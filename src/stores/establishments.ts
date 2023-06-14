@@ -65,11 +65,11 @@ export const useEstablishments = defineStore("establishments", () => {
   function includeEstablishment(establishment: BaseEstablishment | Establishment, { northEast, southWest }: BoundingBox) {
     const { lat, lng } = establishment.geoLocation
     const insideBoundingBox = lat <= northEast.lat && lat >= southWest.lat && lng <= northEast.lng && lng >= southWest.lng
-    const ignoreCurrencies = apiStore.selectedFilters.currencies.length === 0
-    const ignoreCategores = apiStore.selectedFilters.categories.length === 0
+    const ignoreCurrencies = apiStore.selectedCurrencies.length === 0
+    const ignoreCategores = apiStore.selectedCategories.length === 0
     // const filteredByCurrencies = ignoreCurrencies || (establishment.providers as ProviderEstablishment[]).some(p => apiStore.selectedFilters.currencies.some(c => p.buy.has(c) || p.sell.has(c) || p.both.has(c)))
     const filteredByCurrencies = true // TODO
-    const filteredByCategories = ignoreCategores || apiStore.selectedFilters.categories.map(c => c.label).includes(establishment.category)
+    const filteredByCategories = ignoreCategores || apiStore.selectedCategories.map(c => c.label).includes(establishment.category)
     return insideBoundingBox && filteredByCurrencies && filteredByCategories
   }
 

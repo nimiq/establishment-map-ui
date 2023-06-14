@@ -13,24 +13,25 @@ import { computed, onMounted, ref } from "vue"
 const isOpen = ref(false)
 
 const apiStore = useApi()
-const { currencies, categories, selectedFilters } = storeToRefs(apiStore)
+const { currencies, categories, selectedCategories, selectedCurrencies, loading } = storeToRefs(apiStore)
 
-const unappliedFiltersCategories = ref<typeof selectedFilters.value.categories>([])
-const unappliedFiltersCurrencies = ref<typeof selectedFilters.value.currencies>([])
+const unappliedFiltersCategories = ref<typeof selectedCategories.value>([])
+const unappliedFiltersCurrencies = ref<typeof selectedCurrencies.value>([])
 
 onMounted(() => {
-	unappliedFiltersCategories.value = [...selectedFilters.value.categories]
-	unappliedFiltersCurrencies.value = [...selectedFilters.value.currencies]
+	unappliedFiltersCategories.value = [...selectedCategories.value]
+	unappliedFiltersCurrencies.value = [...selectedCurrencies.value]
 })
 
 const nFilters = computed(() => {
-	return selectedFilters.value.categories.length + selectedFilters.value.currencies.length
+	return selectedCategories.value.length + selectedCurrencies.value.length
 })
 
 function clearFilters() {
 	unappliedFiltersCategories.value = []
 	unappliedFiltersCurrencies.value = []
-	selectedFilters.value = { categories: [], currencies: [] }
+	selectedCurrencies.value = []
+	selectedCategories.value = []
 }
 
 function closeModal({ shouldClearFilters }: { shouldClearFilters: boolean }) {
@@ -45,10 +46,8 @@ function openModal() {
 }
 
 function applyFilters() {
-	selectedFilters.value = {
-		categories: unappliedFiltersCategories.value,
-		currencies: unappliedFiltersCurrencies.value
-	}
+	selectedCategories.value = unappliedFiltersCategories.value
+	selectedCurrencies.value = unappliedFiltersCurrencies.value
 	closeModal({ shouldClearFilters: false })
 }
 
@@ -58,7 +57,7 @@ function specialCurrency(id: string | number) {
 </script>
 
 <template>
-	<Button @click="openModal" bgColor="grey" size="md">
+	<Button @click="openModal" bgColor="grey" size="md" :disabled="loading">
 		<template #icon>
 			<FilterIcon class="text-space w-4.5 h-4.5" />
 		</template>
@@ -86,7 +85,7 @@ function specialCurrency(id: string | number) {
 							</DialogTitle>
 							<hr class="w-full h-px my-8 bg-space/10" />
 
-							<Select placeholder="Select cryptocurrencies" :options="[...currencies.values()]" label-key="symbol"
+							<Select placeholder="$t('Select_Cryptocurrency')" :options="[...currencies.values()]" label-key="symbol"
 								v-model="unappliedFiltersCategories" class="px-6 md:px-10">
 								<template #label>
 									<h3 class="mb-6 text-sm font-semibold tracking-wider uppercase text-space/40 md:mb-8">
@@ -95,14 +94,14 @@ function specialCurrency(id: string | number) {
 								</template>
 								<template #option="{ symbol, name }">
 									<div class="flex items-center gap-x-2">
-										<CryptoIcon class="w-6 h-6" :crypto="symbol" border />
+										<CryptoIcon :crypto="symbol" size="sm" bg="white" />
 										<span v-if="!specialCurrency(symbol)"><b>{{ symbol }}</b>, {{ $t(name) }}</span>
 										<template v-else>
 											<span>{{ $t(name) }}</span>
 										</template>
 									</div>
 								</template>
-								<template #after-options> More cryptocurrencies supported in the future </template>
+								<template #after-options> $t('More_cryptocurrencies_supported_in_the_future') </template>
 								<template #selected-option="{ symbol }"> {{ symbol }} </template>
 							</Select>
 							<Select :options="[...categories.values()]" v-model="unappliedFiltersCurrencies"

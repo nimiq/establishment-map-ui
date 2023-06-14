@@ -7,13 +7,14 @@ import { storeToRefs } from "pinia"
 import { computed, ref } from "vue"
 import SearchBox from "../elements/SearchBox.vue"
 import Select from "../elements/Select.vue"
+import type { CurrencyInner } from "@/api"
 
 const apiStore = useApi()
 const { currencies } = storeToRefs(apiStore)
-
+const currenciesOptions = computed(() => [...currencies.value.values()])
 const { autocomplete, suggestions, status } = useAutocomplete({ searchFor: [SuggestionType.GOOGLE_ESTABLISHMENT] })
 
-const selectedCurrencies = ref([])
+const selectedCurrencies = ref<CurrencyInner[]>([])
 const selectedPlace = ref<Suggestion>()
 
 const disabled = computed(() => selectedCurrencies.value.length === 0 || !selectedPlace.value)
@@ -21,7 +22,7 @@ const disabled = computed(() => selectedCurrencies.value.length === 0 || !select
 async function onSubmit(token: string) {
 	return await apiStore.addCandidate({
 		token,
-		currencies: selectedCurrencies.value,
+		currencies: selectedCurrencies.value.map(c => c.symbol),
 		gmapsPlaceId: selectedPlace.value?.id as string || "",
 		name: selectedPlace.value?.label || "",
 	})
@@ -37,15 +38,15 @@ async function onSubmit(token: string) {
 		</template>
 		<template #form>
 			<SearchBox :autocomplete="autocomplete" :status="status" :suggestions="suggestions" :label="$t('Find_place')"
-				combobox-options-classes="w-[calc(100%+4px)] -left-0.5 top-unset" bg-combobox="space" input-id="search-input"
-				@selected="(selectedPlace = $event)" :allow-clean="false" />
+				:placeholder="$t('Type_the_name')" combobox-options-classes="w-[calc(100%+4px)] -left-0.5 top-unset"
+				bg-combobox="space" input-id="search-input" @selected="(selectedPlace = $event)" :allow-clean="false" />
 
 			<Select class="mt-6" :label="$t('Select_Cryptocurrency')" input-id="cryptocurrency-input"
-				:options="Object.values(currencies)" v-model="selectedCurrencies" :placeholder="$t('Select_Cryptocurrency')">
-				<template #option="{ id, name }">
-					<CryptoIcon class="w-6 h-6" :crypto="(id as string)" />
+				:options="currenciesOptions" v-model="selectedCurrencies" :placeholder="$t('Select_Cryptocurrency')">
+				<template #option="{ symbol, name }">
+					<CryptoIcon :crypto="symbol" size="sm" bg="white" />
 					<span>
-						<span class="font-bold">{{ (id as string).toUpperCase() }}</span>
+						<span class="font-bold">{{ symbol.toUpperCase() }}</span>
 						{{ name }}
 					</span>
 				</template>

@@ -14,7 +14,7 @@ export enum AutocompleteStatus {
 export const useApp = defineStore("app", () => {
   const listIsShown = ref(false);
   const toggleList = () => listIsShown.value = !listIsShown.value;
-  const showList = () => { console.trace(); listIsShown.value = true };
+  const showList = () => { listIsShown.value = true };
   const hideList = () => listIsShown.value = false;
 
   const getMapGestureBehaviour = (tentativeValue = 'greedy') => {

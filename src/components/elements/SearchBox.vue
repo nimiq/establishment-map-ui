@@ -1,26 +1,26 @@
 <template>
 	<Combobox v-model="selected" v-slot="{ open }" as="div" nullable @update:model-value="emit('selected', selected)"
 		by="id">
-		<ComboboxLabel v-if="hasLabel" class="text-space/40 capitalize">
+		<ComboboxLabel v-if="hasLabel" class="capitalize text-space/40">
 			<slot name="label">
 				{{ label }}
 			</slot>
 		</ComboboxLabel>
 		<div class="relative" :class="{ 'mt-1': hasLabel }">
 			<div class="relative w-full cursor-default overflow-hidden text-left ring-[1.5px]" :class="{
-	'ring-space/[0.15] focus-within:ring-sky/30': !open,
-	'ring-ocean/30': open,
-	'rounded-full': roundedFull,
-	'rounded-sm': !roundedFull,
-}">
+				'ring-space/[0.15] focus-within:ring-sky/30': !open,
+				'ring-ocean/30': open,
+				'rounded-full': roundedFull,
+				'rounded-sm': !roundedFull,
+			}">
 				<ComboboxInput
 					class="w-full border-none placeholder:text-space/60 focus-within:placeholder:text-sky/60 focus:ring-0 outline-none pr-[3.25rem] pl-4"
 					:class="{
-	'text-space': !open,
-	'text-ocean': open,
-	'text-sm py-[5px]': size === 'sm',
-	'text-base py-2': size === 'md',
-}" autocomplete="off" :placeholder="$t('Search_Crypto_Map')" :displayValue="(v) => (v as Suggestion)?.label"
+						'text-space': !open,
+						'text-ocean': open,
+						'text-sm py-[5px]': size === 'sm',
+						'text-base py-2': size === 'md',
+					}" autocomplete="off" :placeholder="placeholder" :displayValue="(v) => (v as Suggestion)?.label"
 					@change="query = $event.target.value" />
 
 				<div class="absolute inset-y-0 right-0 flex items-center pr-4">
@@ -36,16 +36,16 @@
 				<ComboboxOptions
 					class="z-40 absolute w-full scroll-space overflow-auto rounded-sm text-base focus:outline-none shadow-lg top-0.5"
 					:class="[
-	comboboxOptionsClasses,
-	{
-		'bg-white': bgCombobox === 'white',
-		'bg-space': bgCombobox === 'space',
-	},
-]">
-					<div class="relative cursor-default select-none py-2 px-4" :class="{
-	'text-space/80': bgCombobox === 'white',
-	'text-white/80': bgCombobox === 'space',
-}" v-if="status && [AutocompleteStatus.NO_RESULTS, AutocompleteStatus.LOADING].includes(status)">
+						comboboxOptionsClasses,
+						{
+							'bg-white': bgCombobox === 'white',
+							'bg-space': bgCombobox === 'space',
+						},
+					]">
+					<div class="relative px-4 py-2 cursor-default select-none" :class="{
+						'text-space/80': bgCombobox === 'white',
+						'text-white/80': bgCombobox === 'space',
+					}" v-if="status && [AutocompleteStatus.NO_RESULTS, AutocompleteStatus.LOADING].includes(status)">
 						<span v-if="status === AutocompleteStatus.LOADING">
 							{{ $t('Loading') }}
 						</span>
@@ -57,27 +57,27 @@
 						</span>
 					</div>
 
-					<ComboboxOption v-else v-for="suggestion in suggestions" as="template" :key="suggestion.id"
-						:value="suggestion" v-slot="{ selected, active }">
+					<ComboboxOption v-else v-for="suggestion in suggestions" as="template" :key="suggestion.id" :value="suggestion"
+						v-slot="{ selected, active }">
 						<li class="relative select-none py-1.5 flex items-center transition-colors cursor-pointer" :class="{
-	'hover:bg-space/[0.06] focus:bg-space/[0.06]': bgCombobox === 'white',
-	'hover:bg-white/10 focus:bg-white/10': bgCombobox === 'space',
-	'bg-space/[0.06]': bgCombobox === 'white' && active,
-	'bg-white/10': bgCombobox === 'space' && active,
-	'px-6 gap-x-6': size === 'sm',
-	'px-3 gap-x-2': size === 'md',
-}">
+							'hover:bg-space/[0.06] focus:bg-space/[0.06]': bgCombobox === 'white',
+							'hover:bg-white/10 focus:bg-white/10': bgCombobox === 'space',
+							'bg-space/[0.06]': bgCombobox === 'white' && active,
+							'bg-white/10': bgCombobox === 'space' && active,
+							'px-6 gap-x-6': size === 'sm',
+							'px-3 gap-x-2': size === 'md',
+						}">
 							<span class="block truncate" :class="{
-	'text-space': bgCombobox === 'white',
-	'text-white': bgCombobox === 'space',
-}" v-html="makeBold(suggestion.label, suggestion.matchedSubstrings)">
+								'text-space': bgCombobox === 'white',
+								'text-white': bgCombobox === 'space',
+							}" v-html="makeBold(suggestion.label, suggestion.matchedSubstrings)">
 							</span>
 							<span v-if="selected" class="absolute inset-y-0 left-0 flex items-center pl-3" :class="{
-	'text-white':
-		(active && bgCombobox === 'white') || (!active && bgCombobox === 'space'),
-	'text-space':
-		(!active && bgCombobox === 'white') || (active && bgCombobox === 'space'),
-}">
+								'text-white':
+									(active && bgCombobox === 'white') || (!active && bgCombobox === 'space'),
+								'text-space':
+									(!active && bgCombobox === 'white') || (active && bgCombobox === 'space'),
+							}">
 							</span>
 						</li>
 					</ComboboxOption>
@@ -120,6 +120,10 @@ const props = defineProps({
 		default: "md",
 	},
 	label: {
+		type: String,
+		default: "",
+	},
+	placeholder: {
 		type: String,
 		default: "",
 	},

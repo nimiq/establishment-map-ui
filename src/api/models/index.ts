@@ -16,5 +16,3 @@ export * from './EstablishmentIssueBody';
 export * from './EstablishmentIssueResponse';
 export * from './GeoLocation';
 export * from './GetProviders200ResponseInner';
-export * from './GetProviders200ResponseInnerCta';
-export * from './GetProviders200ResponseInnerStyle';

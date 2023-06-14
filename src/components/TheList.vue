@@ -60,8 +60,8 @@ watch([listIsShown, listIsEmpty], async () => {
 		:class="{
 			'h-full xl:h-[calc(100%-112px)]': !listIsEmpty,
 		}">
-		<div v-if="!listIsEmpty" :class="{ 'xl:!overflow-hidden': !listIsShown }"
-			class="relative gap-6 p-6 space-y-6 bg-space/[0.04] xl:flex xl:flex-col xl:w-96 columns-2xs scroll-py-6 xl:overflow-y-auto scroll-space z-2 max-xl:pb-16 xl:h-full">
+		<div v-if="!listIsEmpty" :class="{ 'xl:!overflow-y-hidden': !listIsShown }"
+			class="relative gap-6 p-6 space-y-6 bg-space/[0.04] xl:flex xl:flex-col xl:w-[322px] columns-2xs scroll-py-6 xl:overflow-y-auto scroll-space z-2 max-xl:pb-16 xl:h-full">
 			<!-- <RecycleScroller :items="items" class="h-full" key-field="uuid" list-tag="ul" item-tag="li" emit-update
 				@update="updateList">
 				<template v-slot="{ item: establishment }">
@@ -90,7 +90,7 @@ watch([listIsShown, listIsEmpty], async () => {
 		</div>
 
 		<div v-else
-			class="grid items-center w-screen gap-6 p-6 bg-white place-content-center xl:w-96 max-xl:py-20 xl:shadow xl:h-main">
+			class="grid items-center w-screen gap-6 p-6 bg-white place-content-center xl:w-[322px] max-xl:py-20 xl:shadow xl:h-main">
 			<NoEstablishments class="w-20 text-space justify-self-center" />
 			<p class="text-base text-center text-space xl:text-xl">{{ $t('Oops_no_businesses_around_here') }}</p>
 		</div>

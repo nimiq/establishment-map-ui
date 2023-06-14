@@ -5,7 +5,7 @@
   "Loading": "Laden...",
   "Start_Typing": "Eingabe beginnen...",
   "Nothing_found": "Nichts gefunden.",
-  "Search_Crypto_Map": "Crypto Map durchsuchen",
+  "Search_Map": "Map durchsuchen",
   "Filters": "Filter",
   "Cryptocurrencies": "Kryptowährungen",
   "Categories": "Kategorien",
@@ -31,6 +31,7 @@
   "You_can_add_any_place_that_has_a_Google_Business_Profile": "Du kannst jede Einrichtung hinzufügen, die über ein Google Business-Profil verfügt.",
   "Create_Google_Business_profile": "Google Business-Profil erstellen",
   "Find_place": "Geschäft finden",
+  "Type_the_name": "Gib den Namen des Geschäfts ein",
   "Select_Cryptocurrency": "Kryptowährung auswählen",
   "Send": "Senden",
   "establishment_gone": "Geschäft existiert nicht mehr",
@@ -62,5 +63,9 @@
   "Learn_more": "Mehr erfahren",
   "Enter_country_city_or_zip_code": "Geben Sie Land, Stadt oder Postleitzahl ein, um Orte zu finden, die Bitcoin, Nimiq und andere Kryptowährungen akzeptieren.",
   "Buy": "Kaufen",
-  "Sell": "Verkaufen"
+  "Sell": "Verkaufen",
+  "providers": {
+    "kurant": { "entry": "Anmelden bei <b>Kurant</b>", "tooltip": "Kurant ATM ist ein Blockchain-basiertes Geldautomatennetzwerk und eine Plattform." },
+    "gocrypto": { "entry": "<b>GoCrypto-App</b> erforderlich.", "tooltip": "GoCrypto ist ein globales Zahlungsnetzwerk, das es Händlern ermöglicht, Krypto-Zahlungen zu akzeptieren." }
+  }
 }

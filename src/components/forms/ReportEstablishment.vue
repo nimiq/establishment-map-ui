@@ -15,6 +15,8 @@ if (!categoriesIssue.value) {
 	apiStore.fetchIssueCategories()
 }
 
+const issueCategoriesOptions = computed(() => categoriesIssue.value.map(c => c.label))
+
 const establishmentsStore = useEstablishments()
 const { establishments } = storeToRefs(establishmentsStore)
 
@@ -58,8 +60,10 @@ async function onSubmit(token: string) {
 		</template>
 
 		<template #form>
-			<Select :label="$t('Select_issue')" :options="categoriesIssue.map(({ id, label }) => ({ id, label: $t(label) }))"
-				v-model:selected-single="selectedIssue" :multiple="false" :placeholder="$t('Select_issue')" replace-placeholder />
+			<Select :label="$t('Select_issue')" :options="categoriesIssue" v-model:selected-single="selectedIssue"
+				:multiple="false" :placeholder="$t('Select_issue')" replace-placeholder>
+				<template #option="{ label }">{{ $t(label) }}</template>
+			</Select>
 
 			<TextAreaInput :placeholder="$t('Write_your_problem_here')" class="mt-6" :label="$t('Describe_the_issue')"
 				v-model="issueDescription" />

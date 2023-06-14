@@ -12,18 +12,23 @@ body {
 
 .scroll-space::-webkit-scrollbar,
 .scroll-grey::-webkit-scrollbar {
-  width: 0.375rem;
+  width: 0.5rem;
   height: 0.375rem;
+  margin: 2px;
 }
 
 .scroll-space::-webkit-scrollbar-thumb {
-  border-radius: 0.375rem;
+  border-radius: 8px;
   background-color: #4b4b5c60;
+  background-clip: padding-box;
+  border: 2px transparent solid;
 }
 
 .scroll-grey::-webkit-scrollbar-thumb {
-  border-radius: 0.375rem;
+  border-radius: 6px;
   background-color: #3b4c6a7d;
+  background-clip: padding-box;
+  border: 2px transparent solid;
 }
 
 .scroll-grey::-webkit-scrollbar-track {

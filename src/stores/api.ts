@@ -7,7 +7,7 @@ import { useRoute, useRouter } from "vue-router";
 import { useEstablishments, type BaseEstablishment, type Establishment } from "./establishments";
 import { useMap } from "./map";
 
-const basePath: string = import.meta.env.VITE_URL_API_URL
+const basePath: string = import.meta.env.VITE_API_URL
 const googleMapsKey: string = import.meta.env.VITE_GOOGLE_MAP_KEY
 
 export const establishmentsApi = new EstablishmentsApi(new Configuration({ basePath }))
@@ -23,12 +23,25 @@ export const useApi = defineStore("api", () => {
   const router = useRouter()
 
   // Filters
-  const selectedFilters: Ref<{ currencies: Currency[], categories: Category[] }> = ref({ currencies: [], categories: [] })
+  const selectedCurrencies: Ref<Currency[]> = ref([])
+  const selectedCategories: Ref<Category[]> = ref([])
 
-  watch(selectedFilters, async ({ categories: newCategories, currencies: newCurrencies }) => {
+  watch(selectedCategories, async (newCategories, oldCategories) => {
+    if (oldCategories.length === 0) return;
     router.push({
       query: {
         categories: newCategories.map(c => c.label),
+        currencies: selectedCurrencies.value.map(c => c.symbol),
+      }
+    })
+    await search()
+  })
+
+  watch(selectedCurrencies, async (newCurrencies, oldCurrencies) => {
+    if (oldCurrencies.length === 0) return;
+    router.push({
+      query: {
+        categories: selectedCategories.value.map(c => c.label),
         currencies: newCurrencies.map(c => c.symbol),
       }
     })
@@ -51,6 +64,38 @@ export const useApi = defineStore("api", () => {
     return parsedEstablishment
   }
 
+  async function search() {
+    const { establishments } = storeToRefs(useEstablishments())
+
+    const { northEast, southWest } = surroundingBoundingBox.value
+    const boundingBoxStr = `${southWest.lng},${southWest.lat},${northEast.lng},${northEast.lat}`
+
+    const body: SearchEstablishmentsRequest = {
+      filterBoundingBox: boundingBoxStr,
+      filterEstablishmentCategoryLabel: selectedCategories.value.map(c => c.label) || undefined,
+      filterCurrency: selectedCurrencies.value.map(c => c.symbol) || undefined,
+    }
+
+    const unformattedResponse: { [key: string]: CryptoEstablishmentBaseApi }[] = await establishmentsApi.searchEstablishments(body).catch((e) => e)
+    console.log('🔍 Got establishments from API: ', unformattedResponse)
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore The API is returning an object with the index as key, but it should return an array
+    const response = Object.values(unformattedResponse) as CryptoEstablishmentBaseApi[]
+
+    if (response instanceof Error) {
+      console.error(response);
+      // alert('The api is not available'); // TODO Handle error
+      return;
+    }
+
+    response
+      .map(parseBaseEstablishment)
+      .sort((a, b) => b.geoLocation.lat - a.geoLocation.lat)
+      .filter((e) => !establishments?.value.has(e.uuid)) // ignore already loaded establishments
+      .forEach((establishment) => establishments?.value.set(establishment.uuid, establishment))
+  }
+
   function parseEstablishment({
     uuid, address, providers: providersWithCrypto, category, gmapsPlaceId, geoLocation, name, photoReference, rating, gmapsTypes
   }: CryptoEstablishmentApi): Establishment {
@@ -58,9 +103,8 @@ export const useApi = defineStore("api", () => {
       ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=540&photo_reference=${photoReference}&key=${googleMapsKey}`
       : undefined
 
-
     const establishmentProviders = providersWithCrypto.map(p => {
-      const provider = providers.value.get(p.id)
+      const provider = providers.value.get(5 || p.id)
       if (!provider) {
         console.error(`Provider ${p.id} not found in providers map`)
         return
@@ -84,39 +128,6 @@ export const useApi = defineStore("api", () => {
       providers: establishmentProviders
     }
     return parsedEstablishment
-  }
-
-  async function search() {
-    const { establishments } = storeToRefs(useEstablishments())
-
-    const { northEast, southWest } = surroundingBoundingBox.value
-    console.log(`https://www.google.com/maps/@${northEast.lat},${northEast.lng},17z`)
-    const boundingBoxStr = `${southWest.lng},${southWest.lat},${northEast.lng},${northEast.lat}`
-
-    const body: SearchEstablishmentsRequest = {
-      filterBoundingBox: boundingBoxStr,
-      filterEstablishmentCategoryLabel: selectedFilters.value.categories.map(c => c.label) || undefined,
-      filterCurrency: selectedFilters.value.currencies.map(c => c.symbol) || undefined,
-    }
-
-    const unformattedResponse: { [key: string]: CryptoEstablishmentBaseApi }[] = await establishmentsApi.searchEstablishments(body).catch((e) => e)
-    console.log('🔍 Got establishments from API: ', unformattedResponse)
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore The API is returning an object with the index as key, but it should return an array
-    const response = Object.values(unformattedResponse) as CryptoEstablishmentBaseApi[]
-
-    if (response instanceof Error) {
-      console.error(response);
-      // alert('The api is not available'); // TODO Handle error
-      return;
-    }
-
-    response
-      .map(parseBaseEstablishment)
-      .sort((a, b) => b.geoLocation.lat - a.geoLocation.lat)
-      .filter((e) => !establishments?.value.has(e.uuid)) // ignore already loaded establishments
-      .forEach((establishment) => establishments?.value.set(establishment.uuid, establishment))
   }
 
   async function getEstablishmentByUuid(uuid: string) {
@@ -238,6 +249,8 @@ export const useApi = defineStore("api", () => {
     await establishmentsApi.postCandidate({ establishmentCandidateBody })
   }
 
+  const loading = ref(true)
+
   onMounted(async () => {
     await Promise.all([
       fetchProviders(),
@@ -245,10 +258,10 @@ export const useApi = defineStore("api", () => {
       fetchCurrencies()
     ])
 
-    selectedFilters.value = {
-      currencies: extractFromMap(currencies.value, pathParamToStringList('currencies')),
-      categories: extractFromMap(categories.value, pathParamToStringList('categories'))
-    };
+    selectedCategories.value = extractFromMap(categories.value, pathParamToStringList('categories'))
+    selectedCurrencies.value = extractFromMap(currencies.value, pathParamToStringList('currencies'))
+
+    loading.value = false
   })
 
   const suggestions = ref<Suggestion[]>([])
@@ -286,12 +299,14 @@ export const useApi = defineStore("api", () => {
     currencies,
     categoriesIssue,
     fetchIssueCategories,
-    selectedFilters,
+    selectedCategories,
+    selectedCurrencies,
     getEstablishmentByUuid,
     setEstablishment,
     reportEstablishment,
     addCandidate,
     autocomplete,
-    suggestions
+    suggestions,
+    loading
   }
 })

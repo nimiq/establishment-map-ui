@@ -1,7 +1,7 @@
 <template>
 	<component :is="getComponent()" :to="!isExternalLink ? props.href : undefined"
 		:href="isExternalLink ? props.href : undefined" :target="isExternalLink ? '_blank' : undefined"
-		class="flex items-center justify-center transition-colors rounded-full outline-none cursor-pointer group w-max"
+		class="flex items-center justify-center transition-colors rounded-full outline-none cursor-pointer group w-max disabled:cursor-not-allowed"
 		v-bind="$attrs" :disabled="isDisabled" :class="{
 			'bg-space': props.bgColor === 'space',
 			'bg-ocean': props.bgColor === 'ocean' && !gradient,

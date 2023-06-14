@@ -282,39 +282,11 @@ paths:
                   required:
                     - id
                     - name
-                    - message_en
-                    - message_es
-                    - message_de
-                    - logo
-                    - style
-                    - cta
                   properties:
                     id:
                       type: integer
                     name:
                       type: string
-                    message_en:
-                      type: string
-                    message_es:
-                      type: string
-                    message_de:
-                      type: string
-                    logo:
-                      type: string
-                    style:
-                      type: object
-                      properties:
-                        opacity:
-                          type: number
-                        background:
-                          type: string
-                    cta:
-                      type: object
-                      properties:
-                        href:
-                          type: string
-                        text:
-                          type: string
         "404":
           description: Not Found
   /api/establishments/issues/categories:

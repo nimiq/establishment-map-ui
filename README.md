@@ -10,7 +10,7 @@ Duplicate `.env.example` and rename it to `.env`. Then fill in the values.
 
 
 ```bash
-VITE_URL_API_URL=             # API Endpoint
+VITE_API_URL=             # API Endpoint
 VITE_GOOGLE_MAP_KEY=          # Map ID associated with the maps key in Google Cloud
 VITE_RECAPTCHA_SITE_KEY=      # Recaptcha Site Key
 ```
