@@ -58,7 +58,7 @@ async function locate(host = ''): Promise<IpLocation> {
         },
         zoom
     }
-    console.log(`Located ${host} at ${ipLocation.location.lat}, ${ipLocation.location.lng}`);
+
     cache(host, ipLocation);
     return ipLocation;
 }

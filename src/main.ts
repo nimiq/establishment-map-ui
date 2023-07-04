@@ -6,7 +6,6 @@ import { createI18n } from "vue-i18n";
 import App from "./App.vue";
 import "./index.css";
 import { messages } from "./locales";
-import "/node_modules/focus-visible/dist/focus-visible.min.js";
 
 import { router } from "./router";
 

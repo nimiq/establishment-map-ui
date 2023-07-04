@@ -9,13 +9,10 @@
 			<div class="relative" :class="{ 'mt-1': hasLabel }">
 				<ListboxButton
 					class="relative w-full ring-[1.5px] ring-space/[0.15] cursor-pointer rounded-sm bg-white py-2 pl-4 pr-[3.25rem] text-left outline-none focus-visible:ring-sky/30 focus-visible:text-sky/60"
-					:class="{ 'text-space': usePlaceholder, 'text-space/60': !usePlaceholder, }">
+					:class="usePlaceholder ? 'text-space' : 'text-space/60'">
 					<span class="block truncate">
-						{{
-							usePlaceholder
-							? selected[0]
-							: placeholder
-						}}
+						<slot v-if="usePlaceholder" name="selected" v-bind="selected as unknown as SelectOption" />
+						<template v-else>{{ placeholder }}</template>
 					</span>
 					<span class="absolute inset-y-0 right-0 flex items-center pr-2 mr-2 pointer-events-none">
 						<ArrowSelectIcon class="h-5 w-5 text-space/[0.15]" aria-hidden="true" />
@@ -63,7 +60,7 @@
 import ArrowSelectIcon from "@/components/icons/icon-arrow-select.vue"
 import CheckIcon from "@/components/icons/icon-check.vue"
 import CrossIcon from "@/components/icons/icon-cross.vue"
-import { ref, useSlots, watch, computed, type PropType } from "vue"
+import { computed, ref, useSlots, watch } from "vue"
 
 import {
 	Listbox,
@@ -84,15 +81,15 @@ const props = defineProps({
 	},
 	selectedSingle: {
 		type: Object as () => SelectOption,
-		default: () => undefined,
+		default: -1,
+	},
+	multiple: {
+		type: Boolean,
+		default: true
 	},
 	options: {
 		type: Array as () => any[],
 		default: () => [],
-	},
-	multiple: {
-		type: Boolean,
-		default: true,
 	},
 	placeholder: {
 		type: String,
@@ -108,7 +105,7 @@ const props = defineProps({
 	},
 })
 
-const usePlaceholder = computed(() => props.replacePlaceholder && !!selected.value && selected.value.length === 1);
+const usePlaceholder = computed(() => props.replacePlaceholder && !!selected.value && (Array.isArray(selected.value) ? selected.value.length > 0 : Object.keys(selected.value).length > 0));
 
 const emit = defineEmits({
 	"update:modelValue": (value: SelectOption[]) => value,
@@ -120,7 +117,7 @@ watch(selected, (value) => {
 	if (props.multiple) {
 		emit("update:modelValue", value)
 	} else {
-		emit("update:selectedSingle", value[0])
+		emit("update:selectedSingle", value as unknown as SelectOption)
 	}
 })
 

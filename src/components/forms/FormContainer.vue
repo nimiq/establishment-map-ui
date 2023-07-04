@@ -45,7 +45,13 @@ async function onSubmit() {
 	const token = await getToken()
 	props
 		.onSubmit(token)
-		.then(() => (state.value = FormState.Success))
+		.then((r: Response) => {
+			if (r.ok) {
+				state.value = FormState.Success
+			} else {
+				state.value = FormState.Error
+			}
+		})
 		.catch(() => (state.value = FormState.Error))
 }
 
@@ -56,8 +62,7 @@ const hasSlot = (name: string) => {
 </script>
 
 <template>
-	<header
-		class="p-6 shadow-[0px_7px_8.5px_rgba(31,_35,_72,_0.04),_0px_2px_2.5px_rgba(31,_35,_72,_0.02)] flex gap-x-4 items-center">
+	<header class="flex items-center p-6 shadow-header gap-x-4">
 		<img src="@/assets/logo.svg" alt="Crypto Map logo" class="h-6" />
 		<Button href="/" bg-color="grey">
 			<template #icon>

@@ -1,8 +1,6 @@
 import MapLayout from "@/layouts/MapLayout.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import "./index.css";
-import "/node_modules/focus-visible/dist/focus-visible.min.js";
-
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -12,11 +10,6 @@ export const router = createRouter({
       name: "add_establishment",
       component: () => import("@/components/forms/NewCandidate.vue"),
       meta: { transition: 'slide-left' },
-    },
-    {
-      path: "/establishment/:uuid",
-      name: "establishment_detail",
-      component: MapLayout,
     },
     {
       path: "/establishment/:uuid/report",

@@ -7,8 +7,7 @@
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
-    "lint": "eslint . --ext .vue,.js,.ts --ignore-pattern dist/ --ignore-pattern '*.config.js'",
-    "api:generate": "yarn openapi-generator-cli generate -g typescript-fetch -i openapi.yaml -o ./src --additional-properties=typescriptThreePlus=true,legacyDiscriminatorBehavior=false,modelPropertyNaming='camelCase',enumPropertyNaming='original' -o ./src/api/ && yarn build"
+    "lint": "eslint . --ext .vue,.js,.ts --ignore-pattern dist/ --ignore-pattern '*.config.js'"
   },
   "dependencies": {
     "@fontsource/mulish": "^4.5.7",
@@ -16,6 +15,9 @@
     "@googlemaps/markerclusterer": "^2.0.14",
     "@headlessui/vue": "^1.7.2",
     "@nimiq/vue3-components": "github:nimiq/vue3-components#build/full",
+    "@vueuse/components": "^10.2.1",
+    "@vueuse/core": "^10.2.1",
+    "@vueuse/router": "^10.2.1",
     "pinia": "^2.0.16",
     "vue": "^3.2.37",
     "vue-i18n": "9",
@@ -23,7 +25,6 @@
     "vue3-google-map": "^0.15.0"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.5.2",
     "@types/google.maps": "^3.50.5",
     "@types/grecaptcha": "^3.0.4",
     "@types/node": "^16.11.45",
@@ -31,7 +32,6 @@
     "@vitejs/plugin-vue": "^3.0.1",
     "@vue/eslint-config-typescript": "^11.0.0",
     "@vue/tsconfig": "^0.1.3",
-    "@vueuse/core": "^9.1.0",
     "autoprefixer": "^10.4.11",
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^9.0.0",

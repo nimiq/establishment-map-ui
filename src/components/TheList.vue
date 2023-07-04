@@ -16,13 +16,13 @@ const appStore = useApp()
 const { listIsShown } = storeToRefs(appStore)
 
 const establishmentsStore = useEstablishments()
-const { establishmentsInView, nearEstablishmentsNotInView, shouldShowNearby } = storeToRefs(establishmentsStore)
+const { establishmentsInView } = storeToRefs(establishmentsStore)
 
 const listIsEmpty = computed(() => establishmentsInView.value.length === 0)
 
 const items = computed(() => {
-	const items = establishmentsInView.value.concat(shouldShowNearby ? nearEstablishmentsNotInView.value : [])
-	return items.map((item) => {
+	// const items = establishmentsInView.value.concat(shouldShowNearby ? nearEstablishmentsNotInView.value : [])
+	return establishmentsInView.value.map((item) => {
 		const isAtm = item.hasAllInfo && item.providers.some((p) => p.sell.length > 0)
 		const type = isAtm ? "atm" : "default"
 		// const size = sizes[type]
@@ -74,7 +74,7 @@ watch([listIsShown, listIsEmpty], async () => {
 				</li>
 			</ul>
 
-			<Button bgColor="grey" class="!mt-9" size="md" @click="establishmentsStore.showNearby"
+			<!-- <Button bgColor="grey" class="!mt-9" size="md" @click="establishmentsStore.showNearby"
 				v-if="!shouldShowNearby && nearEstablishmentsNotInView.length > 0">
 				<template #icon>
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="w-3 h-3 text-space">
@@ -85,7 +85,7 @@ watch([listIsShown, listIsEmpty], async () => {
 				<template #label>
 					{{ $t("Show_more_establishments") }}
 				</template>
-			</Button>
+			</Button> -->
 
 		</div>
 

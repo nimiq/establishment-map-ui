@@ -33,7 +33,7 @@
 				</div>
 			</div>
 			<TransitionRoot leave="transition ease-in duration-100" leave-from="opacity-100" leave-to="opacity-0">
-				<ComboboxOptions
+				<ComboboxOptions v-element-visibility="onListVisibilityChange" data-combobox-options
 					class="z-40 absolute w-full scroll-space overflow-auto rounded-sm text-base focus:outline-none shadow-lg top-0.5"
 					:class="[
 						comboboxOptionsClasses,
@@ -45,11 +45,11 @@
 					<div class="relative px-4 py-2 cursor-default select-none" :class="{
 						'text-space/80': bgCombobox === 'white',
 						'text-white/80': bgCombobox === 'space',
-					}" v-if="status && [AutocompleteStatus.NO_RESULTS, AutocompleteStatus.LOADING].includes(status)">
+					}" v-if="AutocompleteStatus.WITH_RESULTS !== status">
 						<span v-if="status === AutocompleteStatus.LOADING">
 							{{ $t('Loading') }}
 						</span>
-						<span v-else-if="status === AutocompleteStatus.NO_RESULTS && query === ''">
+						<span v-else-if="status === AutocompleteStatus.INITIAL">
 							{{ $t('Start_Typing') }}
 						</span>
 						<span v-else-if="status === AutocompleteStatus.NO_RESULTS && query !== ''">
@@ -90,7 +90,7 @@
 <script setup lang="ts">
 import CrossIcon from "@/components/icons/icon-cross.vue"
 import SearchIcon from "@/components/icons/icon-search.vue"
-import { AutocompleteStatus, type Suggestion } from "@/composables/useAutocomplete";
+import { AutocompleteStatus, type Suggestion } from "@/stores/autocomplete"
 import {
 	Combobox,
 	ComboboxButton,
@@ -100,7 +100,9 @@ import {
 	ComboboxOptions,
 	TransitionRoot
 } from "@headlessui/vue"
-import { computed, ref, useSlots, watch } from "vue"
+import { vElementVisibility } from '@vueuse/components'
+import { useDebounceFn } from "@vueuse/core"
+import { computed, ref, useSlots, watchEffect } from "vue"
 
 const props = defineProps({
 	roundedFull: {
@@ -135,10 +137,6 @@ const props = defineProps({
 		type: Array as () => Suggestion[],
 		required: true,
 	},
-	status: {
-		type: String as () => AutocompleteStatus,
-		required: true,
-	},
 	allowClean: {
 		type: Boolean,
 		default: false,
@@ -147,6 +145,7 @@ const props = defineProps({
 
 const emit = defineEmits({
 	selected: (value?: Suggestion) => value,
+	open: (value: boolean) => value,
 })
 
 const userCanCleanInput = computed(() => props.allowClean && query.value !== "" && query.value !== undefined)
@@ -154,13 +153,22 @@ const userCanCleanInput = computed(() => props.allowClean && query.value !== "" 
 const selected = ref<Suggestion>()
 const query = ref<string>()
 
-watch(
-	() => query.value,
-	() => {
+const loading = ref(false);
+const status = computed<AutocompleteStatus>(() => {
+	if (props.suggestions.length > 0) return AutocompleteStatus.WITH_RESULTS
+	if (loading.value) return AutocompleteStatus.LOADING
+	if (props.suggestions.length === 0 && query.value !== "") return AutocompleteStatus.NO_RESULTS
+	return AutocompleteStatus.INITIAL
+})
+
+watchEffect(
+	async () => {
 		if (query.value === "undefined")
 			query.value = undefined
 		if (!query.value) return
-		props.autocomplete(query.value)
+		loading.value = true
+		await props.autocomplete(query.value)
+		loading.value = false
 	}
 )
 
@@ -171,7 +179,7 @@ function hasSlot(slotName: "label") {
 }
 
 function makeBold(str: string, matches: Suggestion["matchedSubstrings"]) {
-	matches.forEach((match) => {
+	matches?.forEach((match) => {
 		const bolded = str.slice(match.offset, match.offset + match.length)
 		str = str.replace(bolded, `<b>${bolded}</b>`)
 	})
@@ -181,5 +189,16 @@ function makeBold(str: string, matches: Suggestion["matchedSubstrings"]) {
 function clearInput() {
 	selected.value = undefined
 	query.value = undefined
+}
+
+const debouncedRequest = useDebounceFn(
+	(isVisible: boolean) => {
+		emit("open", isVisible)
+	},
+	50
+)
+
+function onListVisibilityChange(isVisible: boolean) {
+	debouncedRequest(isVisible)
 }
 </script>

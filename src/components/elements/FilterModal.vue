@@ -2,36 +2,44 @@
 import Button from "@/components/elements/Button.vue"
 import CategoryIcon from "@/components/elements/CategoryIcon.vue"
 import CryptoIcon from "@/components/elements/CryptoIcon.vue"
-import Select, { type SelectOption } from "@/components/elements/Select.vue"
+import Select from "@/components/elements/Select.vue"
 import CrossIcon from "@/components/icons/icon-cross.vue"
 import FilterIcon from "@/components/icons/icon-filter.vue"
+import type { Category, Currency } from "@/database"
 import { useApi } from "@/stores/api"
+import { useApp } from "@/stores/app"
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue"
 import { storeToRefs } from "pinia"
-import { computed, onMounted, ref } from "vue"
+import { computed, ref, watchEffect } from "vue"
 
 const isOpen = ref(false)
 
 const apiStore = useApi()
-const { currencies, categories, selectedCategories, selectedCurrencies, loading } = storeToRefs(apiStore)
+const { currencies, categories, loading } = storeToRefs(apiStore)
+const appStore = useApp()
+const { selectedCategories, selectedCurrencies } = storeToRefs(appStore)
 
-const unappliedFiltersCategories = ref<typeof selectedCategories.value>([])
-const unappliedFiltersCurrencies = ref<typeof selectedCurrencies.value>([])
+const unappliedFiltersCategories = ref<Category[]>([])
+const unappliedFiltersCurrencies = ref<Currency[]>([])
 
-onMounted(() => {
-	unappliedFiltersCategories.value = [...selectedCategories.value]
-	unappliedFiltersCurrencies.value = [...selectedCurrencies.value]
+watchEffect(() => {
+	unappliedFiltersCategories.value = [...selectedCategories.value];
+})
+
+watchEffect(() => {
+	unappliedFiltersCurrencies.value = [...selectedCurrencies.value];
 })
 
 const nFilters = computed(() => {
+	if (!selectedCategories || !selectedCurrencies) return 0
 	return selectedCategories.value.length + selectedCurrencies.value.length
 })
 
 function clearFilters() {
 	unappliedFiltersCategories.value = []
 	unappliedFiltersCurrencies.value = []
-	selectedCurrencies.value = []
-	selectedCategories.value = []
+	appStore.setSelectedCategories([])
+	appStore.setSelectedCurrencies([])
 }
 
 function closeModal({ shouldClearFilters }: { shouldClearFilters: boolean }) {
@@ -46,13 +54,9 @@ function openModal() {
 }
 
 function applyFilters() {
-	selectedCategories.value = unappliedFiltersCategories.value
-	selectedCurrencies.value = unappliedFiltersCurrencies.value
+	appStore.setSelectedCategories(unappliedFiltersCategories.value.map(c => c.label))
+	appStore.setSelectedCurrencies(unappliedFiltersCurrencies.value.map(c => c.symbol))
 	closeModal({ shouldClearFilters: false })
-}
-
-function specialCurrency(id: string | number) {
-	return ["atm"].includes(id as string)
 }
 </script>
 
@@ -85,8 +89,8 @@ function specialCurrency(id: string | number) {
 							</DialogTitle>
 							<hr class="w-full h-px my-8 bg-space/10" />
 
-							<Select placeholder="$t('Select_Cryptocurrency')" :options="[...currencies.values()]" label-key="symbol"
-								v-model="unappliedFiltersCategories" class="px-6 md:px-10">
+							<Select :placeholder="$t('Select_Cryptocurrency')" :options="[...currencies?.values()]" label-key="symbol"
+								v-model="unappliedFiltersCurrencies" class="px-6 md:px-10">
 								<template #label>
 									<h3 class="mb-6 text-sm font-semibold tracking-wider uppercase text-space/40 md:mb-8">
 										{{ $t('Cryptocurrencies') }}
@@ -95,17 +99,14 @@ function specialCurrency(id: string | number) {
 								<template #option="{ symbol, name }">
 									<div class="flex items-center gap-x-2">
 										<CryptoIcon :crypto="symbol" size="sm" bg="white" />
-										<span v-if="!specialCurrency(symbol)"><b>{{ symbol }}</b>, {{ $t(name) }}</span>
-										<template v-else>
-											<span>{{ $t(name) }}</span>
-										</template>
+										<span><b>{{ symbol }}</b>, {{ $t(name) }}</span>
 									</div>
 								</template>
-								<template #after-options> $t('More_cryptocurrencies_supported_in_the_future') </template>
+								<template #after-options> {{ $t('More_cryptocurrencies_supported_in_the_future') }}</template>
 								<template #selected-option="{ symbol }"> {{ symbol }} </template>
 							</Select>
-							<Select :options="[...categories.values()]" v-model="unappliedFiltersCurrencies"
-								placeholder="Select category" class="px-6 mt-9 md:px-10">
+							<Select :options="[...categories.values()]" v-model="unappliedFiltersCategories"
+								:placeholder="$t('Select_Category')" class="px-6 mt-9 md:px-10">
 								<template #label>
 									<h3 class="mb-6 text-sm font-semibold tracking-wider uppercase text-space/40 md:mb-8">
 										{{ $t('Categories') }}

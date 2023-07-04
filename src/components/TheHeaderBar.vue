@@ -5,20 +5,14 @@ import FilterModal from "@/components/elements/FilterModal.vue"
 import Popover from "@/components/elements/Popover.vue"
 import SearchBox from "@/components/elements/SearchBox.vue"
 import ChevronLeftIcon from "@/components/icons/icon-arrow-small-left.vue"
-import { SuggestionType, useAutocomplete, type Suggestion } from "@/composables/useAutocomplete"
-import { useApi } from "@/stores/api"
 import { useApp } from "@/stores/app"
+import { SuggestionType, useAutocomplete, type Suggestion } from "@/stores/autocomplete"
 import { useEstablishments } from "@/stores/establishments"
-import { useGoogle } from "@/stores/google"
+import { useMap } from "@/stores/map"
 import { useBreakpoints } from "@vueuse/core"
 import { storeToRefs } from "pinia"
 import { screens } from 'tailwindcss-nimiq-theme'
 import { computed } from "vue"
-
-const googleStore = useGoogle()
-
-const apiStore = useApi()
-const { selectedCategories, selectedCurrencies } = storeToRefs(apiStore)
 
 const appStore = useApp()
 const { listIsShown } = storeToRefs(appStore)
@@ -26,31 +20,58 @@ const { listIsShown } = storeToRefs(appStore)
 const { xl } = useBreakpoints(screens)
 
 const establishmentsStore = useEstablishments()
-const { establishmentsInView, nearEstablishmentsNotInView, shouldShowNearby } = storeToRefs(establishmentsStore)
+const { establishmentsInView } = storeToRefs(establishmentsStore)
 
 const listIsEmpty = computed(() => establishmentsInView.value.length === 0)
 
-const { autocomplete, suggestions, status } = useAutocomplete({ searchFor: [SuggestionType.GOOGLE_REGIONS, SuggestionType.API] })
+const autocompleteStore = useAutocomplete();
+const { querySearch } = autocompleteStore;
+const { dbSuggestions, googleSuggestions } = storeToRefs(autocompleteStore)
+
+const suggestions = computed(() => dbSuggestions.value.concat(googleSuggestions.value))
 
 function onSelect(suggestion?: Suggestion) {
 	if (!suggestion) return
 
-	if (suggestion.type === SuggestionType.GOOGLE_REGIONS || suggestion.type === SuggestionType.GOOGLE_ESTABLISHMENT) {
-		googleStore.goToPlaceId(suggestion.id)
-		return
-	} else if (suggestion.type === SuggestionType.API) {
-		switch (suggestion.apiSuggestion) {
-			case 'category':
-				selectedCategories.value = [{ id: suggestion.id as unknown as number, label: suggestion.label }]
-				break
-			case 'currency':
-				selectedCurrencies.value = [{ name: suggestion.label, symbol: suggestion.id }]
-				break
-			case 'establishment':
-				appStore.goToEstablishment(suggestion.id, { behaviourList: 'show' })
-				break
-		}
+	switch (suggestion.type) {
+		case SuggestionType.GOOGLE_ESTABLISHMENT:
+		case SuggestionType.GOOGLE_REGIONS:
+			useMap().goToPlaceId(suggestion.id)
+			break;
+		case 'category':
+			appStore.setSelectedCategories([suggestion.label])
+			break
+		case 'currency':
+			appStore.setSelectedCurrencies([suggestion.id])
+			break
+		case 'establishment':
+			appStore.goToEstablishment(suggestion.id, { behaviourList: 'show' })
+			break
 	}
+
+	hideSearchBoxList()
+}
+
+function searchBoxOpen(value: boolean) {
+	value ? showSearchBoxList() : hideSearchBoxList()
+}
+
+function hideSearchBoxList() {
+	const searchBoxList = document.querySelector('ul[data-combobox-options]') as HTMLElement | null
+	if (!searchBoxList) return
+
+	searchBoxList.remove()
+}
+
+function showSearchBoxList() {
+	const searchBoxList = document.querySelector('[data-search-box] ul') as HTMLElement | null
+	if (!searchBoxList) return
+
+	document.body.appendChild(searchBoxList)
+	searchBoxList.style.position = 'absolute'
+	searchBoxList.style.top = `36px`
+	searchBoxList.style.left = `24px`
+	searchBoxList.style.zIndex = '1000'
 }
 </script>
 
@@ -80,9 +101,9 @@ function onSelect(suggestion?: Suggestion) {
 						<img class="mt-4 ml-auto opacity-40" alt="Nimiq logo" src="@/assets/nimiq-horizontal-logo.svg" />
 					</template>
 				</Popover>
-				<SearchBox :autocomplete="autocomplete" :suggestions="suggestions" :status="status" class="flex-1" rounded-full
+				<SearchBox :autocomplete="querySearch" :suggestions="suggestions" class="flex-1" rounded-full
 					combobox-options-classes="w-[322px] mt-12 left-[-48px] max-h-[220px] rounded-t-0" size="sm"
-					:placeholder="$t('Search_Map')" @selected="onSelect" />
+					@open="searchBoxOpen" :placeholder="$t('Search_Map')" @selected="onSelect" data-search-box />
 				<FilterModal />
 			</div>
 			<p class="pt-4 text-xs text-space/60" v-if="xl">

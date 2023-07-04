@@ -6,7 +6,6 @@ import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import type { GoogleMap } from "vue3-google-map/*";
 import { useApp } from "./app";
-import { useEstablishments } from "./establishments";
 
 export interface Point {
   lat: number;
@@ -65,8 +64,8 @@ export const useMap = defineStore("map", () => {
     return newBoundingBox
   })
 
-  async function setCenter(geoLocation: Point) {
-    center.value = { ...geoLocation }
+  async function setCenter(geolocation: Point) {
+    center.value = { ...geolocation }
   }
 
   function setZoom(newZoom: number) { zoom.value = newZoom }
@@ -85,7 +84,7 @@ export const useMap = defineStore("map", () => {
     if (mapZoom) zoom.value = mapZoom
   }
 
-  const setBoundingBoxDebouncer = useDebounceFn(setBoundingBox, 130)
+  const setBoundingBoxDebouncer = useDebounceFn(setBoundingBox, 600)
 
   const route = useRoute()
   const router = useRouter()
@@ -107,7 +106,7 @@ export const useMap = defineStore("map", () => {
 
     setBoundingBoxDebouncer({ southWest: { lat: swLat(), lng: swLng() }, northEast: { lat: neLat(), lng: neLng() } })
 
-    useEstablishments().hideNearby()
+    // useEstablishments().hideNearby()
 
     if (updateRoute) {
       router.push({ name: "coords", params: { ...center.value, zoom: zoom.value }, query: { ...route.query } })
@@ -129,6 +128,15 @@ export const useMap = defineStore("map", () => {
     map.value.fitBounds(bounds)
     center.value = map.value.getCenter()?.toJSON() || center.value
     zoom.value = map.value.getZoom() || zoom.value
+  }
+
+  async function goToPlaceId(placeId?: string) {
+    const geocoder = new google.maps.Geocoder();
+    if (!placeId) return
+    const res = await geocoder.geocode({ placeId })
+    if (res.results.length === 0) return
+    fitBounds(res.results[0].geometry.viewport)
+    computeBoundingBox()
   }
 
   onMounted(async () => {
@@ -167,6 +175,7 @@ export const useMap = defineStore("map", () => {
     setBoundingBox,
     computeBoundingBox,
     fitBounds,
+    goToPlaceId,
     navigateToUserLocation
   }
 });

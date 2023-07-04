@@ -5,7 +5,7 @@ import FlagIcon from "@/components/icons/icon-flag.vue";
 import IconGmapsPin from '@/components/icons/icon-gmaps-pin.vue';
 import StarFilledIcon from "@/components/icons/icon-star-filled.vue";
 import StarIcon from "@/components/icons/icon-star.vue";
-import type { BaseEstablishment, Establishment } from '@/stores/establishments';
+import type { BaseEstablishment, Establishment } from '@/database';
 import { computed, defineAsyncComponent } from 'vue';
 
 const GoCryptoIcon = defineAsyncComponent(
@@ -26,7 +26,7 @@ const props = defineProps<{
 
 const gmapsCategory = computed(() => {
   if (!props.establishment.hasAllInfo) return ''
-  return props.establishment.gmapsTypes.length > 0 ? props.establishment.gmapsTypes[0] : props.establishment.category
+  return (props.establishment as Establishment).gmapsTypes?.[0] || props.establishment.category
 })
 
 const body = document.querySelector('body')!;
@@ -35,16 +35,15 @@ const body = document.querySelector('body')!;
  * For now we only support in the UI establishments that have only a provider
  */
 const provider = computed(() => props.establishment.hasAllInfo && props.establishment.providers.length ? props.establishment.providers[0] : undefined)
-const isDefaultProvider = computed(() => provider.value?.name === 'DEFAULT')
 </script>
 
 <template>
   <div class="pb-6 bg-white rounded-lg shadow-lg">
     <div class="grid grid-cols-1 grid-rows-1 p-1.5 pb-0 relative">
       <template v-if="establishment.hasAllInfo">
-        <img :src="establishment.photoUrl" class="w-full aspect-[1.77] rounded-md object-cover" :alt="establishment.name"
+        <img :src="establishment.photo" class="w-full aspect-[1.77] rounded-md object-cover" :alt="establishment.name"
           loading="lazy">
-        <Button :href="establishment.gmapsUrl" bg-color="white"
+        <Button :href="establishment.url" bg-color="white"
           class="absolute top-3.5 right-3.5 [&_[data-icon]>svg]:w-3 [&_[data-icon]>svg]:h-3" layout="label-icon">
           <template #label>
             <IconGmapsPin />

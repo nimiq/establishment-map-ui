@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import BtcIcon from "@/components/icons/cryptos/icon-btc.vue"
+import LBtcIcon from "@/components/icons/cryptos/icon-lbtc.vue"
 import DashIcon from "@/components/icons/cryptos/icon-dash.vue"
 import EthIcon from "@/components/icons/cryptos/icon-eth.vue"
 import LtcIcon from "@/components/icons/cryptos/icon-ltc.vue"
@@ -51,5 +52,6 @@ const css: string = !props.mono && needBg ? "ring-1 rounded-full ring-space/10" 
 		<XrpIcon v-else-if="crypto === 'xrp'" :class="css" :style="[styles, { width: mono && '26px' }]" />
 		<DashIcon v-else-if="crypto === 'dash'" :class="css" :style="[styles, { width: mono && '26px' }]" />
 		<XlmIcon v-else-if="crypto === 'xlm'" :class="css" :style="[styles, { width: mono && '28px' }]" />
+		<LBtcIcon v-else-if="crypto === 'lbtc'" :class="css" :style="[styles, { width: mono && '28px' }]" />
 	</div>
 </template>

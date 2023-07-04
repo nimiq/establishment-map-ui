@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import googleMapStyles from "@/assets/google-map-styles"
 import CategoryIcon from "@/components/elements/CategoryIcon.vue"
-import { useEstablishments } from "@/stores/establishments"
 import { useApp } from "@/stores/app"
+import { useEstablishments } from "@/stores/establishments"
 import { useMap } from "@/stores/map"
 import { Cluster, SuperClusterAlgorithm } from "@googlemaps/markerclusterer"
 import { storeToRefs } from "pinia"
@@ -44,18 +44,28 @@ const render = (cluster: Cluster) => {
 		icon: "/img/cluster.png",
 	})
 }
+
+const restriction = {
+	latLngBounds: { north: 90, south: -90, west: -179.999999, east: 179.999999 },
+	strictBounds: true,
+}
+
+function selectEstablishment(uuid: string) {
+	selectedEstablishmentUuid.value = uuid
+	appStore.showList()
+}
 </script>
 
 <template>
 	<GoogleMap v-if="center && center.lat !== 0 && center.lng !== 0" ref="map$" :api-key="googleMapsKey"
 		class="w-full h-full" :center="center" :zoom="zoom" disable-default-ui :clickable-icons="false"
 		:mapGesture-handling="mapGestureBehaviour" :keyboard-shortcuts="false" :styles="googleMapStyles"
-		@bounds_changed="computeBoundingBox" @idle.once="onIdle">
+		@bounds_changed="computeBoundingBox" @idle.once="onIdle" :min-zoom="3" :restriction="restriction">
 		<MarkerCluster :options="{ algorithm: superClusterAlgorithm, renderer: { render } }">
 			<CustomMarker v-for="establishment in establishmentsInView" :key="establishment.uuid"
-				:options="{ position: establishment.geoLocation, anchorPoint: 'TOP_CENTER' }">
-				<RouterLink :to="`/establishment/${establishment.uuid}`" @click="appStore.showList"
-					class="flex flex-col items-center shadow cursor-pointer rounded-full">
+				:options="{ position: { lat: establishment.lat, lng: establishment.lng }, anchorPoint: 'TOP_CENTER' }">
+				<div @click="selectEstablishment(establishment.uuid)"
+					class="flex flex-col items-center rounded-full shadow cursor-pointer" data-tooltip>
 					<svg xmlns="http://www.w3.org/2000/svg" width="28" height="10" viewBox="0 0 28 10" :class="{
 						'text-space': establishment.uuid !== selectedEstablishmentUuid,
 						'text-ocean': establishment.uuid === selectedEstablishmentUuid,
@@ -72,18 +82,18 @@ const render = (cluster: Cluster) => {
 							:category="establishment.category" />
 						<div style="font-size: 1.125rem" class="text-white">{{ establishment.name }}</div>
 					</div>
-				</RouterLink>
+				</div>
 			</CustomMarker>
 		</MarkerCluster>
 	</GoogleMap>
 
-	<div class="absolute top-5 right-5 md:top-6 md:right-6 flex flex-col gap-y-4 children:shadow">
+	<div class="absolute flex flex-col top-5 right-5 md:top-6 md:right-6 gap-y-4 children:shadow">
 		<slot name="button-calculate-position" :navigateToUserLocation="navigateToUserLocation" />
 
 		<div class="flex flex-col bg-white rounded-full">
 			<slot name="button-zoom-in" :zoomIn="increaseZoom" />
 
-			<hr class="bg-space/10 h-px self-stretch" />
+			<hr class="self-stretch h-px bg-space/10" />
 
 			<slot name="button-zoom-out" :zoomOut="decreaseZoom" />
 		</div>

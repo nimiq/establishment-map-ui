@@ -1,31 +1,44 @@
 <script setup lang="ts">
 import CryptoIcon from "@/components/elements/CryptoIcon.vue"
 import FormContainer from "@/components/forms/FormContainer.vue"
-import { useAutocomplete, SuggestionType, type Suggestion } from "@/composables/useAutocomplete"
+import type { Currency } from "@/database"
 import { useApi } from "@/stores/api"
+import { useAutocomplete, type Suggestion } from "@/stores/autocomplete"
 import { storeToRefs } from "pinia"
 import { computed, ref } from "vue"
 import SearchBox from "../elements/SearchBox.vue"
 import Select from "../elements/Select.vue"
-import type { CurrencyInner } from "@/api"
 
 const apiStore = useApi()
 const { currencies } = storeToRefs(apiStore)
 const currenciesOptions = computed(() => [...currencies.value.values()])
-const { autocomplete, suggestions, status } = useAutocomplete({ searchFor: [SuggestionType.GOOGLE_ESTABLISHMENT] })
 
-const selectedCurrencies = ref<CurrencyInner[]>([])
+const autocompleteStore = useAutocomplete()
+const { googleSuggestions } = storeToRefs(autocompleteStore)
+
+const selectedCurrencies = ref<Currency[]>([])
 const selectedPlace = ref<Suggestion>()
 
 const disabled = computed(() => selectedCurrencies.value.length === 0 || !selectedPlace.value)
 
-async function onSubmit(token: string) {
-	return await apiStore.addCandidate({
-		token,
-		currencies: selectedCurrencies.value.map(c => c.symbol),
-		gmapsPlaceId: selectedPlace.value?.id as string || "",
-		name: selectedPlace.value?.label || "",
+async function onSubmit(captcha: string) {
+	if (!selectedPlace.value) return
+	const body = {
+		name: selectedPlace.value.label,
+		gmapsPlaceId: selectedPlace.value.id,
+		currencies: selectedCurrencies.value.map((c) => c.symbol),
+		captcha,
+		dev: import.meta.env.DEV
+	}
+	const url = import.meta.env.VITE_SLACK_NEW_CANDIDATE_URL
+	return await fetch(url, {
+		body: JSON.stringify(body),
+		method: "POST",
 	})
+}
+
+function autocompleteGoogle(query: string) {
+	return autocompleteStore.autocompleteGoogle(query, { searchForEstablishment: true })
 }
 </script>
 
@@ -37,7 +50,7 @@ async function onSubmit(token: string) {
 			<a href="https://www.google.com/business/" target="_blank">{{ $t('Create_Google_Business_profile') }}</a>
 		</template>
 		<template #form>
-			<SearchBox :autocomplete="autocomplete" :status="status" :suggestions="suggestions" :label="$t('Find_place')"
+			<SearchBox :autocomplete="autocompleteGoogle" :suggestions="googleSuggestions" :label="$t('Find_place')"
 				:placeholder="$t('Type_the_name')" combobox-options-classes="w-[calc(100%+4px)] -left-0.5 top-unset"
 				bg-combobox="space" input-id="search-input" @selected="(selectedPlace = $event)" :allow-clean="false" />
 
