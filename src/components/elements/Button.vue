@@ -10,7 +10,7 @@
 			'bg-white hover:bg-[#F2F2F4] focus-visible:bg-[#F2F2F4]': props.bgColor === 'white',
 			'bg-space/10': props.bgColor === 'grey',
 			'py-2.5 px-4 sm:py-3 sm:px-5 sm:h-10 gap-3': props.size === 'lg',
-			'px-2 py-1.5 sm:py-2.5 sm:px-3 h-[30px] sm:h-8 gap-2.5': props.size === 'md',
+			'px-3 py-1.5 sm:py-2.5 sm:px-3 h-[30px] sm:h-8 gap-2': props.size === 'md',
 			'px-2 sm:px-2.5 h-[22px] sm:h-6 gap-2': props.size === 'sm',
 			'aspect-square': hasSlot('icon') && !hasSlot('label'),
 			'focus-visible:ring-offset-2': props.as !== 'div' && props.bgColor === 'space',
@@ -19,19 +19,14 @@
 			'group-button-focus-visible:ring-space group-button-focus-visible:ring-1': props.as === 'div',
 			'relative': hasSlot('badge'),
 			'flex-row-reverse': props.layout === 'label-icon',
+			'ring-1 ring-space/[0.15]': props.borderColor === 'grey',
 		}">
 		<span v-if="!props.hideIcon && (hasSlot('icon') || getComponent() === 'a')" :class="{
 			'text-white/60': ['space', 'sky', 'ocean'].includes(props.bgColor),
 			'text-space/60': ['white', 'transparent', 'grey'].includes(props.bgColor),
 			'text-opacity-40': isDisabled,
 		}" data-icon>
-			<slot name="icon">
-				<template v-if="getComponent() === 'a'">
-					<!-- TODO This only supports external links for now -->
-					<ArrowLinkIcon
-						class="w-2.5 h-2.5 relative group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
-				</template>
-			</slot>
+			<slot name="icon" />
 		</span>
 		<span v-if="hasSlot('label')" class="font-bold text-center whitespace-nowrap" :class="{
 			'text-white [button:disabled>&]:!text-white/40': ['space', 'sky', 'ocean'].includes(
@@ -48,6 +43,12 @@
 		}">
 			<slot name="label" />
 		</span>
+
+		<template v-if="getComponent() === 'a'">
+			<!-- TODO This only supports external links for now -->
+			<ArrowLinkIcon
+				class="w-2.5 h-2.5 relative text-sky group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
+		</template>
 
 		<transition enter-active-class="duration-200 ease-out" enter-from-class="scale-0 opacity-0"
 			enter-to-class="scale-100 opacity-100" leave-active-class="duration-100 ease-in"
@@ -82,6 +83,10 @@ const props = defineProps({
 	bgColor: {
 		type: String as () => "space" | "transparent" | "white" | "sky" | "grey" | "ocean",
 		default: () => "space",
+	},
+	borderColor: {
+		type: String as () => "grey" | undefined,
+		default: undefined,
 	},
 	type: {
 		type: String,

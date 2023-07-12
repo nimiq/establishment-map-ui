@@ -28,6 +28,7 @@ export type BaseEstablishment = {
   lng: number;
   providers: ProviderWithCurrencies[];
   category: string;
+  gmapsTypes: Array<string>;
   hasAllInfo: boolean;
 }
 
@@ -35,7 +36,6 @@ export type Establishment = Omit<BaseEstablishment, "hasAllInfo"> & {
   photo?: string;
   url?: string;
   gmapsPlaceId: string;
-  gmapsTypes: Array<string>;
   category: string;
   address: string;
   rating: number;
