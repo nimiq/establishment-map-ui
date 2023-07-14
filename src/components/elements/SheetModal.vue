@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { useDraggable, useWindowSize } from '@vueuse/core';
 import { computed, ref } from 'vue';
 
 const INITIAL_GAP = 20/*px*/
+
 const props = defineProps({
   initialHeight: {
     type: Number,
@@ -17,26 +17,49 @@ const props = defineProps({
 const progress = ref(0)
 const dif = props.maxHeight - props.initialHeight
 
+let initialY = 0
 let initialTime = 0
+let dragging = false
+let isOpen = false
 const container = ref<HTMLElement | null>(null)
-const { y } = useDraggable(container, {
-  preventDefault: true,
-  axis: 'y',
-  onStart: () => {
-    initialTime = Date.now()
-  },
-  onMove: ({ y }) => {
-    const draggableHeight = windowHeight.value - y
-    progress.value = Math.max(0, Math.min((draggableHeight - props.initialHeight) / dif, 1))
-  },
-  onEnd: () => {
-    container.value?.style.setProperty('--duration', '0.25s');
-    setTimeout(() => container.value?.style.removeProperty('--duration'), 250);
-    progress.value < 0.5 ? close() : open()
-  }
-})
 
-const { height: windowHeight } = useWindowSize()
+function onStart(event: PointerEvent) {
+  dragging = true
+  initialTime = event.timeStamp
+  initialY = event.clientY
+  isOpen = progress.value === 1
+  container.value!.setPointerCapture(event.pointerId)
+}
+
+function onMove(event: PointerEvent) {
+  if (!dragging) return
+  const yDelta = (initialY - event.clientY)
+  const startingPoint = isOpen ? yDelta + dif : yDelta
+  progress.value = Math.max(0, Math.min(startingPoint / dif, 1))
+}
+
+function onEnd(event: PointerEvent) {
+  dragging = false
+  container.value!.releasePointerCapture(event.pointerId)
+
+  animateShortly()
+  const isTouch = event.pointerType === "touch"
+  const timeDelta = event.timeStamp - initialTime
+
+  const isClick = isTouch
+    ? timeDelta < 100
+    : timeDelta < 250
+
+  if (isClick && !isOpen) {
+    open()
+  } else {
+    if (isOpen) {
+      progress.value < 0.85 ? close() : open()
+    } else {
+      progress.value > 0.15 ? open() : close()
+    }
+  }
+}
 
 const style = computed(() => {
   const gap = (1 - progress.value) * INITIAL_GAP
@@ -44,7 +67,7 @@ const style = computed(() => {
   const height = props.initialHeight + dif * progress.value
 
   return {
-    top: `${windowHeight.value - height - gap}px`,
+    top: `${window.innerHeight - height - gap}px`,
     left: `${gap}px`,
     right: `${gap}px`,
     borderBottomRightRadius: `${borderRadius}rem`,
@@ -61,30 +84,25 @@ function open() {
   progress.value = 1
 }
 
-function onClick() {
-  const duration = Date.now() - initialTime
-  console.log({ duration })
-  if (duration < 100) {
-    container.value?.style.setProperty('--duration', '0.25s');
-    setTimeout(() => container.value?.style.removeProperty('--duration'), 250)
-    progress.value = 1
-  }
+function animateShortly() {
+  container.value?.style.setProperty('--duration', '0.1s')
+  setTimeout(() => container.value?.style.removeProperty('--duration'), 100)
 }
 </script>
 
 <template>
-  <div ref="container" class="absolute sheet-transition" :style="style" @click="onClick">
+  <div ref="container" class="absolute sheet-transition touch-none" :style="style" @pointerdown.prevent="onStart"
+    @pointermove.prevent="onMove" @pointerup.prevent="onEnd">
     <div class="pt-2 pb-5 cursor-grab">
       <hr class="w-32 h-1 mx-auto border-0 rounded-full bg-black/20">
     </div>
+    {{ progress }}
     <slot />
   </div>
 </template>
 
 <style>
 .sheet-transition {
-  --gap-duration: calc(var(--duration));
-  transition: top var(--gap-duration) ease-in-out, left var(--gap-duration) ease-in-out, right var(--gap-duration) ease-in-out,
-    border-radius var(--duration) ease-in-out, height var(--duration) ease-in-out;
+  transition: top var(--duration), left var(--duration), right var(--duration), border-bottom-right-radius var(--duration), border-bottom-left-radius var(--duration), height var(--duration);
 }
 </style>
