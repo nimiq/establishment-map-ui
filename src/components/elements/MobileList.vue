@@ -8,15 +8,9 @@ export type MobileListProvider = {
 </script>
 
 <script setup lang="ts">
-import MobileEstablishmentCard from "@/components/elements/MobileEstablishmentCard.vue";
+import MobileEstablishmentCard, { INITIAL_GAP_TO_SCREEN } from "@/components/elements/MobileEstablishmentCard.vue";
 import type { NewEstablishment } from '@/database';
 import { ref, type PropType, type Ref } from "vue";
-
-const INITIAL_GAP_TO_SCREEN = 20/*px*/ // The gap between the cards to the screen
-const INITIAL_BORDER_RADIUS = 8/*px*/
-
-const INITIAL_HEIGHT = 162
-const MAX_HEIGHT = 371
 
 defineProps({
   establishments: {
@@ -36,9 +30,7 @@ const progress = ref(0)
     :style="`--spacing: ${(1 - progress) * INITIAL_GAP_TO_SCREEN}px`">
     <li v-for="(establishment, i) in establishments" :key="i"
       class="relative shrink-0 snap-center first:pl-[var(--spacing)] last:pr-[var(--spacing)]">
-      <MobileEstablishmentCard :e="establishment" :initial-height="INITIAL_HEIGHT" :max-height="MAX_HEIGHT"
-        :initial-border-radius="INITIAL_BORDER_RADIUS" :initial-gap-to-screen="INITIAL_GAP_TO_SCREEN" :progress="progress"
-        @update:progress="progress = $event" />
+      <MobileEstablishmentCard :e="establishment" :progress="progress" @update:progress="progress = $event" />
     </li>
   </ul>
 </template>
