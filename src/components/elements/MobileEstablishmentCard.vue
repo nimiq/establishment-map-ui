@@ -9,9 +9,6 @@ import SheetModal from "@/components/elements/SheetModal.vue";
 import type { NewEstablishment } from "@/database";
 import type { PropType } from 'vue';
 
-
-
-
 defineProps({
   e: {
     type: Object as PropType<NewEstablishment>,
