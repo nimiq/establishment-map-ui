@@ -84,8 +84,8 @@ function open() {
 }
 
 function animateShortly() {
-  container.value?.style.setProperty('--duration', '0.2s')
-  setTimeout(() => container.value?.style.removeProperty('--duration'), 100)
+  document.documentElement.style.setProperty('--duration', '0.2s')
+  setTimeout(() => document.documentElement.style.removeProperty('--duration'), 100)
 }
 
 const style = ref()
