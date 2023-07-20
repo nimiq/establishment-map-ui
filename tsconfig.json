@@ -5,6 +5,7 @@
     "src/**/*"
   ],
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "lib": [
       "DOM",
       "ES2017"

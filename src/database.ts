@@ -44,14 +44,23 @@ export type Establishment = Omit<BaseEstablishment, "hasAllInfo"> & {
   hasAllInfo: true;
 }
 
+export enum ProviderName {
+  Default = 'Default',
+  DefaultAtm = 'DefaultAtm',
+  GoCrypto = "GoCrypto",
+  Kurant = "Kurant",
+  Bluecode = "Bluecode",
+}
+
 export type NewEstablishment = {
+  uuid: string,
   name: string,
   address: string,
   category: string,
   gmapsType: string,
   lat: number,
   lng: number,
-  provider: string,
+  provider: ProviderName,
   buy: string[],
   sell: string[],
   rating?: number,

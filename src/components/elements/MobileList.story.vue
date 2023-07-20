@@ -45,7 +45,7 @@ const establishments: NewEstablishment[] = [{
 </script>
 
 <template>
-  <Story title="Mobile List">
+  <Story title="Mobile List" icon="carbon:overflow-menu-horizontal" icon-color="rgba(255,255,255,0.8)">
     <Variant title="Default">
       <div class="relative h-screen">
         <img src="@/assets-dev/stories/map-new-york-square.png" alt="" class="object-cover h-full">

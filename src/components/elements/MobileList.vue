@@ -1,16 +1,8 @@
-<script lang="ts">
-export const MOBILE_LIST_PROVIDER_KEY = Symbol();
-
-export type MobileListProvider = {
-  progress: Ref<number>,
-  updateProgress: (progress: number) => void
-}
-</script>
-
 <script setup lang="ts">
-import MobileEstablishmentCard, { INITIAL_GAP_TO_SCREEN } from "@/components/elements/MobileEstablishmentCard.vue";
 import type { NewEstablishment } from '@/database';
-import { ref, type PropType, type Ref } from "vue";
+import { ref, type PropType } from "vue";
+
+const INITIAL_GAP_TO_SCREEN = 20/*px*/ // The gap between the cards to the screen
 
 defineProps({
   establishments: {
@@ -30,7 +22,11 @@ const progress = ref(0)
     :style="`--spacing: ${(1 - progress) * INITIAL_GAP_TO_SCREEN}px`">
     <li v-for="(establishment, i) in establishments" :key="i"
       class="relative shrink-0 snap-center first:pl-[var(--spacing)] last:pr-[var(--spacing)]">
-      <MobileEstablishmentCard :e="establishment" :progress="progress" @update:progress="progress = $event" />
+      <SheetModal :initial-height="162" :max-height="371" :initial-border-radius="8"
+        :initial-gap-to-screen="INITIAL_GAP_TO_SCREEN" class="relative w-full px-6 pb-5 bg-white rounded-t-lg"
+        :progress="progress" @update:progress="progress = $event">
+        <NewEstablishmentCard :establishment="establishment" :progress="progress" />
+      </SheetModal>
     </li>
   </ul>
 </template>
