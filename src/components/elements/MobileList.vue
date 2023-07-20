@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { NewEstablishment } from '@/database';
+import type { Location } from '@/database';
 import { ref, type PropType } from "vue";
 
 const INITIAL_GAP_TO_SCREEN = 20/*px*/ // The gap between the cards to the screen
 
 defineProps({
   establishments: {
-    type: Array as PropType<NewEstablishment[]>,
+    type: Array as PropType<Location[]>,
     default: () => [],
   },
 })
@@ -25,7 +25,7 @@ const progress = ref(0)
       <SheetModal :initial-height="162" :max-height="371" :initial-border-radius="8"
         :initial-gap-to-screen="INITIAL_GAP_TO_SCREEN" class="relative w-full px-6 pb-5 bg-white rounded-t-lg"
         :progress="progress" @update:progress="progress = $event">
-        <NewEstablishmentCard :establishment="establishment" :progress="progress" />
+        <LocationCard :establishment="establishment" :progress="progress" />
       </SheetModal>
     </li>
   </ul>

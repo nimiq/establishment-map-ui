@@ -8,7 +8,6 @@ A map of the crypto world, powered by Nimiq.
 
 Duplicate `.env.example` and rename it to `.env`. Then fill in the values.
 
-
 ```bash
 VITE_API_URL=             # API Endpoint
 VITE_GOOGLE_MAP_KEY=          # Map ID associated with the maps key in Google Cloud
@@ -30,9 +29,3 @@ npm run dev
 
 yarn dev
 ```
-
-## API
-
-The API specification is hosted at [https://github.com/nimiq/establishments-map-backend/blob/main/docs/openapi.yaml](https://github.com/nimiq/establishments-map-backend/blob/main/docs/openapi.yaml). 
-
-Run `yarn api:generate` to generate the API client.

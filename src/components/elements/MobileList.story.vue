@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ProviderName, type NewEstablishment } from "@/database";
+import { ProviderName, type Location } from "@/database";
 import MobileList from "./MobileList.vue";
 
-const establishments: NewEstablishment[] = [{
+const establishments: Location[] = [{
   uuid: "1",
   name: "Mercedes-Benz Arena",
   category: "entertainment",

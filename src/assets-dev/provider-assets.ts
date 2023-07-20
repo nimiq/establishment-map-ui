@@ -2,6 +2,8 @@ import { ProviderName } from "@/database";
 import { defineAsyncComponent } from "vue";
 
 export enum Theme {
+  Default = 'default',
+
   // A light colorfull banner at the bottom
   BottomBannerLight = 'bottom-banner-light',
 
@@ -21,10 +23,15 @@ export type ProviderAssets = {
   bg: string;
   label?: string;
   tooltip?: string;
-  icon: ReturnType<typeof defineAsyncComponent>;
+  icon?: ReturnType<typeof defineAsyncComponent>;
 }
 
-export const providersAssets: Partial<Record<ProviderName, ProviderAssets>> = {
+export const providersAssets: Record<ProviderName, ProviderAssets> = {
+  [ProviderName.Default]: {
+    name: ProviderName.DefaultAtm,
+    theme: Theme.Default,
+    bg: 'white',
+  },
   [ProviderName.DefaultAtm]: {
     name: ProviderName.DefaultAtm,
     theme: Theme.FullCardDark,
@@ -61,6 +68,26 @@ export const providersAssets: Partial<Record<ProviderName, ProviderAssets>> = {
     tooltip: "Blah blah",
     icon: defineAsyncComponent(
       () => import("@/components/icons/providers/bluecode.vue")
+    )
+  },
+  [ProviderName.CryptopaymentLink]: {
+    name: ProviderName.CryptopaymentLink,
+    bg: '#5C6CFF',
+    theme: Theme.BottomBannerDark,
+    label: "<b>Cryptopayment Link</b> available",
+    tooltip: "Blah blah",
+    icon: defineAsyncComponent(
+      () => import("@/components/icons/providers/cryptopayment-link.vue")
+    )
+  },
+  [ProviderName.Edenia]: {
+    name: ProviderName.Edenia,
+    bg: '#00B2B0',
+    theme: Theme.FullCardDark,
+    label: "By <b>Edenia</b>",
+    tooltip: "Blah blah",
+    icon: defineAsyncComponent(
+      () => import("@/components/icons/providers/edenia.vue")
     )
   },
 };

@@ -1,24 +1,8 @@
 <script setup lang="ts">
-import { ProviderName, type NewEstablishment } from "@/database";
-import EstablishmentCard from "./EstablishmentCard.vue";
-import { computed, ref } from "vue";
+import { ProviderName, type Location } from "@/database";
+import DesktopList from "./DesktopList.vue";
 
-const progressState = ref<"expanded" | "not-expanded" | "loop" | "custom">("expanded")
-const customProgress = ref(0)
-
-const intervalValue = ref(0)
-setInterval(() => {
-  if (progressState.value !== "loop") return
-  intervalValue.value = (intervalValue.value + 0.01) % 1.2
-}, 1)
-
-const progress = computed(() => {
-  if (progressState.value === "expanded") return 1
-  if (progressState.value === "not-expanded") return 0
-  return intervalValue.value % 1
-})
-
-const establishments: NewEstablishment[] = [{
+const locations: Location[] = [{
   uuid: "1",
   name: "Mercedes-Benz Arena",
   category: "entertainment",
@@ -90,28 +74,7 @@ const establishments: NewEstablishment[] = [{
 </script>
 
 <template>
-  <Story title="Establishment card" :layout="{ type: 'grid', width: '300px' }">
-    <template #controls>
-      <div class="flex flex-col px-4 py-4 gap-x-2">
-        <label for="expanded" class="select-none">Progress State</label>
-        <select v-model="progressState" class="text-black bg-transparent bg-snow">
-          <option name="expanded" value="expanded" class="text-black">Expanded</option>
-          <option name="not-expanded" value="not-expanded" class="text-black">Not expanded</option>
-          <option name="loop" value="loop" class="text-black">Loop</option>
-          <option name="custom" value="custom" class="text-black">Custom</option>
-        </select>
-      </div>
-
-      <div class="flex flex-col px-4 py-4 gap-x-2" v-if="progressState === 'custom'">
-        <label for="expanded">Custom Progress</label>
-        <input name="customProgress" id="customProgress" class="text-black" type="number" v-model="customProgress">
-      </div>
-    </template>
-
-    <Variant v-for="(e, i) in establishments" :title="e.provider" :key="i" class="flex items-end h-full">
-      <EstablishmentCard :establishment="e" :progress="progressState === 'custom' ? customProgress : progress"
-        class="relative" />
-    </Variant>
-
+  <Story title="Desktop List">
+    <DesktopList :locations="locations" />
   </Story>
 </template>

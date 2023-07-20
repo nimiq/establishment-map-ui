@@ -50,9 +50,11 @@ export enum ProviderName {
   GoCrypto = "GoCrypto",
   Kurant = "Kurant",
   Bluecode = "Bluecode",
+  CryptopaymentLink = "CryptopaymentLink",
+  Edenia = "Edenia",
 }
 
-export type NewEstablishment = {
+export type Location = {
   uuid: string,
   name: string,
   address: string,
