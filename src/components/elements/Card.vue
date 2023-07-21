@@ -28,7 +28,7 @@ const props = defineProps({
   },
 })
 
-const ProviderBanner = defineAsyncComponent(() => import("@/components/atoms/ProviderBanner.vue"));
+const ProviderBanner = defineAsyncComponent(() => import("@/components/elements/ProviderBanner.vue"));
 const showProviderBanner = computed(() => props.location.provider !== ProviderName.Default)
 const providerAssets = computed(() => providersAssets[props.location.provider]);
 
