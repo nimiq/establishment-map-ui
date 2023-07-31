@@ -1,0 +1,4 @@
+{
+  "kurant": { "entry": "Register with <b>Kurant</b>", "tooltip": "Kurant ATM is a blockchain-based ATM network and platform." },
+  "gocrypto": { "entry": "<b>GoCrypto app</b> required", "tooltip": "GoCrypto is a global payment network that enables merchants to accept crypto payments." }
+}

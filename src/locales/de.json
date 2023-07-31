@@ -33,29 +33,5 @@
   "Clear": "Löschen",
   "Apply filters": "Filter anwenden",
   "Show more Locations": "Weitere Geschäfte anzeigen",
-  "Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other crypto-currencies.": "Geben Sie Land, Stadt oder Postleitzahl ein, um Orte zu finden, die Bitcoin, Nimiq und andere Kryptowährungen akzeptieren.",
-
-  "location_gone": "Geschäft existiert nicht mehr",
-  "missing_currency": "Währung fehlt",
-  "missing_not_accepted": "Währung wird nicht akzeptiert",
-  "no_crypto": "Keine Kryptowährung akzeptiert",
-  "other": "Andere",
-
-  "cars_bikes": "Autos & Fahrräder",
-  "cash": "Bargeld",
-  "computer_electronics": "Computer & Elektronik",
-  "entertainment": "Unterhaltung",
-  "food_drinks": "Essen & Getränke",
-  "health_beauty": "Gesundheit & Beauty",
-  "hotel_lodging": "Hotel & Unterkunft",
-  "leisure_activities": "Freizeitaktivitäten",
-  "miscellaneous": "Sonstiges",
-  "restaurant_bar": "Restaurant & Bar",
-  "shop": "Geschäft",
-  "sports_fitness": "Sport & Fitness",
-
-  "providers": {
-    "kurant": { "entry": "Anmelden bei <b>Kurant</b>", "tooltip": "Kurant ATM ist ein Blockchain-basiertes Geldautomatennetzwerk und eine Plattform." },
-    "gocrypto": { "entry": "<b>GoCrypto-App</b> erforderlich.", "tooltip": "GoCrypto ist ein globales Zahlungsnetzwerk, das es Händlern ermöglicht, Krypto-Zahlungen zu akzeptieren." }
-  }
+  "Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other crypto-currencies.": "Geben Sie Land, Stadt oder Postleitzahl ein, um Orte zu finden, die Bitcoin, Nimiq und andere Kryptowährungen akzeptieren."
 }

@@ -1,0 +1,20 @@
+{
+  "location_gone": "Establecimiento ya no existe",
+  "missing_currency": "Falta criptomoneda",
+  "missing_not_accepted": "Criptomoneda no aceptada",
+  "no_crypto": "No acepta criptomonedas",
+  "other": "Otro",
+
+  "cars_bikes": "Coches & Bicicletas",
+  "cash": "Efectivo",
+  "computer_electronics": "Ordenadores & Electrónica",
+  "entertainment": "Entretenimiento",
+  "food_drinks": "Comida & Bebidas",
+  "health_beauty": "Salud & Belleza",
+  "hotel_lodging": "Hotel & Alojamiento",
+  "leisure_activities": "Actividades de ocio",
+  "miscellaneous": "Misceláneo",
+  "restaurant_bar": "Restaurantes & Bares",
+  "shop": "Tiendas",
+  "sports_fitness": "Deportes & Fitness"
+}
