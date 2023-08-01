@@ -5,14 +5,14 @@ import { createApp, markRaw } from "vue";
 import { createI18n } from "vue-i18n";
 import App from "./App.vue";
 import "./index.css";
-import { messages } from "./locales";
+import { messages } from "./i18n";
 
 import { router } from "./router";
 
 const languageUser = navigator.language;
 export const i18n = createI18n<false>({
   locale: languageUser,
-  fallbackLocale: "en",
+  fallbackLocale: 'en',
   messages,
 })
 

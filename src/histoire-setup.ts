@@ -2,13 +2,13 @@ import './index.css'
 import { defineSetupVue3 } from '@histoire/plugin-vue'
 import { createPinia } from 'pinia'
 import { router } from "./router";
-import { messages } from "./locales";
+import { messages } from "./i18n";
 import { createI18n } from 'vue-i18n';
 
 const languageUser = navigator.language;
 export const i18n = createI18n<false>({
   locale: languageUser,
-  fallbackLocale: "en",
+  fallbackLocale: 'en',
   messages,
 })
 

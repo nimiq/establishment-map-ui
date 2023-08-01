@@ -1,0 +1,163 @@
+# 
+# Translators:
+# Daniel, 2023
+# 
+msgid ""
+msgstr ""
+"Last-Translator: Daniel, 2023\n"
+"Language-Team: German (https://app.transifex.com/nimiq-foundation/teams/110181/de/)\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/components/forms/NewCandidate.vue:3
+msgid "Add a location to the Crypto Map"
+msgstr "Füge ein Geschäft zur Crypto Map hinzu"
+
+#: src/components/TheMap.vue:32 src/components/TheMap.vue:33
+#: src/components/TheMap.vue:34
+msgid "Add location"
+msgstr "Geschäft hinzufügen"
+
+#: src/components/elements/FilterModal.vue:73
+msgid "Apply filters"
+msgstr "Filter anwenden"
+
+#: src/components/forms/FormContainer.vue:54
+#: src/components/forms/FormContainer.vue:9
+#: src/components/forms/NewCandidate.vue:28
+#: src/components/forms/ReportEstablishment.vue:27
+#: src/components/TheList.vue:47
+msgid "Back to the Map"
+msgstr "Zurück zur Karte"
+
+#: src/components/elements/FilterModal.vue:54
+msgid "Categories"
+msgstr "Kategorien"
+
+#: src/components/elements/FilterModal.vue:70
+msgid "Clear"
+msgstr "Löschen"
+
+#: src/components/forms/NewCandidate.vue:6
+msgid "Create Google Business profile"
+msgstr "Google Business-Profil erstellen"
+
+#: src/components/elements/FilterModal.vue:38
+msgid "Cryptocurrencies"
+msgstr "Kryptowährungen"
+
+#: src/components/forms/ReportEstablishment.vue:19
+msgid "Describe the issue"
+msgstr "Problembeschreibung"
+
+#: src/components/elements/FilterModal.vue:30
+msgid "Filters"
+msgstr "Filter"
+
+#: src/components/forms/NewCandidate.vue:9
+msgid "Find location"
+msgstr "Geschäft finden"
+
+#: src/components/atoms/SearchBox.vue:50
+msgid "Loading..."
+msgstr "Laden..."
+
+#: src/components/elements/FilterModal.vue:47
+#: src/components/forms/NewCandidate.vue:19
+msgid "More cryptocurrencies supported in the future"
+msgstr "Künftig werden weitere Kryptowährungen unterstützt"
+
+#: src/components/atoms/SearchBox.vue:56
+msgid "Nothing found."
+msgstr "Nichts gefunden."
+
+#: src/components/TheList.vue:39
+msgid "Oops, no Locations around here"
+msgstr "Ups, keine Geschäfte in der Nähe"
+
+#: src/components/forms/ReportEstablishment.vue:3
+msgid "Report an issue with a location"
+msgstr "Ein Problem zu einem Eintrag melden"
+
+#: src/components/forms/ReportEstablishment.vue:22
+msgid "Report Location"
+msgstr "Eintrag melden"
+
+#: src/components/elements/InteractionBar.vue:6
+msgid "Search Map"
+msgstr "Map durchsuchen"
+
+#: src/components/elements/FilterModal.vue:51
+msgid "Select category"
+msgstr "Kategorie auswählen"
+
+#: src/components/elements/FilterModal.vue:34
+#: src/components/forms/NewCandidate.vue:13
+#: src/components/forms/NewCandidate.vue:14
+msgid "Select Cryptocurrency"
+msgstr "Kryptowährung auswählen"
+
+#: src/components/forms/ReportEstablishment.vue:12
+#: src/components/forms/ReportEstablishment.vue:13
+msgid "Select issue"
+msgstr "Was ist das Problem?"
+
+#: src/components/forms/FormContainer.vue:39
+msgid "Send"
+msgstr "Senden"
+
+#: src/components/forms/NewCandidate.vue:31
+#: src/components/forms/ReportEstablishment.vue:30
+msgid "Something went wrong"
+msgstr "Etwas ist schief gelaufen"
+
+#: src/components/atoms/SearchBox.vue:53
+msgid "Start typing..."
+msgstr "Eingabe beginnen..."
+
+#: src/components/forms/NewCandidate.vue:23
+msgid "Submit Location"
+msgstr "Eintrag einreichen"
+
+#: src/components/forms/ReportEstablishment.vue:25
+msgid "Thank you for reporting this issue"
+msgstr "Danke für deinen Problembericht"
+
+#: src/components/forms/NewCandidate.vue:26
+msgid "Thank you for submitting a new location to the Crypto Map!"
+msgstr "Vielen Dank! Dein Eintrag ist bei uns eingegangen."
+
+#: src/components/forms/NewCandidate.vue:32
+#: src/components/forms/ReportEstablishment.vue:31
+msgid "There has been a problem on our side."
+msgstr "Auf unserer Seite ist ein Problem aufgetreten."
+
+#: src/components/forms/NewCandidate.vue:27
+#: src/components/forms/ReportEstablishment.vue:26
+msgid ""
+"This may take a few days to process. Keep an eye out for changes to the "
+"location in the Crypto Map."
+msgstr ""
+"Es kann ein paar Tage dauern, bis wir deine Anfrage bearbeitet haben. Bitte "
+"schaue später wieder vorbei, um deinen Eintrag auf der Crypto Map zu finden."
+
+#: src/components/forms/FormContainer.vue:69
+#: src/components/forms/NewCandidate.vue:33
+#: src/components/forms/ReportEstablishment.vue:32
+msgid "Try again"
+msgstr "Erneut versuchen"
+
+#: src/components/forms/NewCandidate.vue:10
+msgid "Type the name of the location"
+msgstr "Gib den Namen des Geschäfts ein"
+
+#: src/components/forms/ReportEstablishment.vue:19
+msgid "Write your problem here"
+msgstr "Beschreibe dein Problem hier"
+
+#: src/components/forms/NewCandidate.vue:4
+msgid "You can add any location that has a Google Business Profile."
+msgstr ""
+"Du kannst jede Einrichtung hinzufügen, die über ein Google Business-Profil "
+"verfügt."
