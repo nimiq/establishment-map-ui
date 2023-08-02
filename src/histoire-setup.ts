@@ -2,18 +2,19 @@ import './index.css'
 import { defineSetupVue3 } from '@histoire/plugin-vue'
 import { createPinia } from 'pinia'
 import { router } from "./router";
-import { messages } from "./i18n";
-import { createI18n } from 'vue-i18n';
+import { i18nRegistration, detectLanguage, setLanguage } from './i18n/i18n-setup'
 
-const languageUser = navigator.language;
-export const i18n = createI18n<false>({
-  locale: languageUser,
-  fallbackLocale: 'en',
-  messages,
-})
+// load and set the initial language
+setLanguage(detectLanguage())
 
 export const setupVue3 = defineSetupVue3(({ app }) => {
   app.use(createPinia())
   app.use(router)
-  app.use(i18n);
+  app.use(i18nRegistration);
 })
+
+// This router navigation guard is to prevent switching to the new route before the language file finished loading.
+// If there are any routes which do not require translations, they can be skipped here.
+router.beforeResolve((to, from, next) => {
+  setLanguage(detectLanguage()).then(next);
+});

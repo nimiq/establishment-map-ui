@@ -2,19 +2,14 @@ import "@fontsource/mulish/variable.css";
 import { Loader } from "@googlemaps/js-api-loader";
 import { createPinia } from "pinia";
 import { createApp, markRaw } from "vue";
-import { createI18n } from "vue-i18n";
 import App from "./App.vue";
 import "./index.css";
-import { messages } from "./i18n";
+import { i18nRegistration, detectLanguage, setLanguage } from './i18n/i18n-setup'
 
 import { router } from "./router";
 
-const languageUser = navigator.language;
-export const i18n = createI18n<false>({
-  locale: languageUser,
-  fallbackLocale: 'en',
-  messages,
-})
+// load and set the initial language
+setLanguage(detectLanguage())
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -24,10 +19,14 @@ pinia.use(({ store }) => {
 });
 app.use(pinia);
 app.use(router);
-app.use(i18n);
+app.use(i18nRegistration);
 
 new Loader({ apiKey: import.meta.env.VITE_GOOGLE_MAP_KEY, version: "weekly", libraries: ['places'] }).load().then(() => {
   app.mount("#app");
 });
 
-export default {}
+// This router navigation guard is to prevent switching to the new route before the language file finished loading.
+// If there are any routes which do not require translations, they can be skipped here.
+router.beforeResolve((to, from, next) => {
+  setLanguage(detectLanguage()).then(next);
+});
