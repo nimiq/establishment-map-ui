@@ -1,5 +1,6 @@
 import { ProviderName } from "@/database";
 import { defineAsyncComponent } from "vue";
+import { i18n } from "@/i18n/i18n-setup";
 
 export enum Theme {
   Default = 'default',
@@ -44,8 +45,12 @@ export const providersAssets: Record<ProviderName, ProviderAssets> = {
     name: ProviderName.GoCrypto,
     theme: Theme.BottomBannerLight,
     bg: '#F0BF4C',
-    label: "<b>GoCrypto app</b> required",
-    tooltip: "Blah blah",
+    get label() {
+      return i18n.t('<b>GoCrypto app</b> required')
+    },
+    get tooltip() {
+      return i18n.t('GoCrypto is a global payment network that enables merchants to accept crypto payments.')
+    },
     icon: defineAsyncComponent(
       () => import("@/components/icons/providers/gocrypto.vue")
     )
@@ -54,8 +59,12 @@ export const providersAssets: Record<ProviderName, ProviderAssets> = {
     name: ProviderName.Kurant,
     theme: Theme.FullCardDark,
     bg: '#A92E19',
-    label: "Register with <b>Kurant</b>",
-    tooltip: "Blah blah",
+    get label() {
+      return i18n.t('Register with <b>Kurant</b>')
+    },
+    get tooltip() {
+      return i18n.t('Kurant ATM is a blockchain-based ATM network and platform.')
+    },
     icon: defineAsyncComponent(
       () => import("@/components/icons/providers/kurant.vue")
     )
@@ -64,8 +73,13 @@ export const providersAssets: Record<ProviderName, ProviderAssets> = {
     name: ProviderName.Bluecode,
     bg: '#004899',
     theme: Theme.BottomBannerDark,
-    label: "<b>Bluecode</b> required",
-    tooltip: "Blah blah",
+    get label() {
+      return i18n.t('<b>Bluecode</b> required')
+    },
+    get tooltip() {
+      // return i18n.t('TODO')
+      return 'Blah blah'
+    },
     icon: defineAsyncComponent(
       () => import("@/components/icons/providers/bluecode.vue")
     )
@@ -74,8 +88,13 @@ export const providersAssets: Record<ProviderName, ProviderAssets> = {
     name: ProviderName.CryptopaymentLink,
     bg: '#5C6CFF',
     theme: Theme.BottomBannerDark,
-    label: "<b>Cryptopayment Link</b> available",
-    tooltip: "Blah blah",
+    get label() {
+      return i18n.t('<b>Cryptopayment Link</b> available')
+    },
+    get tooltip() {
+      // return i18n.t('TODO')
+      return 'Blah blah'
+    },
     icon: defineAsyncComponent(
       () => import("@/components/icons/providers/cryptopayment-link.vue")
     )
@@ -84,8 +103,13 @@ export const providersAssets: Record<ProviderName, ProviderAssets> = {
     name: ProviderName.Edenia,
     bg: '#00B2B0',
     theme: Theme.FullCardDark,
-    label: "By <b>Edenia</b>",
-    tooltip: "Blah blah",
+    get label() {
+      return i18n.t('By <b>Edenia</b>')
+    },
+    get tooltip() {
+      // return i18n.t('TODO')
+      return 'Blah blah'
+    },
     icon: defineAsyncComponent(
       () => import("@/components/icons/providers/edenia.vue")
     )

@@ -2,7 +2,8 @@
 import Select, { type SelectOption } from "@/components/atoms/Select.vue"
 import TextAreaInput from "@/components/atoms/TextAreaInput.vue"
 import FormContainer from "@/components/forms/FormContainer.vue"
-import type { Location } from "@/database"
+import { i18n } from "@/i18n/i18n-setup"
+import { translateCategory as translateLocationCategory, type Location } from "@/database"
 import { useApi } from "@/stores/api"
 import { useLocations } from "@/stores/locations"
 import { storeToRefs } from "pinia"
@@ -11,7 +12,25 @@ import { useRoute } from "vue-router"
 
 const apiStore = useApi();
 
-const issueCategories = ['location_gone', 'missing_currency', 'missing_not_accepted', 'no_crypto', 'other']
+enum IssueCategory {
+	LOCATION_GONE = 'location_gone',
+	MISSING_CURRENCY = 'missing_currency',
+	MISSING_NOT_ACCEPTED = 'missing_not_accepted',
+	NO_CRYPTO = 'no_crypto',
+	OTHER = 'other',
+}
+
+function translateIssueCategory(issueCategory: IssueCategory) {
+	switch (issueCategory) {
+		case IssueCategory.LOCATION_GONE: return i18n.t('Location gone')
+		case IssueCategory.MISSING_CURRENCY: return i18n.t('Currency missing')
+		case IssueCategory.MISSING_NOT_ACCEPTED: return i18n.t('Currency not accepted')
+		case IssueCategory.NO_CRYPTO: return i18n.t('No crypto')
+		case IssueCategory.OTHER:
+		default:
+			return i18n.t('Other')
+	}
+}
 
 const locationsStore = useLocations()
 const { Locations } = storeToRefs(locationsStore)
@@ -52,17 +71,15 @@ async function onSubmit(captcha: string) {
 		<template #title>{{ $t('Report an issue with a location') }}</template>
 		<template #description v-if="location">
 			<RouterLink class="text-sky" :to="`/location/${location?.uuid}`">{{ location?.name }}</RouterLink>
-			<span v-if="location?.address">, {{ location?.address }}</span>
-			<!-- Note: the translations for categories are defined in api-constants-*.json -->
-			<span v-if="location?.category">&nbsp;&nbsp;·&nbsp;&nbsp;{{ $t(location?.category) }}</span>
+			<span v-if="location?.address">, {{ location.address }}</span>
+			<span v-if="location?.category">&nbsp;&nbsp;·&nbsp;&nbsp;{{ translateLocationCategory(location.category) }}</span>
 		</template>
 
 		<template #form>
-			<Select :multiple="false" :label="$t('Select issue')" :options="issueCategories"
+			<Select :multiple="false" :label="$t('Select issue')" :options="Object.values(IssueCategory)"
 				v-model:selected-single="selectedIssue" :placeholder="$t('Select issue')" replace-placeholder>
-				<!-- Note: the translations for issues are defined in api-constants-*.json -->
-				<template #option="{ option: issue }">{{ $t(issue) }}</template>
-				<template #selected="{ option: issue }">{{ $t(issue) }}</template>
+				<template #option="{ option: issue }">{{ translateIssueCategory(issue) }}</template>
+				<template #selected="{ option: issue }">{{ translateIssueCategory(issue) }}</template>
 			</Select>
 
 			<TextAreaInput :placeholder="$t('Write your problem here')" class="mt-6" :label="$t('Describe the issue')"

@@ -5,7 +5,7 @@ import CryptoIcon from "@/components/atoms/CryptoIcon.vue"
 import Select from "@/components/atoms/Select.vue"
 import CrossIcon from "@/components/icons/icon-cross.vue"
 import FilterIcon from "@/components/icons/icon-filter.vue"
-import type { Category, Currency } from "@/database"
+import { translateCategory, type Category, type Currency } from "@/database"
 import { categories, currencies } from "@/database"
 import { useApp } from "@/stores/app"
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue"
@@ -116,12 +116,10 @@ function applyFilters() {
 								</template>
 								<template #option="{ option: category }">
 									<CategoryIcon class="w-6 h-6" :category="category" />
-									<!-- Note: the translations for categories are defined in api-constants-*.json -->
-									{{ $t(category) }}
+									{{ translateCategory(category) }}
 								</template>
 								<template #selected-option="{ option: category }">
-									<!-- Note: the translations for categories are defined in api-constants-*.json -->
-									<template v-if="category">{{ $t(category) }}</template>
+									<template v-if="category">{{ translateCategory(category) }}</template>
 								</template>
 							</Select>
 							<hr class="w-full h-px my-8 bg-space/10" />

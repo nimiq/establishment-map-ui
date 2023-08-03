@@ -1,5 +1,6 @@
 import type { Suggestion } from "./stores/autocomplete";
 import type { BoundingBox } from "./stores/map";
+import { i18n } from "./i18n/i18n-setup";
 
 export enum Currency {
   NIM = 'NIM',
@@ -30,14 +31,34 @@ export enum Category {
 }
 export const categories = Object.values(Category);
 
+export function translateCategory(category: Category) {
+  switch (category) {
+    case Category.CarsBikes: return i18n.t('Cars & Bikes')
+    case Category.Cash: return i18n.t('Cash')
+    case Category.ComputerElectronics: return i18n.t('Computer & Electronics')
+    case Category.Entertainment: return i18n.t('Entertainment')
+    case Category.FoodDrinks: return i18n.t('Food & Drinks')
+    case Category.HealthBeauty: return i18n.t('Health & Beauty')
+    case Category.HotelLodging: return i18n.t('Hotel & Lodging')
+    case Category.LeisureActivities: return i18n.t('Leisure Activities')
+    case Category.Miscellaneous: return i18n.t('Miscellaneous')
+    case Category.RestaurantBar: return i18n.t('Restaurant & Bar')
+    case Category.Shop: return i18n.t('Shop')
+    case Category.SportsFitness: return i18n.t('Sports & Fitness')
+    default:
+      console.error(`Translation for category ${category} is missing`)
+      return i18n.t('Other')
+  }
+}
+
 export enum ProviderName {
   Default = 'Default',
   DefaultAtm = 'DefaultAtm',
-  GoCrypto = "GoCrypto",
-  Kurant = "Kurant",
-  Bluecode = "Bluecode",
-  CryptopaymentLink = "CryptopaymentLink",
-  Edenia = "Edenia",
+  GoCrypto = 'GoCrypto',
+  Kurant = 'Kurant',
+  Bluecode = 'Bluecode',
+  CryptopaymentLink = 'CryptopaymentLink',
+  Edenia = 'Edenia',
 }
 
 export enum LocationType {

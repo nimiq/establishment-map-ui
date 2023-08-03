@@ -26,12 +26,8 @@ export async function setLanguage(lang: string): Promise<string> {
     // setVueComponentsLanguage(lang);
 
     if (!loadedLanguages.includes(lang)) {
-        const messages = (await Promise.all([
-            // For fully dynamic filename `${lang}.po` specify our folder to please @rollup/plugin-dynamic-import-vars.
-            import(`../i18n/${lang}.po`).then((module) => module.default),
-            import(`./api-constants-${lang}.json`).then((module) => module.default),
-            import(`./providers-${lang}.json`).then((module) => ({ providers: module.default })),
-        ])).reduce((combinedMessages, moduleMessages) => ({ ...combinedMessages, ...moduleMessages }))
+        // For dynamic filename `${lang}.po` specify our folder to please @rollup/plugin-dynamic-import-vars.
+        const messages = await import(`../i18n/${lang}.po`).then((module) => module.default)
         i18n.setLocaleMessage(lang, messages)
         loadedLanguages.push(lang)
     }
