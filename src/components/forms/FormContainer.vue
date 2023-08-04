@@ -63,7 +63,7 @@ const hasSlot = (name: string) => {
 
 <template>
 	<header class="flex items-center p-6 shadow-header gap-x-4">
-		<img src="@/assets/logo.svg" alt="Crypto Map logo" class="h-6" />
+		<img src="@/assets/logo.svg" :alt="$t('Crypto Map logo')" class="h-6" />
 		<Button href="/" bg-color="grey">
 			<template #icon>
 				<ArrowLeftIcon class="" />

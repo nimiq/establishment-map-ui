@@ -21,20 +21,16 @@ import GearIcon from "@/components/icons/icon-gear.vue"
 			<CryptoMapIcon class="h-8" />
 		</template>
 
-		<template #title>
-			Crypto Map
-		</template>
+		<template #title>{{ $t('Crypto Map') }}</template>
 
 		<template #content>
-			<p class="[text-wrap:pretty]">
-				This app is brought to you by Nimiq, only places that are verified by Google are accepted for this map.
-			</p>
+			<p class="[text-wrap:pretty]">{{
+				$t('This app is brought to you by Nimiq, only places that are verified by Google are accepted for this map.')
+			}}</p>
 
 			<div class="flex items-center justify-between mt-8">
 				<Button bg="sky" href="/Locations/add">
-					<template #label>
-						Add Crypto location
-					</template>
+					<template #label>{{ $t('Add Crypto location') }}</template>
 				</Button>
 
 				<span>EN</span>

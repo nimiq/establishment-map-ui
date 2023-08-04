@@ -62,7 +62,7 @@ function onSelect(suggestion?: Suggestion) {
 
 <template>
   <header class="relative z-10 w-full p-10 py-6 pl-4 pr-6 desktop:p-4 transition-[border] flex items-center gap-x-2 desktop:gap-x-4 desktop:max-w-xs desktop:rounded-2xl shadow-header">
-		<img src="@/assets/logo.svg" alt="Crypto Map logo" class="h-[22px]">
+		<img src="@/assets/logo.svg" :alt="$t('Crypto Map logo')" class="h-[22px]">
 		<SearchBox :autocomplete="querySearch" :suggestions="suggestions" class="flex-1" rounded-full
 			combobox-options-classes="w-[322px] mt-12 left-[-48px] max-h-[220px] rounded-t-0" size="sm"
 			@open="searchBoxOpen" :placeholder="$t('Search Map')" @selected="onSelect" data-search-box />

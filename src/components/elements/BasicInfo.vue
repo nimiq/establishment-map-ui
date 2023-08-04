@@ -76,15 +76,11 @@ defineProps({
       </div>
     </template>
     <span class="row-start-2 text-xs text-white/70" v-else-if="layout === CardLayout.Atm">
-      <template v-if="location.buy.length > 0 && location.sell.length > 0">
-        Buy & Sell crypto only*
-      </template>
-      <template v-else-if="location.buy.length > 0">
-        Buy crypto only*
-      </template>
-      <template v-else-if="location.sell.length > 0">
-        Sell crypto only*
-      </template>
+      <template v-if="location.buy.length > 0 && location.sell.length > 0">{{
+        $t('Buy & Sell crypto only*')
+      }}</template>
+      <template v-else-if="location.buy.length > 0">{{ $t('Buy crypto only*') }}</template>
+      <template v-else-if="location.sell.length > 0">{{ $t('Sell crypto only*') }}</template>
     </span>
     <p class="text-xs leading-[1.5] grid-cols-1 col-span-3 row-start-3" :class="{
       'text-white/60': layout === CardLayout.Atm,

@@ -20,7 +20,7 @@ const props = defineProps({
 		<TheMapInstance :locations="props.locations">
 			<template #button-calculate-position="{ navigateToUserLocation }">
 				<Button @click="navigateToUserLocation" style="width: 34px; height: 34px" bgColor="white" size="sm"
-					draggable="false" aria-label="Show your location" title="Show your location">
+					draggable="false" :aria-label="$t('Show your location')" :title="$t('Show your location')">
 					<template #icon>
 						<GeolocationIcon />
 					</template>
@@ -29,7 +29,7 @@ const props = defineProps({
 
 			<template #button-zoom-in="{ zoomIn }">
 				<Button @click="zoomIn" style="width: 34px; height: 34px" class="rounded-b-0 p-[5px] pb-1" bgColor="white"
-					size="sm" draggable="false" aria-label="Zoom in" title="Zoom in">
+					size="sm" draggable="false" :aria-label="$t('Zoom in')" :title="$t('Zoom in')">
 					<template #icon>
 						<PlusIcon />
 					</template>
@@ -38,7 +38,7 @@ const props = defineProps({
 
 			<template #button-zoom-out="{ zoomOut }">
 				<Button @click="zoomOut" style="width: 34px; height: 34px" class="rounded-t-0 p-[5px] pt-1" bgColor="white"
-					size="sm" draggable="false" aria-label="Zoom out" title="Zoom out">
+					size="sm" draggable="false" :aria-label="$t('Zoom out')" :title="$t('Zoom out')">
 					<template #icon>
 						<MinusIcon />
 					</template>

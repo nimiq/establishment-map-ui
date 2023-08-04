@@ -12,9 +12,7 @@ import Button from "./Button.vue";
           </svg>
         </template>
 
-        <template #label>
-          Show more Locations
-        </template>
+        <template #label>{{ $t('Show more Locations') }}</template>
       </Button>
     </Variant>
     <Variant title="Icon">

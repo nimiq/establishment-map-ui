@@ -64,9 +64,7 @@ function applyFilters() {
 		<template #icon>
 			<FilterIcon class="text-space w-4.5 h-4.5" />
 		</template>
-		<template #label>
-			Filters
-		</template>
+		<template #label>{{ $t('Filters') }}</template>
 		<template #badge v-if="nFilters > 0">{{ nFilters }} </template>
 	</Button>
 	<TransitionRoot appear :show="isOpen" as="template">

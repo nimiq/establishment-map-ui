@@ -62,9 +62,9 @@ const bgColor = computed(() => {
         <template v-if="progress > 0.5 && location.buy.length > 0 && location.sell.length > 0">
           <div
             class="grid grid-flow-col grid-cols-[auto,auto] grid-rows-[auto,1fr] gap-y-1 gap-x-2 w-max h-max relative z-20">
-            <h5 class="text-xs text-white/60">Buy</h5>
+            <h5 class="text-xs text-white/60">{{ $t('Buy') }}</h5>
             <CryptoList :cryptos="location.buy" />
-            <h5 class="text-xs text-white/60">Sell</h5>
+            <h5 class="text-xs text-white/60">{{ $t('Sell') }}</h5>
             <CryptoList :cryptos="location.sell" />
           </div>
         </template>

@@ -12,6 +12,7 @@
 </template>
 
 <script setup lang="ts">
+import { i18n } from '@/i18n/i18n-setup';
 import { ref, watch } from "vue"
 
 const props = defineProps({
@@ -20,11 +21,11 @@ const props = defineProps({
 	},
 	label: {
 		type: String,
-		default: "Describe here",
+		default: () => i18n.t('Describe here'),
 	},
 	placeholder: {
 		type: String,
-		default: "Describe here",
+		default: () => i18n.t('Describe here'),
 	},
 })
 

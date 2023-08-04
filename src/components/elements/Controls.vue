@@ -11,7 +11,7 @@ const { userLocationIsSupported, geolocateUser, increaseZoom, decreaseZoom } = u
 <template>
   <div class="flex flex-col gap-y-4">
     <Button v-if="userLocationIsSupported" @click="geolocateUser()" style="width: 34px; height: 34px" bgColor="white" size="sm"
-        aria-label="Show your location" title="Show your location">
+        :aria-label="$t('Show your location')" :title="$t('Show your location')">
         <template #icon>
           <GeolocationIcon />
         </template>

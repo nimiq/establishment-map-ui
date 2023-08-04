@@ -62,6 +62,7 @@
 import ArrowSelectIcon from "@/components/icons/icon-arrow-select.vue"
 import CheckIcon from "@/components/icons/icon-check.vue"
 import CrossIcon from "@/components/icons/icon-cross.vue"
+import { i18n } from '@/i18n/i18n-setup';
 import { computed, ref, useSlots, watch } from "vue"
 
 import {
@@ -93,11 +94,11 @@ const props = defineProps({
 	},
 	placeholder: {
 		type: String,
-		default: "Select an option",
+		default: () => i18n.t('Select an option'),
 	},
 	label: {
 		type: String,
-		default: "Select an option",
+		default: () => i18n.t('Select an option'),
 	},
 	replacePlaceholder: {
 		type: Boolean,
