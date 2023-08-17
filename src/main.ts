@@ -21,12 +21,6 @@ app.use(pinia)
 app.use(router)
 app.use(i18nRegistration)
 
-new Loader({ apiKey: import.meta.env.VITE_GOOGLE_MAP_KEY, version: 'weekly', libraries: ['places'] }).load().then(() => {
+new Loader({ apiKey: import.meta.env.VITE_GOOGLE_MAP_KEY, version: 'weekly' }).importLibrary('places').then(() => {
   app.mount('#app')
-})
-
-// This router navigation guard is to prevent switching to the new route before the language file finished loading.
-// If there are any routes which do not require translations, they can be skipped here.
-router.beforeResolve((to, from, next) => {
-  setLanguage(detectLanguage()).then(next)
 })

@@ -137,9 +137,7 @@ function applyFilters() {
                     {{ translateCategory(category) }}
                   </template>
                   <template #selected-option="{ option: category }">
-                    <template v-if="category">
-                      {{ translateCategory(category) }}
-                    </template>
+                    {{ translateCategory(category) }}
                   </template>
                 </Select>
                 <hr class="w-full h-px my-8 bg-space/10">

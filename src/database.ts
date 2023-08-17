@@ -71,6 +71,7 @@ export interface Location {
   name: string
   address: string
   category: Category
+  category_label: string
   gmaps_type: string
   lat: number
   lng: number
@@ -128,6 +129,7 @@ function parseLocation(location: Location) {
   location.type = type ? LocationType.Atm : LocationType.Shop
 
   location.url = location.gmaps || location.instagram || location.facebook
+  location.category_label = translateCategory(location.category)
 
   return location
 }

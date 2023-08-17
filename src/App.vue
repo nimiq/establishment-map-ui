@@ -4,9 +4,9 @@ import { RouterView } from 'vue-router'
 
 <template>
   <RouterView v-slot="{ Component, route }">
-    <transition :name="route.meta.transition">
+    <component :is="route.meta.transition ? 'transition' : 'div'" :name="route.meta.transition ? route.meta.transition : ''">
       <component :is="Component" />
-    </transition>
+    </component>
   </RouterView>
 </template>
 

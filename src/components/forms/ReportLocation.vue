@@ -73,7 +73,7 @@ async function onSubmit(captcha: string) {
         {{ location?.name }}
       </RouterLink>
       <span v-if="location?.address">, {{ location.address }}</span>
-      <span v-if="location?.category">&nbsp;&nbsp;·&nbsp;&nbsp;{{ translateLocationCategory(location.category) }}</span>
+      <span v-if="location?.category">&nbsp;&nbsp;·&nbsp;&nbsp;{{ location.category }}</span>
     </template>
 
     <template #form>
