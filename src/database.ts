@@ -1,7 +1,11 @@
 import type { Suggestion } from './stores/autocomplete'
-import type { BoundingBox } from './stores/map'
 import { i18n } from './i18n/i18n-setup'
+import type { Point } from './composables/useMap'
 
+export interface BoundingBox {
+  southWest: Point
+  northEast: Point
+}
 export enum Currency {
   NIM = 'NIM',
   BTC = 'BTC',
@@ -129,7 +133,11 @@ function parseLocation(location: Location) {
   location.type = type ? LocationType.Atm : LocationType.Shop
 
   location.url = location.gmaps || location.instagram || location.facebook
-  location.category_label = translateCategory(location.category)
+
+  // Make the translation reactive
+  Object.defineProperty(location, 'category_label', {
+    get: () => translateCategory(location.category),
+  })
 
   return location
 }

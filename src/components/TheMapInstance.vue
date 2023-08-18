@@ -1,36 +1,19 @@
 <script setup lang="ts">
 import type { Cluster } from '@googlemaps/markerclusterer'
 import { SuperClusterAlgorithm } from '@googlemaps/markerclusterer'
-import { storeToRefs } from 'pinia'
-import type { PropType } from 'vue'
-import { useRoute } from 'vue-router'
+import { useDebounceFn } from '@vueuse/core'
+import { useRoute, useRouter } from 'vue-router'
 import { CustomMarker, GoogleMap, MarkerCluster } from 'vue3-google-map'
-import googleMapStyles from '@/assets/google-map-styles'
+import { useLocations } from '@/stores/locations'
+import { useMap } from '@/composables/useMap'
 import CategoryIcon from '@/components/atoms/CategoryIcon.vue'
-import type { Location } from '@/database'
-import { useApp } from '@/stores/app'
-import { useMap } from '@/stores/map'
+import googleMapStyles from '@/assets/google-map-styles'
 
-const props = defineProps({
-  locations: {
-    type: Array as PropType<Location[]>,
-    required: true,
-  },
-})
-
-const mapStore = useMap()
-const { computeBoundingBox } = mapStore
-const { center, zoom, map$ } = storeToRefs(mapStore)
+const { map$, setInitialPosition, center, zoom, mapHasPosition, boundingBox } = useMap()
 
 const googleMapsKey = import.meta.env.VITE_GOOGLE_MAP_KEY
 
-// We have to wait until GoogleMap component is mounted in order to compute
-// the bounding box of the map if user is accessing the map from an location
-function onIdle() {
-  computeBoundingBox({ updateRoute: false })
-}
-
-const superClusterAlgorithm = new SuperClusterAlgorithm({ radius: 160, maxZoom: 18 }) as unknown as undefined // To avoid lint error
+const superClusterAlgorithm = new SuperClusterAlgorithm({ radius: 160, maxZoom: 18 })
 function render(cluster: Cluster) {
   return new google.maps.Marker({
     position: cluster.position,
@@ -48,30 +31,35 @@ const restriction = {
   strictBounds: true,
 }
 
-function selectlocation() {
-  // selectedlocationUuid.value = uuid
-  useApp().showList()
-}
-
 const mapGestureBehaviour = useRoute().params.gestureBehaviour || 'greedy'
+
+const router = useRouter()
+
+// Make the API request after the map has not been moved for 300ms or after 700ms
+const { getLocations, locations } = useLocations()
+const debouncedFn = useDebounceFn(async () => {
+  if (!mapHasPosition())
+    await setInitialPosition()
+  getLocations(boundingBox())
+  router.push({ name: 'coords', params: { ...center(), zoom: zoom() } })
+}, 300, { maxWait: 700 })
 </script>
 
 <template>
   <div>
     <GoogleMap
-      v-if="center && center.lat !== 0 && center.lng !== 0" ref="map$" :api-key="googleMapsKey"
-      class="w-full h-full" :center="center" :zoom="zoom" disable-default-ui :clickable-icons="false"
+      ref="map$" :api-key="googleMapsKey"
+      class="w-full h-full" disable-default-ui :clickable-icons="false"
       :map-gesture-handling="mapGestureBehaviour" :keyboard-shortcuts="false" :styles="googleMapStyles"
-      :min-zoom="3" :restriction="restriction" @bounds_changed="computeBoundingBox" @idle.once="onIdle"
+      :min-zoom="3" :restriction="restriction" @bounds_changed="debouncedFn"
     >
       <MarkerCluster :options="{ algorithm: superClusterAlgorithm, renderer: { render } }">
         <CustomMarker
-          v-for="{ lat, uuid, lng, category, name } in props.locations" :key="uuid"
+          v-for="{ lat, uuid, lng, category, name } in locations" :key="uuid"
           :options="{ position: { lat, lng }, anchorPoint: 'TOP_CENTER' }"
         >
           <div
             class="flex flex-col items-center rounded-full shadow cursor-pointer" data-tooltip
-            @click="selectlocation(uuid)"
           >
             <!-- 'text-space': uuid !== selectedlocationUuid,
               'text-ocean': uuid === selectedlocationUuid, -->

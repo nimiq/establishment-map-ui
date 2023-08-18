@@ -59,10 +59,6 @@ watch(selected, (value) => {
     emit('update:selectedSingle', value as Option)
 })
 
-function removeSelected(option: Option) {
-  selected.value = selected.value.filter(o => o !== option)
-}
-
 const slots = useSlots()
 const hasLabel = computed(() => props.label || hasSlot('label'))
 function hasSlot(slotName: 'selected-option' | 'after-options' | 'label') {

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { detectLanguage, setLanguage } from './i18n/i18n-setup'
 import MapView from '@/components/MapView.vue'
 import './index.css'
 
@@ -30,7 +31,7 @@ export const router = createRouter({
       component: MapView,
       name: 'map',
     },
-    // { path: '/:pathMatch(.*)*', redirect: '/' },
+    { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
 })
 
@@ -44,6 +45,6 @@ router.afterEach((to, from) => {
 
 // This router navigation guard is to prevent switching to the new route before the language file finished loading.
 // If there are any routes which do not require translations, they can be skipped here.
-// router.beforeResolve((to, from, next) => {
-//   setLanguage(detectLanguage()).then(next)
-// })
+router.beforeResolve((to, from, next) => {
+  setLanguage(detectLanguage()).then(() => next())
+})

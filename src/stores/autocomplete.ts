@@ -1,8 +1,8 @@
-import { defineStore, storeToRefs } from 'pinia'
+import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { useMap } from './map'
 import { queryResults as queryResultsDb } from '@/database'
 import type { Category, Currency } from '@/database'
+import { useMap } from '@/composables/useMap'
 
 export enum SuggestionType {
   ESTABLISHMENT = 'location',
@@ -53,8 +53,7 @@ export const useAutocomplete = defineStore('autocomplete', () => {
   const sessionToken = ref<google.maps.places.AutocompleteSessionToken>()
   const autocompleteService = ref<google.maps.places.AutocompleteService>()
 
-  const mapStore = useMap()
-  const { map, mapReady } = storeToRefs(mapStore)
+  const { map, mapReady } = useMap()
 
   function init() {
     if (!sessionToken.value)

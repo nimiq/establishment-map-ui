@@ -5,7 +5,7 @@ import SearchBox from '@/components/atoms/SearchBox.vue'
 import CryptoMapModal from '@/components/elements/CryptoMapModal.vue'
 import { useApp } from '@/stores/app'
 import { type Suggestion, SuggestionType, useAutocomplete } from '@/stores/autocomplete'
-import { useMap } from '@/stores/map'
+import { useMap } from '@/composables/useMap'
 
 const autocompleteStore = useAutocomplete()
 const { querySearch } = autocompleteStore
@@ -55,7 +55,7 @@ function onSelect(suggestion?: Suggestion) {
       appStore.setSelectedCurrencies([suggestion.id])
       break
     case SuggestionType.ESTABLISHMENT:
-      appStore.goToLocation(suggestion.id, { behaviourList: 'show' })
+      appStore.goToLocation(suggestion.id)
       break
   }
 

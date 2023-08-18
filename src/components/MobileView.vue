@@ -8,17 +8,17 @@ import InteractionBar from '@/components/elements/InteractionBar.vue'
 import Controls from '@/components/elements/Controls.vue'
 
 const locationsStore = useLocations()
-const { locationsInView } = storeToRefs(locationsStore)
+const { locations } = storeToRefs(locationsStore)
 </script>
 
 <template>
   <div class="flex flex-col h-screen">
     <InteractionBar />
 
-    <TheMapInstance class="relative flex-1" :locations="locationsInView">
+    <TheMapInstance class="relative flex-1">
       <FilterModal class="absolute top-6 right-6" />
       <Controls class="absolute bottom-6 right-6" />
-      <MobileList :locations="locationsInView" class="absolute bottom-0 w-full" />
+      <MobileList :locations="locations" class="absolute bottom-0 w-full" />
     </TheMapInstance>
   </div>
 </template>

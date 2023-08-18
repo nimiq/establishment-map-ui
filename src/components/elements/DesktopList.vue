@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import { storeToRefs } from 'pinia'
 import { CardLayout } from './Card.vue'
 import { Theme, providersAssets } from '@/assets-dev/provider-assets'
 import BasicInfo from '@/components/elements/BasicInfo.vue'
 import CardBg from '@/components/elements/CardBg.vue'
 import type { Location } from '@/database'
-
-defineProps({
-  locations: {
-    type: Array as PropType<Location[]>,
-    required: true,
-  },
-})
+import { useLocations } from '@/stores/locations'
 
 const layout = ({ category }: Location) => category === 'cash' ? CardLayout.Atm : CardLayout.Location
 const asset = ({ provider }: Location) => providersAssets[provider]
@@ -20,6 +14,9 @@ function bgColor(e: Location) {
     background: [Theme.FullCardDark, Theme.FullCardLight].includes(asset(e).theme) ? asset(e).bg : 'white',
   }
 }
+
+const locationsStore = useLocations()
+const { locations } = storeToRefs(locationsStore)
 </script>
 
 <template>

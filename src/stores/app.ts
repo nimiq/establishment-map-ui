@@ -1,9 +1,9 @@
 import { useRouteQuery } from '@vueuse/router'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { useMap } from './map'
 import { useLocations } from '@/stores/locations'
 import { type Category, type Currency, categories, currencies } from '@/database'
+import { useMap } from '@/composables/useMap'
 
 export const useApp = defineStore('app', () => {
   const listIsShown = ref(false)
@@ -38,24 +38,17 @@ export const useApp = defineStore('app', () => {
     selectedCategoriesQuery.value = categories
   }
 
-  const mapStore = useMap()
-  const { computeBoundingBox } = mapStore
-
-  const { setCenter, setZoom } = useMap()
-
-  async function goToLocation(uuid: string, options?: { behaviourList?: 'show' | 'hide' }) {
-    const location = useLocations().Locations.get(uuid)
+  async function goToLocation(uuid: string) {
+    const location = useLocations().locations.get(uuid)
     if (!location)
       return false
 
-    setCenter({ lng: location.lng, lat: location.lat })
-    setZoom(19)
+    useMap().setPosition({
+      center: { lat: location.lat, lng: location.lng },
+      zoom: 19,
+    })
+
     selectedLocationUuid.value = uuid
-    if (options?.behaviourList === 'show')
-      showList()
-    if (options?.behaviourList === 'hide')
-      hideList()
-    computeBoundingBox({ updateRoute: false })
     return true
   }
 
