@@ -11,7 +11,7 @@ import { useApp } from '@/stores/app'
 import { useLocations } from '@/stores/locations'
 
 const locationsStore = useLocations()
-const { locations } = storeToRefs(locationsStore)
+const { locations, loaded: locationsLoaded } = storeToRefs(locationsStore)
 
 const appStore = useApp()
 const { listIsShown } = storeToRefs(appStore)
@@ -25,17 +25,20 @@ const { listIsShown } = storeToRefs(appStore)
         <DesktopList
           class="transition-[max-height]"
           :class="{
-            'max-h-[calc(100vh-10rem)]': listIsShown,
+            'max-h-[calc(100vh-10.5rem)]': listIsShown,
             'max-h-0': !listIsShown,
           }"
         />
       </div>
-      <Button bg-color="white" class="mt-6" @click="listIsShown = !listIsShown">
-        <template #icon>
-          <IconChevronDown :class="{ 'rotate-180': listIsShown }" class="transition-transform delay-500 text-space" />
+      <Button bg-color="white" class="mt-6" :loading="!locationsLoaded" @click="listIsShown = !listIsShown">
+        <template v-if="locationsLoaded" #icon>
+          <IconChevronDown :class="{ 'rotate-180': listIsShown }" class="transition-transform delay-500" />
         </template>
         <template #label>
-          <template v-if="listIsShown">
+          <template v-if="!locationsLoaded">
+            {{ $t('Loading') }}
+          </template>
+          <template v-else-if="listIsShown">
             {{ $t('Hide list') }}
           </template>
           <template v-else>

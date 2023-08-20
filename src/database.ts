@@ -43,9 +43,11 @@ async function fetchDb<T>(query: string): Promise<T | undefined> {
 }
 
 function parseLocation(location: Location) {
+  const isAtm = location.category === Category.Cash
+
   if (!location.provider || !PROVIDERS.includes(location.provider)) {
-    console.warn(`Unknown provider: '${location.provider}'. Location: ${JSON.stringify(location)}`)
-    location.provider = Provider.Default
+    location.provider = isAtm ? Provider.DefaultAtm : Provider.DefaultShop
+    console.warn(`Unknown provider: '${location.provider}'. Setting ${location.provider} provider. Location: ${JSON.stringify(location)}`)
   }
 
   // Prioritize links in this order: 1. Google Maps -> 2. Instagram -> 3. Facebook
@@ -54,13 +56,13 @@ function parseLocation(location: Location) {
 
   Object.assign(location, providersAssets[location.provider]) // Assing all the keys from the asset to the location
 
-  const isAtm = location.category === Category.Cash
   location.isAtm = isAtm
   location.isShop = location.category === Category.Shop
   location.isDark = location.theme === Theme.Dark
   location.isLight = location.theme === Theme.Light
+  location.hasBottomBanner = location.provider !== Provider.DefaultShop && location.provider !== Provider.DefaultAtm
 
-  if (isAtm && location.provider === Provider.Default)
+  if (isAtm && location.provider === Provider.DefaultShop)
     location.provider = Provider.DefaultAtm
 
   // Make the translation reactive in case user change language

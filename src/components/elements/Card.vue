@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { type PropType, computed, defineAsyncComponent } from 'vue'
+import { type PropType, defineAsyncComponent } from 'vue'
 import CryptoList from '@/components/atoms/CryptoList.vue'
 import BasicInfo from '@/components/elements/BasicInfo.vue'
 import CardBg from '@/components/elements/CardBg.vue'
-import { type Location, Provider } from '@/types'
+import type { Location } from '@/types'
 
-const props = defineProps({
+defineProps({
   location: {
     type: Object as PropType<Location>,
     required: true,
@@ -17,15 +17,11 @@ const props = defineProps({
 })
 
 const ProviderBanner = defineAsyncComponent(() => import('@/components/elements/ProviderBanner.vue'))
-const showProviderBanner = computed(() => props.location.provider !== Provider.Default)
 </script>
 
 <template>
   <div class="relative overflow-hidden rounded-lg duration-[--duration,0] group/card" :style="`background: ${location.bgFullCard ? location.bg : 'white'}`">
-    <CardBg
-      v-if="location.provider !== Provider.Default" :location="location"
-      :progress="progress"
-    />
+    <CardBg v-if="location.bgFullCard" :location="location" :progress="progress" />
 
     <div
       v-if="location.photo" class="pt-1.5 px-1.5 transition-height duration-[--duration]"
@@ -64,7 +60,7 @@ const showProviderBanner = computed(() => props.location.provider !== Provider.D
     </div>
 
     <ProviderBanner
-      v-if="progress > 0 && showProviderBanner && location.provider !== Provider.Default" :location="location"
+      v-if="progress > 0 && location.hasBottomBanner" :location="location"
       class="absolute w-full rounded-b-lg -mt-9"
       :style="`backgroundColor: ${location.isShop ? location.bg : 'transparent'}; opacity: ${progress / 0.8}; bottom: -${(1 - progress) * 54}px;`"
     />

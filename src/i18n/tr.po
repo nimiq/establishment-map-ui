@@ -10,80 +10,79 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/assets-dev/provider-assets.ts:49
+#: src/assets-dev/provider-assets.ts:26
 msgid "{provider} app required"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:92
+#: src/assets-dev/provider-assets.ts:69
 msgid "{provider} available"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:77
+#: src/assets-dev/provider-assets.ts:54
 msgid "{provider} required"
 msgstr ""
 
-#: src/components/forms/NewCandidate.vue:3
+#: src/components/forms/NewCandidate.vue:4
 msgid "Add a location to the Crypto Map"
 msgstr ""
 
-#: src/components/elements/CryptoMapModal.vue:25
+#: src/components/elements/CryptoMapModal.vue:29
 msgid "Add Crypto location"
 msgstr ""
 
-#: src/components/TheMap.vue:32 src/components/TheMap.vue:33
-#: src/components/TheMap.vue:34
+#: src/components/TheMap.vue:39 src/components/TheMap.vue:40
+#: src/components/TheMap.vue:43
 msgid "Add location"
 msgstr "Lokasyon ekle"
 
-#: src/components/elements/FilterModal.vue:69
+#: src/components/elements/FilterModal.vue:91
 msgid "Apply filters"
 msgstr "Filtreleri uygula"
 
-#: src/components/forms/FormContainer.vue:54
+#: src/components/forms/FormContainer.vue:64
 #: src/components/forms/FormContainer.vue:9
-#: src/components/forms/NewCandidate.vue:28
-#: src/components/forms/ReportEstablishment.vue:25
-#: src/components/TheList.vue:47
+#: src/components/forms/NewCandidate.vue:47
+#: src/components/forms/ReportLocation.vue:44 src/components/TheList.vue:56
 msgid "Back to the Map"
 msgstr "Haritaya Geri Dön"
 
-#: src/components/elements/Card.vue:22
+#: src/components/elements/Card.vue:29
 msgid "Buy"
 msgstr ""
 
-#: src/components/elements/BasicInfo.vue:48
+#: src/components/elements/BasicInfo.vue:62
 msgid "Buy & Sell crypto only*"
 msgstr ""
 
-#: src/components/elements/BasicInfo.vue:50
+#: src/components/elements/BasicInfo.vue:64
 msgid "Buy crypto only*"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:107
+#: src/assets-dev/provider-assets.ts:84
 msgid "By {provider}"
 msgstr ""
 
-#: src/database.ts:36
+#: src/translations.ts:6
 msgid "Cars & Bikes"
 msgstr "Arabalar ve Bisikletler"
 
-#: src/database.ts:37
+#: src/translations.ts:7
 msgid "Cash"
 msgstr "Nakit para"
 
-#: src/components/elements/FilterModal.vue:52
+#: src/components/elements/FilterModal.vue:71
 msgid "Categories"
 msgstr "Kategoriler"
 
-#: src/components/elements/FilterModal.vue:66
+#: src/components/elements/FilterModal.vue:86
 msgid "Clear"
 msgstr "Temizle"
 
-#: src/database.ts:38
+#: src/translations.ts:8
 msgid "Computer & Electronics"
 msgstr "Bilgisayar ve Elektronik"
 
-#: src/components/forms/NewCandidate.vue:6
+#: src/components/forms/NewCandidate.vue:10
 msgid "Create Google Business profile"
 msgstr "Google İşletme profili oluşturun"
 
@@ -96,45 +95,45 @@ msgstr ""
 msgid "Crypto Map logo"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:36
+#: src/components/elements/FilterModal.vue:49
 msgid "Cryptocurrencies"
 msgstr "Kripto Para Birimleri"
 
-#: src/components/forms/ReportEstablishment.vue:26
+#: src/translations.ts:27
 msgid "Currency missing"
 msgstr "Para birimi eksik"
 
-#: src/components/forms/ReportEstablishment.vue:27
+#: src/translations.ts:28
 msgid "Currency not accepted"
 msgstr "Para birimi kabul edilmiyor"
 
-#: src/components/atoms/TextAreaInput.vue:24
-#: src/components/atoms/TextAreaInput.vue:28
+#: src/components/atoms/TextAreaInput.vue:11
+#: src/components/atoms/TextAreaInput.vue:15
 msgid "Describe here"
 msgstr ""
 
-#: src/components/forms/ReportEstablishment.vue:17
+#: src/components/forms/ReportLocation.vue:29
 msgid "Describe the issue"
 msgstr "Sorunu açıkla"
 
-#: src/database.ts:39
+#: src/translations.ts:9
 msgid "Entertainment"
 msgstr "Eğlence"
 
-#: src/components/elements/FilterModal.vue:28
-#: src/components/elements/FilterModal.vue:7
+#: src/components/elements/FilterModal.vue:39
+#: src/components/elements/FilterModal.vue:8
 msgid "Filters"
 msgstr "Filtreler"
 
-#: src/components/forms/NewCandidate.vue:9
+#: src/components/forms/NewCandidate.vue:14
 msgid "Find location"
 msgstr "Konum bulun"
 
-#: src/database.ts:40
+#: src/translations.ts:10
 msgid "Food & Drinks"
 msgstr "Yiyecek ve İçecekler"
 
-#: src/assets-dev/provider-assets.ts:52
+#: src/assets-dev/provider-assets.ts:29
 msgid ""
 "GoCrypto is a global payment network that enables merchants to accept crypto"
 " payments."
@@ -142,156 +141,168 @@ msgstr ""
 "GoCrypto, tüccarların kripto ödemelerini kabul etmelerini sağlayan küresel "
 "bir ödeme ağıdır."
 
-#: src/database.ts:41
+#: src/translations.ts:11
 msgid "Health & Beauty"
 msgstr "Sağlık ve Güzellik"
 
-#: src/database.ts:42
+#: src/components/DesktopView.vue:23
+msgid "Hide list"
+msgstr ""
+
+#: src/translations.ts:12
 msgid "Hotel & Lodging"
 msgstr "Otel ve Konaklama"
 
-#: src/assets-dev/provider-assets.ts:66
+#: src/assets-dev/provider-assets.ts:43
 msgid "Kurant ATM is a blockchain-based ATM network and platform."
 msgstr "Kurant ATM, blok zinciri tabanlı bir ATM ağı ve platformudur."
 
-#: src/database.ts:43
+#: src/translations.ts:13
 msgid "Leisure Activities"
 msgstr "Boş Zaman Etkinlikleri"
 
-#: src/components/atoms/SearchBox.vue:50
+#: src/components/DesktopView.vue:20
+msgid "Loading"
+msgstr ""
+
+#: src/components/atoms/SearchBox.vue:59
 msgid "Loading..."
 msgstr "Yükleniyor..."
 
-#: src/components/forms/ReportEstablishment.vue:25
+#: src/translations.ts:26
 msgid "Location gone"
 msgstr "Konum gitmiş"
 
-#: src/database.ts:44
+#: src/translations.ts:14 src/translations.ts:20
 msgid "Miscellaneous"
 msgstr "Çeşitli Ürünler"
 
-#: src/components/elements/FilterModal.vue:45
-#: src/components/forms/NewCandidate.vue:19
+#: src/components/elements/FilterModal.vue:59
+#: src/components/forms/NewCandidate.vue:28
 msgid "More cryptocurrencies supported in the future"
 msgstr "Gelecekte daha fazla kripto para birimi desteklenecek"
 
-#: src/components/forms/ReportEstablishment.vue:28
+#: src/translations.ts:29
 msgid "No crypto"
 msgstr "Kripto yok"
 
-#: src/components/atoms/SearchBox.vue:56
+#: src/components/atoms/SearchBox.vue:65
 msgid "Nothing found."
 msgstr "Hiçbir şey bulunamadı."
 
-#: src/components/TheList.vue:39
+#: src/components/TheList.vue:44
 msgid "Oops, no Locations around here"
 msgstr "Oops, buralarda lokasyon yok"
 
-#: src/components/forms/ReportEstablishment.vue:31 src/database.ts:50
+#: src/translations.ts:32
 msgid "Other"
 msgstr "Diğer"
 
-#: src/assets-dev/provider-assets.ts:63
+#: src/assets-dev/provider-assets.ts:40
 msgid "Register with {provider}"
 msgstr ""
 
-#: src/components/forms/ReportEstablishment.vue:3
+#: src/components/forms/ReportLocation.vue:4
 msgid "Report an issue with a location"
 msgstr ""
 
-#: src/components/forms/ReportEstablishment.vue:20
+#: src/components/forms/ReportLocation.vue:33
 msgid "Report Location"
 msgstr "Lokasyonu raporla"
 
-#: src/database.ts:45
+#: src/translations.ts:15
 msgid "Restaurant & Bar"
 msgstr "Restoran ve Bar"
 
-#: src/components/elements/InteractionBar.vue:6
+#: src/components/elements/InteractionBar.vue:7
 msgid "Search Map"
 msgstr "Harita üzerinde ara"
 
-#: src/components/atoms/Select.vue:101 src/components/atoms/Select.vue:97
+#: src/components/atoms/Select.vue:34 src/components/atoms/Select.vue:38
 msgid "Select an option"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:49
+#: src/components/elements/FilterModal.vue:67
 msgid "Select category"
 msgstr "Kategori seçin"
 
-#: src/components/elements/FilterModal.vue:32
-#: src/components/forms/NewCandidate.vue:13
-#: src/components/forms/NewCandidate.vue:14
+#: src/components/elements/FilterModal.vue:44
+#: src/components/forms/NewCandidate.vue:21
 msgid "Select Cryptocurrency"
 msgstr "Kripto Para Birimi Seçin"
 
-#: src/components/forms/ReportEstablishment.vue:11
-#: src/components/forms/ReportEstablishment.vue:12
+#: src/components/forms/ReportLocation.vue:16
+#: src/components/forms/ReportLocation.vue:17
 msgid "Select issue"
 msgstr "Sorun seç"
 
-#: src/components/elements/Card.vue:24
+#: src/components/elements/Card.vue:33
 msgid "Sell"
 msgstr ""
 
-#: src/components/elements/BasicInfo.vue:51
+#: src/components/elements/BasicInfo.vue:65
 msgid "Sell crypto only*"
 msgstr ""
 
-#: src/components/forms/FormContainer.vue:39
+#: src/components/forms/FormContainer.vue:47
 msgid "Send"
 msgstr "Gönder"
 
-#: src/database.ts:46
+#: src/translations.ts:16
 msgid "Shop"
 msgstr "Mağaza"
 
-#: src/components/atoms/Button.story.vue:11
+#: src/components/DesktopView.vue:26
+msgid "Show list"
+msgstr ""
+
+#: src/components/atoms/Button.story.vue:12
 msgid "Show more Locations"
 msgstr "Daha fazla lokasyon göster"
 
-#: src/components/elements/Controls.vue:4 src/components/TheMap.vue:6
+#: src/components/elements/Controls.vue:4
+#: src/components/elements/Controls.vue:5 src/components/TheMap.vue:7
 msgid "Show your location"
 msgstr ""
 
-#: src/components/forms/NewCandidate.vue:31
-#: src/components/forms/ReportEstablishment.vue:28
+#: src/components/forms/NewCandidate.vue:52
+#: src/components/forms/ReportLocation.vue:49
 msgid "Something went wrong"
 msgstr "Bir şeyler ters gitti"
 
-#: src/database.ts:47
+#: src/translations.ts:17
 msgid "Sports & Fitness"
 msgstr "Spor ve Fitness"
 
-#: src/components/atoms/SearchBox.vue:53
+#: src/components/atoms/SearchBox.vue:62
 msgid "Start typing..."
 msgstr "Yazmaya başlayın..."
 
-#: src/components/forms/NewCandidate.vue:23
+#: src/components/forms/NewCandidate.vue:36
 msgid "Submit Location"
 msgstr "Konum Gönder"
 
-#: src/components/forms/ReportEstablishment.vue:23
+#: src/components/forms/ReportLocation.vue:38
 msgid "Thank you for reporting this issue"
 msgstr "Sorunu raporladığınız için teşekkürler"
 
-#: src/components/forms/NewCandidate.vue:26
+#: src/components/forms/NewCandidate.vue:41
 msgid "Thank you for submitting a new location to the Crypto Map!"
 msgstr "Kripto Haritasına yeni bir konum gönderdiğiniz için teşekkür ederiz!"
 
-#: src/components/forms/NewCandidate.vue:32
-#: src/components/forms/ReportEstablishment.vue:29
+#: src/components/forms/NewCandidate.vue:55
+#: src/components/forms/ReportLocation.vue:52
 msgid "There has been a problem on our side."
 msgstr "Bizim tarafımızda bir sorun var."
 
-#: src/components/elements/CryptoMapModal.vue:20
+#: src/components/elements/CryptoMapModal.vue:22
 msgid ""
 "This app is brought to you by Nimiq, only places that are verified by Google"
 " are accepted for this map."
 msgstr ""
 
-#: src/components/forms/NewCandidate.vue:27
-#: src/components/forms/ReportEstablishment.vue:24
+#: src/components/forms/NewCandidate.vue:44
+#: src/components/forms/ReportLocation.vue:41
 msgid ""
 "This may take a few days to process. Keep an eye out for changes to the "
 "location in the Crypto Map."
@@ -299,28 +310,28 @@ msgstr ""
 "Bu işlem birkaç gün sürebilir. Kripto Haritasındaki konum değişiklikleri "
 "için gözünüzü dört açın."
 
-#: src/components/forms/FormContainer.vue:69
-#: src/components/forms/NewCandidate.vue:33
-#: src/components/forms/ReportEstablishment.vue:30
+#: src/components/forms/FormContainer.vue:83
+#: src/components/forms/NewCandidate.vue:58
+#: src/components/forms/ReportLocation.vue:55
 msgid "Try again"
 msgstr "Tekrar deneyin"
 
-#: src/components/forms/NewCandidate.vue:10
+#: src/components/forms/NewCandidate.vue:15
 msgid "Type the name of the location"
 msgstr "Konumun adını yazın"
 
-#: src/components/forms/ReportEstablishment.vue:17
+#: src/components/forms/ReportLocation.vue:28
 msgid "Write your problem here"
 msgstr "Problemini buraya yaz"
 
-#: src/components/forms/NewCandidate.vue:4
+#: src/components/forms/NewCandidate.vue:7
 msgid "You can add any location that has a Google Business Profile."
 msgstr "Google İşletme Profili olan herhangi bir konumu ekleyebilirsiniz."
 
-#: src/components/TheMap.vue:15
+#: src/components/TheMap.vue:18
 msgid "Zoom in"
 msgstr ""
 
-#: src/components/TheMap.vue:24
+#: src/components/TheMap.vue:29
 msgid "Zoom out"
 msgstr ""

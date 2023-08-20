@@ -160,3 +160,33 @@ function getComponent() {
     </transition>
   </component>
 </template>
+
+<style scoped>
+.loading-enter-active {
+  animation: loading-in 400ms ease-out;
+}
+
+.loading-leave-active {
+  animation: loading-in 300ms ease-in reverse;
+}
+
+@keyframes loading-in {
+  0% {
+    transform: scale(0);
+    margin-left: -12px;
+    width: 0;
+  }
+
+  40% {
+    transform: scale(0);
+    margin-left: 0;
+    width: unset;
+  }
+
+  100% {
+    transform: scale(1);
+    margin-left: 0;
+    width: unset;
+  }
+}
+</style>

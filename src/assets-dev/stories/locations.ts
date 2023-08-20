@@ -3,7 +3,8 @@ import { CATEGORIES } from '@/database'
 import { translateCategory } from '@/translations'
 import { Category, Currency, type Location, LocationType, Provider } from '@/types'
 
-function getExtra(provider: Provider, locationType: LocationType): Pick<Location, 'isAtm' | 'isShop' | 'isDark' | 'isLight' | 'assets' | 'provider' | 'category' | 'category_label'> {
+type ExtraFields = Pick<Location, 'isAtm' | 'isShop' | 'isDark' | 'isLight' | 'provider' | 'category' | 'category_label' | 'providerLabel' | 'providerLogo' | 'providerTooltip' | 'theme' | 'bg' | 'bgFullCard' | 'hasBottomBanner'>
+function getExtra(provider: Provider, locationType: LocationType): ExtraFields {
   const assets = providersAssets[provider]
   if (!assets)
     throw new Error(`Provider ${provider} not found in providersAssets`)
@@ -16,15 +17,16 @@ function getExtra(provider: Provider, locationType: LocationType): Pick<Location
     isShop: locationType === LocationType.Shop,
     isDark: assets.theme === 'dark',
     isLight: assets.theme === 'light',
-    assets,
+    ...assets,
     provider,
     category,
+    hasBottomBanner: provider !== Provider.DefaultShop && provider !== Provider.DefaultAtm,
     category_label: translateCategory(category),
   }
 }
 
 export const locations: Record<Provider, Location> = {
-  [Provider.Default]: {
+  [Provider.DefaultShop]: {
     uuid: '1',
     name: 'Mercedes-Benz Arena',
     address: 'Kreuzbergstrasse 28, 10247, Berlin',
@@ -36,7 +38,7 @@ export const locations: Record<Provider, Location> = {
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
-    ...getExtra(Provider.Default, LocationType.Shop),
+    ...getExtra(Provider.DefaultShop, LocationType.Shop),
   },
   [Provider.DefaultAtm]: {
     uuid: '2',
@@ -119,5 +121,18 @@ export const locations: Record<Provider, Location> = {
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
     ...getExtra(Provider.Edenia, LocationType.Shop),
+  },
+  [Provider.CryptoCR]: {
+    uuid: '5',
+    name: 'Mercedes-Benz Arena',
+    address: 'Kreuzbergstrasse 28, 10247, Berlin',
+    accepts: [Currency.BTC, Currency.NIM, Currency.USDC_POLYGON],
+    sells: [],
+    gmaps_type: 'Stadium',
+    lat: 1,
+    lng: 1,
+    rating: 4,
+    gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
+    ...getExtra(Provider.CryptoCR, LocationType.Shop),
   },
 }

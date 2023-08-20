@@ -10,80 +10,79 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: src/assets-dev/provider-assets.ts:49
+#: src/assets-dev/provider-assets.ts:26
 msgid "{provider} app required"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:92
+#: src/assets-dev/provider-assets.ts:69
 msgid "{provider} available"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:77
+#: src/assets-dev/provider-assets.ts:54
 msgid "{provider} required"
 msgstr ""
 
-#: src/components/forms/NewCandidate.vue:3
+#: src/components/forms/NewCandidate.vue:4
 msgid "Add a location to the Crypto Map"
 msgstr "Añadir un lugar al Crypto Map"
 
-#: src/components/elements/CryptoMapModal.vue:25
+#: src/components/elements/CryptoMapModal.vue:29
 msgid "Add Crypto location"
 msgstr ""
 
-#: src/components/TheMap.vue:32 src/components/TheMap.vue:33
-#: src/components/TheMap.vue:34
+#: src/components/TheMap.vue:39 src/components/TheMap.vue:40
+#: src/components/TheMap.vue:43
 msgid "Add location"
 msgstr "Añadir establecimiento"
 
-#: src/components/elements/FilterModal.vue:69
+#: src/components/elements/FilterModal.vue:91
 msgid "Apply filters"
 msgstr "Aplicar filtros"
 
-#: src/components/forms/FormContainer.vue:54
+#: src/components/forms/FormContainer.vue:64
 #: src/components/forms/FormContainer.vue:9
-#: src/components/forms/NewCandidate.vue:28
-#: src/components/forms/ReportEstablishment.vue:25
-#: src/components/TheList.vue:47
+#: src/components/forms/NewCandidate.vue:47
+#: src/components/forms/ReportLocation.vue:44 src/components/TheList.vue:56
 msgid "Back to the Map"
 msgstr "Volver al mapa"
 
-#: src/components/elements/Card.vue:22
+#: src/components/elements/Card.vue:29
 msgid "Buy"
 msgstr ""
 
-#: src/components/elements/BasicInfo.vue:48
+#: src/components/elements/BasicInfo.vue:62
 msgid "Buy & Sell crypto only*"
 msgstr ""
 
-#: src/components/elements/BasicInfo.vue:50
+#: src/components/elements/BasicInfo.vue:64
 msgid "Buy crypto only*"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:107
+#: src/assets-dev/provider-assets.ts:84
 msgid "By {provider}"
 msgstr ""
 
-#: src/database.ts:36
+#: src/translations.ts:6
 msgid "Cars & Bikes"
 msgstr "Coches & Bicicletas"
 
-#: src/database.ts:37
+#: src/translations.ts:7
 msgid "Cash"
 msgstr "Efectivo"
 
-#: src/components/elements/FilterModal.vue:52
+#: src/components/elements/FilterModal.vue:71
 msgid "Categories"
 msgstr "Categorias"
 
-#: src/components/elements/FilterModal.vue:66
+#: src/components/elements/FilterModal.vue:86
 msgid "Clear"
 msgstr "Limpiar"
 
-#: src/database.ts:38
+#: src/translations.ts:8
 msgid "Computer & Electronics"
 msgstr "Ordenadores & Electrónica"
 
-#: src/components/forms/NewCandidate.vue:6
+#: src/components/forms/NewCandidate.vue:10
 msgid "Create Google Business profile"
 msgstr "Crear perfil de Google Business"
 
@@ -96,45 +95,45 @@ msgstr ""
 msgid "Crypto Map logo"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:36
+#: src/components/elements/FilterModal.vue:49
 msgid "Cryptocurrencies"
 msgstr "Criptomonedas"
 
-#: src/components/forms/ReportEstablishment.vue:26
+#: src/translations.ts:27
 msgid "Currency missing"
 msgstr "Falta criptomoneda"
 
-#: src/components/forms/ReportEstablishment.vue:27
+#: src/translations.ts:28
 msgid "Currency not accepted"
 msgstr "Criptomoneda no aceptada"
 
-#: src/components/atoms/TextAreaInput.vue:24
-#: src/components/atoms/TextAreaInput.vue:28
+#: src/components/atoms/TextAreaInput.vue:11
+#: src/components/atoms/TextAreaInput.vue:15
 msgid "Describe here"
 msgstr ""
 
-#: src/components/forms/ReportEstablishment.vue:17
+#: src/components/forms/ReportLocation.vue:29
 msgid "Describe the issue"
 msgstr "Describa el problema"
 
-#: src/database.ts:39
+#: src/translations.ts:9
 msgid "Entertainment"
 msgstr "Entretenimiento"
 
-#: src/components/elements/FilterModal.vue:28
-#: src/components/elements/FilterModal.vue:7
+#: src/components/elements/FilterModal.vue:39
+#: src/components/elements/FilterModal.vue:8
 msgid "Filters"
 msgstr "Filtros"
 
-#: src/components/forms/NewCandidate.vue:9
+#: src/components/forms/NewCandidate.vue:14
 msgid "Find location"
 msgstr "Buscar lugar"
 
-#: src/database.ts:40
+#: src/translations.ts:10
 msgid "Food & Drinks"
 msgstr "Comida & Bebidas"
 
-#: src/assets-dev/provider-assets.ts:52
+#: src/assets-dev/provider-assets.ts:29
 msgid ""
 "GoCrypto is a global payment network that enables merchants to accept crypto"
 " payments."
@@ -142,158 +141,170 @@ msgstr ""
 "GoCrypto es una red mundial de pagos que permite a los comerciantes aceptar "
 "pagos con criptomonedas."
 
-#: src/database.ts:41
+#: src/translations.ts:11
 msgid "Health & Beauty"
 msgstr "Salud & Belleza"
 
-#: src/database.ts:42
+#: src/components/DesktopView.vue:23
+msgid "Hide list"
+msgstr ""
+
+#: src/translations.ts:12
 msgid "Hotel & Lodging"
 msgstr "Hotel & Alojamiento"
 
-#: src/assets-dev/provider-assets.ts:66
+#: src/assets-dev/provider-assets.ts:43
 msgid "Kurant ATM is a blockchain-based ATM network and platform."
 msgstr ""
 "Kurant ATM es una red y plataforma de cajeros automáticos basada en "
 "blockchain."
 
-#: src/database.ts:43
+#: src/translations.ts:13
 msgid "Leisure Activities"
 msgstr "Actividades de ocio"
 
-#: src/components/atoms/SearchBox.vue:50
+#: src/components/DesktopView.vue:20
+msgid "Loading"
+msgstr ""
+
+#: src/components/atoms/SearchBox.vue:59
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: src/components/forms/ReportEstablishment.vue:25
+#: src/translations.ts:26
 msgid "Location gone"
 msgstr "Establecimiento ya no existe"
 
-#: src/database.ts:44
+#: src/translations.ts:14 src/translations.ts:20
 msgid "Miscellaneous"
 msgstr "Misceláneo"
 
-#: src/components/elements/FilterModal.vue:45
-#: src/components/forms/NewCandidate.vue:19
+#: src/components/elements/FilterModal.vue:59
+#: src/components/forms/NewCandidate.vue:28
 msgid "More cryptocurrencies supported in the future"
 msgstr "Más criptomonedas soportadas en el futuro"
 
-#: src/components/forms/ReportEstablishment.vue:28
+#: src/translations.ts:29
 msgid "No crypto"
 msgstr "No acepta criptomonedas"
 
-#: src/components/atoms/SearchBox.vue:56
+#: src/components/atoms/SearchBox.vue:65
 msgid "Nothing found."
 msgstr "No se han encontrado resultados."
 
-#: src/components/TheList.vue:39
+#: src/components/TheList.vue:44
 msgid "Oops, no Locations around here"
 msgstr "Vaya, no hay establecimientos por aquí"
 
-#: src/components/forms/ReportEstablishment.vue:31 src/database.ts:50
+#: src/translations.ts:32
 msgid "Other"
 msgstr "Otro"
 
-#: src/assets-dev/provider-assets.ts:63
+#: src/assets-dev/provider-assets.ts:40
 msgid "Register with {provider}"
 msgstr ""
 
-#: src/components/forms/ReportEstablishment.vue:3
+#: src/components/forms/ReportLocation.vue:4
 msgid "Report an issue with a location"
 msgstr "Informar de un problema con un establecimiento"
 
-#: src/components/forms/ReportEstablishment.vue:20
+#: src/components/forms/ReportLocation.vue:33
 msgid "Report Location"
 msgstr "Notificar de establecimiento"
 
-#: src/database.ts:45
+#: src/translations.ts:15
 msgid "Restaurant & Bar"
 msgstr "Restaurantes & Bares"
 
-#: src/components/elements/InteractionBar.vue:6
+#: src/components/elements/InteractionBar.vue:7
 msgid "Search Map"
 msgstr "Buscar mapa"
 
-#: src/components/atoms/Select.vue:101 src/components/atoms/Select.vue:97
+#: src/components/atoms/Select.vue:34 src/components/atoms/Select.vue:38
 msgid "Select an option"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:49
+#: src/components/elements/FilterModal.vue:67
 msgid "Select category"
 msgstr "Seleccionar categoría"
 
-#: src/components/elements/FilterModal.vue:32
-#: src/components/forms/NewCandidate.vue:13
-#: src/components/forms/NewCandidate.vue:14
+#: src/components/elements/FilterModal.vue:44
+#: src/components/forms/NewCandidate.vue:21
 msgid "Select Cryptocurrency"
 msgstr "Seleccionar criptomoneda"
 
-#: src/components/forms/ReportEstablishment.vue:11
-#: src/components/forms/ReportEstablishment.vue:12
+#: src/components/forms/ReportLocation.vue:16
+#: src/components/forms/ReportLocation.vue:17
 msgid "Select issue"
 msgstr "Seleccionar un problema"
 
-#: src/components/elements/Card.vue:24
+#: src/components/elements/Card.vue:33
 msgid "Sell"
 msgstr ""
 
-#: src/components/elements/BasicInfo.vue:51
+#: src/components/elements/BasicInfo.vue:65
 msgid "Sell crypto only*"
 msgstr ""
 
-#: src/components/forms/FormContainer.vue:39
+#: src/components/forms/FormContainer.vue:47
 msgid "Send"
 msgstr "Enviar"
 
-#: src/database.ts:46
+#: src/translations.ts:16
 msgid "Shop"
 msgstr "Tiendas"
 
-#: src/components/atoms/Button.story.vue:11
+#: src/components/DesktopView.vue:26
+msgid "Show list"
+msgstr ""
+
+#: src/components/atoms/Button.story.vue:12
 msgid "Show more Locations"
 msgstr "Mostrar más establecimientos"
 
-#: src/components/elements/Controls.vue:4 src/components/TheMap.vue:6
+#: src/components/elements/Controls.vue:4
+#: src/components/elements/Controls.vue:5 src/components/TheMap.vue:7
 msgid "Show your location"
 msgstr ""
 
-#: src/components/forms/NewCandidate.vue:31
-#: src/components/forms/ReportEstablishment.vue:28
+#: src/components/forms/NewCandidate.vue:52
+#: src/components/forms/ReportLocation.vue:49
 msgid "Something went wrong"
 msgstr "Algo ha ido mal"
 
-#: src/database.ts:47
+#: src/translations.ts:17
 msgid "Sports & Fitness"
 msgstr "Deportes & Fitness"
 
-#: src/components/atoms/SearchBox.vue:53
+#: src/components/atoms/SearchBox.vue:62
 msgid "Start typing..."
 msgstr "Escribe algo..."
 
-#: src/components/forms/NewCandidate.vue:23
+#: src/components/forms/NewCandidate.vue:36
 msgid "Submit Location"
 msgstr "Enviar sugerencia"
 
-#: src/components/forms/ReportEstablishment.vue:23
+#: src/components/forms/ReportLocation.vue:38
 msgid "Thank you for reporting this issue"
 msgstr "Gracias por notificar este problema"
 
-#: src/components/forms/NewCandidate.vue:26
+#: src/components/forms/NewCandidate.vue:41
 msgid "Thank you for submitting a new location to the Crypto Map!"
 msgstr "¡Gracias por enviar un nuevo lugar al Crypto Map!"
 
-#: src/components/forms/NewCandidate.vue:32
-#: src/components/forms/ReportEstablishment.vue:29
+#: src/components/forms/NewCandidate.vue:55
+#: src/components/forms/ReportLocation.vue:52
 msgid "There has been a problem on our side."
 msgstr "Ha habido un problema de nuestro lado."
 
-#: src/components/elements/CryptoMapModal.vue:20
+#: src/components/elements/CryptoMapModal.vue:22
 msgid ""
 "This app is brought to you by Nimiq, only places that are verified by Google"
 " are accepted for this map."
 msgstr ""
 
-#: src/components/forms/NewCandidate.vue:27
-#: src/components/forms/ReportEstablishment.vue:24
+#: src/components/forms/NewCandidate.vue:44
+#: src/components/forms/ReportLocation.vue:41
 msgid ""
 "This may take a few days to process. Keep an eye out for changes to the "
 "location in the Crypto Map."
@@ -301,28 +312,28 @@ msgstr ""
 "Esto puede tardar unos días en procesarse. Esté atento a los cambios del "
 "establecimiento en el Crypto Map."
 
-#: src/components/forms/FormContainer.vue:69
-#: src/components/forms/NewCandidate.vue:33
-#: src/components/forms/ReportEstablishment.vue:30
+#: src/components/forms/FormContainer.vue:83
+#: src/components/forms/NewCandidate.vue:58
+#: src/components/forms/ReportLocation.vue:55
 msgid "Try again"
 msgstr "Inténtalo de nuevo"
 
-#: src/components/forms/NewCandidate.vue:10
+#: src/components/forms/NewCandidate.vue:15
 msgid "Type the name of the location"
 msgstr "Escribe el nombre del lugar"
 
-#: src/components/forms/ReportEstablishment.vue:17
+#: src/components/forms/ReportLocation.vue:28
 msgid "Write your problem here"
 msgstr "Escribe tu problema aquí"
 
-#: src/components/forms/NewCandidate.vue:4
+#: src/components/forms/NewCandidate.vue:7
 msgid "You can add any location that has a Google Business Profile."
 msgstr "Puedes añadir cualquier lugar que tenga un perfil de Google Business."
 
-#: src/components/TheMap.vue:15
+#: src/components/TheMap.vue:18
 msgid "Zoom in"
 msgstr ""
 
-#: src/components/TheMap.vue:24
+#: src/components/TheMap.vue:29
 msgid "Zoom out"
 msgstr ""

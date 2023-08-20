@@ -1,10 +1,14 @@
 import { defineStore } from 'pinia'
-import { computed, reactive } from 'vue'
-import { type BoundingBox, type Location, getLocations as getDbLocations, getLocation } from '@/database'
+import { computed, reactive, ref } from 'vue'
+import { getLocations as getDbLocations, getLocation } from '@/database'
+import type { BoundingBox, Location } from '@/types'
 
 export const useLocations = defineStore('locations', () => {
   // const appStore = useApp()
   // const { selectedCategories, selectedCurrencies } = storeToRefs(appStore)
+
+  // We just track the first load, so we can show a loading indicator
+  const loaded = ref(false)
 
   const locationsMap = reactive(new Map<string, Location>())
   const locations = computed(() => [...locationsMap.values()])
@@ -13,6 +17,7 @@ export const useLocations = defineStore('locations', () => {
   async function getLocations(boundingBox: BoundingBox) {
     const newLocations = await getDbLocations(boundingBox)
     newLocations.forEach(newLocation => locationsMap.set(newLocation.uuid, newLocation))
+    loaded.value = true
   }
 
   async function getLocationByUuid(uuid: string) {
@@ -42,6 +47,7 @@ export const useLocations = defineStore('locations', () => {
   // }
 
   return {
+    loaded,
     getLocations,
     getLocationByUuid,
 

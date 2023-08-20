@@ -4,7 +4,7 @@ import { Provider, Theme } from '@/types'
 import type { Location } from '@/types'
 
 export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard' | 'theme' | 'providerLabel' | 'providerLogo' | 'providerTooltip'>> = {
-  [Provider.Default]: {
+  [Provider.DefaultShop]: {
     bg: 'white',
     bgFullCard: false,
     theme: Theme.Light,

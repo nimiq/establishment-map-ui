@@ -25,10 +25,10 @@ export enum Category {
   HealthBeauty = 'health_beauty',
   HotelLodging = 'hotel_lodging',
   LeisureActivities = 'leisure_activities',
-  Miscellaneous = 'miscellaneous',
   RestaurantBar = 'restaurant_bar',
   Shop = 'shop',
   SportsFitness = 'sports_fitness',
+  Miscellaneous = 'miscellaneous',
 }
 
 export enum Currency {
@@ -44,7 +44,7 @@ export enum Currency {
 }
 
 export enum Provider {
-  Default = 'DEFAULT',
+  DefaultShop = 'DefaultShop',
   DefaultAtm = 'DefaultAtm',
   GoCrypto = 'GoCrypto',
   Kurant = 'Kurant',
@@ -138,6 +138,7 @@ export interface Location {
   isShop: boolean
   isDark: boolean
   isLight: boolean
+  hasBottomBanner: boolean
 }
 
 // Others types
