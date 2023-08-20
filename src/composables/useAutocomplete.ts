@@ -1,59 +1,21 @@
-import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { queryResults as queryResultsDb } from '@/database'
-import type { Category, Currency } from '@/database'
 import { useMap } from '@/composables/useMap'
+import { AutocompleteStatus, type Suggestion, SuggestionType } from '@/types'
 
-export enum SuggestionType {
-  ESTABLISHMENT = 'location',
-  CATEGORY = 'category',
-  CURRENCY = 'currency',
-  GOOGLE_ESTABLISHMENT = 'googleLocation',
-  GOOGLE_REGIONS = 'regions',
-}
-
-export type Suggestion = {
-  label: string
-} & ({
-  id: string // Google Place ID
-  type: SuggestionType.GOOGLE_ESTABLISHMENT | SuggestionType.GOOGLE_REGIONS
-  matchedSubstrings: google.maps.places.AutocompletePrediction['matched_substrings']
-} | {
-  id: Category
-  type: SuggestionType.CATEGORY
-  matchedSubstrings: undefined
-} | {
-  id: Currency
-  type: SuggestionType.CURRENCY
-  matchedSubstrings: undefined
-} | {
-  id: string // Location UUID
-  type: SuggestionType.ESTABLISHMENT
-  matchedSubstrings: undefined
-})
-
-export enum AutocompleteStatus {
-  INITIAL = 'initial',
-  LOADING = 'loading',
-  WITH_RESULTS = 'with-results',
-  NO_RESULTS = 'no-results',
-}
-
-interface SearchFor {
+interface AutocompleteGoogleOptions {
   searchForLocation?: boolean
   searchForRegions?: boolean
 }
 
-export const useAutocomplete = defineStore('autocomplete', () => {
-  const status = ref<AutocompleteStatus>(AutocompleteStatus.NO_RESULTS)
+export function useAutocomplete() {
+  const status = ref<AutocompleteStatus>(AutocompleteStatus.NoResults)
   const dbSuggestions = ref<Suggestion[]>([])
   const googleSuggestions = ref<Suggestion[]>([])
 
   // Google Autocomplete
   const sessionToken = ref<google.maps.places.AutocompleteSessionToken>()
   const autocompleteService = ref<google.maps.places.AutocompleteService>()
-
-  const { map, mapReady } = useMap()
 
   function init() {
     if (!sessionToken.value)
@@ -62,13 +24,13 @@ export const useAutocomplete = defineStore('autocomplete', () => {
       autocompleteService.value = new google.maps.places.AutocompleteService()
   }
 
-  async function autocompleteGoogle(query: string, { searchForLocation, searchForRegions }: SearchFor) {
+  async function autocompleteGoogle(query: string, { searchForLocation, searchForRegions }: AutocompleteGoogleOptions) {
     init()
     await autocompleteService.value?.getPlacePredictions({
       input: query,
       sessionToken: sessionToken.value,
-      location: mapReady.value && map.value ? map.value.getCenter() : undefined,
-      bounds: mapReady.value && map.value ? map.value.getBounds() : undefined,
+      location: useMap().map.value?.getCenter(),
+      bounds: useMap().map.value?.getBounds(),
       types: [
         searchForLocation ? 'location' : '',
         searchForRegions ? '(regions)' : '',
@@ -80,7 +42,7 @@ export const useAutocomplete = defineStore('autocomplete', () => {
       googleSuggestions.value = predictions.map(p => ({
         id: p.place_id,
         label: p.description,
-        type: SuggestionType.GOOGLE_ESTABLISHMENT,
+        type: SuggestionType.GoogleLocation,
         matchedSubstrings: p.matched_substrings,
       }))
     })
@@ -103,4 +65,4 @@ export const useAutocomplete = defineStore('autocomplete', () => {
     googleSuggestions,
     autocompleteGoogle,
   }
-})
+}

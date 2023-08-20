@@ -11,9 +11,10 @@ import {
 import { vElementVisibility } from '@vueuse/components'
 import { useDebounceFn } from '@vueuse/core'
 import { computed, ref, useSlots, watchEffect } from 'vue'
-import { AutocompleteStatus, type Suggestion } from '@/stores/autocomplete'
 import SearchIcon from '@/components/icons/icon-search.vue'
 import CrossIcon from '@/components/icons/icon-cross.vue'
+import { AutocompleteStatus } from '@/types'
+import type { Suggestion } from '@/types'
 
 const props = defineProps({
   roundedFull: {
@@ -67,12 +68,12 @@ const userCanCleanInput = computed(() => props.allowClean && query.value !== '' 
 const loading = ref(false)
 const status = computed<AutocompleteStatus>(() => {
   if (props.suggestions.length > 0)
-    return AutocompleteStatus.WITH_RESULTS
+    return AutocompleteStatus.WithResults
   if (loading.value)
-    return AutocompleteStatus.LOADING
+    return AutocompleteStatus.Loading
   if (props.suggestions.length === 0 && query.value !== '')
-    return AutocompleteStatus.NO_RESULTS
-  return AutocompleteStatus.INITIAL
+    return AutocompleteStatus.NoResults
+  return AutocompleteStatus.Initial
 })
 
 watchEffect(
@@ -188,18 +189,18 @@ function onListVisibilityChange(isVisible: boolean) {
           ]"
         >
           <div
-            v-if="AutocompleteStatus.WITH_RESULTS !== status" class="relative px-4 py-2 cursor-default select-none" :class="{
+            v-if="AutocompleteStatus.WithResults !== status" class="relative px-4 py-2 cursor-default select-none" :class="{
               'text-space/80': bgCombobox === 'white',
               'text-white/80': bgCombobox === 'space',
             }"
           >
-            <span v-if="status === AutocompleteStatus.LOADING">
+            <span v-if="status === AutocompleteStatus.Loading">
               {{ $t('Loading...') }}
             </span>
-            <span v-else-if="status === AutocompleteStatus.INITIAL">
+            <span v-else-if="status === AutocompleteStatus.Initial">
               {{ $t('Start typing...') }}
             </span>
-            <span v-else-if="status === AutocompleteStatus.NO_RESULTS && query !== ''">
+            <span v-else-if="status === AutocompleteStatus.NoResults && query !== ''">
               {{ $t('Nothing found.') }}
             </span>
           </div>

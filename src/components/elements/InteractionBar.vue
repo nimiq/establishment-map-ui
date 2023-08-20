@@ -1,16 +1,14 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 import SearchBox from '@/components/atoms/SearchBox.vue'
 import CryptoMapModal from '@/components/elements/CryptoMapModal.vue'
 import { useApp } from '@/stores/app'
-import { type Suggestion, SuggestionType, useAutocomplete } from '@/stores/autocomplete'
+import { useAutocomplete } from '@/composables/useAutocomplete'
 import { useMap } from '@/composables/useMap'
+import { type Suggestion, SuggestionType } from '@/types'
 
-const autocompleteStore = useAutocomplete()
-const { querySearch } = autocompleteStore
+const { querySearch, dbSuggestions, googleSuggestions } = useAutocomplete()
 
-const { dbSuggestions, googleSuggestions } = storeToRefs(autocompleteStore)
 const suggestions = computed(() => dbSuggestions.value.concat(googleSuggestions.value))
 
 function searchBoxOpen(value: boolean) {
@@ -44,17 +42,17 @@ function onSelect(suggestion?: Suggestion) {
     return
 
   switch (suggestion.type) {
-    case SuggestionType.GOOGLE_ESTABLISHMENT:
-    case SuggestionType.GOOGLE_REGIONS:
+    case SuggestionType.GoogleLocation:
+    case SuggestionType.Region:
       useMap().goToPlaceId(suggestion.id)
       break
-    case SuggestionType.CATEGORY:
+    case SuggestionType.Category:
       appStore.setSelectedCategories([suggestion.id])
       break
-    case SuggestionType.CURRENCY:
+    case SuggestionType.Currency:
       appStore.setSelectedCurrencies([suggestion.id])
       break
-    case SuggestionType.ESTABLISHMENT:
+    case SuggestionType.Location:
       appStore.goToLocation(suggestion.id)
       break
   }

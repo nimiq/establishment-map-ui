@@ -20,20 +20,16 @@ const { listIsShown } = storeToRefs(appStore)
 <template>
   <TheMapInstance class="relative flex flex-col w-screen h-screen" :locations="locations">
     <div
-      :class="{ 'translate-x-0 delay-75 duration-1000': listIsShown, '-translate-x-full duration-500 delay-100': !listIsShown }"
+      v-for="i in 2" :key="i"
+      :class="{ 'translate-x-0 delay-75 duration-1000 opacity-10': listIsShown, '-translate-x-full duration-500 delay-100 opacity-[0.04]': !listIsShown }"
       style="background-image: linear-gradient(90deg, #1F2348 0%, transparent 100%);"
-      class="opacity-[0.06] absolute inset-0 max-w-[368px] transition-transform will-change-transform pointer-events-none "
-    />
-    <div
-      :class="{ 'translate-x-0 delay-75 duration-1000': listIsShown, '-translate-x-full duration-500 delay-100': !listIsShown }"
-      style="background-image: linear-gradient(90deg, #1F2348 0%, transparent 100%);"
-      class="opacity-[0.06] absolute inset-0 max-w-[368px] transition-transform will-change-transform pointer-events-none "
+      class="opacity-10 absolute inset-0 max-w-[368px] transition-transform will-change-transform pointer-events-none "
     />
     <div class="absolute flex flex-col max-w-xs bottom-6 top-6 left-6">
       <div class="bg-white shadow-header rounded-2xl" style="mask-image: linear-gradient(white, white);">
         <InteractionBar />
         <DesktopList
-          class="transition-[max-height]"
+          class="transition-[max-height] will-change-[height]"
           :class="{
             'max-h-[calc(100vh-10.5rem)]': listIsShown,
             'max-h-0': !listIsShown,

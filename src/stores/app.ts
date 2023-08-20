@@ -2,8 +2,9 @@ import { useRouteQuery } from '@vueuse/router'
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useLocations } from '@/stores/locations'
-import { CATEGORIES, CURRENCIES, type Category, type Currency } from '@/database'
+import { CATEGORIES, CURRENCIES } from '@/database'
 import { useMap } from '@/composables/useMap'
+import type { Category, Currency } from '@/types'
 
 export const useApp = defineStore('app', () => {
   const listIsShown = ref(false)

@@ -102,15 +102,18 @@ function getComponent() {
       'ring-1 ring-space/[0.15]': props.borderColor === 'grey',
     }"
   >
-    <span
-      v-if="!props.hideIcon && (hasSlot('icon') || getComponent() === 'a')" :class="{
-        'text-white/60': ['space', 'sky', 'ocean'].includes(props.bgColor),
-        'text-space/60': ['white', 'transparent', 'grey'].includes(props.bgColor),
-        'text-opacity-40': isDisabled,
-      }" data-icon
-    >
-      <slot name="icon" />
-    </span>
+    <transition name="icon">
+      <span
+        v-if="!props.hideIcon && (hasSlot('icon') || getComponent() === 'a')" :class="{
+          'text-white/60': ['space', 'sky', 'ocean'].includes(props.bgColor),
+          'text-space/60': ['white', 'transparent', 'grey'].includes(props.bgColor),
+          'text-opacity-40': isDisabled,
+        }" data-icon
+      >
+        <slot name="icon" />
+      </span>
+    </transition>
+
     <span
       v-if="hasSlot('label')" class="font-bold text-center whitespace-nowrap" :class="{
         'text-white [button:disabled>&]:!text-white/40': ['space', 'sky', 'ocean'].includes(
@@ -149,7 +152,7 @@ function getComponent() {
       </div>
     </transition>
 
-    <transition name="loading">
+    <transition name="icon">
       <CircleSpinner
         v-if="props.loading" :class="{
           'text-white': !['transparent', 'white'].includes(props.bgColor),
@@ -162,15 +165,15 @@ function getComponent() {
 </template>
 
 <style scoped>
-.loading-enter-active {
-  animation: loading-in 400ms ease-out;
+.icon-enter-active {
+  animation: icon-in 400ms ease-out;
 }
 
-.loading-leave-active {
-  animation: loading-in 300ms ease-in reverse;
+.icon-leave-active {
+  animation: icon-in 300ms ease-in reverse;
 }
 
-@keyframes loading-in {
+@keyframes icon-in {
   0% {
     transform: scale(0);
     margin-left: -12px;

@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
 import type { Currency } from '@nimiq/utils'
+import { computed, ref } from 'vue'
 import SearchBox from '../atoms/SearchBox.vue'
 import Select from '../atoms/Select.vue'
 import CryptoIcon from '@/components/atoms/CryptoIcon.vue'
 import FormContainer from '@/components/forms/FormContainer.vue'
+import { useAutocomplete } from '@/composables/useAutocomplete'
 import { CURRENCIES } from '@/database'
-import { type Suggestion, useAutocomplete } from '@/stores/autocomplete'
+import type { Suggestion } from '@/types'
 
-const autocompleteStore = useAutocomplete()
-const { googleSuggestions } = storeToRefs(autocompleteStore)
+const { googleSuggestions, autocompleteGoogle } = useAutocomplete()
 
 const selectedCurrencies = ref<Currency[]>([])
 const selectedPlace = ref<Suggestion>()
@@ -33,10 +32,6 @@ async function onSubmit(captcha: string) {
     method: 'POST',
   })
 }
-
-function autocompleteGoogle(query: string) {
-  return autocompleteStore.autocompleteGoogle(query, { searchForLocation: true })
-}
 </script>
 
 <template>
@@ -52,7 +47,7 @@ function autocompleteGoogle(query: string) {
     </template>
     <template #form>
       <SearchBox
-        :autocomplete="autocompleteGoogle" :suggestions="googleSuggestions" :label="$t('Find location')"
+        :autocomplete="(query: string) => autocompleteGoogle(query, { searchForLocation: true })" :suggestions="googleSuggestions" :label="$t('Find location')"
         :placeholder="$t('Type the name of the location')" combobox-options-classes="w-[calc(100%+4px)] -left-0.5 top-unset"
         bg-combobox="space" input-id="search-input" :allow-clean="false" @selected="(selectedPlace = $event)"
       />

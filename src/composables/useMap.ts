@@ -9,17 +9,17 @@ export const FALLBACK_POSITION: Position = { center: { lat: 9.832213439337215, l
 export function useMap() {
   const map$ = ref<typeof GoogleMap>()
   const map = computed(() => map$?.value ? map$?.value.map as google.maps.Map : undefined)
-  const center = () => map.value?.getCenter()?.toJSON() as Point
-  const zoom = () => map.value?.getZoom() as number
-  const mapHasPosition = () => center().lat !== 0 && center().lng !== 0 && zoom() !== 0
-  const boundingBox = () => {
-    if (!mapHasPosition())
+  const center = computed(() => map.value?.getCenter()?.toJSON() as Point)
+  const zoom = computed(() => map.value?.getZoom() as number)
+  const mapHasPosition = computed(() => center.value.lat !== 0 && center.value.lng !== 0 && zoom.value !== 0)
+  const boundingBox = computed(() => {
+    if (!mapHasPosition.value)
       return
     return {
       southWest: map.value!.getBounds()!.getSouthWest().toJSON(),
       northEast: map.value!.getBounds()!.getNorthEast().toJSON(),
     }
-  }
+  })
 
   function setPosition(p?: Position | EstimatedPosition | google.maps.LatLngBounds) {
     if (!map.value || !p)
@@ -82,12 +82,13 @@ export function useMap() {
     setPosition,
     mapHasPosition,
 
+    map,
     center,
     zoom,
     boundingBox,
 
-    decreaseZoom: () => map.value?.setZoom(map.value.getZoom()! - 1),
-    increaseZoom: () => map.value?.setZoom(map.value.getZoom()! + 1),
+    decreaseZoom: () => map.value?.setZoom(zoom.value! - 1),
+    increaseZoom: () => map.value?.setZoom(zoom.value! + 1),
 
     goToPlaceId,
   }

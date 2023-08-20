@@ -1,6 +1,6 @@
 import { useGeolocation } from '@vueuse/core'
 import { computed, ref } from 'vue'
-import type { EstimatedPosition } from '@/composables/useMap'
+import type { EstimatedPosition } from '@/types'
 
 interface GeoIpResponse {
   location?: {

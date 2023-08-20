@@ -1,7 +1,6 @@
 import { providersAssets } from './assets-dev/provider-assets'
-import type { Suggestion } from './stores/autocomplete'
 import { translateCategory } from './translations'
-import { type BoundingBox, Category, Currency, type Location, LocationLink, Provider, Theme } from './types'
+import { type BoundingBox, Category, Currency, type Location, LocationLink, Provider, type Suggestion, Theme } from './types'
 
 export const CURRENCIES = Object.values(Currency)
 export const CATEGORIES = Object.values(Category)

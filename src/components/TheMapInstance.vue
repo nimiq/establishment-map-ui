@@ -10,9 +10,9 @@ import { useMap } from '@/composables/useMap'
 import CategoryIcon from '@/components/atoms/CategoryIcon.vue'
 import googleMapStyles from '@/assets/google-map-styles'
 
-const { map$, mapHasPosition, setInitialPosition, center, zoom, boundingBox } = useMap()
-
 const googleMapsKey = import.meta.env.VITE_GOOGLE_MAP_KEY
+
+const { map$, mapHasPosition, setInitialPosition, center, zoom, boundingBox } = useMap()
 
 const superClusterAlgorithm = new SuperClusterAlgorithm({ radius: 160, maxZoom: 18 })
 function render(cluster: Cluster) {
@@ -46,10 +46,10 @@ const router = useRouter()
 // Make the API request after the map has not been moved for 300ms or after 700ms
 const { getLocations, locations } = useLocations()
 const debouncedFn = useDebounceFn(async () => {
-  if (!mapHasPosition())
+  if (!mapHasPosition.value)
     return
-  getLocations(boundingBox()!)
-  router.push({ name: 'coords', params: { ...center(), zoom: zoom() } })
+  getLocations(boundingBox.value!)
+  router.push({ name: 'coords', params: { ...center.value, zoom: zoom.value } })
 }, 300, { maxWait: 700 })
 </script>
 

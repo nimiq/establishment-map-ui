@@ -141,6 +141,47 @@ export interface Location {
   hasBottomBanner: boolean
 }
 
+// Autocomplete types
+export enum AutocompleteStatus {
+  Initial = 'initial',
+  Loading = 'loading',
+  WithResults = 'with-results',
+  NoResults = 'no-results',
+}
+
+export interface SearchFor {
+  searchForLocation?: boolean
+  searchForRegions?: boolean
+}
+
+export enum SuggestionType {
+  Location = 'location',
+  Category = 'category',
+  Currency = 'currency',
+  GoogleLocation = 'googleLocation',
+  Region = 'regions',
+}
+
+export type Suggestion = {
+  label: string
+} & ({
+  id: string // Google Place ID
+  type: SuggestionType.GoogleLocation | SuggestionType.Region
+  matchedSubstrings: google.maps.places.AutocompletePrediction['matched_substrings']
+} | {
+  id: Category
+  type: SuggestionType.Category
+  matchedSubstrings: undefined
+} | {
+  id: Currency
+  type: SuggestionType.Currency
+  matchedSubstrings: undefined
+} | {
+  id: string // Location UUID
+  type: SuggestionType.Location
+  matchedSubstrings: undefined
+})
+
 // Others types
 export enum Issue {
   LOCATION_GONE = 'location_gone',
