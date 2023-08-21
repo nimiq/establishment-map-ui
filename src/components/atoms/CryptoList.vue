@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import CryptoIcon from '@/components/atoms/CryptoIcon.vue'
+import CryptoIcon from '@/components/icons/cryptos/CryptoIcon.vue'
 
 const props = defineProps({
   cryptos: {

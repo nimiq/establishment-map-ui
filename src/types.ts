@@ -1,5 +1,3 @@
-import type { defineAsyncComponent } from 'vue'
-
 /** Database Types
 
 The types from the database are basically the same as the values we would get from the database
@@ -49,7 +47,7 @@ export enum Provider {
   GoCrypto = 'GoCrypto',
   Kurant = 'Kurant',
   Bluecode = 'Bluecode',
-  CryptopaymentLink = 'CryptopaymentLink',
+  CryptopaymentLink = 'Cryptopayment Link',
   Edenia = 'Edenia',
 
   // TODO
@@ -127,7 +125,6 @@ export interface Location {
   theme: Theme
   bgFullCard: boolean
   bg: string
-  providerLogo?: ReturnType<typeof defineAsyncComponent>
 
   // Provider text
   providerLabel?: string

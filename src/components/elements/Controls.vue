@@ -6,22 +6,19 @@ import PlusIcon from '@/components/icons/icon-plus.vue'
 import { useGeoIp } from '@/composables/useGeoLocation'
 import { useMap } from '@/stores/map'
 
-const { browserLocationIsSupported, geolocateUser, browserPosition, errorBrowser } = useGeoIp()
+const { browserPositionIsSupported, geolocateUserViaBrowser, geolocatingUserBrowser } = useGeoIp()
 
-function setBrowserPosition() {
-  geolocateUser()
-
-  if (!browserPosition.value)
-    console.error(errorBrowser.value) // TODO show error to user
-
-  useMap().setPosition(browserPosition.value)
+async function setBrowserPosition() {
+  const browserPosition = await geolocateUserViaBrowser()
+  useMap().setPosition(browserPosition)
 }
 </script>
 
 <template>
   <div class="flex flex-col gap-y-4">
     <Button
-      v-if="browserLocationIsSupported" style="width: 34px; height: 34px" bg-color="white" size="sm" :aria-label="$t('Show your location')"
+      v-if="browserPositionIsSupported"
+      :disabled="geolocatingUserBrowser" style="width: 34px; height: 34px" bg-color="white" size="sm" :aria-label="$t('Show your location')"
       :title="$t('Show your location')" @click="setBrowserPosition"
     >
       <template #icon>

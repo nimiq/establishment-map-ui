@@ -1,20 +1,20 @@
 import { providersAssets } from '../provider-assets'
 import { CATEGORIES } from '@/database'
 import { translateCategory } from '@/translations'
-import { Category, Currency, type Location, LocationType, Provider } from '@/types'
+import { Category, Currency, type Location, Provider } from '@/types'
 
-type ExtraFields = Pick<Location, 'isAtm' | 'isShop' | 'isDark' | 'isLight' | 'provider' | 'category' | 'category_label' | 'providerLabel' | 'providerLogo' | 'providerTooltip' | 'theme' | 'bg' | 'bgFullCard' | 'hasBottomBanner'>
-function getExtra(provider: Provider, locationType: LocationType): ExtraFields {
+type ExtraFields = Pick<Location, 'isAtm' | 'isShop' | 'isDark' | 'isLight' | 'provider' | 'category' | 'category_label' | 'providerLabel' | 'providerTooltip' | 'theme' | 'bg' | 'bgFullCard' | 'hasBottomBanner' | 'sells'>
+export function getExtra(provider: Provider, sells: Currency[] = []): ExtraFields {
   const assets = providersAssets[provider]
   if (!assets)
     throw new Error(`Provider ${provider} not found in providersAssets`)
 
-  const isAtm = locationType === LocationType.Atm
+  const isAtm = sells.length > 0
   const category = isAtm ? Category.CarsBikes : CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)]
 
   return {
     isAtm,
-    isShop: locationType === LocationType.Shop,
+    isShop: !isAtm,
     isDark: assets.theme === 'dark',
     isLight: assets.theme === 'light',
     ...assets,
@@ -22,117 +22,110 @@ function getExtra(provider: Provider, locationType: LocationType): ExtraFields {
     category,
     hasBottomBanner: provider !== Provider.DefaultShop && provider !== Provider.DefaultAtm,
     category_label: translateCategory(category),
+    sells,
   }
 }
 
 export const locations: Record<Provider, Location> = {
   [Provider.DefaultShop]: {
-    uuid: '1',
+    uuid: 'DefaultShop',
     name: 'Mercedes-Benz Arena',
     address: 'Kreuzbergstrasse 28, 10247, Berlin',
     accepts: [Currency.BTC, Currency.NIM, Currency.ETH],
-    sells: [],
     gmaps_type: 'Stadium',
     lat: 1,
     lng: 1,
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
-    ...getExtra(Provider.DefaultShop, LocationType.Shop),
+    ...getExtra(Provider.DefaultShop),
   },
   [Provider.DefaultAtm]: {
-    uuid: '2',
+    uuid: 'DefaultATM',
     name: 'ATM',
     address: 'Kreuzbergstrasse 28, 10247, Berlin',
     accepts: [Currency.BTC, Currency.NIM, Currency.ETH, Currency.DASH, Currency.XLM],
-    sells: [],
     gmaps_type: 'Bank',
     lat: 1,
     lng: 1,
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
-    ...getExtra(Provider.DefaultAtm, LocationType.Shop),
+    ...getExtra(Provider.DefaultAtm, [Currency.BTC, Currency.NIM, Currency.ETH, Currency.DASH, Currency.XLM]),
 
   },
   [Provider.Kurant]: {
-    uuid: '2',
+    uuid: 'Kurant',
     name: 'ATM (Kurant)',
     address: 'Kreuzbergstrasse 28, 10247, Berlin',
     accepts: [Currency.BTC, Currency.NIM],
-    sells: [Currency.NIM],
     gmaps_type: 'Bank',
     lat: 1,
     lng: 1,
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
-    ...getExtra(Provider.Kurant, LocationType.Shop),
+    ...getExtra(Provider.Kurant, [Currency.BTC, Currency.NIM]),
   },
   [Provider.Bluecode]: {
-    uuid: '3',
+    uuid: 'Bluecode',
     name: 'Room 88',
     address: 'Kreuzbergstrasse 28, 10247, Berlin',
     accepts: [Currency.BTC, Currency.NIM, Currency.ETH],
-    sells: [],
     gmaps_type: 'Stadium',
     lat: 1,
     lng: 1,
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
     photo: 'https://images.unsplash.com/photo-1543007631-283050bb3e8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
-    ...getExtra(Provider.Bluecode, LocationType.Shop),
+    ...getExtra(Provider.Bluecode),
   },
   [Provider.GoCrypto]: {
-    uuid: '4',
+    uuid: 'GoCrypto',
     name: 'Mercedes-Benz Arena',
     address: 'Kreuzbergstrasse 28, 10247, Berlin',
     accepts: [Currency.BTC, Currency.NIM, Currency.ETH],
-    sells: [],
     gmaps_type: 'Stadium',
     lat: 1,
     lng: 1,
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
-    ...getExtra(Provider.GoCrypto, LocationType.Shop),
+    ...getExtra(Provider.GoCrypto),
   },
   [Provider.CryptopaymentLink]: {
-    uuid: '5',
+    uuid: 'CryptoPaymentLink',
     name: 'Mercedes-Benz Arena',
     address: 'Kreuzbergstrasse 28, 10247, Berlin',
     accepts: [Currency.BTC, Currency.NIM, Currency.USDC_POLYGON],
-    sells: [],
     gmaps_type: 'Stadium',
     lat: 1,
     lng: 1,
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
-    ...getExtra(Provider.CryptopaymentLink, LocationType.Shop),
+    ...getExtra(Provider.CryptopaymentLink),
   },
   [Provider.Edenia]: {
-    uuid: '5',
+    uuid: 'Edenia',
     name: 'Mercedes-Benz Arena',
     address: 'Kreuzbergstrasse 28, 10247, Berlin',
     accepts: [Currency.BTC, Currency.NIM, Currency.USDC_POLYGON],
-    sells: [],
     gmaps_type: 'Stadium',
     lat: 1,
     lng: 1,
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
-    ...getExtra(Provider.Edenia, LocationType.Shop),
+    ...getExtra(Provider.Edenia),
   },
   [Provider.CryptoCR]: {
-    uuid: '5',
+    uuid: 'CryptoCR',
     name: 'Mercedes-Benz Arena',
     address: 'Kreuzbergstrasse 28, 10247, Berlin',
     accepts: [Currency.BTC, Currency.NIM, Currency.USDC_POLYGON],
-    sells: [],
     gmaps_type: 'Stadium',
     lat: 1,
     lng: 1,
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
-    ...getExtra(Provider.CryptoCR, LocationType.Shop),
+    ...getExtra(Provider.CryptoCR),
   },
 }

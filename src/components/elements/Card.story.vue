@@ -25,7 +25,7 @@ const layout = ({ category }: Location) => category === 'cash' ? LocationType.At
 </script>
 
 <template>
-  <Story title="Card" :layout="{ type: 'grid', width: '300px' }">
+  <Story title="Card" :layout="{ type: 'grid', width: '360px' }">
     <template #controls>
       <div class="flex flex-col px-4 py-4 gap-x-2">
         <label for="expanded" class="select-none">Progress State</label>

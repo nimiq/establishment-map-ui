@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 import TheMapInstance from '@/components/TheMapInstance.vue'
 import Button from '@/components/atoms/Button.vue'
 import Controls from '@/components/elements/Controls.vue'
@@ -7,34 +8,25 @@ import DesktopList from '@/components/elements/DesktopList.vue'
 import FilterModal from '@/components/elements/FilterModal.vue'
 import InteractionBar from '@/components/elements/InteractionBar.vue'
 import IconChevronDown from '@/components/icons/icon-chevron-down.vue'
-import { useApp } from '@/stores/app'
 import { useLocations } from '@/stores/locations'
 
 const locationsStore = useLocations()
 const { locations, loaded: locationsLoaded } = storeToRefs(locationsStore)
 
-const appStore = useApp()
-const { listIsShown } = storeToRefs(appStore)
+const listIsShown = ref(false)
 </script>
 
 <template>
   <TheMapInstance class="relative flex flex-col w-screen h-screen" :locations="locations">
     <div
-      v-for="i in 2" :key="i"
-      :class="{ 'translate-x-0 delay-75 duration-1000 opacity-10': listIsShown, '-translate-x-full duration-500 delay-100 opacity-[0.04]': !listIsShown }"
-      style="background-image: linear-gradient(90deg, #1F2348 0%, transparent 100%);"
-      class="opacity-10 absolute inset-0 max-w-[368px] transition-transform will-change-transform pointer-events-none "
+      v-for="i in 1" :key="i"
+      :class="{ 'translate-x-0 delay-100 duration-500 opacity-10': listIsShown, '-translate-x-full duration-1000 delay-75 opacity-0': !listIsShown }"
+      class="absolute inset-0 max-w-[368px] transition-[transform,opacity] will-change-transform pointer-events-none bg-gradient-to-r from-space to-space/0"
     />
     <div class="absolute flex flex-col max-w-xs bottom-6 top-6 left-6">
       <div class="bg-white shadow-header rounded-2xl" style="mask-image: linear-gradient(white, white);">
         <InteractionBar />
-        <DesktopList
-          class="transition-[max-height] will-change-[height]"
-          :class="{
-            'max-h-[calc(100vh-10.5rem)]': listIsShown,
-            'max-h-0': !listIsShown,
-          }"
-        />
+        <DesktopList :locations="locations" :list-is-shown="listIsShown" />
       </div>
       <Button bg-color="white" class="mt-6" :loading="!locationsLoaded" @click="listIsShown = !listIsShown">
         <template v-if="locationsLoaded" #icon>

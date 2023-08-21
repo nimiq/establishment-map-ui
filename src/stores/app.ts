@@ -1,17 +1,12 @@
 import { useRouteQuery } from '@vueuse/router'
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useMap } from '@/stores/map'
 import { CATEGORIES, CURRENCIES } from '@/database'
 import { useLocations } from '@/stores/locations'
 import type { Category, Currency } from '@/types'
 
 export const useApp = defineStore('app', () => {
-  const listIsShown = ref(false)
-  const toggleList = () => listIsShown.value = !listIsShown.value
-  const showList = () => listIsShown.value = true
-  const hideList = () => listIsShown.value = false
-
   // TODO Do we need to store this in the store?
   const selectedLocationUuid = useRouteQuery('e')
   const selectedCategoriesQuery = useRouteQuery<Category | Category[]>('categories')
@@ -54,10 +49,6 @@ export const useApp = defineStore('app', () => {
   }
 
   return {
-    listIsShown,
-    toggleList,
-    showList,
-    hideList,
     selectedLocationUuid,
     goToLocation,
     selectedCategories,

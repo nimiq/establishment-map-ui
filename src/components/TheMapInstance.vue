@@ -7,7 +7,7 @@ import { CustomMarker, GoogleMap, MarkerCluster } from 'vue3-google-map'
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useLocations } from '@/stores/locations'
-import CategoryIcon from '@/components/atoms/CategoryIcon.vue'
+import CategoryIcon from '@/components/icons/categories/CategoryIcon.vue'
 import googleMapStyles from '@/assets/google-map-styles'
 import { useMap } from '@/stores/map'
 

@@ -46,7 +46,7 @@ async function fetchDb<T>(query: string): Promise<T | undefined> {
 }
 
 function parseLocation(location: Location) {
-  const isAtm = location.category === Category.Cash
+  const isAtm = location.sells.length > 0
 
   if (!location.provider || !PROVIDERS.includes(location.provider)) {
     console.warn(`Unknown provider: '${location.provider}'. Setting ${location.provider} provider. Location: ${JSON.stringify(location)}`)

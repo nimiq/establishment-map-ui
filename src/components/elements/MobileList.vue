@@ -7,7 +7,7 @@ import type { Location } from '@/types'
 defineProps({
   locations: {
     type: Array as PropType<Location[]>,
-    default: () => [],
+    required: true,
   },
 })
 
