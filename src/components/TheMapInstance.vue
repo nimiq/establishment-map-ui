@@ -6,17 +6,10 @@ import { useRoute, useRouter } from 'vue-router'
 import { CustomMarker, GoogleMap, MarkerCluster } from 'vue3-google-map'
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { Loader } from '@googlemaps/js-api-loader'
 import { useLocations } from '@/stores/locations'
 import CategoryIcon from '@/components/icons/categories/CategoryIcon.vue'
 import { useMap } from '@/stores/map'
 import { detectLanguage } from '@/i18n/i18n-setup'
-
-// FIXME
-// Vue 3 Google Maps is supposed to load the Google Maps API for us, but it doesn't work for some reason
-// https://github.com/inocan-group/vue3-google-map/blob/9e33d341d4ba31fdc0dc43acc36989e010b5c996/src/components/GoogleMap.vue#L327-L335
-// I tried many things, but this is the only thing that worked
-new Loader({ apiKey: import.meta.env.VITE_GOOGLE_MAP_KEY, version: 'weekly' }).importLibrary('places')
 
 const mapStore = useMap()
 const { mapHasPosition, center, zoom } = mapStore
