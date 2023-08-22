@@ -51,6 +51,9 @@ function parseLocation(location: Location) {
     console.warn(`Unknown provider: '${location.provider}'. Setting ${location.provider} provider. Location: ${JSON.stringify(location)}`)
     location.provider = isAtm ? Provider.DefaultAtm : Provider.DefaultShop
   }
+  else if (isAtm && location.provider === Provider.DefaultShop) {
+    location.provider = Provider.DefaultAtm
+  }
 
   // Prioritize links in this order: 1. Google Maps -> 2. Instagram -> 3. Facebook
   location.linkTo = location.gmaps ? LocationLink.GMaps : location.instagram ? LocationLink.Instagram : location.facebook ? LocationLink.Facebook : undefined
@@ -63,9 +66,6 @@ function parseLocation(location: Location) {
   location.isDark = location.theme === Theme.Dark
   location.isLight = location.theme === Theme.Light
   location.hasBottomBanner = location.provider !== Provider.DefaultShop && location.provider !== Provider.DefaultAtm
-
-  if (isAtm && location.provider === Provider.DefaultShop)
-    location.provider = Provider.DefaultAtm
 
   // Make the translation reactive in case user change language
   Object.defineProperty(location, 'category_label', {
