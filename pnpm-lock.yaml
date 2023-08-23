@@ -113,7 +113,7 @@ devDependencies:
     version: 1.8.8(typescript@4.7.4)
   webpack-i18n-tools:
     specifier: github:nimiq/webpack-i18n-tools
-    version: github.com/nimiq/webpack-i18n-tools/63d7eaebd9ee89f6a67f032dfac9dbf89b649e6a(webpack@5.88.2)
+    version: github.com/nimiq/webpack-i18n-tools/4fe8c4cdeae2325b63677bb6a3a609b6752f39cd(webpack@5.88.2)
 
 packages:
 
@@ -692,7 +692,7 @@ packages:
   /@types/fs-extra@9.0.13:
     resolution: {integrity: sha512-nEnwB++1u5lVDM2UI4c1+5R+FYaKfaAzS4OococimjVm3nQw3TuzH5UNsocrcTBbhnerblyHj4A49qXbIiZdpA==}
     dependencies:
-      '@types/node': 20.5.1
+      '@types/node': 20.5.3
     dev: true
 
   /@types/geojson@7946.0.10:
@@ -703,7 +703,7 @@ packages:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
     dependencies:
       '@types/minimatch': 5.1.2
-      '@types/node': 20.5.1
+      '@types/node': 20.5.3
     dev: true
 
   /@types/google.maps@3.53.6:
@@ -743,8 +743,8 @@ packages:
     resolution: {integrity: sha512-K0VQKziLUWkVKiRVrx4a40iPaxTUefQmjtkQofBkYRcoaaL/8rhwDWww9qWbrgicNOgnpIsMxyNIUM4+n6dUIA==}
     dev: true
 
-  /@types/node@20.5.1:
-    resolution: {integrity: sha512-4tT2UrL5LBqDwoed9wZ6N3umC4Yhz3W3FloMmiiG4JwmUJWpie0c7lcnUNd4gtMKuDEO4wRVS8B6Xa0uMRsMKg==}
+  /@types/node@20.5.3:
+    resolution: {integrity: sha512-ITI7rbWczR8a/S6qjAW7DMqxqFMjjTo61qZVWJ1ubPvbIQsL5D/TvwjYEalM8Kthpe3hTzOGrF2TGbAu2uyqeA==}
     dev: true
 
   /@types/normalize-package-data@2.4.1:
@@ -1629,7 +1629,7 @@ packages:
       normalize-path: 3.0.0
       readdirp: 3.6.0
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /chrome-trace-event@1.0.3:
@@ -2757,8 +2757,8 @@ packages:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: true
 
-  /fsevents@2.3.2:
-    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+  /fsevents@2.3.3:
+    resolution: {integrity: sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==}
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
     requiresBuild: true
@@ -3196,7 +3196,7 @@ packages:
     resolution: {integrity: sha512-7vuh85V5cdDofPyxn58nrPjBktZo0u9x1g8WtjQol+jZDaE+fhN+cIvTj11GndBnMnyfrUOG1sZQxCdjKh+DKg==}
     engines: {node: '>= 10.13.0'}
     dependencies:
-      '@types/node': 20.5.1
+      '@types/node': 20.5.3
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: true
@@ -4213,7 +4213,7 @@ packages:
     engines: {node: '>=10.0.0'}
     hasBin: true
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /run-parallel@1.2.0:
@@ -4868,7 +4868,7 @@ packages:
       resolve: 1.22.4
       rollup: 2.79.1
     optionalDependencies:
-      fsevents: 2.3.2
+      fsevents: 2.3.3
     dev: true
 
   /vue-demi@0.14.5(vue@3.3.4):
@@ -5171,9 +5171,9 @@ packages:
       qr-scanner: 1.4.2
     dev: false
 
-  github.com/nimiq/webpack-i18n-tools/63d7eaebd9ee89f6a67f032dfac9dbf89b649e6a(webpack@5.88.2):
-    resolution: {tarball: https://codeload.github.com/nimiq/webpack-i18n-tools/tar.gz/63d7eaebd9ee89f6a67f032dfac9dbf89b649e6a}
-    id: github.com/nimiq/webpack-i18n-tools/63d7eaebd9ee89f6a67f032dfac9dbf89b649e6a
+  github.com/nimiq/webpack-i18n-tools/4fe8c4cdeae2325b63677bb6a3a609b6752f39cd(webpack@5.88.2):
+    resolution: {tarball: https://codeload.github.com/nimiq/webpack-i18n-tools/tar.gz/4fe8c4cdeae2325b63677bb6a3a609b6752f39cd}
+    id: github.com/nimiq/webpack-i18n-tools/4fe8c4cdeae2325b63677bb6a3a609b6752f39cd
     name: webpack-i18n-tools
     version: 0.0.1
     peerDependencies:
