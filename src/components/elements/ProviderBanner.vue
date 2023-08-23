@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import Popover from '@/components/atoms/Popover.vue'
+import CardBg from '@/components/elements/CardBg.vue'
 import InfoIcon from '@/components/icons/icon-info.vue'
 import type { Location } from '@/types'
 
@@ -17,7 +18,9 @@ defineProps({
 </script>
 
 <template>
-  <footer class="relative flex items-center" :style="`height: ${location.providerLabel ? '56px' : '36px'};`">
+  <footer class="relative flex items-center" :class="{ 'h-16': location.providerLabel, 'h-9': !location.providerLabel }">
+    <CardBg v-if="location.isShop && location.providerLabel" :location="location" />
+
     <div v-if="location.providerLabel" class="z-20 flex items-center pt-1.5 pl-6 pr-4 text-xs gap-x-1.5">
       <i18n-t
         :keypath="location.providerLabel" tag="p" :class="{

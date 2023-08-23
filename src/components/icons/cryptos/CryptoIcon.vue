@@ -56,5 +56,6 @@ const css: string = !props.mono && needBg ? 'ring-1 rounded-full ring-space/10' 
     <DashIcon v-else-if="crypto === 'dash'" :class="css" :style="[styles, { width: mono && '26px' }]" />
     <XlmIcon v-else-if="crypto === 'xlm'" :class="css" :style="[styles, { width: mono && '28px' }]" />
     <LBtcIcon v-else-if="crypto === 'lbtc'" :class="css" :style="[styles, { width: mono && '28px' }]" />
+    <!-- TODO Add USDC Polygon icon -->
   </div>
 </template>

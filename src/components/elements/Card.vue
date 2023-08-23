@@ -20,8 +20,8 @@ const ProviderBanner = defineAsyncComponent(() => import('@/components/elements/
 </script>
 
 <template>
-  <div class="relative overflow-hidden rounded-lg duration-[--duration,0] group/card" :style="`background: ${location.bgFullCard ? location.bg : 'white'}`">
-    <CardBg v-if="location.bgFullCard" :location="location" :progress="progress" />
+  <div class="relative rounded-lg duration-[--duration,0] group/card" :style="`background: ${location.bgFullCard ? location.bg : 'white'}`">
+    <CardBg v-if="location.bgFullCard" :location="location" />
 
     <div
       v-if="location.photo" class="pt-1.5 px-1.5 transition-height duration-[--duration]"
@@ -46,11 +46,11 @@ const ProviderBanner = defineAsyncComponent(() => import('@/components/elements/
             <h5 class="text-xs text-white/60">
               {{ $t('Buy') }}
             </h5>
-            <CryptoList :cryptos="location.accepts" />
+            <CryptoList :cryptos="location.sells" />
             <h5 class="text-xs text-white/60">
               {{ $t('Sell') }}
             </h5>
-            <CryptoList :cryptos="location.sells" />
+            <CryptoList :cryptos="location.accepts" />
           </div>
         </template>
         <template v-else>

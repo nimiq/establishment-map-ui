@@ -2,16 +2,13 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-#: src/assets-dev/provider-assets.ts:22
+#: src/assets-dev/provider-assets.ts:23
+#: src/assets-dev/provider-assets.ts:49
 msgid "{provider} app required"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:56
+#: src/assets-dev/provider-assets.ts:63
 msgid "{provider} available"
-msgstr ""
-
-#: src/assets-dev/provider-assets.ts:44
-msgid "{provider} required"
 msgstr ""
 
 #: src/components/forms/NewCandidate.vue:4
@@ -38,15 +35,11 @@ msgid "Buy"
 msgstr ""
 
 #: src/components/elements/BasicInfo.vue:62
-msgid "Buy & Sell crypto only*"
+msgid "Buy & sell crypto"
 msgstr ""
 
-#: src/components/elements/BasicInfo.vue:64
-msgid "Buy crypto only*"
-msgstr ""
-
-#: src/assets-dev/provider-assets.ts:68
-msgid "By {provider}"
+#: src/components/elements/BasicInfo.vue:65
+msgid "Buy crypto only"
 msgstr ""
 
 #: src/translations.ts:6
@@ -120,7 +113,7 @@ msgstr ""
 msgid "Food & Drinks"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:25
+#: src/assets-dev/provider-assets.ts:27
 msgid "GoCrypto is a global payment network that enables merchants to accept crypto payments."
 msgstr ""
 
@@ -128,7 +121,7 @@ msgstr ""
 msgid "Health & Beauty"
 msgstr ""
 
-#: src/components/DesktopView.vue:23
+#: src/components/DesktopView.vue:22
 #: src/components/elements/DesktopList.story.vue:17
 msgid "Hide list"
 msgstr ""
@@ -137,7 +130,7 @@ msgstr ""
 msgid "Hotel & Lodging"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:36
+#: src/assets-dev/provider-assets.ts:40
 msgid "Kurant ATM is a blockchain-based ATM network and platform."
 msgstr ""
 
@@ -145,7 +138,7 @@ msgstr ""
 msgid "Leisure Activities"
 msgstr ""
 
-#: src/components/DesktopView.vue:20
+#: src/components/DesktopView.vue:19
 msgid "Loading"
 msgstr ""
 
@@ -179,7 +172,8 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:33
+#: src/assets-dev/provider-assets.ts:36
+#: src/assets-dev/provider-assets.ts:77
 msgid "Register with {provider}"
 msgstr ""
 
@@ -222,8 +216,8 @@ msgstr ""
 msgid "Sell"
 msgstr ""
 
-#: src/components/elements/BasicInfo.vue:65
-msgid "Sell crypto only*"
+#: src/components/elements/BasicInfo.vue:64
+msgid "Sell crypto only"
 msgstr ""
 
 #: src/components/forms/FormContainer.vue:47
@@ -234,7 +228,7 @@ msgstr ""
 msgid "Shop"
 msgstr ""
 
-#: src/components/DesktopView.vue:26
+#: src/components/DesktopView.vue:25
 #: src/components/elements/DesktopList.story.vue:20
 msgid "Show list"
 msgstr ""
@@ -243,8 +237,8 @@ msgstr ""
 msgid "Show more Locations"
 msgstr ""
 
-#: src/components/elements/Controls.vue:4
 #: src/components/elements/Controls.vue:5
+#: src/components/elements/Controls.vue:6
 msgid "Show your location"
 msgstr ""
 

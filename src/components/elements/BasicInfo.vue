@@ -22,9 +22,9 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
 
 <template>
   <div
-    class="relative grid grid-cols-[auto_1fr_72px] grid-rows-[repeat(3,auto)] items-center group/card" :class="{
-      'text-white': location.isDark,
-      'text-space': location.isLight,
+    class="relative grid grid-cols-[auto_1fr_72px] grid-rows-[repeat(3,auto)] gap-x-1.5 items-center group/card" :class="{
+      'text-white': location.bgFullCard && location.isDark,
+      'text-space': !location.bgFullCard || location.isLight,
     }"
   >
     <h2 class="text-base font-bold leading-[1.3] col-span-2 pb-1 text-balance truncate">
@@ -60,8 +60,8 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
           <template #icon>
             <EllipsisVertical
               class="h-5" :class="{
-                'text-space/30': location.isLight,
-                'text-white/50': location.isDark,
+                'text-white/50': location.bgFullCard && location.isDark,
+                'text-space/30': !location.bgFullCard || location.isLight,
               }"
             />
           </template>
@@ -79,17 +79,17 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
         </template>
       </div>
     </template>
-    <span v-else-if="location.isAtm" class="row-start-2 text-xs text-white/70">
+    <span v-else-if="location.isAtm" class="row-start-2 text-xs text-white/70 font-semibold">
       <template v-if="location.accepts?.length > 0 && location.sells?.length > 0">{{
-        $t('Buy & Sell crypto only*')
+        $t('Buy & sell crypto')
       }}</template>
-      <template v-else-if="location.accepts.length > 0">{{ $t('Buy crypto only*') }}</template>
-      <template v-else-if="location.sells.length > 0">{{ $t('Sell crypto only*') }}</template>
+      <template v-else-if="location.accepts.length > 0">{{ $t('Sell crypto only') }}</template>
+      <template v-else-if="location.sells.length > 0">{{ $t('Buy crypto only') }}</template>
     </span>
     <p
       class="text-xs leading-[1.5] grid-cols-1 col-span-3 row-start-3" :class="{
-        'text-white/60': location.isDark,
-        'text-space/70': location.isLight,
+        'text-white/60': location.bgFullCard && location.isDark,
+        'text-space/70': !location.bgFullCard || location.isLight,
       }"
     >
       {{ location.address }}

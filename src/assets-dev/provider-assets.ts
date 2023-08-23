@@ -19,7 +19,9 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
     bgFullCard: false,
     bg: '#F0BF4C',
     get providerLabel() {
-      return i18n.t('{provider} app required')
+      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
+      const translation = i18n.t('{provider} app required')
+      return '{provider} app required'
     },
     get providerTooltip() {
       return i18n.t('GoCrypto is a global payment network that enables merchants to accept crypto payments.')
@@ -30,7 +32,9 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
     bgFullCard: true,
     bg: '#A92E19',
     get providerLabel() {
-      return i18n.t('Register with {provider}')
+      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
+      const translation = i18n.t('Register with {provider}')
+      return 'Register with {provider}'
     },
     get providerTooltip() {
       return i18n.t('Kurant ATM is a blockchain-based ATM network and platform.')
@@ -41,7 +45,9 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
     bgFullCard: false,
     theme: Theme.Dark,
     get providerLabel() {
-      return i18n.t('{provider} required')
+      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
+      const translation = i18n.t('{provider} app required')
+      return '{provider} app required'
     },
     get providerTooltip() {
       // TODO
@@ -53,7 +59,9 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
     theme: Theme.Dark,
     bgFullCard: false,
     get providerLabel() {
-      return i18n.t('{provider} available')
+      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
+      const translation = i18n.t('{provider} available')
+      return '{provider} available'
     },
     get providerTooltip() {
       // TODO
@@ -63,9 +71,11 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
   [Provider.Edenia]: {
     bg: '#00B2B0',
     theme: Theme.Dark,
-    bgFullCard: false,
+    bgFullCard: true,
     get providerLabel() {
-      return i18n.t('By {provider}')
+      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
+      const translation = i18n.t('Register with {provider}')
+      return 'Register with {provider}'
     },
     get providerTooltip() {
       // TODO
