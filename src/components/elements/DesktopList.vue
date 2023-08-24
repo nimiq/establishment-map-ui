@@ -50,9 +50,9 @@ defineProps({
     <template #default="{ item: location }">
       <div
         class="px-6 py-5"
-        :style="`background: ${location.isDark ? location.bg : 'white'}`"
+        :style="`background: ${location.isAtm && location.isDark ? location.bg : 'white'}`"
       >
-        <CardBg v-if="location.isAtm" :location="location" />
+        <CardBg v-if="location.isAtm" :location="location" :with-gradient="false" class="translate-y-1" />
         <BasicInfo :location="location" />
       </div>
     </template>

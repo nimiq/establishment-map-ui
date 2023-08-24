@@ -88,8 +88,8 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
     </span>
     <p
       class="text-xs leading-[1.5] grid-cols-1 col-span-3 row-start-3" :class="{
-        'text-white/60': location.bgFullCard && location.isDark,
-        'text-space/70': !location.bgFullCard || location.isLight,
+        'text-white/70': location.bgFullCard && location.isDark,
+        'text-space/60': !location.bgFullCard || location.isLight,
       }"
     >
       {{ location.address }}
