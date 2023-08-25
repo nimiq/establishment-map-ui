@@ -7,7 +7,7 @@ export const locations: Partial<Record<Provider, Location>> = {
     name: 'ATM with no rating',
     address: 'This is suppose a long address. This is weird case since ',
     accepts: [Currency.BTC, Currency.NIM, Currency.ETH],
-    gmaps_type: 'Stadium',
+    gmapstype: ['stadium'],
     lat: 1,
     lng: 1,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
