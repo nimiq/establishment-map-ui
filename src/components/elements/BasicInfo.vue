@@ -28,11 +28,8 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
     }"
   >
     <h2 class="text-base font-bold leading-[1.3] col-span-2 pb-1 text-balance truncate">
-      <template v-if="location.isAtm">
-        {{ $t('ATM') }} (
-      </template>{{ location.name }}<template v-if="location.isAtm">
-        )
-      </template>
+      <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
+      <template v-if="location.isAtm">{{ $t('ATM') }} (</template>{{ location.name }}<template v-if="location.isAtm">)</template>
     </h2>
 
     <div class="relative flex self-start row-span-2 ml-5 gap-x-3">
