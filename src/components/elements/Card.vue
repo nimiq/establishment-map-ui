@@ -17,6 +17,10 @@ defineProps({
 })
 
 const ProviderBanner = defineAsyncComponent(() => import('@/components/elements/ProviderBanner.vue'))
+
+function arrayEquals(arrA: string[], arrB: string[]): boolean {
+  return arrA.length === arrB.length && arrA.every((value, index) => value === arrB[index])
+}
 </script>
 
 <template>
@@ -39,7 +43,7 @@ const ProviderBanner = defineAsyncComponent(() => import('@/components/elements/
         leave-active-class="transition duration-75 ease-out" leave-from-class="transform opacity-100"
         leave-to-class="transform translate-y-3 opacity-0"
       >
-        <template v-if="progress > 0.5 && location.accepts.length > 0 && location.sells.length > 0">
+        <template v-if="progress > 0.5 && location.accepts.length && location.sells.length && !arrayEquals(location.accepts, location.sells)">
           <div
             class="grid grid-flow-col grid-cols-[auto,auto] grid-rows-[auto,1fr] gap-y-1 gap-x-2 w-max h-max relative z-20"
           >
