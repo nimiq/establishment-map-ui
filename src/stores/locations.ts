@@ -8,6 +8,8 @@ export const useLocations = defineStore('locations', () => {
   // We just track the first load, so we can show a loading indicator
   const loaded = ref(false)
 
+  const currentBoundingBox = ref<BoundingBox>()
+
   /*
     Reduce redundant database fetches by reusing fetched locations by:
       - `memoizedLocations` stores fetched bounding boxes without considering zoom levels.
@@ -16,9 +18,20 @@ export const useLocations = defineStore('locations', () => {
   */
   const memoizedLocations = ref<BoundingBox[]>([])
   const locationsMap = reactive(new Map<string, Location>())
-  const locations = computed(() => [...locationsMap.values()].filter(includeLocation))
+  const locations = computed(() => {
+    if (!currentBoundingBox.value)
+      return []
+    const { neLat, neLng, swLat, swLng } = currentBoundingBox.value
+    return [...locationsMap.values()].filter((location) => {
+      const { lat, lng } = location
+      const isWithinBoundingBox = lat <= neLat && lng <= neLng && lat >= swLat && lng >= swLng
+      return isWithinBoundingBox && includeLocation(location)
+    })
+  })
 
   async function getLocations(boundingBox: BoundingBox) {
+    currentBoundingBox.value = boundingBox
+
     // Check if the current bounding box is within an already fetched bounding box
     for (const { neLat, neLng, swLat, swLng } of memoizedLocations.value) {
       if (boundingBox.neLat <= neLat && boundingBox.neLng <= neLng && boundingBox.swLat >= swLat && boundingBox.swLng >= swLng)
