@@ -8,12 +8,28 @@ export const useLocations = defineStore('locations', () => {
   // We just track the first load, so we can show a loading indicator
   const loaded = ref(false)
 
+  /*
+    Reduce redundant database fetches by reusing fetched locations by:
+      - `memoizedLocations` stores fetched bounding boxes without considering zoom levels.
+      - Before fetching, we check if the current bounding box is within a larger fetched bounding box.
+      - If so, the fetch is skipped; otherwise, a new fetch occurs and `memoizedLocations` is updated.
+  */
+  const memoizedLocations = ref<BoundingBox[]>([])
   const locationsMap = reactive(new Map<string, Location>())
   const locations = computed(() => [...locationsMap.values()].filter(includeLocation))
 
   async function getLocations(boundingBox: BoundingBox) {
+    // Check if the current bounding box is within an already fetched bounding box
+    for (const { neLat, neLng, swLat, swLng } of memoizedLocations.value) {
+      if (boundingBox.neLat <= neLat && boundingBox.neLng <= neLng && boundingBox.swLat >= swLat && boundingBox.swLng >= swLng)
+        return
+    }
+
     const newLocations = await getDbLocations(boundingBox)
     newLocations.forEach(newLocation => locationsMap.set(newLocation.uuid, newLocation))
+
+    // Update memoizedLocations
+    memoizedLocations.value.push(boundingBox)
     loaded.value = true
   }
 
