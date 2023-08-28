@@ -10,8 +10,8 @@ export const useCluster = defineStore('cluster', () => {
   const BASE_RADIUS = 140 // This is the max cluster radius at zoom level 0
   const DECAY_FACTOR = 1.05 // You can adjust this to change how fast the radius decreases
 
-  function locationToPoint({ lat, lng }: Location): Supercluster.PointFeature<AnyProps> {
-    return { type: 'Feature', geometry: { type: 'Point', coordinates: [lng, lat] }, properties: { lng, lat } }
+  function locationToPoint({ lat, lng, name }: Location): Supercluster.PointFeature<AnyProps> {
+    return { type: 'Feature', geometry: { type: 'Point', coordinates: [lng, lat] }, properties: { name } }
   }
 
   const clusterAlgorithm = ref<Supercluster>()
@@ -24,7 +24,8 @@ export const useCluster = defineStore('cluster', () => {
     clusters.value = clusterAlgorithm.value.getClusters([swLng, swLat, neLng, neLat], zoom).map((c) => {
       const center: Point = { lng: c.geometry.coordinates[0], lat: c.geometry.coordinates[1] }
       const count = c.properties.point_count || 1
-      return { center, count, clusterId: c.properties.cluster_id }
+      const name = count === 1 ? c.properties.name : ''
+      return { center, count, clusterId: c.properties.cluster_id, name }
     })
   }
 
