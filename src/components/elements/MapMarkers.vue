@@ -64,13 +64,19 @@ const isMobile = smaller(DESKTOP_LAYOUT)
     </div>
   </CustomMarker>
 
-  <DefineTemplate v-slot="{ location: { category, name } }">
+  <DefineTemplate v-slot="{ location: { category, name, isAtm, bg } }">
     <div class="flex items-center gap-x-2 max-w-[176px]">
-      <div v-if="showCategoryIcon()" class="grid w-8 h-8 text-white rounded-full shadow ring-white/40 ring-2 place-content-center bg-space">
+      <div
+        v-if="isAtm" class="grid w-8 h-8 text-white rounded-full shadow ring-white/40 ring-2 place-content-center" :style="`background: ${
+          bg}`"
+      >
+        {{ $t('ATM') }}
+      </div>
+      <div v-else-if="showCategoryIcon()" class="grid w-8 h-8 text-white rounded-full shadow ring-white/40 ring-2 place-content-center bg-space">
         <CategoryIcon :category="category" class="w-7" />
       </div>
       <div v-else class="grid w-3 h-3 text-sm font-bold text-white rounded-full shadow ring-white/40 ring-2 place-content-center bg-space" />
-      <span v-if="showSingleName()" class="flex-1 font-semibold leading-none text-left text-space" style="font-size: 16.5px; text-stroke: 0.5px white;">
+      <span v-if="!isAtm && showSingleName()" class="flex-1 font-semibold leading-none text-left text-space" style="font-size: 16.5px; text-stroke: 0.5px white;">
         {{ name }}
       </span>
     </div>

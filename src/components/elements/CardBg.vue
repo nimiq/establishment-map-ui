@@ -16,7 +16,7 @@ defineProps({
 </script>
 
 <template>
-  <template v-if="location.isShop">
+  <template v-if="!location.isAtm">
     <div
       v-if="withGradient"
       class="absolute rounded-b-lg right-0 top-0 bg-[radial-gradient(100%_75.78%_at_100%_100%,#ffffff_0%,rgba(255,255,255,0)_100%)] opacity-20 pointer-events-none w-full h-full"

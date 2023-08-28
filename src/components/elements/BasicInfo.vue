@@ -23,12 +23,16 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
 <template>
   <div
     class="relative grid grid-cols-[auto_1fr_72px] grid-rows-[repeat(3,auto)] gap-x-1.5 items-center group/card" :class="{
-      'text-white': location.bgFullCard && location.isDark,
-      'text-space': !location.bgFullCard || location.isLight,
+      'text-white': location.isAtm && location.isDark,
+      'text-space': !location.isAtm || location.isLight,
     }"
   >
     <h2 class="text-base font-bold leading-[1.3] col-span-2 pb-1 text-balance truncate">
-      {{ location.name }}
+      <template v-if="location.isAtm">
+        {{ $t('ATM') }} (
+      </template>{{ location.name }}<template v-if="location.isAtm">
+        )
+      </template>
     </h2>
 
     <div class="relative flex self-start row-span-2 ml-5 gap-x-3">
@@ -60,8 +64,8 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
           <template #icon>
             <EllipsisVertical
               class="h-5" :class="{
-                'text-white/50': location.bgFullCard && location.isDark,
-                'text-space/30': !location.bgFullCard || location.isLight,
+                'text-white/50': location.isAtm && location.isDark,
+                'text-space/30': !location.isAtm || location.isLight,
               }"
             />
           </template>
@@ -88,8 +92,8 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
     </span>
     <p
       class="text-xs leading-[1.5] grid-cols-1 col-span-3 row-start-3" :class="{
-        'text-white/70': location.bgFullCard && location.isDark,
-        'text-space/60': !location.bgFullCard || location.isLight,
+        'text-white/70': location.isAtm && location.isDark,
+        'text-space/60': !location.isAtm || location.isLight,
         'truncate': progress === 0,
       }"
     >

@@ -20,8 +20,8 @@ const ProviderBanner = defineAsyncComponent(() => import('@/components/elements/
 </script>
 
 <template>
-  <div class="relative rounded-lg duration-[--duration,0] group/card" :style="`background: ${location.bgFullCard ? location.bg : 'white'}`">
-    <CardBg v-if="location.bgFullCard" :location="location" />
+  <div class="relative rounded-lg duration-[--duration,0] group/card" :style="`background: ${location.isAtm ? location.bg : 'white'}`">
+    <CardBg v-if="location.isAtm" :location="location" />
 
     <div
       v-if="location.photo" class="pt-1.5 px-1.5 transition-height duration-[--duration]"
@@ -62,7 +62,7 @@ const ProviderBanner = defineAsyncComponent(() => import('@/components/elements/
     <ProviderBanner
       v-if="progress > 0 && location.hasBottomBanner" :location="location"
       class="absolute w-full rounded-b-lg -mt-9"
-      :style="`backgroundColor: ${location.isShop ? location.bg : 'transparent'}; opacity: ${progress / 0.8}; bottom: -${(1 - progress) * 54}px;`"
+      :style="`backgroundColor: ${!location.isAtm ? location.bg : 'transparent'}; opacity: ${progress / 0.8}; bottom: -${(1 - progress) * 54}px;`"
     />
   </div>
 </template>

@@ -28,7 +28,7 @@ defineProps({
 
 // function getPoolType(l: Location): Location & { itemSize: number } {
 //   let itemSize = heights.border + heights.py + heights.title + (l.address ? heights.address : 0)
-//   if (l.isShop)
+//   if (!l.isAtm)
 //     itemSize += l.category || l.rating ? heights.categoryAndRating : 0
 //   else if (l.isAtm)
 //     itemSize += heights.buyAndSell
