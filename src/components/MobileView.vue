@@ -15,7 +15,7 @@ const { locations } = storeToRefs(locationsStore)
   <div class="flex flex-col h-screen">
     <InteractionBar />
     <TheMapInstance class="relative flex-1" />
-    <FilterModal class="absolute top-6 right-6" />
+    <FilterModal class="absolute top-24 right-5" />
     <Controls class="absolute bottom-6 right-6" />
     <MobileList :locations="locations" class="absolute bottom-0 w-full" />
   </div>

@@ -19,7 +19,7 @@ msgstr ""
 msgid "Add Crypto location"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:91
+#: src/components/elements/FilterModal.vue:103
 msgid "Apply filters"
 msgstr ""
 
@@ -55,11 +55,11 @@ msgstr ""
 msgid "Cash"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:71
+#: src/components/elements/FilterModal.vue:83
 msgid "Categories"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:86
+#: src/components/elements/FilterModal.vue:98
 msgid "Clear"
 msgstr ""
 
@@ -80,7 +80,7 @@ msgstr ""
 msgid "Crypto Map logo"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:49
+#: src/components/elements/FilterModal.vue:61
 msgid "Cryptocurrencies"
 msgstr ""
 
@@ -105,8 +105,8 @@ msgstr ""
 msgid "Entertainment"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:39
-#: src/components/elements/FilterModal.vue:8
+#: src/components/elements/FilterModal.vue:19
+#: src/components/elements/FilterModal.vue:51
 msgid "Filters"
 msgstr ""
 
@@ -160,7 +160,7 @@ msgstr ""
 msgid "Miscellaneous"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:59
+#: src/components/elements/FilterModal.vue:71
 #: src/components/forms/NewCandidate.vue:28
 msgid "More cryptocurrencies supported in the future"
 msgstr ""
@@ -207,11 +207,11 @@ msgstr ""
 msgid "Select an option"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:67
+#: src/components/elements/FilterModal.vue:79
 msgid "Select category"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:44
+#: src/components/elements/FilterModal.vue:56
 #: src/components/forms/NewCandidate.vue:21
 msgid "Select Cryptocurrency"
 msgstr ""

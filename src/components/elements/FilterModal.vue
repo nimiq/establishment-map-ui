@@ -2,6 +2,8 @@
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watchEffect } from 'vue'
+import { useBreakpoints } from '@vueuse/core'
+import { screens } from 'tailwindcss-nimiq-theme'
 import Button from '@/components/atoms/Button.vue'
 import CategoryIcon from '@/components/icons/categories/CategoryIcon.vue'
 import CryptoIcon from '@/components/icons/cryptos/CryptoIcon.vue'
@@ -17,6 +19,7 @@ import { useMap } from '@/stores/map'
 import { useCluster } from '@/stores/cluster'
 
 const isOpen = ref(false)
+const isMobile = useBreakpoints(screens).smaller('md')
 
 const appStore = useApp()
 const { selectedCategories, selectedCurrencies } = storeToRefs(appStore)
@@ -74,17 +77,29 @@ function applyFilters() {
 
 <template>
   <div>
-    <Button bg-color="white" size="md" @click="openModal">
-      <template #icon>
-        <FilterIcon class="text-space w-4.5 h-4.5" />
-      </template>
-      <template #label>
-        {{ $t('Filters') }}
-      </template>
-      <template v-if="nFilters > 0" #badge>
-        {{ nFilters }}
-      </template>
-    </Button>
+    <template v-if="isMobile">
+      <Button bg-color="white" size="lg" class="!w-10 h-10" @click="openModal">
+        <template #icon>
+          <FilterIcon class="w-6 h-6 text-space" />
+        </template>
+        <template v-if="nFilters > 0" #badge>
+          {{ nFilters }}
+        </template>
+      </Button>
+    </template>
+    <template v-else>
+      <Button bg-color="white" size="md" @click="openModal">
+        <template #icon>
+          <FilterIcon class="text-space w-4.5 h-4.5" />
+        </template>
+        <template #label>
+          {{ $t('Filters') }}
+        </template>
+        <template v-if="nFilters > 0" #badge>
+          {{ nFilters }}
+        </template>
+      </Button>
+    </template>
     <TransitionRoot appear :show="isOpen" as="template">
       <Dialog as="div" class="relative z-20" @close="closeModal({ shouldClearFilters: false })">
         <TransitionChild
