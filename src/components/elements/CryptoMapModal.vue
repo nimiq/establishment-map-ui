@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import Modal from '@/components/atoms/Modal.vue'
 import Button from '@/components/atoms/Button.vue'
+import LanguageSelector from '@/components/elements/LanguageSelector.vue'
 import CryptoMapIcon from '@/components/icons/icon-crypto-map.vue'
 import GearIcon from '@/components/icons/icon-gear.vue'
+
+import { SUPPORTED_LANGUAGES, i18n, setLanguage } from '@/i18n/i18n-setup'
+
+function _onLanguagesChange(language: string) {
+  setLanguage(language)
+}
 </script>
 
 <template>
@@ -37,7 +44,7 @@ import GearIcon from '@/components/icons/icon-gear.vue'
           </template>
         </Button>
 
-        <span>EN</span>
+        <LanguageSelector :value="i18n.locale" :languages="SUPPORTED_LANGUAGES" @update:language="_onLanguagesChange" />
       </div>
     </template>
   </Modal>
