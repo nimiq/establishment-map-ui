@@ -76,7 +76,11 @@ const isMobile = smaller(DESKTOP_LAYOUT)
         <CategoryIcon :category="category" class="w-7" />
       </div>
       <div v-else class="grid w-3 h-3 text-sm font-bold text-white rounded-full shadow ring-white/40 ring-2 place-content-center bg-space" />
-      <span v-if="!isAtm && showSingleName()" class="flex-1 font-semibold leading-none text-left text-space" style="font-size: 16.5px; text-stroke: 0.5px white;">
+      <span
+        v-if="!isAtm && showSingleName()"
+        class="outline-text flex-1 text-base font-semibold leading-none text-left text-space"
+        :data-outline="name"
+      >
         {{ name }}
       </span>
     </div>
@@ -111,3 +115,18 @@ const isMobile = smaller(DESKTOP_LAYOUT)
     </PopoverRoot>
   </CustomMarker>
 </template>
+
+<style scoped>
+.outline-text {
+  -webkit-text-stroke: 3px white;
+  text-stroke: 3px white;
+  position: relative;
+}
+
+.outline-text::before {
+  content: attr(data-outline);
+  position: absolute;
+  -webkit-text-stroke: 0;
+  text-stroke: 0;
+}
+</style>
