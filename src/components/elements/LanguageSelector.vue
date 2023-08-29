@@ -96,7 +96,7 @@ function handleClick() {
 
 <template>
   <div
-    class="text-lg font-semibold tracking-[.125rem] uppercase cursor-pointer"
+    class="text-lg font-semibold tracking-[.125rem] uppercase cursor-pointer relative"
     :tabindex="!isListShown && languages.length > 1 ? 0 : -1" @click.once="handleClick" @focus.capture="_showList" @blur.capture="
       // Do not hide the list immediately to wait whether the next focused element is also a language list entry,
       // because blurs also occur when moving between the list entries.
@@ -113,7 +113,7 @@ function handleClick() {
     <transition name="transition-fade">
       <div
         v-if="isListShown && languages.length > 1"
-        class="absolute px-3 py-2 rounded-sm right-7 bottom-7 text-white/50 bg-space drop-shadow"
+        class="absolute px-3 py-2 rounded-sm -right-3 -bottom-2 text-white/50 bg-space drop-shadow"
       >
         <div
           v-for="language of languages" ref="listEntries" :key="language" tabindex="0" class="flex group"
