@@ -34,10 +34,13 @@ export const useCluster = defineStore('cluster', () => {
     const existingData = memoizedCluster.value.get(zoom)
 
     if (existingData) {
+      const toStr = (arr: string[]) => JSON.stringify(arr.sort())
+      const categoriesStr = toStr(selectedCategories.value)
+      const currenciesStr = toStr(selectedCurrencies.value)
       for (const { boundingBox: { neLat: memNeLat, neLng: memNeLng, swLat: memSwLat, swLng: memSwLng }, clusters: memoizedCluster, categories, currencies } of existingData) {
         const isWithinBoundingBox = neLat <= memNeLat && neLng <= memNeLng && swLat >= memSwLat && swLng >= memSwLng
-        const hasSameCategories = JSON.stringify(categories) === JSON.stringify(selectedCategories.value)
-        const hasSameCurrencies = JSON.stringify(currencies) === JSON.stringify(selectedCurrencies.value)
+        const hasSameCategories = toStr(categories) === categoriesStr
+        const hasSameCurrencies = toStr(currencies) === currenciesStr
         if (isWithinBoundingBox && hasSameCategories && hasSameCurrencies) {
           clusters.value = memoizedCluster
           return
