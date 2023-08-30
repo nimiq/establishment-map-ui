@@ -3,7 +3,6 @@ import { useShare } from '@vueuse/core'
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuRoot, DropdownMenuTrigger } from 'radix-vue'
 import type { PropType } from 'vue'
 import { ref } from 'vue'
-import { Clipboard } from '@nimiq/utils'
 import { CheckmarkSmallIcon, CopyIcon } from '@nimiq/vue3-components'
 import IconFlag from '@/components/icons/icon-flag.vue'
 import IconShare from '@/components/icons/icon-share.vue'
@@ -23,22 +22,20 @@ const keepOpen = ref(false)
 
 const { share, isSupported: shareIsSupported } = useShare()
 
-const url = () => `${window.location.origin}/${window.location.pathname}?uuid=${props.location.uuid}`
-
 async function handleShare() {
   keepOpen.value = true
   if (shareIsSupported.value) {
     await share({
       title: props.location.name,
-      text: i18n.t('Check out {locationName} on Nimiq\'s Crypto Map'),
-      url: url(),
+      text: i18n.t('Check out {locationName} on Nimiq\'s Crypto Map', { locationName: props.location.name }),
+      url: window.location.href,
     })
     keepOpen.value = false
   }
   else {
-    isUrlCopied.value = Clipboard.copy(url())
+    isUrlCopied.value = await navigator.clipboard.writeText(window.location.href).then(() => true).catch(() => false)
     if (!isUrlCopied.value)
-      alert('Could not copy URL to clipboard.')
+      alert(i18n.t('Could not copy URL to clipboard.'))
     setTimeout(() => {
       isUrlCopied.value = false
       keepOpen.value = false
@@ -64,12 +61,12 @@ async function handleShare() {
         >
           <template v-if="shareIsSupported">
             <IconShare class="w-4 h-4 mr-3" />
-            <span class="text-base font-semibold leading-4">Share</span>
+            <span class="text-base font-semibold leading-4">${{ $t('Share') }}</span>
           </template>
           <template v-else>
             <CopyIcon v-if="!isUrlCopied" class="w-4 h-4 mr-3" />
             <CheckmarkSmallIcon v-else class="w-4 h-4 mr-3" />
-            <span class="text-base font-semibold leading-4">{{ isUrlCopied ? 'Copied' : 'Copy URL' }}</span>
+            <span class="text-base font-semibold leading-4">{{ isUrlCopied ? $t('Copied') : $t('Copy URL') }}</span>
           </template>
         </DropdownMenuItem>
         <DropdownMenuItem
@@ -78,7 +75,7 @@ async function handleShare() {
           class="flex px-4 py-2 transition-colors outline-none cursor-pointer select-none text-salmon hover:text-salmon/80"
         >
           <IconFlag class="w-4 h-4 mr-3" />
-          <span class="text-base font-semibold leading-4">Report</span>
+          <span class="text-base font-semibold leading-4">{{ $t('Report') }}</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenuPortal>
