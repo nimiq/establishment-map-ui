@@ -1,5 +1,5 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, ref, shallowReactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useRouteQuery } from '@vueuse/router'
 import { useMap } from './map'
@@ -19,8 +19,8 @@ export const useLocations = defineStore('locations', () => {
       - Before fetching, we check if the current bounding box is within a larger fetched bounding box.
       - If so, the fetch is skipped; otherwise, a new fetch occurs and `memoizedLocations` is updated.
   */
-  const memoizedLocations = ref<BoundingBox[]>([])
-  const locationsMap = reactive(new Map<string, Location>())
+  const memoizedLocations: BoundingBox[] = []
+  const locationsMap = shallowReactive(new Map<string, Location>())
   const locations = computed(() => {
     if (!currentBoundingBox.value)
       return []
@@ -36,7 +36,7 @@ export const useLocations = defineStore('locations', () => {
     currentBoundingBox.value = boundingBox
 
     // Check if the current bounding box is within an already fetched bounding box
-    for (const { neLat, neLng, swLat, swLng } of memoizedLocations.value) {
+    for (const { neLat, neLng, swLat, swLng } of memoizedLocations) {
       if (boundingBox.neLat <= neLat && boundingBox.neLng <= neLng && boundingBox.swLat >= swLat && boundingBox.swLng >= swLng)
         return
     }
@@ -45,7 +45,7 @@ export const useLocations = defineStore('locations', () => {
     newLocations.forEach(newLocation => locationsMap.set(newLocation.uuid, newLocation))
 
     // Update memoizedLocations
-    memoizedLocations.value.push(boundingBox)
+    memoizedLocations.push(boundingBox)
     loaded.value = true
   }
 

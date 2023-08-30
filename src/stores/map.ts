@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, shallowRef } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import type { GoogleMap } from 'vue3-google-map'
 import { useDebounceFn } from '@vueuse/core'
@@ -8,7 +8,7 @@ import { useCluster } from './cluster'
 import type { EstimatedMapPosition, MapPosition, Point } from '@/types'
 
 export const useMap = defineStore('map', () => {
-  const mapInstance = ref<typeof GoogleMap>()
+  const mapInstance = shallowRef<typeof GoogleMap>()
   const map = computed(() => mapInstance.value?.map as google.maps.Map)
   const center = () => map.value?.getCenter()?.toJSON() as Point
   const zoom = () => map.value?.getZoom() as number

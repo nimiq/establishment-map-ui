@@ -1,17 +1,17 @@
 import { defineStore, storeToRefs } from 'pinia'
 import type { AnyProps } from 'supercluster'
 import Supercluster from 'supercluster'
-import { ref } from 'vue'
+import { shallowRef } from 'vue'
 import { useFilters } from './filters'
 import type { BoundingBox, Cluster, Location, MemoizedCluster, Point } from '@/types'
 
 export const useCluster = defineStore('cluster', () => {
   const { selectedCategories, selectedCurrencies } = storeToRefs(useFilters())
 
-  const clusters = ref<Cluster[]>([])
+  const clusters = shallowRef<Cluster[]>([])
 
   // All items that are not clustered
-  const singles = ref<Location[]>([])
+  const singles = shallowRef<Location[]>([])
 
   const BASE_RADIUS = 140 // This is the max cluster radius at zoom level 0
   const DECAY_FACTOR = 1.05 // You can adjust this to change how fast the radius decreases
@@ -26,9 +26,9 @@ export const useCluster = defineStore('cluster', () => {
       - Before re-clustering, we check for existing data matching the current zoom, bounding box, and filters.
       - If a match is found, we reuse stored clusters; otherwise, new clusters are computed and stored.
   */
-  const memoizedCluster = ref<Map<number, MemoizedCluster[]>>(new Map())
+  const memoizedCluster = shallowRef<Map<number, MemoizedCluster[]>>(new Map())
 
-  const clusterAlgorithm = ref<Supercluster>()
+  const clusterAlgorithm = shallowRef<Supercluster>()
 
   function cluster(locations: Location[], { neLat, neLng, swLat, swLng }: BoundingBox, zoom: number) {
     const existingData = memoizedCluster.value.get(zoom)
