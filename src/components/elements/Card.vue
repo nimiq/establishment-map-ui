@@ -72,19 +72,3 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
     />
   </div>
 </template>
-
-<style scoped>
-.zoom-in {
-  animation: zoomIn 400ms cubic-bezier(0.4, 0, 0.31, 1.3);
-}
-
-@keyframes zoomIn {
-  0% {
-    transform: scale(0)
-  }
-
-  100% {
-    transform: scale(1)
-  }
-}
-</style>
