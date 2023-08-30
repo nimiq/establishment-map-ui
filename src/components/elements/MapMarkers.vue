@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { createReusableTemplate, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
+import { PopoverAnchor, PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import { screens } from 'tailwindcss-nimiq-theme'
 import { defineAsyncComponent } from 'vue'
 import { CustomMarker } from 'vue3-google-map'
@@ -67,7 +67,7 @@ const { selectedUuid } = storeToRefs(useLocations())
   </CustomMarker>
 
   <DefineTemplate v-slot="{ location: { category, name, isAtm, bg, uuid } }">
-    <div class="flex items-center max-w-[176px]">
+    <div class="flex items-center gap-x-2 max-w-[176px]">
       <div
         v-if="isAtm" class="grid w-8 h-8 text-white rounded-full shadow ring-white/40 ring-2 place-content-center" :style="`background: ${
           bg}`"
@@ -101,8 +101,12 @@ const { selectedUuid } = storeToRefs(useLocations())
       :default-open="location.uuid === initialUuid"
       @update:open="isOpen => selectedUuid = isOpen ? location.uuid : undefined"
     >
-      <PopoverTrigger :aria-label="$t('See location details')" class="p-1 cursor-pointer" :data-trigger-uuid="location.uuid">
-        <ReuseTemplate :location="location" class="px-1 transition-shadow rounded-sm" />
+      <PopoverAnchor
+        class="h-full absolute -left-1 pointer-events-none"
+        :class="location.isAtm || showCategoryIcon() ? 'w-10' : 'w-5'"
+      />
+      <PopoverTrigger :aria-label="$t('See location details')" class="cursor-pointer" :data-trigger-uuid="location.uuid">
+        <ReuseTemplate :location="location" class="transition-shadow rounded-sm" />
       </PopoverTrigger>
       <PopoverPortal>
         <PopoverContent side="right" :side-offset="5" class="rounded-lg shadow">
