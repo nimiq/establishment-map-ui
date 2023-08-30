@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref, useSlots } from 'vue'
 import Button from '@/components/atoms/Button.vue'
-import ArrowLinkIcon from '@/components/icons/icon-arrow-link.vue'
 import ArrowLeftIcon from '@/components/icons/icon-arrow-left.vue'
+import ArrowLinkIcon from '@/components/icons/icon-arrow-link.vue'
 import { useCaptcha } from '@/composables/useCaptcha'
 
 const props = defineProps({

@@ -1,5 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+import { useRouteQuery } from '@vueuse/router'
 import { getLocations as getDbLocations, getLocation } from '@/database'
 import type { BoundingBox, Location } from '@/types'
 import { useApp } from '@/stores/app'
@@ -47,9 +49,8 @@ export const useLocations = defineStore('locations', () => {
   }
 
   async function getLocationByUuid(uuid: string) {
-    if (!locationsMap.has(uuid))
+    if (locationsMap.has(uuid))
       return locationsMap.get(uuid)
-
     const location = await getLocation(uuid)
     if (!location)
       return
@@ -66,10 +67,13 @@ export const useLocations = defineStore('locations', () => {
     return isFilteredByCurrencies && isFilteredByCategories
   }
 
-  const selectedLocationUuid = ref<string>()
-  function setSelectedLocationUuid(uuid?: string) {
-    selectedLocationUuid.value = uuid
-  }
+  const router = useRouter()
+
+  const selectedUuid = useRouteQuery<string | undefined>('uuid') // No need to check for string[]. UUID checked in router.ts
+  watch(() => selectedUuid.value, (newUuid) => {
+    if (newUuid)
+      router.push({ query: { uuid: newUuid } })
+  })
 
   return {
     loaded,
@@ -77,7 +81,6 @@ export const useLocations = defineStore('locations', () => {
     getLocationByUuid,
     locations,
 
-    selectedLocationUuid,
-    setSelectedLocationUuid,
+    selectedUuid,
   }
 })

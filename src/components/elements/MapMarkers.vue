@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { createReusableTemplate, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
+import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import { screens } from 'tailwindcss-nimiq-theme'
 import { defineAsyncComponent } from 'vue'
 import { CustomMarker } from 'vue3-google-map'
-
-// @ts-expect-error The types will be added in the future
-import { PopoverAnchor, PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import type { Location, Point } from '@/types'
 import { useMap } from '@/stores/map'
 import { useCluster } from '@/stores/cluster'
@@ -54,17 +52,7 @@ const { smaller } = useBreakpoints(screens)
 const DESKTOP_LAYOUT = 'md' // FIXME This is suppose to be the same value as in the tailwind config
 const isMobile = smaller(DESKTOP_LAYOUT)
 
-const { setSelectedLocationUuid } = useLocations()
-const { selectedLocationUuid } = storeToRefs(useLocations())
-
-function onPopupOpen(location: Location) {
-  setSelectedLocationUuid(location.uuid)
-}
-
-function onPopupClose(location: Location) {
-  if (selectedLocationUuid.value === location.uuid)
-    setSelectedLocationUuid(undefined)
-}
+const { selectedUuid } = storeToRefs(useLocations())
 </script>
 
 <template>
@@ -85,15 +73,14 @@ function onPopupClose(location: Location) {
       >
         {{ $t('ATM') }}
       </div>
-      <div v-else-if="showCategoryIcon()" class="grid w-8 h-8 text-white rounded-full shadow ring-white/40 ring-2 place-content-center" :class="uuid === selectedLocationUuid ? 'bg-sky' : 'bg-space'">
+      <div v-else-if="showCategoryIcon()" class="grid w-8 h-8 text-white rounded-full shadow ring-white/40 ring-2 place-content-center" :class="uuid === selectedUuid ? 'bg-sky' : 'bg-space'">
         <CategoryIcon :category="category" class="w-7" />
       </div>
-      <div v-else class="grid w-3 h-3 text-sm font-bold text-white rounded-full shadow ring-white/40 ring-2 place-content-center" :class="uuid === selectedLocationUuid ? 'bg-sky' : 'bg-space'" />
+      <div v-else class="grid w-3 h-3 text-sm font-bold text-white rounded-full shadow ring-white/40 ring-2 place-content-center" :class="uuid === selectedUuid ? 'bg-sky' : 'bg-space'" />
       <PopoverAnchor class="mx-1" />
       <span
         v-if="!isAtm && showSingleName()"
-        class="outline-text flex-1 text-base font-semibold leading-none text-left text-space"
-        :class="{ invisible: uuid === selectedLocationUuid }"
+        class="flex-1 text-base font-semibold leading-none text-left outline-text text-space"
         :data-outline="name"
       >
         {{ name }}
@@ -107,12 +94,15 @@ function onPopupClose(location: Location) {
   >
     <ReuseTemplate v-if="isMobile" :location="location" />
 
-    <PopoverRoot v-else>
+    <PopoverRoot
+      v-else :default-open="location.uuid === selectedUuid"
+      @update:open="isOpen => selectedUuid = isOpen ? location.uuid : undefined"
+    >
       <PopoverTrigger :aria-label="$t('See location details')" class="p-1 cursor-pointer">
         <ReuseTemplate :location="location" class="px-1 transition-shadow rounded-sm" />
       </PopoverTrigger>
       <PopoverPortal>
-        <PopoverContent side="right" :side-offset="5" class="shadow" @open-auto-focus="onPopupOpen(location)" @close-auto-focus="onPopupClose(location)">
+        <PopoverContent side="right" :side-offset="5" class="shadow">
           <Card :location="location" :progress="1" class="max-w-xs" />
           <PopoverArrow :style="`fill: ${location.isAtm ? location.bg : 'white'}; width: 16px; height:8px`" />
 

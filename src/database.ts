@@ -98,8 +98,8 @@ export async function getLocations({ neLat, neLng, swLat, swLng }: BoundingBox):
 }
 
 export async function getLocation(uuid: string): Promise<Location | undefined> {
-  const url = new URL(`${databaseUrl}/rest/v1/rpc/get_location`)
-  url.searchParams.set('uuid', uuid)
+  const url = new URL(`${databaseUrl}/rest/v1/rpc/get_location_by_uuid`)
+  url.searchParams.set('location_uuid', uuid)
   const location = await fetchDb<Location>(url)
   if (!location) {
     console.warn(`Location ${uuid} not found`)

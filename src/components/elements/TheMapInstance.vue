@@ -9,7 +9,8 @@ import { useInitialMapPosition } from '@/composables/useInitialMapPosition'
 import MapMarkers from '@/components/elements/MapMarkers.vue'
 
 const { params: initialParams } = useRoute()
-const setInitialMapPosition = () => useInitialMapPosition(initialParams)
+const { query } = useRoute()
+const setInitialMapPosition = () => useInitialMapPosition(initialParams, query)
 
 const mapStore = useMap()
 const { mapInstance } = storeToRefs(mapStore)
