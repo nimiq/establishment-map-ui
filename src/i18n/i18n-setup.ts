@@ -8,6 +8,9 @@ const DEFAULT_LANGUAGE = 'en'
 export const SUPPORTED_LANGUAGES = ['de', 'en', 'es', 'fr', 'nl', 'tr', 'uk']
 const loadedLanguages: string[] = []
 
+// Note: additional config is applied at compile time in vite.config.ts, see
+// https://vue-i18n.intlify.dev/guide/advanced/optimization.html#feature-build-flags
+
 export const i18nRegistration = createI18n({
   locale: DEFAULT_LANGUAGE, // set locale (2 letters format: 'en')
   fallbackLocale: DEFAULT_LANGUAGE, // fallback locale if no translation found
