@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import { type PropType, ref, watch } from 'vue'
 import { RecycleScroller } from 'vue-virtual-scroller'
+import { storeToRefs } from 'pinia'
 import BasicInfo from '@/components/elements/BasicInfo.vue'
 import CardBg from '@/components/elements/CardBg.vue'
 import type { Cluster, Location } from '@/types'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
+import { useLocations } from '@/stores/locations'
 
-defineProps({
+const props = defineProps({
   locations: {
     type: Array as PropType<Location[]>,
     required: true,
@@ -21,9 +23,29 @@ defineProps({
   },
 })
 
+let uuidClickedInList: string | undefined
+
 function onLocationClicked({ uuid }: Location) {
-  (document.querySelector(`[data-trigger-uuid="${uuid}"]`) as HTMLElement)?.click()
+  uuidClickedInList = uuid
+  ;(document.querySelector(`[data-trigger-uuid="${uuid}"]`) as HTMLElement)?.click()
 }
+
+const scroller = ref<RecycleScroller>()
+
+const { selectedUuid } = storeToRefs(useLocations())
+
+watch(selectedUuid, (uuid) => {
+  if (!uuid || !scroller.value)
+    return
+
+  // Prevent scrolling when clicking a location in the list
+  if (uuidClickedInList === uuid)
+    return
+  uuidClickedInList = undefined
+
+  const index = props.locations.findIndex(location => location.uuid === uuid)
+  scroller.value.scrollToItem(index - 2) // -2 to scroll the location to 2 entries from the top of the list
+})
 
 // const heights = {
 //   border: 0.8,
@@ -47,6 +69,7 @@ function onLocationClicked({ uuid }: Location) {
 
 <template>
   <RecycleScroller
+    ref="scroller"
     key-field="uuid"
     :items="locations"
     :item-size="99"
