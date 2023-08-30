@@ -2,7 +2,6 @@
 import { type PropType, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import Button from '@/components/atoms/Button.vue'
-import EllipsisVertical from '@/components/icons/icon-ellipsis-vertical.vue'
 import StarFilledIcon from '@/components/icons/icon-star-filled.vue'
 import StarIcon from '@/components/icons/icon-star.vue'
 import { type Location, LocationLink } from '@/types'
@@ -26,23 +25,20 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
 
 <template>
   <div
-    class="relative grid grid-cols-[auto_1fr_72px] grid-rows-[repeat(3,auto)] gap-x-1.5 items-center group/card" :class="{
+    class="relative grid grid-cols-[auto_1fr] grid-rows-[repeat(3,auto)] gap-x-1.5 items-center group/card" :class="{
       'text-white': location.isAtm && location.isDark,
       'text-space': !location.isAtm || location.isLight,
     }"
   >
-    <h2 class="text-base font-bold leading-[1.3] col-span-2 pb-1 text-balance truncate" :class="{ 'text-sky': selectedUuid === location.uuid }">
+    <h2 class="text-base font-bold leading-[1.3] col-span-2 pb-1 text-balance truncate" :class="{ 'text-sky': !location.isAtm && selectedUuid === location.uuid }">
       <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
       <template v-if="location.isAtm">{{ $t('ATM') }} (</template>{{ location.name }}<template v-if="location.isAtm">)</template>
     </h2>
 
-    <div class="relative flex self-start row-span-2 ml-5 gap-x-3">
+    <div class="relative flex self-start row-span-2 ml-2">
       <Button
-        v-if="location.url" bg-color="white" :href="location.url" border-color="grey"
-        class="transition-[top,right] !w-[52px] right-0 lg:opacity-0 lg:group-hover/card:opacity-100" size="sm" :style="{
-          top: location.photo ? `-${progress * 184}px` : '',
-          position: location.photo ? `absolute` : '',
-        }"
+        v-if="location.url && progress < 0.5" bg-color="white" :href="location.url" border-color="grey"
+        class="absolute z-100 top-0 transition-[top,right] !w-[52px] right-0 lg:opacity-0 lg:group-hover/card:opacity-100" size="sm"
       >
         <template #icon>
           <GmapsPin v-if="location.linkTo === LocationLink.GMaps" />
@@ -51,27 +47,6 @@ const GmapsPin = defineAsyncComponent(() => import('@/components/icons/icon-gmap
           <span v-if="location.linkTo === LocationLink.Facebook">Facebook</span>
         </template>
       </Button>
-
-      <transition
-        enter-active-class="right-0 transition duration-100 ease-out" enter-from-class="scale-95 opacity-0"
-        enter-to-class="scale-100 opacity-100" leave-active-class="transition duration-75 ease-out"
-        leave-from-class="scale-100 opacity-100" leave-to-class="scale-95 opacity-0"
-      >
-        <Button
-          bg-color="transparent" size="sm" class="lg:hidden invisible ml-auto !p-0 !w-1 !h-5 clickable" :class="{
-            visible: progress > 0,
-          }" :style="`width: ${progress * 4}px`"
-        >
-          <template #icon>
-            <EllipsisVertical
-              class="h-5" :class="{
-                'text-white/50': location.isAtm && location.isDark,
-                'text-space/30': !location.isAtm || location.isLight,
-              }"
-            />
-          </template>
-        </Button>
-      </transition>
     </div>
 
     <template v-if="!location.isAtm">
