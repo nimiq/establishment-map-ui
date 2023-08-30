@@ -1,4 +1,4 @@
-<script setup lang="ts" generic="Option">
+<script setup lang="ts" generic="Option extends string|object">
 import {
   Listbox,
   ListboxButton,
@@ -18,15 +18,14 @@ const props = defineProps({
     default: () => [],
   },
   selectedSingle: {
-    type: Object as () => Option,
-    default: -1,
+    type: [Object, String] as unknown as () => Option,
   },
   multiple: {
     type: Boolean,
     default: true,
   },
   options: {
-    type: Array as () => any[],
+    type: Array as () => Option[],
     default: () => [],
   },
   placeholder: {
@@ -82,7 +81,7 @@ function hasSlot(slotName: 'selected-option' | 'after-options' | 'label') {
           <span class="block truncate">
             <slot
               v-if="usePlaceholder" name="selected"
-              v-bind="typeof selected[0] === 'object' ? selected[0] : { option: selected[0] }"
+              v-bind="{ option: multiple ? selected : selected as Option }"
             />
             <template v-else>{{ placeholder }}</template>
           </span>

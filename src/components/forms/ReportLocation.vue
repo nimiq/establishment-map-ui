@@ -1,25 +1,31 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
+import Select from '../atoms/Select.vue'
 import TextAreaInput from '@/components/atoms/TextAreaInput.vue'
 import FormContainer from '@/components/forms/FormContainer.vue'
 import { useLocations } from '@/stores/locations'
 import { translateIssue } from '@/translations'
 import type { Location } from '@/types'
 import { Issue } from '@/types'
-
-const { getLocationByUuid } = useLocations()
+import CircleSpinner from '@/components/icons/icon-circle-spinner.vue'
 
 const selectedIssue = ref<Issue>()
 const issueDescription = ref<string>('')
 const disabled = computed(() => !selectedIssue.value || !issueDescription.value)
 
-const route = useRoute()
-const uuid = computed(() => route.params.uuid as string)
+const router = useRouter()
+
+const { getLocationByUuid, selectedUuid } = useLocations()
+if (!selectedUuid)
+  router.push('/')
+
 const location = ref<Location>()
 
 onMounted(async () => {
-  location.value = await getLocationByUuid(uuid.value)
+  location.value = await getLocationByUuid(selectedUuid!)
+  if (!location.value)
+    router.push('/')
 })
 
 async function onSubmit(captcha: string) {
@@ -30,7 +36,7 @@ async function onSubmit(captcha: string) {
     dev: import.meta.env.DEV,
     reason: issueDescription.value,
     reason_id: selectedIssue.value,
-    uuid: uuid.value,
+    uuid: selectedUuid,
   }
   const url = import.meta.env.VITE_SLACK_REPORT_URL
   return await fetch(url, {
@@ -41,16 +47,24 @@ async function onSubmit(captcha: string) {
 </script>
 
 <template>
-  <FormContainer :disabled="disabled" :on-submit="onSubmit">
+  <FormContainer :disabled="disabled" :on-submit="onSubmit" :show-form="!!location">
     <template #title>
       {{ $t('Report an issue with a location') }}
     </template>
-    <template v-if="location" #description>
-      <RouterLink class="text-sky" :to="`/location/${location?.uuid}`">
-        {{ location?.name }}
-      </RouterLink>
-      <span v-if="location?.address">, {{ location.address }}</span>
-      <span v-if="location?.category">&nbsp;&nbsp;·&nbsp;&nbsp;{{ location.category_label }}</span>
+    <template #description>
+      <template v-if="!!location">
+        <RouterLink class="text-sky" :to="`/location/${location?.uuid}`">
+          {{ location?.name }}
+        </RouterLink>
+        <span v-if="location?.address">, {{ location.address }}</span>
+        <span v-if="location?.category">&nbsp;&nbsp;·&nbsp;&nbsp;{{ location.category_label }}</span>
+      </template>
+      <template v-else>
+        <span class="flex items-center justify-center gap-2 ">
+          <CircleSpinner />
+          {{ $t('Loading information') }}
+        </span>
+      </template>
     </template>
 
     <template #form>
@@ -62,15 +76,16 @@ async function onSubmit(captcha: string) {
           {{ translateIssue(issue) }}
         </template>
         <template #selected="{ option: issue }">
-          {{ translateIssue(issue) }}
+          {{ translateIssue(issue as Issue) }}
         </template>
       </Select>
 
       <TextAreaInput
-        v-model="issueDescription" :placeholder="$t('Write your problem here')" class="mt-6"
-        :label="$t('Describe the issue')"
+        v-model="issueDescription" :placeholder="$t('Write your problem here')"
+        :label="$t('Describe the issue')" class="mt-6"
       />
     </template>
+
     <template #button-label>
       {{ $t('Report Location') }}
     </template>

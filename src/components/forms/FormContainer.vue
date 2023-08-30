@@ -14,6 +14,10 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  showForm: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const { getToken, loadRecaptcha, removeRecaptcha } = useCaptcha()
@@ -98,7 +102,7 @@ function hasSlot(name: string) {
           <ArrowLinkIcon class="w-2.5 h-2.5 group-hover:left-0.5 group-hover:-top-0.5 transition-all duration-300" />
         </div>
 
-        <form v-if="hasSlot('form')" class="text-left mt-14 lg:mt-16" @submit.prevent="onSubmit">
+        <form v-if="hasSlot('form')" class="text-left transition-[opacity,transform] mt-14 lg:mt-16 delay-200" :class="showForm ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'" @submit.prevent="onSubmit">
           <slot name="form" />
 
           <Button
