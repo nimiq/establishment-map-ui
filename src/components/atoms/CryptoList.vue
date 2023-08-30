@@ -35,7 +35,7 @@ const n = computed(() => {
 </script>
 
 <template>
-  <div class="flex items-center gap-x-2">
+  <div v-if="cryptosToDisplay.length > 0" class="flex items-center gap-x-2">
     <ul class="flex items-center p-1 bg-white rounded-full w-max gap-x-2 ring-1 ring-space/10">
       <li v-for="c in cryptosToDisplay " :key="c">
         <CryptoIcon :crypto="c" size="md" bg="transparent" />
