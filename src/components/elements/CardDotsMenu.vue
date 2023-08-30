@@ -2,7 +2,7 @@
 import { useShare } from '@vueuse/core'
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuRoot, DropdownMenuTrigger } from 'radix-vue'
 import type { PropType } from 'vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { CheckmarkSmallIcon, CopyIcon } from '@nimiq/vue3-components'
 import IconFlag from '@/components/icons/icon-flag.vue'
 import IconShare from '@/components/icons/icon-share.vue'
@@ -18,7 +18,10 @@ const props = defineProps({
 })
 
 const isUrlCopied = ref(false)
+const isClickable = ref(false)
 const keepOpen = ref(false)
+
+watch(keepOpen, x => isClickable.value = x)
 
 const { share, isSupported: shareIsSupported } = useShare()
 
@@ -42,10 +45,17 @@ async function handleShare() {
     }, 2000)
   }
 }
+
+function handleOpen(open: boolean) {
+  if (open)
+    setTimeout(() => isClickable.value = true, 200)
+  else
+    isClickable.value = false
+}
 </script>
 
 <template>
-  <DropdownMenuRoot :open="keepOpen">
+  <DropdownMenuRoot :open="keepOpen" @update:open="handleOpen">
     <DropdownMenuTrigger v-bind="$attrs">
       <IconThreeDots class="w-5 h-5 text-space/30 hover:text-space/50" />
     </DropdownMenuTrigger>
@@ -53,10 +63,13 @@ async function handleShare() {
     <DropdownMenuPortal>
       <DropdownMenuContent
         class="outline-none bg-gradient-space rounded-sm p-1 will-change-[colors] shadow absolute -top-6 -right-2 min-w-max animate-slideLeftAndFade"
+        :class="{ 'pointer-events-none': !isClickable }"
         :side-offset="0"
+        @interact-outside="isClickable = false"
       >
         <DropdownMenuItem
           class="flex px-4 py-2 text-white transition-colors outline-none cursor-pointer select-none hover:text-white/80"
+          :class="{ 'pointer-events-none': !isClickable }"
           @click="handleShare"
         >
           <template v-if="shareIsSupported">
