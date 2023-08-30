@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { createReusableTemplate, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { PopoverAnchor, PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
+import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import { screens } from 'tailwindcss-nimiq-theme'
 import { defineAsyncComponent } from 'vue'
 import { CustomMarker } from 'vue3-google-map'
@@ -78,7 +78,7 @@ const { selectedUuid } = storeToRefs(useLocations())
         <CategoryIcon :category="category" class="w-7" />
       </div>
       <div v-else class="grid w-3 h-3 text-sm font-bold text-white rounded-full shadow ring-white/40 ring-2 place-content-center" :class="uuid === selectedUuid ? 'bg-sky' : 'bg-space'" />
-      <PopoverAnchor class="mx-1" />
+      <!-- <PopoverAnchor class="mx-1" /> -->
       <span
         v-if="!isAtm && showSingleName()"
         class="flex-1 text-base font-semibold leading-none text-left outline-text text-space"
