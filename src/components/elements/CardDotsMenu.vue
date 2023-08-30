@@ -2,6 +2,9 @@
 import { useShare } from '@vueuse/core'
 import { DropdownMenuContent, DropdownMenuItem, DropdownMenuPortal, DropdownMenuRoot, DropdownMenuTrigger } from 'radix-vue'
 import type { PropType } from 'vue'
+import { ref } from 'vue'
+import { Clipboard } from '@nimiq/utils'
+import { CheckmarkSmallIcon, CopyIcon } from '@nimiq/vue3-components'
 import IconFlag from '@/components/icons/icon-flag.vue'
 import IconShare from '@/components/icons/icon-share.vue'
 import IconThreeDots from '@/components/icons/icon-three-dots.vue'
@@ -15,33 +18,59 @@ const props = defineProps({
   },
 })
 
+const isUrlCopied = ref(false)
+const keepOpen = ref(false)
+
 const { share, isSupported: shareIsSupported } = useShare()
 
 const url = () => `${window.location.origin}/${window.location.pathname}?uuid=${props.location.uuid}`
+
+async function handleShare() {
+  keepOpen.value = true
+  if (shareIsSupported.value) {
+    await share({
+      title: props.location.name,
+      text: i18n.t('Check out {locationName} on Nimiq\'s Crypto Map'),
+      url: url(),
+    })
+    keepOpen.value = false
+  }
+  else {
+    isUrlCopied.value = Clipboard.copy(url())
+    if (!isUrlCopied.value)
+      alert('Could not copy URL to clipboard.')
+    setTimeout(() => {
+      isUrlCopied.value = false
+      keepOpen.value = false
+    }, 2000)
+  }
+}
 </script>
 
 <template>
-  <DropdownMenuRoot>
+  <DropdownMenuRoot :open="keepOpen">
     <DropdownMenuTrigger v-bind="$attrs">
       <IconThreeDots class="w-5 h-5 text-space/30 hover:text-space/50" />
     </DropdownMenuTrigger>
 
     <DropdownMenuPortal>
       <DropdownMenuContent
-        class="outline-none bg-gradient-space rounded-sm p-1 will-change-[opacity] shadow"
+        class="outline-none bg-gradient-space rounded-sm p-1 will-change-[colors] shadow"
         :side-offset="10"
       >
         <DropdownMenuItem
-          v-if="shareIsSupported"
           class="flex px-4 py-2 text-white transition-colors outline-none cursor-pointer select-none hover:text-white/80"
-          @click="share({
-            title: location.name,
-            text: i18n.t('Check out {locationName} on Nimiq\'s Crypto Map'),
-            url: url(),
-          })"
+          @click="handleShare"
         >
-          <IconShare class="w-4 h-4 mr-3" />
-          <span class="text-base font-semibold leading-4">Share</span>
+          <template v-if="shareIsSupported">
+            <IconShare class="w-4 h-4 mr-3" />
+            <span class="text-base font-semibold leading-4">Share</span>
+          </template>
+          <template v-else>
+            <CopyIcon v-if="!isUrlCopied" class="w-4 h-4 mr-3" />
+            <CheckmarkSmallIcon v-else class="w-4 h-4 mr-3" />
+            <span class="text-base font-semibold leading-4">{{ isUrlCopied ? 'Copied' : 'Copy URL' }}</span>
+          </template>
         </DropdownMenuItem>
         <DropdownMenuItem
           as="a"
