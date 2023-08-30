@@ -2,6 +2,9 @@ import { i18n } from '@/i18n/i18n-setup'
 import { Provider, Theme } from '@/types'
 import type { Location } from '@/types'
 
+// Note that providerLabel and providerTooltip are defined as getters to not be constant but re-computed on language
+// changes. providerLabel can include a {provider} placeholder which gets handled by passing the translation through
+// i18n-t in ProviderBanner
 export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard' | 'theme' | 'providerLabel' | 'providerTooltip' | 'providerTooltipCta'>> = {
   [Provider.DefaultShop]: {
     bg: 'white',
@@ -19,13 +22,9 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
     bgFullCard: false,
     bg: '#F0BF4C',
     get providerLabel() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('Powered by {provider}')
-      return 'Powered by {provider}'
+      return i18n.t('Powered by {provider}')
     },
     get providerTooltip() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('GoCrypto is a global payment network that enables merchants to accept crypto payments.')
       return i18n.t('GoCrypto is a global payment network that enables merchants to accept crypto payments.')
     },
     providerTooltipCta: 'https://gocrypto.com',
@@ -35,13 +34,9 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
     bgFullCard: true,
     bg: '#A92E19',
     get providerLabel() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('Register with {provider}')
-      return 'Register with {provider}'
+      return i18n.t('Register with {provider}')
     },
     get providerTooltip() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('Kurant enables users to easily purchase cryptocurrencies through a network of ATMs.')
       return i18n.t('Kurant enables users to easily purchase cryptocurrencies through a network of ATMs.')
     },
     providerTooltipCta: 'https://kurant.net',
@@ -51,14 +46,10 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
     bgFullCard: false,
     theme: Theme.Dark,
     get providerLabel() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('Powered by {provider}')
-      return 'Powered by {provider}'
+      return i18n.t('Powered by {provider}')
     },
     get providerTooltip() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('Bluecode is a payment method that allows secure transactions directly through the smartphone.')
-      return 'Bluecode is a payment method that allows secure transactions directly through the smartphone.'
+      return i18n.t('Bluecode is a payment method that allows secure transactions directly through the smartphone.')
     },
     providerTooltipCta: 'https://bluecode.com',
   },
@@ -67,14 +58,10 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
     theme: Theme.Dark,
     bgFullCard: false,
     get providerLabel() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('Powered by {provider}')
-      return 'Powered by {provider}'
+      return i18n.t('Powered by {provider}')
     },
     get providerTooltip() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('With CryptoPayment Link, you can quickly and easily receive cryptocurrency payments from your customers.')
-      return 'With CryptoPayment Link, you can quickly and easily receive cryptocurrency payments from your customers.'
+      return i18n.t('With CryptoPayment Link, you can quickly and easily receive cryptocurrency payments from your customers.')
     },
     providerTooltipCta: 'https://cplink.com',
   },
@@ -83,14 +70,10 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
     theme: Theme.Dark,
     bgFullCard: true,
     get providerLabel() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('Register with {provider}')
-      return 'Register with {provider}'
+      return i18n.t('Register with {provider}')
     },
     get providerTooltip() {
-      // @ts-expect-error Must write out the translation key so it can be extracted by the i18n plugin
-      const translation = i18n.t('Edenia enables users to easily purchase cryptocurrencies through a network of ATMs')
-      return 'Edenia enables users to easily purchase cryptocurrencies through a network of ATMs'
+      return i18n.t('Edenia enables users to easily purchase cryptocurrencies through a network of ATMs')
     },
   },
 

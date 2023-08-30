@@ -19,7 +19,8 @@ export const i18nRegistration = createI18n({
 export const i18n = i18nRegistration.global
 
 if (process.env.NODE_ENV === 'production')
-  i18n.missing = () => '' // trick to not show numbers instead of string before language is loaded
+  // trick to not show numbers instead of string before language is loaded
+  i18n.missing = (locale, key) => /^[0-9]+$/.test(key) ? '' : key
 
 // load and set language
 export async function setLanguage(lang: string): Promise<string> {
