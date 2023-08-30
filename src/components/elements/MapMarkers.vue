@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { createReusableTemplate, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
+import { PopoverAnchor, PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import { screens } from 'tailwindcss-nimiq-theme'
 import { defineAsyncComponent } from 'vue'
 import { CustomMarker } from 'vue3-google-map'
 import type { Location, Point } from '@/types'
 import { useMap } from '@/stores/map'
-import { useCluster } from '@/stores/cluster'
 import { useLocations } from '@/stores/locations'
+import { useCluster } from '@/stores/cluster'
 import Card from '@/components/elements/Card.vue'
 
 // TODO Import this from radix-vue
@@ -57,7 +57,7 @@ const { selectedUuid } = storeToRefs(useLocations())
 
 <template>
   <CustomMarker
-    v-for="({ center, count, clusterId }, i) in clusters" :key="i"
+    v-for="({ center, count, clusterId }) in clusters" :key="clusterId"
     :options="{ position: center, anchorPoint: 'CENTER' }"
   >
     <div class="grid text-sm font-bold text-white rounded-full shadow cursor-pointer aspect-square place-content-center bg-space ring-white/20 ring-2 ring-offset-1 ring-offset-white/40" :style="`width: clamp(24px, ${0.24 * count + 24}px, 48px); font-size: clamp(14px, ${0.14 * count + 4}px, 18px)`" @click="onClusterClick(center, clusterId)">
@@ -89,13 +89,14 @@ const { selectedUuid } = storeToRefs(useLocations())
   </DefineTemplate>
 
   <CustomMarker
-    v-for="(location, i) in singles" :key="i"
+    v-for="location in singles" :key="location.uuid"
     :options="{ position: { lng: location.lng, lat: location.lat }, anchorPoint: showSingleName() ? 'LEFT_CENTER' : 'CENTER' }"
   >
     <ReuseTemplate v-if="isMobile" :location="location" />
 
     <PopoverRoot
-      v-else :default-open="location.uuid === selectedUuid"
+      v-else
+      :default-open="location.uuid === selectedUuid"
       @update:open="isOpen => selectedUuid = isOpen ? location.uuid : undefined"
     >
       <PopoverTrigger :aria-label="$t('See location details')" class="p-1 cursor-pointer">

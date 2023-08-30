@@ -5,7 +5,6 @@ import { useDebounceFn } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { useLocations } from './locations'
 import { useCluster } from './cluster'
-import { useApp } from './app'
 import type { EstimatedMapPosition, MapPosition, Point } from '@/types'
 
 export const useMap = defineStore('map', () => {
@@ -55,7 +54,7 @@ export const useMap = defineStore('map', () => {
   const router = useRouter()
   const locationsStore = useLocations()
   const { cluster } = useCluster()
-  const { selectedUuid } = storeToRefs(useApp())
+  const { selectedUuid } = storeToRefs(useLocations())
 
   async function onBoundsChanged() {
     const bbox = boundingBox()

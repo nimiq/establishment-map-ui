@@ -48,13 +48,13 @@ defineProps({
     item-class="relative overflow-hidden border-space/10 border-t-xs group/card [&_[data-rings]]:-rotate-90"
   >
     <template #default="{ item: location }">
-      <div
-        class="px-6 py-5"
+      <button
+        class="w-full px-6 py-5 text-left"
         :style="`background: ${location.isAtm && location.isDark ? location.bg : 'white'}`"
       >
         <CardBg v-if="location.isAtm" :location="location" :with-gradient="false" class="translate-y-1" />
         <BasicInfo :location="location" />
-      </div>
+      </button>
     </template>
   </RecycleScroller>
 </template>
