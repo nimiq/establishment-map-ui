@@ -146,6 +146,7 @@ export interface Location {
   // Provider text
   providerLabel?: string
   providerTooltip?: string
+  providerTooltipCta?: string
 
   // Quick getters
   isAtm: boolean
