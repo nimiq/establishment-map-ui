@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const props = defineProps({
   progress: {
@@ -32,15 +32,14 @@ const dif = props.maxHeight - props.initialHeight
 
 let initialY = 0
 let initialTime = 0
-let isOpen = false
 const dragging = ref(false)
 const container = ref<HTMLElement | null>(null)
+const isOpen = computed(() => props.progress === 1)
 
 function onStart(event: PointerEvent) {
   dragging.value = true
   initialTime = event.timeStamp
   initialY = event.clientY
-  isOpen = props.progress === 1
   container.value!.setPointerCapture(event.pointerId)
 }
 
@@ -48,7 +47,7 @@ function onMove(event: PointerEvent) {
   if (!dragging.value)
     return
   const yDelta = (initialY - event.clientY)
-  const startingPoint = isOpen ? yDelta + dif : yDelta
+  const startingPoint = isOpen.value ? yDelta + dif : yDelta
   const newProgress = Math.max(0, Math.min(startingPoint / dif, 1))
   emit('update:progress', newProgress)
 }
@@ -62,11 +61,11 @@ function onEnd(event: PointerEvent) {
 
   const isClick = timeDelta < 500
 
-  if (isClick && !isOpen) {
+  if (isClick && !isOpen.value) {
     open()
   }
   else {
-    if (isOpen)
+    if (isOpen.value)
       props.progress < 0.85 ? close() : open()
 
     else
@@ -122,7 +121,11 @@ onBeforeUnmount(() => {
     <slot name="dragger">
       <div class="relative">
         <hr
-          class="absolute inset-x-0 z-10 w-32 h-1 mx-auto mt-2 ml-auto border-0 rounded-full bg-black/20 mix-blend-difference"
+          class="absolute inset-x-0 z-10 w-32 h-1 mx-auto mt-2 ml-auto border-0 rounded-full bg-black/20"
+          :class="{
+            'bg-white mt-3': isOpen,
+            'mix-blend-darken': !isOpen,
+          }"
         >
       </div>
     </slot>
