@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { PropType } from 'vue'
 import { computed } from 'vue'
 import CryptoIcon from '@/components/icons/cryptos/CryptoIcon.vue'
+import type { Currency } from '@/types'
 
 const props = defineProps({
   cryptos: {
-    type: Array as () => string[],
+    type: Array as PropType<Currency[]>,
     default: () => [],
   },
   label: {
