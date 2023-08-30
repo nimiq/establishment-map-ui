@@ -23,7 +23,7 @@ const url = () => `${window.location.origin}/${window.location.pathname}?uuid=${
 <template>
   <DropdownMenuRoot>
     <DropdownMenuTrigger v-bind="$attrs">
-      <IconThreeDots class="w-5 h-5 text-space/30" />
+      <IconThreeDots class="w-5 h-5 text-space/30 hover:text-space/50" />
     </DropdownMenuTrigger>
 
     <DropdownMenuPortal>
