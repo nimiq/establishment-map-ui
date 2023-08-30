@@ -2,11 +2,9 @@ import { useRouteQuery } from '@vueuse/router'
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { CATEGORIES, CURRENCIES } from '@/database'
-import { useLocations } from '@/stores/locations'
-import { useMap } from '@/stores/map'
 import type { Category, Currency } from '@/types'
 
-export const useApp = defineStore('app', () => {
+export const useFilters = defineStore('filters', () => {
   const selectedCategoriesQuery = useRouteQuery<Category | Category[]>('categories')
   const selectedCategories = computed(() => {
     const c = selectedCategoriesQuery.value
@@ -32,21 +30,7 @@ export const useApp = defineStore('app', () => {
     selectedCategoriesQuery.value = categories
   }
 
-  async function goToLocation(uuid: string) {
-    const location = await useLocations().getLocationByUuid(uuid)
-    if (!location)
-      return false
-
-    useMap().setPosition({
-      center: { lat: location.lat, lng: location.lng },
-      zoom: 19,
-    })
-
-    return true
-  }
-
   return {
-    goToLocation,
     selectedCategories,
     selectedCurrencies,
     setSelectedCurrencies,

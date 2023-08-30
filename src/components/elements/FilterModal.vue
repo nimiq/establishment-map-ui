@@ -11,7 +11,7 @@ import Select from '@/components/atoms/Select.vue'
 import CrossIcon from '@/components/icons/icon-cross.vue'
 import FilterIcon from '@/components/icons/icon-filter.vue'
 import { CATEGORIES, CURRENCIES } from '@/database'
-import { useApp } from '@/stores/app'
+import { useFilters } from '@/stores/filters'
 import { translateCategory, translateCurrency } from '@/translations'
 import type { Category, Currency } from '@/types'
 import { useLocations } from '@/stores/locations'
@@ -21,8 +21,8 @@ import { useCluster } from '@/stores/cluster'
 const isOpen = ref(false)
 const isMobile = useBreakpoints(screens).smaller('md')
 
-const appStore = useApp()
-const { selectedCategories, selectedCurrencies } = storeToRefs(appStore)
+const filtersStore = useFilters()
+const { selectedCategories, selectedCurrencies } = storeToRefs(filtersStore)
 
 const unappliedFiltersCategories = ref<Category[]>([])
 const unappliedFiltersCurrencies = ref<Currency[]>([])
@@ -45,8 +45,8 @@ const { locations } = storeToRefs(useLocations())
 const { boundingBox, zoom } = useMap()
 
 function updateFilters() {
-  appStore.setSelectedCategories(unappliedFiltersCategories.value)
-  appStore.setSelectedCurrencies(unappliedFiltersCurrencies.value)
+  filtersStore.setSelectedCategories(unappliedFiltersCategories.value)
+  filtersStore.setSelectedCurrencies(unappliedFiltersCurrencies.value)
 
   // re-render the clusters in the map
   useCluster().cluster(locations.value, boundingBox()!, zoom())

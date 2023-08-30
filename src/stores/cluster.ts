@@ -2,11 +2,11 @@ import { defineStore, storeToRefs } from 'pinia'
 import type { AnyProps } from 'supercluster'
 import Supercluster from 'supercluster'
 import { ref } from 'vue'
-import { useApp } from './app'
+import { useFilters } from './filters'
 import type { BoundingBox, Cluster, Location, MemoizedCluster, Point } from '@/types'
 
 export const useCluster = defineStore('cluster', () => {
-  const { selectedCategories, selectedCurrencies } = storeToRefs(useApp())
+  const { selectedCategories, selectedCurrencies } = storeToRefs(useFilters())
 
   const clusters = ref<Cluster[]>([])
 

@@ -2,7 +2,7 @@ import { computed, ref } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import type { GoogleMap } from 'vue3-google-map'
 import { useDebounceFn } from '@vueuse/core'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useLocations } from './locations'
 import { useCluster } from './cluster'
 import type { EstimatedMapPosition, MapPosition, Point } from '@/types'
@@ -52,6 +52,8 @@ export const useMap = defineStore('map', () => {
   }
 
   const router = useRouter()
+  const route = useRoute()
+
   const locationsStore = useLocations()
   const { cluster } = useCluster()
   const { selectedUuid } = storeToRefs(useLocations())
@@ -63,7 +65,7 @@ export const useMap = defineStore('map', () => {
     router.push({
       name: 'coords',
       params: { ...center(), zoom: zoom() },
-      query: selectedUuid.value ? { uuid: selectedUuid.value } : undefined,
+      query: { ...route.query, uuid: selectedUuid.value ? selectedUuid.value : undefined },
       replace: true,
     })
     await locationsStore.getLocations(boundingBox()!)

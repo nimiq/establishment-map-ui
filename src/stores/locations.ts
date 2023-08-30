@@ -1,10 +1,11 @@
 import { defineStore, storeToRefs } from 'pinia'
 import { computed, reactive, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useRouteQuery } from '@vueuse/router'
+import { useMap } from './map'
 import { getLocations as getDbLocations, getLocation } from '@/database'
 import type { BoundingBox, Location } from '@/types'
-import { useApp } from '@/stores/app'
+import { useFilters } from '@/stores/filters'
 
 export const useLocations = defineStore('locations', () => {
   // We just track the first load, so we can show a loading indicator
@@ -58,7 +59,7 @@ export const useLocations = defineStore('locations', () => {
     return location
   }
 
-  const { selectedCurrencies, selectedCategories } = storeToRefs(useApp())
+  const { selectedCurrencies, selectedCategories } = storeToRefs(useFilters())
 
   function includeLocation({ category, accepts, sells }: Location) {
     const currencies = accepts.concat(sells)
@@ -68,12 +69,26 @@ export const useLocations = defineStore('locations', () => {
   }
 
   const router = useRouter()
+  const route = useRoute()
 
   const selectedUuid = useRouteQuery<string | undefined>('uuid') // No need to check for string[]. UUID checked in router.ts
   watch(() => selectedUuid.value, (newUuid) => {
     if (newUuid)
-      router.push({ query: { uuid: newUuid } })
+      router.push({ query: { uuid: newUuid, ...route.query } })
   })
+
+  async function goToLocation(uuid: string) {
+    const location = await useLocations().getLocationByUuid(uuid)
+    if (!location)
+      return false
+
+    useMap().setPosition({
+      center: { lat: location.lat, lng: location.lng },
+      zoom: 19,
+    })
+
+    return true
+  }
 
   return {
     loaded,
@@ -82,5 +97,6 @@ export const useLocations = defineStore('locations', () => {
     locations,
 
     selectedUuid,
+    goToLocation,
   }
 })

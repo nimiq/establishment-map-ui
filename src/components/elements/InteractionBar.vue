@@ -2,10 +2,11 @@
 import { computed } from 'vue'
 import SearchBox from '@/components/atoms/SearchBox.vue'
 import CryptoMapModal from '@/components/elements/CryptoMapModal.vue'
-import { useApp } from '@/stores/app'
+import { useFilters } from '@/stores/filters'
 import { useAutocomplete } from '@/composables/useAutocomplete'
 import { type Suggestion, SuggestionType } from '@/types'
 import { useMap } from '@/stores/map'
+import { useLocations } from '@/stores/locations'
 
 const { querySearch, dbSuggestions, googleSuggestions } = useAutocomplete()
 
@@ -35,8 +36,6 @@ function showSearchBoxList() {
   searchBoxList.style.zIndex = '1000'
 }
 
-const appStore = useApp()
-
 function onSelect(suggestion?: Suggestion) {
   if (!suggestion)
     return
@@ -47,13 +46,13 @@ function onSelect(suggestion?: Suggestion) {
       useMap().goToPlaceId(suggestion.id)
       break
     case SuggestionType.Category:
-      appStore.setSelectedCategories([suggestion.id])
+      useFilters().setSelectedCategories([suggestion.id])
       break
     case SuggestionType.Currency:
-      appStore.setSelectedCurrencies([suggestion.id])
+      useFilters().setSelectedCurrencies([suggestion.id])
       break
     case SuggestionType.Location:
-      appStore.goToLocation(suggestion.id)
+      useLocations().goToLocation(suggestion.id)
       break
   }
 
