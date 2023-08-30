@@ -10,14 +10,6 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: src/assets-dev/provider-assets.ts:23 src/assets-dev/provider-assets.ts:49
-msgid "{provider} app required"
-msgstr ""
-
-#: src/assets-dev/provider-assets.ts:63
-msgid "{provider} available"
-msgstr ""
-
 #: src/components/elements/DesktopList.vue:25
 msgid "+ {count} grouped"
 msgstr ""
@@ -46,6 +38,12 @@ msgstr ""
 msgid "Back to the Map"
 msgstr "Volver al mapa"
 
+#: src/assets-dev/provider-assets.ts:60
+msgid ""
+"Bluecode is a payment method that allows secure transactions directly "
+"through the smartphone."
+msgstr ""
+
 #: src/components/elements/Card.vue:27
 msgid "Buy"
 msgstr ""
@@ -70,7 +68,7 @@ msgstr "Efectivo"
 msgid "Categories"
 msgstr "Categorias"
 
-#: src/components/elements/CardDotsMenu.vue:17
+#: src/components/elements/CardDotsMenu.vue:33
 msgid "Check out {locationName} on Nimiq's Crypto Map"
 msgstr ""
 
@@ -81,6 +79,18 @@ msgstr "Limpiar"
 #: src/translations.ts:8
 msgid "Computer & Electronics"
 msgstr "Ordenadores & Electrónica"
+
+#: src/components/elements/CardDotsMenu.vue:26
+msgid "Copied"
+msgstr ""
+
+#: src/components/elements/CardDotsMenu.vue:26
+msgid "Copy URL"
+msgstr ""
+
+#: src/components/elements/CardDotsMenu.vue:41
+msgid "Could not copy URL to clipboard."
+msgstr ""
 
 #: src/components/forms/NewCandidate.vue:10
 msgid "Create Google Business profile"
@@ -116,6 +126,12 @@ msgstr ""
 msgid "Describe the issue"
 msgstr "Describa el problema"
 
+#: src/assets-dev/provider-assets.ts:92
+msgid ""
+"Edenia enables users to easily purchase cryptocurrencies through a network "
+"of ATMs"
+msgstr ""
+
 #: src/translations.ts:9
 msgid "Entertainment"
 msgstr "Entretenimiento"
@@ -133,7 +149,7 @@ msgstr "Buscar lugar"
 msgid "Food & Drinks"
 msgstr "Comida & Bebidas"
 
-#: src/assets-dev/provider-assets.ts:27
+#: src/assets-dev/provider-assets.ts:28 src/assets-dev/provider-assets.ts:29
 msgid ""
 "GoCrypto is a global payment network that enables merchants to accept crypto"
 " payments."
@@ -154,11 +170,11 @@ msgstr ""
 msgid "Hotel & Lodging"
 msgstr "Hotel & Alojamiento"
 
-#: src/assets-dev/provider-assets.ts:40
-msgid "Kurant ATM is a blockchain-based ATM network and platform."
+#: src/assets-dev/provider-assets.ts:44 src/assets-dev/provider-assets.ts:45
+msgid ""
+"Kurant enables users to easily purchase cryptocurrencies through a network "
+"of ATMs."
 msgstr ""
-"Kurant ATM es una red y plataforma de cajeros automáticos basada en "
-"blockchain."
 
 #: src/translations.ts:13
 msgid "Leisure Activities"
@@ -201,8 +217,17 @@ msgstr "No se han encontrado resultados."
 msgid "Other"
 msgstr "Otro"
 
-#: src/assets-dev/provider-assets.ts:36 src/assets-dev/provider-assets.ts:77
+#: src/assets-dev/provider-assets.ts:23 src/assets-dev/provider-assets.ts:55
+#: src/assets-dev/provider-assets.ts:71
+msgid "Powered by {provider}"
+msgstr ""
+
+#: src/assets-dev/provider-assets.ts:39 src/assets-dev/provider-assets.ts:87
 msgid "Register with {provider}"
+msgstr ""
+
+#: src/components/elements/CardDotsMenu.vue:35
+msgid "Report"
 msgstr ""
 
 #: src/components/forms/ReportLocation.vue:4
@@ -221,7 +246,7 @@ msgstr "Restaurantes & Bares"
 msgid "Search Map"
 msgstr "Buscar mapa"
 
-#: src/components/elements/MapMarkers.vue:46
+#: src/components/elements/MapMarkers.vue:50
 msgid "See location details"
 msgstr ""
 
@@ -254,6 +279,10 @@ msgstr ""
 #: src/components/forms/FormContainer.vue:47
 msgid "Send"
 msgstr "Enviar"
+
+#: src/components/elements/CardDotsMenu.vue:21
+msgid "Share"
+msgstr ""
 
 #: src/translations.ts:16
 msgid "Shop"
@@ -330,6 +359,12 @@ msgstr "Escribe el nombre del lugar"
 
 #: src/translations.ts:38
 msgid "USDC on POLYGON"
+msgstr ""
+
+#: src/assets-dev/provider-assets.ts:76
+msgid ""
+"With CryptoPayment Link, you can quickly and easily receive cryptocurrency "
+"payments from your customers."
 msgstr ""
 
 #: src/components/forms/ReportLocation.vue:36

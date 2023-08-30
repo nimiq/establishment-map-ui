@@ -10,14 +10,6 @@ msgstr ""
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: src/assets-dev/provider-assets.ts:23 src/assets-dev/provider-assets.ts:49
-msgid "{provider} app required"
-msgstr ""
-
-#: src/assets-dev/provider-assets.ts:63
-msgid "{provider} available"
-msgstr ""
-
 #: src/components/elements/DesktopList.vue:25
 msgid "+ {count} grouped"
 msgstr ""
@@ -46,6 +38,12 @@ msgstr ""
 msgid "Back to the Map"
 msgstr "Haritaya Geri Dön"
 
+#: src/assets-dev/provider-assets.ts:60
+msgid ""
+"Bluecode is a payment method that allows secure transactions directly "
+"through the smartphone."
+msgstr ""
+
 #: src/components/elements/Card.vue:27
 msgid "Buy"
 msgstr ""
@@ -70,7 +68,7 @@ msgstr "Nakit para"
 msgid "Categories"
 msgstr "Kategoriler"
 
-#: src/components/elements/CardDotsMenu.vue:17
+#: src/components/elements/CardDotsMenu.vue:33
 msgid "Check out {locationName} on Nimiq's Crypto Map"
 msgstr ""
 
@@ -81,6 +79,18 @@ msgstr "Temizle"
 #: src/translations.ts:8
 msgid "Computer & Electronics"
 msgstr "Bilgisayar ve Elektronik"
+
+#: src/components/elements/CardDotsMenu.vue:26
+msgid "Copied"
+msgstr ""
+
+#: src/components/elements/CardDotsMenu.vue:26
+msgid "Copy URL"
+msgstr ""
+
+#: src/components/elements/CardDotsMenu.vue:41
+msgid "Could not copy URL to clipboard."
+msgstr ""
 
 #: src/components/forms/NewCandidate.vue:10
 msgid "Create Google Business profile"
@@ -116,6 +126,12 @@ msgstr ""
 msgid "Describe the issue"
 msgstr "Sorunu açıkla"
 
+#: src/assets-dev/provider-assets.ts:92
+msgid ""
+"Edenia enables users to easily purchase cryptocurrencies through a network "
+"of ATMs"
+msgstr ""
+
 #: src/translations.ts:9
 msgid "Entertainment"
 msgstr "Eğlence"
@@ -133,7 +149,7 @@ msgstr "Konum bulun"
 msgid "Food & Drinks"
 msgstr "Yiyecek ve İçecekler"
 
-#: src/assets-dev/provider-assets.ts:27
+#: src/assets-dev/provider-assets.ts:28 src/assets-dev/provider-assets.ts:29
 msgid ""
 "GoCrypto is a global payment network that enables merchants to accept crypto"
 " payments."
@@ -154,9 +170,11 @@ msgstr ""
 msgid "Hotel & Lodging"
 msgstr "Otel ve Konaklama"
 
-#: src/assets-dev/provider-assets.ts:40
-msgid "Kurant ATM is a blockchain-based ATM network and platform."
-msgstr "Kurant ATM, blok zinciri tabanlı bir ATM ağı ve platformudur."
+#: src/assets-dev/provider-assets.ts:44 src/assets-dev/provider-assets.ts:45
+msgid ""
+"Kurant enables users to easily purchase cryptocurrencies through a network "
+"of ATMs."
+msgstr ""
 
 #: src/translations.ts:13
 msgid "Leisure Activities"
@@ -199,8 +217,17 @@ msgstr "Hiçbir şey bulunamadı."
 msgid "Other"
 msgstr "Diğer"
 
-#: src/assets-dev/provider-assets.ts:36 src/assets-dev/provider-assets.ts:77
+#: src/assets-dev/provider-assets.ts:23 src/assets-dev/provider-assets.ts:55
+#: src/assets-dev/provider-assets.ts:71
+msgid "Powered by {provider}"
+msgstr ""
+
+#: src/assets-dev/provider-assets.ts:39 src/assets-dev/provider-assets.ts:87
 msgid "Register with {provider}"
+msgstr ""
+
+#: src/components/elements/CardDotsMenu.vue:35
+msgid "Report"
 msgstr ""
 
 #: src/components/forms/ReportLocation.vue:4
@@ -219,7 +246,7 @@ msgstr "Restoran ve Bar"
 msgid "Search Map"
 msgstr "Harita üzerinde ara"
 
-#: src/components/elements/MapMarkers.vue:46
+#: src/components/elements/MapMarkers.vue:50
 msgid "See location details"
 msgstr ""
 
@@ -252,6 +279,10 @@ msgstr ""
 #: src/components/forms/FormContainer.vue:47
 msgid "Send"
 msgstr "Gönder"
+
+#: src/components/elements/CardDotsMenu.vue:21
+msgid "Share"
+msgstr ""
 
 #: src/translations.ts:16
 msgid "Shop"
@@ -328,6 +359,12 @@ msgstr "Konumun adını yazın"
 
 #: src/translations.ts:38
 msgid "USDC on POLYGON"
+msgstr ""
+
+#: src/assets-dev/provider-assets.ts:76
+msgid ""
+"With CryptoPayment Link, you can quickly and easily receive cryptocurrency "
+"payments from your customers."
 msgstr ""
 
 #: src/components/forms/ReportLocation.vue:36
