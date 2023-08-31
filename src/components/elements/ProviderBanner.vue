@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import Popover from '@/components/atoms/Popover.vue'
+import { TooltipArrow, TooltipContent, TooltipPortal, TooltipProvider, TooltipRoot, TooltipTrigger } from 'radix-vue'
+import { useBreakpoints } from '@vueuse/core'
+import { screens } from 'tailwindcss-nimiq-theme'
 import CardBg from '@/components/elements/CardBg.vue'
 import InfoIcon from '@/components/icons/icon-info.vue'
+import ProviderCircleLogo from '@/components/icons/providers/ProviderCircleLogo.vue'
 import { type Location, Provider } from '@/types'
 
 defineProps({
@@ -15,6 +18,8 @@ defineProps({
     default: false,
   },
 })
+
+const isMobile = useBreakpoints(screens).smaller('md')
 </script>
 
 <template>
@@ -32,7 +37,9 @@ defineProps({
         <template #provider>
           <b>{{ location.provider }}</b>
         </template>
-      </i18n-t><i18n-t
+      </i18n-t>
+
+      <i18n-t
         v-if="[Provider.Edenia, Provider.Kurant].includes(location.provider)"
         keypath="Register with {provider}" tag="p" :class="{
           'text-white/60 [&>b]:text-white': location.isDark,
@@ -44,22 +51,48 @@ defineProps({
         </template>
       </i18n-t>
 
-      <Popover preferred-position="top">
-        <template #trigger>
-          <InfoIcon
-            :class="{
-              'text-white/50': location.isDark,
-              'text-space/50': location.isLight,
-            }"
-          />
-        </template>
-        <template #title>
-          {{ location.provider }}
-        </template>
-        <template #description>
-          {{ location.providerTooltip }}
-        </template>
-      </Popover>
+      <TooltipProvider :delay-duration="300">
+        <TooltipRoot>
+          <TooltipTrigger>
+            <InfoIcon :class="{ 'text-white/50': location.isDark, 'text-space/50': location.isLight }" />
+          </TooltipTrigger>
+          <TooltipPortal>
+            <TooltipContent
+              as-child
+              class="max-w-xs p-4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space"
+              :side-offset="4"
+              :align-offset="40"
+              :side="isMobile ? 'top' : 'right'"
+            >
+              <div>
+                <header class="flex items-center justify-start gap-x-2">
+                  <ProviderCircleLogo :provider="location.provider" />
+                  <h4 class="font-semibold truncate">
+                    {{ location.provider }}
+                  </h4>
+                </header>
+
+                <p class="mt-2 text-sm text-white/60">
+                  {{ location.providerTooltip }}
+                </p>
+
+                <!-- The use of -ml-3 it is a hack to position it centered -->
+                <TooltipArrow class=" fill-space" size="10" :class="!isMobile && '-ml-3'" />
+
+                <!-- TODO Once this is fixed https://github.com/radix-vue/radix-vue/issues/353 use custom arrow -->
+                <!-- <TooltipArrow as-child>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 10" class="relative h-3 text-space w-max left-2" :style="`color: ${location.bg}`">
+                    <path
+                      fill="currentColor"
+                      d="M12.63 1.83 8.27 8.25A4 4 0 0 1 4.97 10h17.8a4 4 0 0 1-3.3-1.75L15.1 1.83a1.5 1.5 0 0 0-2.48 0z"
+                    />
+                  </svg>
+                </TooltipArrow> -->
+              </div>
+            </TooltipContent>
+          </TooltipPortal>
+        </TooltipRoot>
+      </TooltipProvider>
     </div>
   </footer>
 </template>

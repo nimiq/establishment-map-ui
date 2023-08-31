@@ -30,11 +30,11 @@ msgstr ""
 msgid "Back to the Map"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:60
+#: src/assets-dev/provider-assets.ts:43
 msgid "Bluecode is a payment method that allows secure transactions directly through the smartphone."
 msgstr ""
 
-#: src/components/elements/Card.vue:27
+#: src/components/elements/Card.vue:31
 msgid "Buy"
 msgstr ""
 
@@ -78,7 +78,7 @@ msgstr ""
 msgid "Copy URL"
 msgstr ""
 
-#: src/components/elements/CardDotsMenu.vue:41
+#: src/components/elements/CardDotsMenu.vue:42
 msgid "Could not copy URL to clipboard."
 msgstr ""
 
@@ -116,7 +116,7 @@ msgstr ""
 msgid "Describe the issue"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:92
+#: src/assets-dev/provider-assets.ts:61
 msgid "Edenia enables users to easily purchase cryptocurrencies through a network of ATMs"
 msgstr ""
 
@@ -137,8 +137,7 @@ msgstr ""
 msgid "Food & Drinks"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:28
-#: src/assets-dev/provider-assets.ts:29
+#: src/assets-dev/provider-assets.ts:25
 msgid "GoCrypto is a global payment network that enables merchants to accept crypto payments."
 msgstr ""
 
@@ -155,8 +154,7 @@ msgstr ""
 msgid "Hotel & Lodging"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:44
-#: src/assets-dev/provider-assets.ts:45
+#: src/assets-dev/provider-assets.ts:34
 msgid "Kurant enables users to easily purchase cryptocurrencies through a network of ATMs."
 msgstr ""
 
@@ -202,14 +200,11 @@ msgstr ""
 msgid "Other"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:23
-#: src/assets-dev/provider-assets.ts:55
-#: src/assets-dev/provider-assets.ts:71
+#: src/components/elements/ProviderBanner.vue:8
 msgid "Powered by {provider}"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:39
-#: src/assets-dev/provider-assets.ts:87
+#: src/components/elements/ProviderBanner.vue:20
 msgid "Register with {provider}"
 msgstr ""
 
@@ -256,7 +251,7 @@ msgstr ""
 msgid "Select issue"
 msgstr ""
 
-#: src/components/elements/Card.vue:31
+#: src/components/elements/Card.vue:35
 msgid "Sell"
 msgstr ""
 
@@ -343,7 +338,7 @@ msgstr ""
 msgid "USDC on POLYGON"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:76
+#: src/assets-dev/provider-assets.ts:52
 msgid "With CryptoPayment Link, you can quickly and easily receive cryptocurrency payments from your customers."
 msgstr ""
 
