@@ -3,7 +3,7 @@ import type { PropType } from 'vue'
 import Popover from '@/components/atoms/Popover.vue'
 import CardBg from '@/components/elements/CardBg.vue'
 import InfoIcon from '@/components/icons/icon-info.vue'
-import type { Location } from '@/types'
+import { type Location, Provider } from '@/types'
 
 defineProps({
   location: {
@@ -18,21 +18,32 @@ defineProps({
 </script>
 
 <template>
-  <footer class="relative flex items-center" :class="{ 'h-16': location.providerLabel, 'h-9': !location.providerLabel }">
-    <CardBg v-if="!location.isAtm && location.providerLabel" :location="location" />
+  <footer class="relative flex items-center h-16">
+    <CardBg v-if="!location.isAtm" :location="location" />
 
-    <div v-if="location.providerLabel" class="z-20 flex items-center pt-1.5 pl-6 pr-4 text-xs gap-x-1.5">
+    <div class="z-20 flex items-center pt-1.5 pl-6 pr-4 text-xs gap-x-1.5">
       <i18n-t
-        :keypath="location.providerLabel" tag="p" :class="{
+        v-if="[Provider.Bluecode, Provider.CryptopaymentLink, Provider.GoCrypto].includes(location.provider)"
+        keypath="Powered by {provider}" tag="p" :class="{
           'text-white/60 [&>b]:text-white': location.isDark,
           'text-space/60 [&>b]:text-space': location.isLight,
         }"
       >
-        <!-- The name in the label can optionally be written bold by including a {provider} placeholder -->
+        <template #provider>
+          <b>{{ location.provider }}</b>
+        </template>
+      </i18n-t><i18n-t
+        v-if="[Provider.Edenia, Provider.Kurant].includes(location.provider)"
+        keypath="Register with {provider}" tag="p" :class="{
+          'text-white/60 [&>b]:text-white': location.isDark,
+          'text-space/60 [&>b]:text-space': location.isLight,
+        }"
+      >
         <template #provider>
           <b>{{ location.provider }}</b>
         </template>
       </i18n-t>
+
       <Popover preferred-position="top">
         <template #trigger>
           <InfoIcon

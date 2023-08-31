@@ -3,7 +3,7 @@ import { CATEGORIES } from '@/database'
 import { translateCategory } from '@/translations'
 import { Category, Currency, type Location, Provider } from '@/types'
 
-type ExtraFields = Pick<Location, 'isAtm' | 'isShop' | 'isDark' | 'isLight' | 'provider' | 'category' | 'category_label' | 'providerLabel' | 'providerTooltip' | 'theme' | 'bg' | 'bgFullCard' | 'hasBottomBanner' | 'sells'>
+type ExtraFields = Pick<Location, 'isAtm' | 'isShop' | 'isDark' | 'isLight' | 'provider' | 'category' | 'category_label' | 'providerTooltip' | 'theme' | 'bg' | 'bgFullCard' | 'hasBottomBanner' | 'sells'>
 export function getExtra(provider: Provider, sells: Currency[] = []): ExtraFields {
   const assets = providersAssets[provider]
   if (!assets)
