@@ -88,8 +88,8 @@ function extractColorFromBg(bg: string) {
       <!-- <PopoverAnchor class="mx-1" /> -->
       <span
         v-if="!isAtm && showSingleName()"
-        class="flex-1 text-base font-semibold leading-none text-left outline-text text-space"
-        :class="{ invisible: uuid === selectedUuid }"
+        class="flex-1 text-base font-semibold leading-none text-left outline-text"
+        :class="[uuid === selectedUuid ? 'text-sky' : 'text-space', { invisible: !isMobile && uuid === selectedUuid }]"
         :data-outline="name"
       >
         {{ name }}
@@ -101,7 +101,7 @@ function extractColorFromBg(bg: string) {
     v-for="location in singles" :key="location.uuid"
     :options="{ position: { lng: location.lng, lat: location.lat }, anchorPoint: showSingleName() ? 'LEFT_CENTER' : 'CENTER' }"
   >
-    <ReuseTemplate v-if="isMobile" :location="location" />
+    <ReuseTemplate v-if="isMobile" :location="location" @click="selectedUuid = location.uuid" />
 
     <PopoverRoot
       v-else
