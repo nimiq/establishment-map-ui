@@ -74,7 +74,8 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
 
     <ProviderBanner
       v-if="progress > 0 && location.hasBottomBanner" :location="location"
-      class="absolute w-full rounded-b-lg -mt-9"
+      class="absolute w-full -mt-9"
+      :class="{ 'rounded-b-lg': progress < 1 || !isMobile }"
       :style="`backgroundColor: ${!location.isAtm ? location.bg : 'transparent'}; opacity: ${progress / 0.8}; bottom: -${(1 - progress) * 54}px;`"
     />
   </div>
