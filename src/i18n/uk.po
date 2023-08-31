@@ -38,13 +38,13 @@ msgstr ""
 msgid "Back to the Map"
 msgstr "Повернутися до карти"
 
-#: src/assets-dev/provider-assets.ts:60
+#: src/assets-dev/provider-assets.ts:43
 msgid ""
 "Bluecode is a payment method that allows secure transactions directly "
 "through the smartphone."
 msgstr ""
 
-#: src/components/elements/Card.vue:27
+#: src/components/elements/Card.vue:31
 msgid "Buy"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Copy URL"
 msgstr ""
 
-#: src/components/elements/CardDotsMenu.vue:41
+#: src/components/elements/CardDotsMenu.vue:42
 msgid "Could not copy URL to clipboard."
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr ""
 msgid "Describe the issue"
 msgstr "Опишіть проблему"
 
-#: src/assets-dev/provider-assets.ts:92
+#: src/assets-dev/provider-assets.ts:61
 msgid ""
 "Edenia enables users to easily purchase cryptocurrencies through a network "
 "of ATMs"
@@ -149,7 +149,7 @@ msgstr "Знайти локацію"
 msgid "Food & Drinks"
 msgstr "Їжа та напої"
 
-#: src/assets-dev/provider-assets.ts:28 src/assets-dev/provider-assets.ts:29
+#: src/assets-dev/provider-assets.ts:25
 msgid ""
 "GoCrypto is a global payment network that enables merchants to accept crypto"
 " payments."
@@ -170,10 +170,14 @@ msgstr ""
 msgid "Hotel & Lodging"
 msgstr "Готелі та житло"
 
-#: src/assets-dev/provider-assets.ts:44 src/assets-dev/provider-assets.ts:45
+#: src/assets-dev/provider-assets.ts:34
 msgid ""
 "Kurant enables users to easily purchase cryptocurrencies through a network "
 "of ATMs."
+msgstr ""
+
+#: src/components/elements/ProviderBanner.vue:56
+msgid "Learn more"
 msgstr ""
 
 #: src/translations.ts:13
@@ -217,12 +221,11 @@ msgstr "Нічого не знайдено."
 msgid "Other"
 msgstr "Інше"
 
-#: src/assets-dev/provider-assets.ts:23 src/assets-dev/provider-assets.ts:55
-#: src/assets-dev/provider-assets.ts:71
+#: src/components/elements/ProviderBanner.vue:8
 msgid "Powered by {provider}"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:39 src/assets-dev/provider-assets.ts:87
+#: src/components/elements/ProviderBanner.vue:20
 msgid "Register with {provider}"
 msgstr ""
 
@@ -268,7 +271,7 @@ msgstr "Виберіть криптовалюту"
 msgid "Select issue"
 msgstr "Виберіть проблему"
 
-#: src/components/elements/Card.vue:31
+#: src/components/elements/Card.vue:35
 msgid "Sell"
 msgstr ""
 
@@ -361,7 +364,7 @@ msgstr "Введіть назву локації"
 msgid "USDC on POLYGON"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:76
+#: src/assets-dev/provider-assets.ts:52
 msgid ""
 "With CryptoPayment Link, you can quickly and easily receive cryptocurrency "
 "payments from your customers."

@@ -158,6 +158,10 @@ msgstr ""
 msgid "Kurant enables users to easily purchase cryptocurrencies through a network of ATMs."
 msgstr ""
 
+#: src/components/elements/ProviderBanner.vue:56
+msgid "Learn more"
+msgstr ""
+
 #: src/translations.ts:13
 msgid "Leisure Activities"
 msgstr ""
