@@ -28,27 +28,36 @@ const emit = defineEmits({
   'update:progress': (_: number) => true,
 })
 
-const dif = props.maxHeight - props.initialHeight
+const heightDifference = props.maxHeight - props.initialHeight
 
 let initialY = 0
-let initialTime = 0
+let initialX = 0
+let initialOpen = false
 const dragging = ref(false)
 const container = ref<HTMLElement | null>(null)
 const isOpen = computed(() => props.progress === 1)
 
 function onStart(event: PointerEvent) {
   dragging.value = true
-  initialTime = event.timeStamp
   initialY = event.clientY
+  initialX = event.clientX
+  initialOpen = isOpen.value
   container.value!.setPointerCapture(event.pointerId)
 }
 
 function onMove(event: PointerEvent) {
   if (!dragging.value)
     return
-  const yDelta = (initialY - event.clientY)
-  const startingPoint = isOpen.value ? yDelta + dif : yDelta
-  const newProgress = Math.max(0, Math.min(startingPoint / dif, 1))
+  const yDelta = initialY - event.clientY
+  let newProgress: number
+  if (initialOpen) {
+    // yDelta is negative for dragging down
+    newProgress = Math.min(Math.max(heightDifference + yDelta, 0), heightDifference) / heightDifference
+  }
+  else {
+    // yDelta is positive for dragging up
+    newProgress = Math.min(Math.max(yDelta, 0), heightDifference) / heightDifference
+  }
   emit('update:progress', newProgress)
 }
 
@@ -57,15 +66,14 @@ function onEnd(event: PointerEvent) {
   container.value!.releasePointerCapture(event.pointerId)
 
   animateShortly()
-  const timeDelta = event.timeStamp - initialTime
 
-  const isClick = timeDelta < 500
+  const isClick = Math.abs(initialY - event.clientY) < 10 && Math.abs(initialX - event.clientX) < 10
 
-  if (isClick && !isOpen.value) {
+  if (isClick && !initialOpen) {
     open()
   }
   else {
-    if (isOpen.value)
+    if (initialOpen)
       props.progress < 0.85 ? close() : open()
 
     else
@@ -91,7 +99,7 @@ function onCardDrag(progress: number) {
   const radius = (1 - progress) * props.initialBorderRadius
 
   style.value = {
-    height: `${props.initialHeight + dif * progress}px`,
+    height: `${props.initialHeight + heightDifference * progress}px`,
     marginBottom: `${(1 - progress) * props.initialGapToScreen}px`,
     borderBottomRightRadius: `${radius}px`,
     borderBottomLeftRadius: `${radius}px`,
@@ -115,7 +123,7 @@ onBeforeUnmount(() => {
 
 <template>
   <article
-    ref="container" class="absolute h-full touch-none sheet-transition will-change-auto"
+    ref="container" class="absolute h-full touch-pan-x sheet-transition will-change-auto"
     :style="style" @pointerdown.prevent="onStart" @pointermove.prevent="onMove" @pointerup.prevent="onEnd"
   >
     <slot name="dragger">

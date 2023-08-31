@@ -9,7 +9,7 @@ const progress = ref(0)
   <Story title="Modal Sheet">
     <div class="relative h-screen bg-space/20">
       <SheetModal
-        class="inset-x-0 bottom-0 mx-auto text-center text-white rounded-lg shadow bg-space overscroll-none"
+        class="inset-x-0 bottom-0 mx-auto text-center text-white rounded-lg shadow bg-space"
         :progress="progress" :initial-height="171" :max-height="371" :initial-border-radius="8"
         :initial-gap-to-screen="20" @update:progress="progress = $event"
       >
