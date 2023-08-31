@@ -81,6 +81,16 @@ function onEnd(event: PointerEvent) {
   }
 }
 
+function onCancel(event: PointerEvent) {
+  dragging.value = false
+  container.value!.releasePointerCapture(event.pointerId)
+  animateShortly()
+  if (initialOpen)
+    open()
+  else
+    close()
+}
+
 function close() {
   emit('update:progress', 0)
 }
@@ -124,7 +134,7 @@ onBeforeUnmount(() => {
 <template>
   <article
     ref="container" class="absolute h-full touch-pan-x sheet-transition will-change-auto"
-    :style="style" @pointerdown.prevent="onStart" @pointermove.prevent="onMove" @pointerup.prevent="onEnd"
+    :style="style" @pointerdown="onStart" @pointermove="onMove" @pointerup="onEnd" @pointercancel="onCancel"
   >
     <slot name="dragger">
       <div class="relative">
