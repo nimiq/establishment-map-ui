@@ -140,6 +140,8 @@ export interface Location {
   bgFullCard: boolean
   bg: string
 
+  // Provider text
+  providerLabel?: string
   providerTooltip?: string
   providerTooltipCta?: string
 
