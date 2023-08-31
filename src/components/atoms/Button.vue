@@ -101,6 +101,7 @@ function getComponent() {
       'flex-row-reverse': props.layout === 'label-icon',
       'ring-1 ring-space/[0.15]': props.borderColor === 'grey',
     }"
+    @pointerdown.stop=""
   >
     <transition name="icon">
       <span
