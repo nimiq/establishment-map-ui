@@ -114,7 +114,7 @@ function onCardDrag(progress: number) {
   const radius = (1 - progress) * props.initialBorderRadius
 
   style.value = {
-    height: `${props.initialHeight + heightDifference * progress}px`,
+    height: isOpen.value ? 'min-content' : `${props.initialHeight + heightDifference * progress}px`,
     marginBottom: `${(1 - progress) * props.initialGapToScreen}px`,
     borderBottomRightRadius: `${radius}px`,
     borderBottomLeftRadius: `${radius}px`,
