@@ -89,7 +89,7 @@ function extractColorFromBg(bg: string) {
       <!-- <PopoverAnchor class="mx-1" /> -->
       <span
         v-if="!isAtm && showSingleName()"
-        class="flex-1 text-base font-semibold leading-none text-left outline-text"
+        class="flex-1 text-base font-semibold leading-none text-left select-none outline-text"
         :class="[uuid === selectedUuid ? 'text-sky' : 'text-space', { invisible: !isMobile && uuid === selectedUuid }]"
         :data-outline="name"
       >
