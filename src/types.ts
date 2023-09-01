@@ -168,31 +168,27 @@ export interface SearchFor {
 
 export enum SuggestionType {
   Location = 'location',
-  Category = 'category',
-  Currency = 'currency',
   GoogleLocation = 'googleLocation',
   Region = 'regions',
 }
 
-export type Suggestion = {
+export interface PredictionSubstring {
+  /**
+   * The length of the substring.
+   */
+  length: number
+  /**
+   * The offset to the substring&#39;s start within the description string.
+   */
+  offset: number
+}
+
+export interface Suggestion {
   label: string
-} & ({
-  id: string // Google Place ID
-  type: SuggestionType.GoogleLocation | SuggestionType.Region
-  matchedSubstrings: google.maps.places.AutocompletePrediction['matched_substrings']
-} | {
-  id: Category
-  type: SuggestionType.Category
-  matchedSubstrings: undefined
-} | {
-  id: Currency
-  type: SuggestionType.Currency
-  matchedSubstrings: undefined
-} | {
-  id: string // Location UUID
-  type: SuggestionType.Location
-  matchedSubstrings: undefined
-})
+  id: string // Google Place ID | Location UUID
+  type: SuggestionType.GoogleLocation | SuggestionType.Region | SuggestionType.Location
+  matchedSubstrings: PredictionSubstring[]
+}
 
 // Others types
 export enum Issue {

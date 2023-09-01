@@ -1,9 +1,9 @@
 import { useThrottleFn } from '@vueuse/core'
-import { ref } from 'vue'
-import { queryResults as queryResultsDb } from '@/database'
+import { computed, ref } from 'vue'
 import { detectLanguage } from '@/i18n/i18n-setup'
 import { useMap } from '@/stores/map'
 import { AutocompleteStatus, type Suggestion, SuggestionType } from '@/types'
+import { queryLocations } from '@/database'
 
 enum GoogleAutocompleteFor {
   Location = 'establishment',
@@ -54,10 +54,11 @@ export function useAutocomplete() {
   async function querySearch(query: string) {
     if (!query) {
       dbSuggestions.value = []
+      googleSuggestions.value = []
       return
     }
 
-    dbSuggestions.value = await queryResultsDb(query)
+    dbSuggestions.value = (await queryLocations(query)).map(q => Object.assign(q, { type: SuggestionType.Location }))
     autocompleteGoogle(query, GoogleAutocompleteFor.Regions)
   }
 
@@ -66,6 +67,7 @@ export function useAutocomplete() {
     querySearch,
     dbSuggestions,
     googleSuggestions,
+    suggestions: computed(() => dbSuggestions.value.concat(googleSuggestions.value)),
     autocompleteGoogleLocations: useThrottleFn((query: string) => autocompleteGoogle(query, GoogleAutocompleteFor.Location), 300),
   }
 }

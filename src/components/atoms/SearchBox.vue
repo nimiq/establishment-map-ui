@@ -14,7 +14,7 @@ import { computed, ref, useSlots, watchEffect } from 'vue'
 import SearchIcon from '@/components/icons/icon-search.vue'
 import CrossIcon from '@/components/icons/icon-cross.vue'
 import { AutocompleteStatus } from '@/types'
-import type { Suggestion } from '@/types'
+import type { PredictionSubstring, Suggestion } from '@/types'
 
 const props = defineProps({
   roundedFull: {
@@ -94,7 +94,7 @@ function hasSlot(slotName: 'label') {
   return slots[slotName] !== undefined
 }
 
-function sanitizeAndHighlightMatches(str: string, matches: Suggestion['matchedSubstrings']) {
+function sanitizeAndHighlightMatches(str: string, matches: PredictionSubstring[]) {
   // Split into unicode chars because match positions in google.maps.places.AutocompletePrediction["matched_substrings"]
   // are based on unicode chars, as opposed to surrogate pairs of Javascript strings for Unicode chars on astral planes
   // (see https://mathiasbynens.be/notes/javascript-unicode)
@@ -158,6 +158,7 @@ function onListVisibilityChange(isVisible: boolean) {
       >
         <ComboboxInput
           class="w-full border-none placeholder:text-space/60 focus-within:placeholder:text-sky/60 focus:ring-0 outline-none pr-[3.25rem] pl-4"
+          spellcheck="false"
           :class="{
             'text-space': !open,
             'text-ocean': open,
@@ -179,7 +180,6 @@ function onListVisibilityChange(isVisible: boolean) {
       <TransitionRoot leave="transition ease-in duration-100" leave-from="opacity-100" leave-to="opacity-0">
         <ComboboxOptions
           v-element-visibility="onListVisibilityChange" data-combobox-options
-          class="z-40 absolute w-full scroll-space overflow-auto rounded-sm text-base focus:outline-none shadow-lg top-0.5"
           :class="[
             comboboxOptionsClasses,
             {
@@ -187,6 +187,7 @@ function onListVisibilityChange(isVisible: boolean) {
               'bg-space': bgCombobox === 'space',
             },
           ]"
+          class="absolute z-40 overflow-auto text-base rounded-sm shadow-lg scroll-space focus:outline-none"
         >
           <div
             v-if="AutocompleteStatus.WithResults !== status" class="relative px-4 py-2 cursor-default select-none" :class="{

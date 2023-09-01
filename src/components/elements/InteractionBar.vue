@@ -1,19 +1,20 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import SearchBox from '@/components/atoms/SearchBox.vue'
 import CryptoMapModal from '@/components/elements/CryptoMapModal.vue'
-import { useFilters } from '@/stores/filters'
 import { useAutocomplete } from '@/composables/useAutocomplete'
 import { type Suggestion, SuggestionType } from '@/types'
 import { useMap } from '@/stores/map'
 import { useLocations } from '@/stores/locations'
 
-const { querySearch, dbSuggestions, googleSuggestions } = useAutocomplete()
+const emit = defineEmits({
+  open: (value: boolean) => value,
+})
 
-const suggestions = computed(() => dbSuggestions.value.concat(googleSuggestions.value))
+const { querySearch, suggestions } = useAutocomplete()
 
 function searchBoxOpen(value: boolean) {
   value ? showSearchBoxList() : hideSearchBoxList()
+  emit('open', value)
 }
 
 function hideSearchBoxList() {
@@ -45,12 +46,6 @@ function onSelect(suggestion?: Suggestion) {
     case SuggestionType.Region:
       useMap().goToPlaceId(suggestion.id)
       break
-    case SuggestionType.Category:
-      useFilters().setSelectedCategories([suggestion.id])
-      break
-    case SuggestionType.Currency:
-      useFilters().setSelectedCurrencies([suggestion.id])
-      break
     case SuggestionType.Location:
       useLocations().goToLocation(suggestion.id)
       break
@@ -64,8 +59,8 @@ function onSelect(suggestion?: Suggestion) {
   <header class="relative z-10 flex items-center w-full p-10 py-6 pl-4 pr-6 desktop:p-4 gap-x-2 desktop:gap-x-4">
     <img src="@/assets/logo.svg" :alt="$t('Crypto Map logo')" class="h-[22px]">
     <SearchBox
-      :autocomplete="querySearch" :suggestions="suggestions" class="flex-1" rounded-full
-      combobox-options-classes="w-[322px] mt-12 left-[-48px] max-h-[220px] rounded-t-0" size="sm"
+      :autocomplete="querySearch" :suggestions="suggestions" class="flex-1 w-full" rounded-full
+      combobox-options-classes="w-[320px] desktop:!top-[88px] !rounded-t-0 !rounded-b-2xl" size="sm"
       :placeholder="$t('Search Map')" data-search-box @open="searchBoxOpen" @selected="onSelect"
     />
     <CryptoMapModal />

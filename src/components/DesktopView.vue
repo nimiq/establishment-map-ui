@@ -16,6 +16,8 @@ const { loaded: locationsLoaded } = storeToRefs(locationsStore)
 const { singles, clusters } = storeToRefs(useCluster())
 
 const listIsShown = ref(false)
+
+const openSuggestions = ref(false)
 </script>
 
 <template>
@@ -26,8 +28,8 @@ const listIsShown = ref(false)
     class="absolute inset-0 max-w-[368px] transition-[transform,opacity] will-change-transform pointer-events-none bg-gradient-to-r from-space to-space/0"
   />
   <div class="absolute flex flex-col max-w-xs bottom-6 top-6 left-6 h-max pointer-events-none [&>*]:pointer-events-auto">
-    <div class="bg-white shadow-header rounded-2xl" style="mask-image: linear-gradient(white, white);">
-      <InteractionBar />
+    <div class="bg-white shadow-header transition-border-radius" :class="openSuggestions ? 'rounded-t-2xl' : 'rounded-2xl'" style="mask-image: linear-gradient(white, white);">
+      <InteractionBar @open="openSuggestions = $event" />
       <DesktopList :locations="singles" :clusters="clusters" :list-is-shown="listIsShown" />
     </div>
     <Button bg-color="white" class="mt-6" :loading="!locationsLoaded" @click="listIsShown = !listIsShown">
