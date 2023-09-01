@@ -8,9 +8,10 @@ import {
   ComboboxOptions,
   TransitionRoot,
 } from '@headlessui/vue'
-import { vElementVisibility } from '@vueuse/components'
-import { useDebounceFn } from '@vueuse/core'
+import type { PropType } from 'vue'
 import { computed, ref, useSlots, watchEffect } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
+import { vElementVisibility } from '@vueuse/components'
 import SearchIcon from '@/components/icons/icon-search.vue'
 import CrossIcon from '@/components/icons/icon-cross.vue'
 import { AutocompleteStatus } from '@/types'
@@ -53,6 +54,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  status: {
+    type: String as PropType<AutocompleteStatus>,
+    required: true,
+  },
 })
 
 const emit = defineEmits({
@@ -66,15 +71,6 @@ const query = ref<string>()
 const userCanCleanInput = computed(() => props.allowClean && query.value !== '' && query.value !== undefined)
 
 const loading = ref(false)
-const status = computed<AutocompleteStatus>(() => {
-  if (props.suggestions.length > 0)
-    return AutocompleteStatus.WithResults
-  if (loading.value)
-    return AutocompleteStatus.Loading
-  if (props.suggestions.length === 0 && query.value !== '')
-    return AutocompleteStatus.NoResults
-  return AutocompleteStatus.Initial
-})
 
 watchEffect(
   async () => {
@@ -143,9 +139,7 @@ function onListVisibilityChange(isVisible: boolean) {
     @update:model-value="emit('selected', selected)"
   >
     <ComboboxLabel v-if="hasLabel" class="capitalize text-space/40">
-      <slot name="label">
-        {{ label }}
-      </slot>
+      {{ label }}
     </ComboboxLabel>
     <div class="relative" :class="{ 'mt-1': hasLabel }">
       <div
@@ -177,67 +171,72 @@ function onListVisibilityChange(isVisible: boolean) {
           </button>
         </div>
       </div>
-      <TransitionRoot leave="transition ease-in duration-100" leave-from="opacity-100" leave-to="opacity-0">
-        <ComboboxOptions
-          v-element-visibility="onListVisibilityChange" data-combobox-options
-          :class="[
-            comboboxOptionsClasses,
-            {
-              'bg-white': bgCombobox === 'white',
-              'bg-space': bgCombobox === 'space',
-            },
-          ]"
-          class="absolute z-40 overflow-auto text-base rounded-sm shadow-lg scroll-space focus:outline-none"
-        >
-          <div
-            v-if="AutocompleteStatus.WithResults !== status" class="relative px-4 py-2 cursor-default select-none" :class="{
-              'text-space/80': bgCombobox === 'white',
-              'text-white/80': bgCombobox === 'space',
-            }"
+      <Teleport to="body">
+        <TransitionRoot leave="transition ease-in duration-100" leave-from="opacity-100" leave-to="opacity-0">
+          <ComboboxOptions
+            v-element-visibility="onListVisibilityChange"
+            :class="[
+              comboboxOptionsClasses,
+              {
+                'bg-white': bgCombobox === 'white',
+                'bg-space': bgCombobox === 'space',
+              },
+            ]"
+            class="absolute z-40 overflow-auto text-base shadow-lg scroll-space focus:outline-none"
           >
-            <span v-if="status === AutocompleteStatus.Loading">
-              {{ $t('Loading...') }}
-            </span>
-            <span v-else-if="status === AutocompleteStatus.Initial">
-              {{ $t('Start typing...') }}
-            </span>
-            <span v-else-if="status === AutocompleteStatus.NoResults && query !== ''">
-              {{ $t('Nothing found.') }}
-            </span>
-          </div>
-
-          <ComboboxOption
-            v-for="suggestion in suggestions" v-else :key="suggestion.id" v-slot="{ selected: optionIsSelected, active }" as="template"
-            :value="suggestion"
-          >
-            <li
-              class="relative select-none py-1.5 flex items-center transition-colors cursor-pointer" :class="{
-                'hover:bg-space/[0.06] focus:bg-space/[0.06]': bgCombobox === 'white',
-                'hover:bg-white/10 focus:bg-white/10': bgCombobox === 'space',
-                'bg-space/[0.06]': bgCombobox === 'white' && active,
-                'bg-white/10': bgCombobox === 'space' && active,
-                'px-6 gap-x-6': size === 'sm',
-                'px-3 gap-x-2': size === 'md',
+            <div
+              v-if="AutocompleteStatus.WithResults !== status" class="relative px-4 py-2 cursor-default select-none" :class="{
+                'text-space/80': bgCombobox === 'white',
+                'text-white/80': bgCombobox === 'space',
               }"
             >
-              <span
-                class="block truncate" :class="{
-                  'text-space': bgCombobox === 'white',
-                  'text-white': bgCombobox === 'space',
-                }" v-html="sanitizeAndHighlightMatches(suggestion.label, suggestion.matchedSubstrings)"
-              />
-              <span
-                v-if="optionIsSelected" class="absolute inset-y-0 left-0 flex items-center pl-3" :class="{
-                  'text-white':
-                    (active && bgCombobox === 'white') || (!active && bgCombobox === 'space'),
-                  'text-space':
-                    (!active && bgCombobox === 'white') || (active && bgCombobox === 'space'),
+              <span v-if="status === AutocompleteStatus.Loading">
+                {{ $t('Loading...') }}
+              </span>
+              <span v-else-if="status === AutocompleteStatus.Initial">
+                {{ $t('Start typing...') }}
+              </span>
+              <span v-else-if="status === AutocompleteStatus.Error">
+                {{ $t('Error loading results.') }}
+              </span>
+              <span v-else-if="status === AutocompleteStatus.NoResults && query !== ''">
+                {{ $t('Nothing found.') }}
+              </span>
+            </div>
+
+            <ComboboxOption
+              v-for="suggestion in suggestions" v-else :key="suggestion.id" v-slot="{ selected: optionIsSelected, active }" as="template"
+              :value="suggestion"
+            >
+              <li
+                class="relative select-none py-1.5 flex items-center transition-colors cursor-pointer" :class="{
+                  'hover:bg-space/[0.06] focus:bg-space/[0.06]': bgCombobox === 'white',
+                  'hover:bg-white/10 focus:bg-white/10': bgCombobox === 'space',
+                  'bg-space/[0.06]': bgCombobox === 'white' && active,
+                  'bg-white/10': bgCombobox === 'space' && active,
+                  'px-6 gap-x-6': size === 'sm',
+                  'px-3 gap-x-2': size === 'md',
                 }"
-              />
-            </li>
-          </ComboboxOption>
-        </ComboboxOptions>
-      </TransitionRoot>
+              >
+                <span
+                  class="block truncate" :class="{
+                    'text-space': bgCombobox === 'white',
+                    'text-white': bgCombobox === 'space',
+                  }" v-html="sanitizeAndHighlightMatches(suggestion.label, suggestion.matchedSubstrings)"
+                />
+                <span
+                  v-if="optionIsSelected" class="absolute inset-y-0 left-0 flex items-center pl-3" :class="{
+                    'text-white':
+                      (active && bgCombobox === 'white') || (!active && bgCombobox === 'space'),
+                    'text-space':
+                      (!active && bgCombobox === 'white') || (active && bgCombobox === 'space'),
+                  }"
+                />
+              </li>
+            </ComboboxOption>
+          </ComboboxOptions>
+        </TransitionRoot>
+      </Teleport>
     </div>
   </Combobox>
 </template>

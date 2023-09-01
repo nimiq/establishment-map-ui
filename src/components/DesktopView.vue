@@ -28,7 +28,7 @@ const openSuggestions = ref(false)
     class="absolute inset-0 max-w-[368px] transition-[transform,opacity] will-change-transform pointer-events-none bg-gradient-to-r from-space to-space/0"
   />
   <aside class="absolute flex flex-col max-w-xs bottom-6 top-6 left-6 h-max pointer-events-none [&>*]:pointer-events-auto">
-    <div class="bg-white shadow-header transition-border-radius" :class="openSuggestions ? 'rounded-t-2xl' : 'rounded-2xl'" style="mask-image: linear-gradient(white, white);">
+    <div class="duration-75 bg-white shadow-header transition-border-radius" :class="openSuggestions ? 'rounded-t-2xl' : 'rounded-2xl'" style="mask-image: linear-gradient(white, white);">
       <InteractionBar @open="openSuggestions = $event" />
       <DesktopList :locations="singles" :clusters="clusters" :list-is-shown="listIsShown" />
     </div>

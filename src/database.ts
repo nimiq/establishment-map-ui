@@ -36,9 +36,8 @@ async function fetchDb<T>(url: URL): Promise<T | undefined> {
   const data: T = await response.json()
 
   /* eslint-disable no-console */
-  console.group('🔍 Database GET')
-  console.log(`Fetching to ${url}`)
-  console.log(data)
+  console.group(`🔍 Database "${url.pathname.split('/').pop()}${url.search}"`)
+  console.table(data)
   console.groupEnd()
   /* eslint-enable no-console */
 

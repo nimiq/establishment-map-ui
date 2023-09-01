@@ -1,5 +1,5 @@
 import { useDebounceFn } from '@vueuse/core'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { detectLanguage } from '@/i18n/i18n-setup'
 import { useMap } from '@/stores/map'
 import { AutocompleteStatus, type Suggestion, SuggestionType } from '@/types'
@@ -11,10 +11,9 @@ enum GoogleAutocompleteFor {
 }
 
 export function useAutocomplete() {
-  const status = ref<AutocompleteStatus>(AutocompleteStatus.NoResults)
-  const dbSuggestions = ref<Suggestion[]>([])
+  const status = ref<AutocompleteStatus>(AutocompleteStatus.Initial)
   const googleSuggestions = ref<Suggestion[]>([])
-  const suggestions = computed(() => dbSuggestions.value.concat(googleSuggestions.value))
+  const suggestions = ref<Suggestion[]>([])
 
   // Google Autocomplete
   const sessionToken = ref<google.maps.places.AutocompleteSessionToken>()
@@ -33,12 +32,12 @@ export function useAutocomplete() {
         ? { locationBias: useMap().map?.getBounds() }
         : undefined),
     }
+
     const fn = autocompleteFor === GoogleAutocompleteFor.Regions ? 'getQueryPredictions' : 'getPlacePredictions'
     await autocompleteService.value?.[fn](request, (predictions, status) => {
       if (status !== google.maps.places.PlacesServiceStatus.OK || !predictions)
         return
-
-      googleSuggestions.value = predictions
+      const suggestions = predictions
         .filter(p => !!p.place_id)
         .map(p => ({
           id: p.place_id as string,
@@ -46,39 +45,58 @@ export function useAutocomplete() {
           type: SuggestionType.GoogleLocation,
           matchedSubstrings: p.matched_substrings,
         }))
+
+      /* eslint-disable no-console */
+      console.group(`🔍 Google Autocomplete "${query}"`)
+      console.table(suggestions)
+      console.groupEnd()
+      /* eslint-enable no-console */
+
+      googleSuggestions.value = suggestions
     })
   }
 
   async function autocompleteDatabase(query: string) {
     const locations = await searchLocations(query)
-    dbSuggestions.value = locations.map(q => Object.assign(q, { type: SuggestionType.Location }))
+    return locations.map(q => Object.assign(q, { type: SuggestionType.Location }))
   }
 
-  async function querySearch(query: string) {
+  // If we search just for new candidates, we don't need to search in the database
+  // and we just search locations in Google
+  async function querySearch(query: string, justNewCandidates = false) {
     status.value = AutocompleteStatus.Loading
-
     if (!query) {
-      dbSuggestions.value = []
-      googleSuggestions.value = []
+      suggestions.value = []
       return
     }
 
-    const result = await Promise.allSettled([autocompleteDatabase(query), autocompleteGoogle(query, GoogleAutocompleteFor.Regions)])
+    const result = justNewCandidates
+      ? await Promise.allSettled([autocompleteGoogle(query, GoogleAutocompleteFor.Location)])
+      : await Promise.allSettled([autocompleteDatabase(query), autocompleteGoogle(query, GoogleAutocompleteFor.Regions)])
 
     if (result.every(r => r.status === 'rejected')) {
       status.value = AutocompleteStatus.Error
       return
     }
+    if (justNewCandidates) {
+      suggestions.value = googleSuggestions.value
+    }
+    else {
+      const db = result[0].status === 'fulfilled' ? result[0].value : [] as Suggestion[]
+      suggestions.value = [...db!, ...googleSuggestions.value]
+    }
 
     status.value = suggestions.value.length ? AutocompleteStatus.WithResults : AutocompleteStatus.NoResults
   }
 
+  const debouncer = useDebounceFn((query: string, justNewCandidates: boolean) => querySearch(query, justNewCandidates), 400)
+
   return {
     status,
     suggestions,
-    dbSuggestions,
-    googleSuggestions,
-    autocompleteGoogleLocations: useDebounceFn((query: string) => autocompleteGoogle(query, GoogleAutocompleteFor.Location), 300),
-    querySearch: useDebounceFn((query: string) => querySearch(query), 300),
+    querySearch(query: string, justNewCandidates = false) {
+      status.value = AutocompleteStatus.Loading
+      debouncer(query, justNewCandidates)
+    },
   }
 }
