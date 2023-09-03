@@ -2,5 +2,6 @@
   "editor.tabSize": 2,
   "cSpell.words": [
     "grecaptcha"
-  ]
+  ],
+  "deno.enablePaths": ["./supabase/functions"]
 }
