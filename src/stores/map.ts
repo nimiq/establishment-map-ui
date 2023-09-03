@@ -5,7 +5,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { useRoute, useRouter } from 'vue-router'
 import { useLocations } from './locations'
 import { useCluster } from './cluster'
-import type { EstimatedMapPosition, MapPosition, Point } from '@/types'
+import type { EstimatedMapPosition, MapPosition, Point } from '@/types/'
 
 export const useMap = defineStore('map', () => {
   const mapInstance = shallowRef<typeof GoogleMap>()

@@ -3,7 +3,7 @@ import type { AnyProps } from 'supercluster'
 import Supercluster from 'supercluster'
 import { shallowRef } from 'vue'
 import { useFilters } from './filters'
-import type { BoundingBox, Cluster, Location, MemoizedCluster, Point } from '@/types'
+import type { BoundingBox, Cluster, Location, MemoizedCluster, Point } from '@/types/'
 
 export const useCluster = defineStore('cluster', () => {
   const { selectedCategories, selectedCurrencies } = storeToRefs(useFilters())

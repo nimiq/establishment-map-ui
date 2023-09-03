@@ -2,7 +2,7 @@ import { useRouteQuery } from '@vueuse/router'
 import { defineStore } from 'pinia'
 import { computed } from 'vue'
 import { CATEGORIES, CURRENCIES } from '@/database'
-import type { Category, Currency } from '@/types'
+import type { Category, Currency } from '@/types/'
 
 export const useFilters = defineStore('filters', () => {
   const selectedCategoriesQuery = useRouteQuery<Category | Category[]>('categories')

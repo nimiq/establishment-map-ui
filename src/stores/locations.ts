@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useRouteQuery } from '@vueuse/router'
 import { useMap } from './map'
 import { getLocations as getDbLocations, getLocation } from '@/database'
-import type { BoundingBox, Location } from '@/types'
+import type { BoundingBox, Location } from '@/types/'
 import { useFilters } from '@/stores/filters'
 
 export const useLocations = defineStore('locations', () => {

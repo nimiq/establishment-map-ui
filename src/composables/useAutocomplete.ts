@@ -2,7 +2,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { ref } from 'vue'
 import { detectLanguage } from '@/i18n/i18n-setup'
 import { useMap } from '@/stores/map'
-import { AutocompleteStatus, type Suggestion, SuggestionType } from '@/types'
+import { AutocompleteStatus, type Suggestion, SuggestionType } from '@/types/'
 import { searchLocations } from '@/database'
 
 enum GoogleAutocompleteFor {
