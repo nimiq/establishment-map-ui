@@ -25,18 +25,20 @@ watch(keepOpen, x => isClickable.value = x)
 
 const { share, isSupported: shareIsSupported } = useShare()
 
+const url = () => `${window.location.origin}/${window.location.pathname}?uuid=${props.location.uuid}`
+
 async function handleShare() {
   keepOpen.value = true
   if (shareIsSupported.value) {
     await share({
       title: props.location.name,
       text: i18n.t('Check out {locationName} on Nimiq\'s Crypto Map', { locationName: props.location.name }),
-      url: window.location.href,
+      url: url(),
     })
     keepOpen.value = false
   }
   else {
-    isUrlCopied.value = await navigator.clipboard.writeText(window.location.href).then(() => true).catch(() => false)
+    isUrlCopied.value = await navigator.clipboard.writeText(url()).then(() => true).catch(() => false)
     if (!isUrlCopied.value)
       /* eslint-disable-next-line no-alert */
       alert(i18n.t('Could not copy URL to clipboard.'))
