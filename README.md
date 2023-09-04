@@ -79,6 +79,7 @@ Each time we load a cluster or location, we will store it in memory, and before 
 
 The code for the clustering can be found in [`shared/compute-cluster.ts`](shared/compute-cluster.ts). This function is used in the [`src/stores/cluster.ts`](src/stores/cluster.ts) store and in the [`supabase/functions/generate-locations_clusters-set.ts`](supabase/functions/generate-locations-clusters-set.ts) function.
 
+If the user uses any kind of filters, then we will load the locations directly from the `locations` table and apply the filters in the client. The main reason is that the amount of combinations of filters is too big, and we cannot store all the possible combinations in the database. We could use some strategies to mitigate this issue, but the amount of lines of code involved is too big, and the performance gain is not worth it.
 
 ## 🏗️ Stack
 
