@@ -5,7 +5,7 @@ import { PopoverAnchor, PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot
 import { screens } from 'tailwindcss-nimiq-theme'
 import { defineAsyncComponent } from 'vue'
 import { CustomMarker } from 'vue3-google-map'
-import type { Location } from 'types'
+import type { Location, Point } from 'types'
 import { useMap } from '@/stores/map'
 import { useLocations } from '@/stores/locations'
 import { useCluster } from '@/stores/cluster'
@@ -48,6 +48,12 @@ function extractColorFromBg(bg: string) {
   const colors = bg.match(regex) || []
   return colors[colors.length - 1]
 }
+
+function onClusterClick(center: Point, proposedZoom: number) {
+  // To make it more fluid if zoom is lower than 13, the minimum zoom change must be 3
+  const newZoom = proposedZoom < 13 ? Math.max(proposedZoom, zoom() + 3) : proposedZoom
+  setPosition({ center, zoom: newZoom })
+}
 </script>
 
 <template>
@@ -55,7 +61,7 @@ function extractColorFromBg(bg: string) {
     v-for="({ center, count, expansionZoom, id }) in clusters" :key="id"
     :options="{ position: center, anchorPoint: 'CENTER' }"
   >
-    <div class="grid text-sm font-bold text-white transition-colors rounded-full shadow cursor-pointer aspect-square place-content-center bg-space hover:bg-[#35395A] focus:bg-[#35395A] ring-white/20 ring-2 ring-offset-1 ring-offset-white/40" :style="`width: clamp(24px, ${0.24 * count + 24}px, 48px); font-size: clamp(14px, ${0.14 * count + 4}px, 18px)`" @click="setPosition({ center, zoom: expansionZoom })">
+    <div class="grid text-sm font-bold text-white transition-colors rounded-full shadow cursor-pointer aspect-square place-content-center bg-space hover:bg-[#35395A] focus:bg-[#35395A] ring-white/20 ring-2 ring-offset-1 ring-offset-white/40" :style="`width: clamp(24px, ${0.24 * count + 24}px, 48px); font-size: clamp(14px, ${0.14 * count + 4}px, 18px)`" @click="onClusterClick(center, expansionZoom)">
       {{ count < 100 ? count : '99+' }}
     </div>
   </CustomMarker>
@@ -108,19 +114,17 @@ function extractColorFromBg(bg: string) {
       <PopoverPortal>
         <PopoverContent side="right" :side-offset="5" class="rounded-lg shadow">
           <Card :location="location" :progress="1" class="max-w-xs" />
-          <PopoverArrow class="w-4 h-2" />
+          <PopoverArrow class="w-4 h-2" :style="`fill: ${location.isAtm ? extractColorFromBg(location.bg) : 'white'}`" />
 
-          <PopoverArrow as-child>
-            <svg
-              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 10" class="relative h-3 w-max left-2"
-              :style="`fill: ${location.isAtm ? extractColorFromBg(location.bg) : 'white'}`"
-            >
+          <!-- TODO Once this is fixed https://github.com/radix-vue/radix-vue/issues/353 use custom arrow -->
+          <!-- <PopoverArrow as-child>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 10" class="relative h-3 text-space w-max left-2" :style="`color: ${location.bg}`">
               <path
                 fill="currentColor"
                 d="M12.63 1.83 8.27 8.25A4 4 0 0 1 4.97 10h17.8a4 4 0 0 1-3.3-1.75L15.1 1.83a1.5 1.5 0 0 0-2.48 0z"
               />
             </svg>
-          </PopoverArrow>
+          </PopoverArrow> -->
         </PopoverContent>
       </PopoverPortal>
     </PopoverRoot>

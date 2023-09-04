@@ -9,16 +9,14 @@ import { computeCluster } from '../../shared/compute-cluster.ts'
 import { flushClusterTable, insertLocationsClusterSet } from '../../database/functions.ts'
 
 const env = await load()
-
-function error(message: string): never {
-  throw new Error(message)
+const dbArgs: DatabaseAuthArgs = {
+  apikey: env.DB_AUTH_KEY,
+  url: env.DB_URL,
+  auth: {
+    email: env.DB_AUTH_EMAIL,
+    password: env.DB_AUTH_PASSWORD,
+  },
 }
-
-const url = env.DB_URL || error('DB_URL not set')
-const apikey = env.DB_AUTH_KEY || error('DB_AUTH_KEY not set')
-const email = env.DB_AUTH_EMAIL || error('DB_AUTH_EMAIL not set')
-const password = env.DB_AUTH_PASSWORD || error('DB_AUTH_PASSWORD not set')
-const dbArgs: DatabaseAuthArgs = { apikey, url, auth: { email, password } }
 
 await flushClusterTable(dbArgs)
 
