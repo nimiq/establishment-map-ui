@@ -3,5 +3,15 @@
   "cSpell.words": [
     "grecaptcha"
   ],
-  "deno.enablePaths": ["./supabase/functions"]
+  "deno.enablePaths": ["./supabase/functions", "./bot"],
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.unstable": true,
+  "deno.suggest.imports.hosts": {
+    "https://deno.land": false
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  }
 }
