@@ -3,9 +3,9 @@ import { createReusableTemplate, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { PopoverAnchor, PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import { screens } from 'tailwindcss-nimiq-theme'
-import { defineAsyncComponent } from 'vue'
+import type { Location, Point } from 'types'
+import { computed, defineAsyncComponent } from 'vue'
 import { CustomMarker } from 'vue3-google-map'
-import type { Location, Point } from '@/types'
 import { useMap } from '@/stores/map'
 import { useLocations } from '@/stores/locations'
 import { useCluster } from '@/stores/cluster'
@@ -23,8 +23,8 @@ const { clusters, singles } = storeToRefs(useCluster())
 const { setPosition } = useMap()
 const { zoom } = storeToRefs(useMap())
 
-const showSingleName = () => zoom.value >= 11
-const showCategoryIcon = () => zoom.value >= 13
+const showSingleName = computed(() => zoom.value >= 11)
+const showCategoryIcon = computed(() => zoom.value >= 13)
 
 const CategoryIcon = defineAsyncComponent(
   () => import('@/components/icons/categories/CategoryIcon.vue'),
@@ -51,7 +51,7 @@ function extractColorFromBg(bg: string) {
 
 function onClusterClick(center: Point, proposedZoom: number) {
   // To make it more fluid if zoom is lower than 13, the minimum zoom change must be 3
-  const newZoom = proposedZoom < 13 ? Math.max(proposedZoom, zoom() + 3) : proposedZoom
+  const newZoom = proposedZoom < 13 ? Math.max(proposedZoom, zoom.value + 3) : proposedZoom
   setPosition({ center, zoom: newZoom })
 }
 </script>
