@@ -14,8 +14,8 @@ import CrossIcon from '@/components/icons/icon-cross.vue'
 import FilterIcon from '@/components/icons/icon-filter.vue'
 import { useFilters } from '@/stores/filters'
 import { translateCategory, translateCurrency } from '@/translations'
-import { useMap } from '@/stores/map'
 import { useCluster } from '@/stores/cluster'
+import { useMap } from '@/stores/map'
 
 const isOpen = ref(false)
 const isMobile = useBreakpoints(screens).smaller('md')
