@@ -3,7 +3,7 @@ import { createReusableTemplate, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { PopoverAnchor, PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import { screens } from 'tailwindcss-nimiq-theme'
-import { defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent } from 'vue'
 import { CustomMarker } from 'vue3-google-map'
 import type { Location, Point } from '@/types'
 import { useMap } from '@/stores/map'
@@ -20,7 +20,8 @@ import Card from '@/components/elements/Card.vue'
 
 const { clusters, singles, clusterAlgorithm } = storeToRefs(useCluster())
 
-const { setPosition, zoom } = useMap()
+const { setPosition } = useMap()
+const { zoom } = storeToRefs(useMap())
 
 function onClusterClick(center: Point, clusterId: number) {
   if (!clusterAlgorithm.value)
@@ -29,7 +30,7 @@ function onClusterClick(center: Point, clusterId: number) {
   // If zoom is lower than 13, the minimum zoom change must be 3
   // To make it more fluid
   const proposedZoom = clusterAlgorithm.value.getClusterExpansionZoom(clusterId)
-  const newZoom = proposedZoom < 13 ? Math.max(proposedZoom, zoom() + 3) : proposedZoom
+  const newZoom = proposedZoom < 13 ? Math.max(proposedZoom, zoom.value + 3) : proposedZoom
 
   setPosition({
     center,
@@ -37,8 +38,8 @@ function onClusterClick(center: Point, clusterId: number) {
   })
 }
 
-const showSingleName = () => zoom() >= 11
-const showCategoryIcon = () => zoom() >= 13
+const showSingleName = computed(() => zoom.value >= 11)
+const showCategoryIcon = computed(() => zoom.value >= 13)
 
 const CategoryIcon = defineAsyncComponent(
   () => import('@/components/icons/categories/CategoryIcon.vue'),
@@ -80,7 +81,7 @@ function extractColorFromBg(bg: string) {
         {{ $t('ATM') }}
       </div>
       <div
-        v-else-if="showCategoryIcon()"
+        v-else-if="showCategoryIcon"
         class="grid w-8 h-8 text-white transition-colors rounded-full shadow ring-white/40 ring-2 place-content-center" :class="uuid === selectedUuid ? 'bg-sky' : 'bg-space group-hover/marker:bg-[#494d6c] group-focus/marker:bg-[#494d6c]'"
       >
         <CategoryIcon :category="category" class="w-7" />
@@ -91,7 +92,7 @@ function extractColorFromBg(bg: string) {
       />
       <!-- <PopoverAnchor class="mx-1" /> -->
       <span
-        v-if="!isAtm && showSingleName()"
+        v-if="!isAtm && showSingleName"
         class="flex-1 text-base font-semibold leading-none text-left transition-[color,-webkit-text-stroke] select-none [-webkit-text-stroke:_3px_white] relative before:content-[attr(data-outline)] before:absolute before:[-webkit-text-stroke:0]"
         :class="[uuid === selectedUuid ? 'text-sky' : 'text-space group-hover/marker:text-space/80 group-focus/marker:bg-[#35395A]', { invisible: !isMobile && uuid === selectedUuid }]"
         :data-outline="name"
@@ -103,7 +104,7 @@ function extractColorFromBg(bg: string) {
 
   <CustomMarker
     v-for="location in singles" :key="location.uuid"
-    :options="{ position: { lng: location.lng, lat: location.lat }, anchorPoint: showSingleName() ? 'LEFT_CENTER' : 'CENTER' }"
+    :options="{ position: { lng: location.lng, lat: location.lat }, anchorPoint: showSingleName ? 'LEFT_CENTER' : 'CENTER' }"
   >
     <ReuseTemplate v-if="isMobile" :location="location" @click="selectedUuid = location.uuid" />
 
@@ -114,7 +115,7 @@ function extractColorFromBg(bg: string) {
     >
       <PopoverAnchor
         class="absolute h-full pointer-events-none -left-1"
-        :class="location.isAtm || showCategoryIcon() ? 'w-10' : 'w-5'"
+        :class="location.isAtm || showCategoryIcon ? 'w-10' : 'w-5'"
       />
       <PopoverTrigger :aria-label="$t('See location details')" class="cursor-pointer" :data-trigger-uuid="location.uuid">
         <ReuseTemplate :location="location" class="transition-shadow rounded-sm" />

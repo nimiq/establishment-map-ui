@@ -1,4 +1,4 @@
-import { computed, shallowRef } from 'vue'
+import { computed, ref, shallowRef, watch } from 'vue'
 import { defineStore, storeToRefs } from 'pinia'
 import type { GoogleMap } from 'vue3-google-map'
 import { useDebounceFn } from '@vueuse/core'
@@ -9,11 +9,21 @@ import type { EstimatedMapPosition, MapPosition, Point } from '@/types'
 
 export const useMap = defineStore('map', () => {
   const mapInstance = shallowRef<typeof GoogleMap>()
-  const map = computed(() => mapInstance.value?.map as google.maps.Map)
-  const center = () => map.value?.getCenter()?.toJSON() as Point
-  const zoom = () => map.value?.getZoom() as number
-  const increaseZoom = () => map.value?.setZoom(zoom() + 1)
-  const decreaseZoom = () => map.value?.setZoom(zoom() - 1)
+  const map = computed(() => mapInstance.value?.map as google.maps.Map | undefined)
+  const center = () => map.value?.getCenter()?.toJSON() as Point | undefined
+  const zoom = ref(map.value?.getZoom() ?? 3)
+
+  const unwatch = watch(map, (map) => {
+    if (!map)
+      return
+    map.addListener('zoom_changed', () => {
+      zoom.value = map.getZoom()!
+    })
+    unwatch()
+  })
+
+  const increaseZoom = () => map.value?.setZoom(zoom.value + 1)
+  const decreaseZoom = () => map.value?.setZoom(zoom.value - 1)
 
   const boundingBox = () => {
     if (!map.value?.getBounds())
@@ -64,12 +74,12 @@ export const useMap = defineStore('map', () => {
       return
     router.push({
       name: 'coords',
-      params: { ...center(), zoom: zoom() },
+      params: { ...center(), zoom: zoom.value },
       query: { ...route.query, uuid: selectedUuid.value ? selectedUuid.value : undefined },
       replace: true,
     })
     await locationsStore.getLocations(boundingBox()!)
-    cluster(locationsStore.locations, boundingBox()!, zoom())
+    cluster(locationsStore.locations, boundingBox()!, zoom.value)
   }
 
   return {
