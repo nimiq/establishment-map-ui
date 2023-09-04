@@ -18,7 +18,6 @@ export const useMap = defineStore('map', () => {
   const router = useRouter()
   const route = useRoute()
 
-  const locationsStore = useLocations()
   const { cluster } = useCluster()
   const { selectedUuid } = storeToRefs(useLocations())
   const { selectedCategories, selectedCurrencies } = storeToRefs(useFilters())
@@ -33,14 +32,10 @@ export const useMap = defineStore('map', () => {
       query: { ...route.query, uuid: selectedUuid.value ? selectedUuid.value : undefined },
       replace: true,
     })
-    await locationsStore.getLocations(bbox)
-    cluster({
-      boundingBox: bbox,
-      zoom: zoom.value,
-    }, {
-      categories: selectedCategories.value,
-      currencies: selectedCurrencies.value,
-    })
+    cluster(
+      { boundingBox: bbox, zoom: zoom.value },
+      { categories: selectedCategories.value, currencies: selectedCurrencies.value },
+    )
   }
 
   // Make the API request after the map has not been moved for 300ms or after 700ms
