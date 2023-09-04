@@ -114,9 +114,9 @@ function onClusterClick(center: Point, proposedZoom: number) {
       <PopoverPortal>
         <PopoverContent side="right" :side-offset="5" class="rounded-lg shadow">
           <Card :location="location" :progress="1" class="max-w-xs" />
-          <PopoverArrow class="w-4 h-2" />
+          <PopoverArrow class="w-4 h-2" :style="`fill: ${location.isAtm ? extractColorFromBg(location.bg) : 'white'}`" />
 
-          <PopoverArrow as-child>
+          <!-- <PopoverArrow as-child>
             <svg
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 10" class="relative h-3 w-max left-2"
               :style="`fill: ${location.isAtm ? extractColorFromBg(location.bg) : 'white'}`"
@@ -126,7 +126,7 @@ function onClusterClick(center: Point, proposedZoom: number) {
                 d="M12.63 1.83 8.27 8.25A4 4 0 0 1 4.97 10h17.8a4 4 0 0 1-3.3-1.75L15.1 1.83a1.5 1.5 0 0 0-2.48 0z"
               />
             </svg>
-          </PopoverArrow>
+          </PopoverArrow> -->
         </PopoverContent>
       </PopoverPortal>
     </PopoverRoot>
