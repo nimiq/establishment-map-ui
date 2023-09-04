@@ -116,6 +116,7 @@ function onClusterClick(center: Point, proposedZoom: number) {
           <Card :location="location" :progress="1" class="max-w-xs" />
           <PopoverArrow class="w-4 h-2" :style="`fill: ${location.isAtm ? extractColorFromBg(location.bg) : 'white'}`" />
 
+          <!-- TODO Once this is fixed https://github.com/radix-vue/radix-vue/issues/353 use custom arrow -->
           <!-- <PopoverArrow as-child>
             <svg
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 10" class="relative h-3 w-max left-2"
