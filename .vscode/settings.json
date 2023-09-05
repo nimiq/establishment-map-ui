@@ -1,9 +1,14 @@
 {
-  "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.organizeImports": true
   },
   "cSpell.words": [
     "grecaptcha"
-  ]
+  ],
+  "deno.enablePaths": ["supabase", "bot"],
+  "deno.lint": true,
+  "deno.unstable": true,
+  "deno.suggest.imports.hosts": {
+    "https://deno.land": false
+  }
 }
