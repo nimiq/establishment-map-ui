@@ -71,7 +71,7 @@ watch(selectedUuid, (uuid) => {
   <DynamicScroller
     ref="scroller"
     key-field="uuid"
-    :items="[]"
+    :items="locations"
     :min-item-size="99"
     list-tag="ul"
     item-tag="li"
