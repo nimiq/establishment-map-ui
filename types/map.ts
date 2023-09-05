@@ -1,4 +1,4 @@
-import type { MultiPolygon } from '@turf/turf'
+import type { MultiPolygon } from '@turf/helpers'
 import type { Location } from './location'
 
 export interface BoundingBox {
