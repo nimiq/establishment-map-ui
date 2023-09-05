@@ -31,10 +31,10 @@ watch(firstLocationsLoaded, () => {
       enter-active-class="transition duration-300" leave-active-class="transition duration-300"
     >
       <template v-if="singles.length > 0">
-        <MobileList v-if="isListShown" :locations="singles" class="absolute bottom-0 w-full" />
+        <MobileList v-if="isListShown" :locations="singles" class="absolute bottom-0 w-full" @close-list="isListShown = false" />
         <ShowListButton
           v-else :first-locations-loaded="firstLocationsLoaded" :list-is-shown="isListShown" chevron-direction="up"
-          class="absolute -translate-x-1/2 bottom-6 left-1/2" @click="isListShown = !isListShown"
+          class="absolute -translate-x-1/2 bottom-6 left-1/2" @click="isListShown = true"
         />
       </template>
     </transition>

@@ -26,6 +26,7 @@ const props = defineProps({
 
 const emit = defineEmits({
   'update:progress': (_: number) => true,
+  'closeList': () => true,
 })
 
 const containerHeight = ref(0)
@@ -35,6 +36,10 @@ const heightDifference = computed(() => props.maxHeight - initialHeight.value)
 let initialY = 0
 let initialX = 0
 let initialOpen = false
+let lastEventTime = window.performance.now()
+let lastEventY = 0
+let speedY = 0
+let timerId: number | null = null
 const dragging = ref(false)
 const container = ref<HTMLElement | null>(null)
 const isOpen = computed(() => props.progress === 1)
@@ -56,6 +61,18 @@ function onMove(event: PointerEvent) {
   if (Math.abs(yDelta) < 10)
     return
 
+  const currentEventTime = window.performance.now()
+  const timeDifference = currentEventTime - lastEventTime
+  const dy = event.clientY - lastEventY
+  speedY = dy / timeDifference // speed in px/ms
+  lastEventTime = currentEventTime
+  lastEventY = event.clientY
+  if (timerId !== null)
+    clearTimeout(timerId)
+  timerId = window.setTimeout(() => {
+    speedY = 0
+  }, 100) // if no event in 100ms, reset speedY to 0
+
   let newProgress: number
   if (initialOpen) {
     // yDelta is negative for dragging down
@@ -63,7 +80,11 @@ function onMove(event: PointerEvent) {
   }
   else {
     // yDelta is positive for dragging up
-    newProgress = Math.min(Math.max(yDelta, 0), heightDifference.value) / heightDifference.value
+    if (yDelta > 0)
+      newProgress = Math.min(yDelta, heightDifference.value) / heightDifference.value
+    else
+      // Dragging down to close list
+      newProgress = Math.min(yDelta, heightDifference.value) / heightDifference.value
   }
   emit('update:progress', newProgress)
 }
@@ -80,11 +101,19 @@ function onEnd(event: PointerEvent) {
     open()
   }
   else {
-    if (initialOpen)
+    if (initialOpen) {
       props.progress < 0.85 ? close() : open()
-
-    else
+    }
+    else {
       props.progress > 0.15 ? open() : close()
+
+      // Close list if dragged down fast enough
+      if (props.progress < 0 && speedY > 0.8)
+        emit('closeList')
+
+      if (props.progress < -0.5)
+        emit('closeList')
+    }
   }
 }
 
@@ -116,11 +145,12 @@ function onCardDrag(progress: number) {
   const radius = (1 - progress) * props.initialBorderRadius
 
   style.value = {
-    height: isOpen.value ? 'min-content' : progress ? `${initialHeight.value + heightDifference.value * progress}px` : 'min-content',
-    marginBottom: `${(1 - progress) * props.initialGapToScreen}px`,
+    height: isOpen.value ? 'min-content' : progress > 0 ? `${initialHeight.value + heightDifference.value * progress}px` : 'min-content',
+    // Set to -8 for closing list, -10 would be more "accurate" more -8 feels more natural
+    marginBottom: `${(1 - (progress >= 0 ? progress : progress * -6)) * props.initialGapToScreen}px`,
     borderBottomRightRadius: `${radius}px`,
     borderBottomLeftRadius: `${radius}px`,
-    width: `${window.innerWidth - (1 - progress) * 40}px`,
+    width: `${window.innerWidth - (1 - Math.max(progress, 0)) * 40}px`,
   }
 }
 watch(() => props.progress, onCardDrag, { immediate: true })
@@ -142,14 +172,13 @@ onBeforeUnmount(() => {
 
 <template>
   <article
-    ref="container" class="absolute h-full touch-pan-x sheet-transition will-change-auto min-h-fit"
-    :style="style" @pointerdown="onStart" @pointermove="onMove" @pointerup="onEnd" @pointercancel="onCancel"
+    ref="container" class="absolute h-full touch-pan-x sheet-transition will-change-auto min-h-fit" :style="style"
+    @pointerdown="onStart" @pointermove="onMove" @pointerup="onEnd" @pointercancel="onCancel"
   >
     <slot name="dragger">
       <div class="relative">
         <hr
-          class="absolute inset-x-0 z-10 w-32 h-1 mx-auto mt-2 ml-auto border-0 rounded-full bg-black/20"
-          :class="{
+          class="absolute inset-x-0 z-10 w-32 h-1 mx-auto mt-2 ml-auto border-0 rounded-full bg-black/20" :class="{
             'bg-white mt-3': isOpen,
             'mix-blend-darken': !isOpen,
           }"

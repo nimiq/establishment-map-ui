@@ -36,7 +36,7 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
     <CardBg v-if="location.isAtm" :location="location" />
 
     <div
-      v-if="location.photo" class="pt-1.5 px-1.5 transition-height duration-[--duration]"
+      v-if="location.photo && progress > 0" class="pt-1.5 px-1.5 transition-height duration-[--duration]"
       :style="`height: ${progress * 184}px;`"
     >
       <img class="object-cover w-full h-full rounded-sm" :src="location.photo" alt="">

@@ -13,6 +13,10 @@ defineProps({
   },
 })
 
+defineEmits({
+  closeList: () => true,
+})
+
 // We have only one progress across all elements. If any of the element moves, all of them move.
 const INITIAL_GAP_TO_SCREEN = 20
 
@@ -76,7 +80,7 @@ watch(cards, (newCards, oldCards) => {
   <ul
     ref="scrollRoot"
     class="flex items-end w-full overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-x-3 scroll-mx-[var(--spacing)] pointer-events-none"
-    :style="`--spacing: ${(1 - progress) * INITIAL_GAP_TO_SCREEN}px`"
+    :style="`--spacing: ${(1 - Math.max(progress, 0)) * INITIAL_GAP_TO_SCREEN}px`"
   >
     <li
       v-for="location in locations" :key="location.uuid"
@@ -88,6 +92,7 @@ watch(cards, (newCards, oldCards) => {
         :max-height="location.photo ? 363 : 179" :initial-border-radius="8"
         :initial-gap-to-screen="INITIAL_GAP_TO_SCREEN" class="relative w-full bg-white rounded-t-lg" :progress="progress"
         @update:progress="progress = $event"
+        @close-list="() => $emit('closeList')"
       >
         <Card :location="location" :progress="progress" />
       </SheetModal>

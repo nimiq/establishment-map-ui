@@ -91,7 +91,6 @@ const FacebookLogo = defineAsyncComponent(() => import('@/components/icons/icon-
       class="text-xs leading-[1.5] grid-cols-1 col-span-3 row-start-3" :class="{
         'text-white/70': location.isAtm && location.isDark,
         'text-space/60': !location.isAtm || location.isLight,
-        'truncate': progress === 0,
       }"
     >
       {{ location.address }}
