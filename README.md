@@ -49,7 +49,7 @@ The project is structured in a monorepo:
 - [`shared`](shared): Shared functions across the project.
 - [`database`](database): Functions to interact with the database.
 - [`bot`](bot): A slack bot to manage the database.
-- [`supbase`](supabase): Edge Functions in Supabase.
+- [`supabase`](supabase): Edge Functions in Supabase.
 
 ### Database
 

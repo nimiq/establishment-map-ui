@@ -8,7 +8,7 @@ import type { DatabaseAuthArgs, InsertLocationsClustersSetParamsItem } from '../
 import type { BoundingBox, Cluster, Location } from '../../../types/index.ts'
 
 const apikey = Deno.env.get('SUPABASE_ANON_KEY')
-const url = Deno.env.get('SUPABASE_DB_URL')
+const url = Deno.env.get('SUPABASE_URL')
 const email = Deno.env.get('DB_AUTH_EMAIL')
 const password = Deno.env.get('DB_AUTH_PASSWORD')
 
