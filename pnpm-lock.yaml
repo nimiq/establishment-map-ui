@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@fontsource/mulish':
     specifier: ^4.5.14
@@ -18,7 +22,7 @@ dependencies:
     version: 0.9.2
   '@nimiq/vue3-components':
     specifier: github:nimiq/vue3-components#build/full
-    version: github.com/nimiq/vue3-components/2c9ccc48da848e09615c742057215d157c5e383d
+    version: github.com/nimiq/vue3-components/6c0077eea2407259747ca5f866946d834f3288c0
   '@turf/bbox-polygon':
     specifier: ^6.5.0
     version: 6.5.0
@@ -65,8 +69,8 @@ dependencies:
     specifier: ^3.3.4
     version: 3.3.4
   vue-i18n:
-    specifier: ^9.2.2
-    version: 9.2.2(vue@3.3.4)
+    specifier: ^9.3.0
+    version: 9.3.0(vue@3.3.4)
   vue-router:
     specifier: ^4.2.4
     version: 4.2.4(vue@3.3.4)
@@ -74,8 +78,8 @@ dependencies:
     specifier: 2.0.0-beta.8
     version: 2.0.0-beta.8(vue@3.3.4)
   vue3-google-map:
-    specifier: 0.15.0
-    version: 0.15.0(vue@3.3.4)
+    specifier: ^0.17.1
+    version: 0.17.1(vue@3.3.4)
 
 devDependencies:
   '@antfu/eslint-config':
@@ -539,42 +543,42 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@intlify/core-base@9.2.2:
-    resolution: {integrity: sha512-JjUpQtNfn+joMbrXvpR4hTF8iJQ2sEFzzK3KIESOx+f+uwIjgw20igOyaIdhfsVVBCds8ZM64MoeNSx+PHQMkA==}
-    engines: {node: '>= 14'}
+  /@intlify/core-base@9.3.0:
+    resolution: {integrity: sha512-SRzn8TMnPZ6MY8OFrgouRq4DGaf01SHcJEF6FglYFYvRkgPzziEcQe+v2PD+O5lUp/rJafP4dabm1CmsVAA7rA==}
+    engines: {node: '>= 16'}
     dependencies:
-      '@intlify/devtools-if': 9.2.2
-      '@intlify/message-compiler': 9.2.2
-      '@intlify/shared': 9.2.2
-      '@intlify/vue-devtools': 9.2.2
+      '@intlify/devtools-if': 9.3.0
+      '@intlify/message-compiler': 9.3.0
+      '@intlify/shared': 9.3.0
+      '@intlify/vue-devtools': 9.3.0
     dev: false
 
-  /@intlify/devtools-if@9.2.2:
-    resolution: {integrity: sha512-4ttr/FNO29w+kBbU7HZ/U0Lzuh2cRDhP8UlWOtV9ERcjHzuyXVZmjyleESK6eVP60tGC9QtQW9yZE+JeRhDHkg==}
-    engines: {node: '>= 14'}
+  /@intlify/devtools-if@9.3.0:
+    resolution: {integrity: sha512-5aKZnqj0Ff4dfwBX2Oo+MheVs00CBnC0RzWK26aT2M4AF0cxdFLOJAs51/eHT01jmzrxSvfBMjdArUWHwgetfg==}
+    engines: {node: '>= 16'}
     dependencies:
-      '@intlify/shared': 9.2.2
+      '@intlify/shared': 9.3.0
     dev: false
 
-  /@intlify/message-compiler@9.2.2:
-    resolution: {integrity: sha512-IUrQW7byAKN2fMBe8z6sK6riG1pue95e5jfokn8hA5Q3Bqy4MBJ5lJAofUsawQJYHeoPJ7svMDyBaVJ4d0GTtA==}
-    engines: {node: '>= 14'}
+  /@intlify/message-compiler@9.3.0:
+    resolution: {integrity: sha512-D8tSJEhTCSFcCzkThjE4Sbk1tIdvzkYa1FaVIzUtZ8hKPATvokNrOiDw1i/h671m8A80l9Ywq594i/LPTB6EJA==}
+    engines: {node: '>= 16'}
     dependencies:
-      '@intlify/shared': 9.2.2
-      source-map: 0.6.1
+      '@intlify/shared': 9.3.0
+      source-map-js: 1.0.2
     dev: false
 
-  /@intlify/shared@9.2.2:
-    resolution: {integrity: sha512-wRwTpsslgZS5HNyM7uDQYZtxnbI12aGiBZURX3BTR9RFIKKRWpllTsgzHWvj3HKm3Y2Sh5LPC1r0PDCKEhVn9Q==}
-    engines: {node: '>= 14'}
+  /@intlify/shared@9.3.0:
+    resolution: {integrity: sha512-MMGRz6zWxtz7rHtxIIdnyb8SYOIaaseN1IvUhAEs9tOW4u77RD4DFp4qgPXesp2Gxo/5QitH9kwSs0jnxGUNEw==}
+    engines: {node: '>= 16'}
     dev: false
 
-  /@intlify/vue-devtools@9.2.2:
-    resolution: {integrity: sha512-+dUyqyCHWHb/UcvY1MlIpO87munedm3Gn6E9WWYdWrMuYLcoIoOEVDWSS8xSwtlPU+kA+MEQTP6Q1iI/ocusJg==}
-    engines: {node: '>= 14'}
+  /@intlify/vue-devtools@9.3.0:
+    resolution: {integrity: sha512-kEaxIz1VEgsz2q5RhoS+fBGTkXr/4+pxmK9mN14+speVGb82HPRntKBmz0GO18I1JisD4Z0vAva+KCTHGeAqbQ==}
+    engines: {node: '>= 16'}
     dependencies:
-      '@intlify/core-base': 9.2.2
-      '@intlify/shared': 9.2.2
+      '@intlify/core-base': 9.3.0
+      '@intlify/shared': 9.3.0
     dev: false
 
   /@isaacs/cliui@8.0.2:
@@ -4515,6 +4519,7 @@ packages:
   /source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
+    dev: true
 
   /spdx-correct@3.2.0:
     resolution: {integrity: sha512-kN9dJbvnySHULIluDHy32WHRUu3Og7B9sbY7tsFLctQkIqnMh3hErYgdMjTYuqmcXX+lK5T1lnUt3G7zNswmZA==}
@@ -5052,15 +5057,15 @@ packages:
       - supports-color
     dev: true
 
-  /vue-i18n@9.2.2(vue@3.3.4):
-    resolution: {integrity: sha512-yswpwtj89rTBhegUAv9Mu37LNznyu3NpyLQmozF3i1hYOhwpG8RjcjIFIIfnu+2MDZJGSZPXaKWvnQA71Yv9TQ==}
-    engines: {node: '>= 14'}
+  /vue-i18n@9.3.0(vue@3.3.4):
+    resolution: {integrity: sha512-+2L+ae/e4+fixhjym3lgzGCGQG8wVGlGrDHzjfdgUudheHvbVHu5i6tn6FF+buH75UFA7T5ZO2ZO7zrh6CzuaA==}
+    engines: {node: '>= 16'}
     peerDependencies:
       vue: ^3.0.0
     dependencies:
-      '@intlify/core-base': 9.2.2
-      '@intlify/shared': 9.2.2
-      '@intlify/vue-devtools': 9.2.2
+      '@intlify/core-base': 9.3.0
+      '@intlify/shared': 9.3.0
+      '@intlify/vue-devtools': 9.3.0
       '@vue/devtools-api': 6.5.0
       vue: 3.3.4
     dev: false
@@ -5120,11 +5125,11 @@ packages:
       vue-resize: 2.0.0-alpha.1(vue@3.3.4)
     dev: false
 
-  /vue3-google-map@0.15.0(vue@3.3.4):
-    resolution: {integrity: sha512-Y0fyBa9feS3mFIsYnCdqGr2TQWtRAhs0Q2vTmrhD/kzyY9z7lqd5p8ZM+Axw7xsaUXP+NvvIdIP4TianIOubkQ==}
-    engines: {node: '>=12'}
+  /vue3-google-map@0.17.1(vue@3.3.4):
+    resolution: {integrity: sha512-1JB4ma10v4GvlnQ/RZczUn2HIc3Eh/K44OOcXKbgiQZQzlWcBLmXjA1fTRSdwlZ/qAmTopYNxdOQEBi/mFlRXg==}
+    engines: {node: '>=16.11.0'}
     peerDependencies:
-      vue: '3'
+      vue: ^3.3.4
     dependencies:
       '@googlemaps/js-api-loader': 1.16.2
       '@googlemaps/markerclusterer': 2.4.0
@@ -5310,8 +5315,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/nimiq/vue3-components/2c9ccc48da848e09615c742057215d157c5e383d:
-    resolution: {tarball: https://codeload.github.com/nimiq/vue3-components/tar.gz/2c9ccc48da848e09615c742057215d157c5e383d}
+  github.com/nimiq/vue3-components/6c0077eea2407259747ca5f866946d834f3288c0:
+    resolution: {tarball: https://codeload.github.com/nimiq/vue3-components/tar.gz/6c0077eea2407259747ca5f866946d834f3288c0}
     name: '@nimiq/vue3-components'
     version: 0.0.0
     dependencies:

@@ -40,10 +40,10 @@
     "radix-vue": "^0.1.30",
     "supercluster": "^8.0.1",
     "vue": "^3.3.4",
-    "vue-i18n": "^9.2.2",
+    "vue-i18n": "^9.3.0",
     "vue-router": "^4.2.4",
     "vue-virtual-scroller": "2.0.0-beta.8",
-    "vue3-google-map": "0.15.0"
+    "vue3-google-map": "^0.17.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.40.3",
