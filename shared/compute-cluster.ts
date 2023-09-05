@@ -25,7 +25,7 @@ export function computeCluster(algorithm: Supercluster, locations: Location[], {
       })
     }
     else {
-      singles.push(c.properties.location)
+      singles.push(c.properties as Location)
     }
   }
 
