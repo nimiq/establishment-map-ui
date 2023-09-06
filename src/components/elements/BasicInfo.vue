@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import { type PropType } from 'vue'
-import { storeToRefs } from 'pinia'
 import { type Location } from 'types'
 import GmapsButton from './GmapsButton.vue'
 import StarFilledIcon from '@/components/icons/icon-star-filled.vue'
 import StarIcon from '@/components/icons/icon-star.vue'
-import { useLocations } from '@/stores/locations'
 
 defineProps({
   location: {
@@ -17,8 +15,6 @@ defineProps({
     default: 0,
   },
 })
-
-const { selectedUuid } = storeToRefs(useLocations())
 </script>
 
 <template>
@@ -30,17 +26,16 @@ const { selectedUuid } = storeToRefs(useLocations())
       'grid-cols-[auto_1fr_auto]': !location.photo,
     }"
   >
-    <h2
+    <h3
       class="text-base font-bold leading-[1.3] col-span-2 pb-1 text-balance"
       :class="{
-        'text-sky': !location.isAtm && selectedUuid === location.uuid,
         'mr-4': location.photo,
         'mr-2': !location.photo,
       }"
     >
       <!-- eslint-disable-next-line vue/singleline-html-element-content-newline -->
       <template v-if="location.isAtm">{{ $t('ATM') }} (</template>{{ location.name }}<template v-if="location.isAtm">)</template>
-    </h2>
+    </h3>
 
     <GmapsButton v-if="!location.photo && location.url && progress > 0.5" :location="location" class="mr-4 self-start -mt-2 -mb-2" />
 
