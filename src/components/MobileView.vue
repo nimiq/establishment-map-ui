@@ -33,6 +33,11 @@ watch(selectedUuid, (uuid) => {
   <div class="flex flex-col h-screen">
     <InteractionBar />
     <TheMapInstance class="relative flex-1" />
+    <!-- Shadow -->
+    <!-- <div
+      :class="{ 'translate-y-0 delay-100 duration-500 opacity-20': isListShown, 'translate-y-full duration-500 opacity-0': !isListShown }"
+      class="absolute bottom-0 w-full h-[184px] transition-[transform,opacity] will-change-transform pointer-events-none bg-gradient-to-t from-space to-space/0"
+    /> -->
     <FilterModal class="absolute top-24 right-5" />
     <Controls class="absolute bottom-6 right-6" :class="{ hidden: isListShown }" />
     <transition

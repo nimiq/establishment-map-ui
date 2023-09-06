@@ -90,8 +90,8 @@ watch(cards, (newCards, oldCards) => {
 <template>
   <ul
     ref="scrollRoot"
-    class="flex items-end w-full overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-x-3 scroll-mx-[var(--spacing)] pointer-events-none"
-    :style="`--spacing: ${(1 - Math.max(progress, 0)) * INITIAL_GAP_TO_SCREEN}px`"
+    class="flex items-end w-full overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-x-3 scroll-mx-[var(--spacing)] pointer-events-none bg-gradient-to-t from-space/20 to-space/0 bg-bottom bg-no-repeat"
+    :style="`--spacing: ${(1 - Math.max(progress, 0)) * INITIAL_GAP_TO_SCREEN}px; background-size: 100% 184px;`"
   >
     <li
       v-for="location in locations" :key="location.uuid"

@@ -20,9 +20,9 @@ const openSuggestions = ref(false)
 
 <template>
   <TheMapInstance class="relative flex flex-col w-screen h-screen" />
+  <!-- Shadow -->
   <div
-    v-for="i in 2" :key="i"
-    :class="{ 'translate-x-0 delay-100 duration-500 opacity-10': listIsShown, '-translate-x-full duration-1000 delay-75 opacity-0': !listIsShown }"
+    :class="{ 'translate-x-0 delay-100 duration-500 opacity-20': listIsShown, '-translate-x-full duration-1000 delay-75 opacity-0': !listIsShown }"
     class="absolute inset-0 max-w-[368px] transition-[transform,opacity] will-change-transform pointer-events-none bg-gradient-to-r from-space to-space/0"
   />
   <aside class="absolute flex flex-col max-w-xs bottom-6 top-6 left-6 h-max pointer-events-none [&>*]:pointer-events-auto">
