@@ -84,7 +84,7 @@ function onMove(event: PointerEvent) {
       newProgress = Math.min(yDelta, heightDifference.value) / heightDifference.value
     else
       // Dragging down to close list
-      newProgress = Math.min(yDelta, heightDifference.value) / heightDifference.value
+      newProgress = Math.min(yDelta, initialHeight.value) / initialHeight.value
   }
   emit('update:progress', newProgress)
 }
@@ -146,7 +146,7 @@ function onCardDrag(progress: number) {
 
   style.value = {
     height: isOpen.value ? 'min-content' : progress > 0 ? `${initialHeight.value + heightDifference.value * progress}px` : 'min-content',
-    // Set to -8 for closing list, -10 would be more "accurate" more -8 feels more natural
+    // Set to -6 for closing list, -8 would be more "accurate" more -6 feels more natural
     marginBottom: `${(1 - (progress >= 0 ? progress : progress * -6)) * props.initialGapToScreen}px`,
     borderBottomRightRadius: `${radius}px`,
     borderBottomLeftRadius: `${radius}px`,
