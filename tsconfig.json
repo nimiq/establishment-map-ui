@@ -27,5 +27,5 @@
       "shared": ["./shared"]
     }
   },
-  "exclude": ["dist", "node_modules", "supabase", "bot"]
+  "exclude": ["dist", "node_modules"]
 }

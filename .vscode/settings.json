@@ -2,7 +2,7 @@
   "cSpell.words": [
     "grecaptcha"
   ],
-  "deno.enablePaths": ["supabase", "bot"],
+  "deno.enablePaths": ["./supabase", "./bot"],
   "deno.lint": true,
   "deno.unstable": true,
   "deno.suggest.imports.hosts": {

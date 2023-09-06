@@ -4,7 +4,7 @@ import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
 import booleanWithin from '@turf/boolean-within'
 import pointsWithinPolygon from '@turf/points-within-polygon'
 import union from '@turf/union'
-import type { BoundingBox, Location, Point } from 'types'
+import type { BoundingBox, Location, Point } from '../types/index.ts'
 
 /**
  * Returns a GeoJSON Point from a location. You can pass an object like a Location which will be stored as a property of the point
