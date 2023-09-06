@@ -94,11 +94,10 @@ watch(selectedUuid, (uuid) => {
       </DynamicScrollerItem>
     </template>
 
-    <!-- TODO -->
-    <!-- <template v-if="clusters.length" #after>
+    <template v-if="clusters.length" #after>
       <div class="px-6 py-5 text-sm font-semibold border-space/10 border-t-xs text-space/50">
         {{ $tc('+ {count} grouped', clusters.reduce((sum, cluster) => sum + cluster.count, 0)) }}
       </div>
-    </template> -->
+    </template>
   </DynamicScroller>
 </template>
