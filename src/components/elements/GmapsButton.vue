@@ -16,7 +16,7 @@ const FacebookLogo = defineAsyncComponent(() => import('@/components/icons/icon-
 <template>
   <Button bg-color="white" :href="location.url" border-color="grey" class="!w-[52px]" size="sm">
     <template #icon>
-      <IconGmapsPin v-if="location.linkTo === LocationLink.GMaps" class="h-4" />
+      <IconGmapsPin v-if="location.linkTo === LocationLink.GMaps" class="h-4.5" />
       <InstagramLogo v-else-if="location.linkTo === LocationLink.Instagram" class="h-4" />
       <FacebookLogo v-else-if="location.linkTo === LocationLink.Facebook" class="h-4" />
     </template>

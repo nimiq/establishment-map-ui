@@ -37,13 +37,13 @@ defineProps({
       <template v-if="location.isAtm">{{ $t('ATM') }} (</template>{{ location.name }}<template v-if="location.isAtm">)</template>
     </h3>
 
-    <GmapsButton v-if="!location.photo && location.url && progress > 0.5" :location="location" class="mr-4 self-start -mt-2 -mb-2" />
+    <GmapsButton v-if="!location.photo && location.url && progress > 0.5" :location="location" class="mr-5 self-start -mt-2 -mb-2" />
 
     <template v-if="!location.isAtm">
-      <span class="row-start-2 text-xs font-semibold first-letter:capitalize text-space/60">
+      <span class="row-start-2 text-xs font-semibold first-letter:capitalize text-space/60 whitespace-nowrap">
         {{ location.gmaps_types[0]?.replaceAll('_', ' ') || location.category_label }}
       </span>
-      <div v-if="location.rating" class="row-start-2 flex gap-x-0.5">
+      <div v-if="location.rating" class="row-start-2 flex gap-x-0.5 self-center">
         <template v-for="i in 5" :key="i">
           <component :is="i <= location.rating ? StarFilledIcon : StarIcon" class="w-3 h-3" />
         </template>
