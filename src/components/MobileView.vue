@@ -47,7 +47,7 @@ watch(selectedUuid, (uuid) => {
       enter-active-class="transition duration-300" leave-active-class="transition duration-300"
     >
       <template v-if="singlesInView.length > 0">
-        <MobileList v-if="isListShown" :locations="singlesInView" class="absolute bottom-0 w-full" @close-list="isListShown = false; selectedUuid = undefined;" />
+        <MobileList v-if="isListShown" :locations="singlesInView" :list-is-shown="isListShown" class="absolute bottom-0 w-full" @close-list="isListShown = false; selectedUuid = undefined;" />
         <ShowListButton
           v-else :first-locations-loaded="firstLocationsLoaded" :list-is-shown="isListShown" chevron-direction="up"
           class="absolute -translate-x-1/2 bottom-6 left-1/2" @click="isListShown = true"

@@ -6,10 +6,14 @@ import { useLocations } from '@/stores/locations'
 import SheetModal from '@/components/atoms/SheetModal.vue'
 import Card from '@/components/elements/Card.vue'
 
-defineProps({
+const props = defineProps({
   locations: {
     type: Array as PropType<Location[]>,
     required: true,
+  },
+  listIsShown: {
+    type: Boolean,
+    default: false,
   },
 })
 
@@ -20,8 +24,9 @@ defineEmits({
 // We have only one progress across all elements. If any of the element moves, all of them move.
 const INITIAL_GAP_TO_SCREEN = 20
 
-// Value is between 0 and 1
+// Value is between 0 and +-1
 const progress = ref(0)
+const delayScrolling = ref(false)
 
 const { selectedUuid } = storeToRefs(useLocations())
 
@@ -39,7 +44,8 @@ function handleSelectedUuidUpdate(uuid: string | undefined, smooth = true) {
     return
 
   scrollingIntoView = true
-  document.querySelector(`[data-card-uuid="${uuid}"]`)?.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant' })
+  // Delay scrolling when the list is not shown during the transition duration to prevent glitchy scrolling
+  setTimeout(() => document.querySelector(`[data-card-uuid="${uuid}"]`)?.scrollIntoView({ behavior: smooth ? 'smooth' : 'instant' }), delayScrolling.value ? 350 : 0)
 
   if (smooth) {
     if ('onscrollend' in window) {
@@ -57,9 +63,14 @@ function handleSelectedUuidUpdate(uuid: string | undefined, smooth = true) {
 }
 
 watch(selectedUuid, uuid => handleSelectedUuidUpdate(uuid))
+watch(() => props.listIsShown, (listIsShown) => {
+  // This will prevent the glitchy scrolling but also allow to now have any delay when the list is already open
+  delayScrolling.value = listIsShown
+  setTimeout(() => delayScrolling.value = !listIsShown, 10)
+}, { immediate: true })
 
 onMounted(() => {
-  handleSelectedUuidUpdate(selectedUuid.value, false)
+  handleSelectedUuidUpdate(selectedUuid.value, true)
 })
 
 function intersectionHandler(entries: IntersectionObserverEntry[]) {
