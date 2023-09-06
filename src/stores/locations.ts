@@ -24,16 +24,16 @@ export const useLocations = defineStore('locations', () => {
 
   async function getLocations(boundingBox: BoundingBox): Promise<Location[]> {
     if (bBoxIsWithinArea(boundingBox, visitedAreas)) {
+      // We already have scanned this area, no need to fetch from the database
       const locations = [...locationsMap.values()]
       const filteredLocations = filterLocations(locations) // Filter locations by categories and currencies
       return getLocationsWithinBBox(filteredLocations, boundingBox) // Filter locations by bounding box
     }
 
+    // New area, we need to fetch from the database
     const newLocations = await getDbLocations(DATABASE_ARGS, boundingBox, parseLocation)
     setLocations(newLocations)
-
     visitedAreas = addBBoxToArea(boundingBox, visitedAreas)
-
     return filterLocations(newLocations)
   }
 

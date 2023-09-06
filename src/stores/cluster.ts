@@ -2,7 +2,7 @@ import { getClusterMaxZoom, getClusters } from 'database'
 import { defineStore, storeToRefs } from 'pinia'
 import type { ComputedClusterSet, LocationClusterParams, LocationClusterSet } from 'types'
 import { addBBoxToArea, algorithm, bBoxIsWithinArea, toMultiPolygon } from 'shared'
-import { computed, shallowRef } from 'vue'
+import { computed, ref, shallowRef } from 'vue'
 import { useLocations } from './locations'
 import { useFilters } from './filters'
 import { useMap } from './map'
@@ -21,7 +21,7 @@ export const useCluster = defineStore('cluster', () => {
       - If a match is found, we reuse stored clusters; otherwise, new clusters are computed and stored.
   */
   const memoized = shallowRef(new Map<LocationClusterParams, LocationClusterSet>())
-  const active = shallowRef<LocationClusterSet>()
+  const active = ref<LocationClusterSet>()
 
   function getKey({ zoom, categories, currencies }: LocationClusterParams): LocationClusterParams | undefined {
     for (const key of memoized.value.keys()) {
@@ -41,8 +41,10 @@ export const useCluster = defineStore('cluster', () => {
     const needsToUpdate = !item || !bBoxIsWithinArea(boundingBox.value!, item.memoizedArea)
 
     // Update the memoized item if it exists
-    if (!needsToUpdate)
+    if (!needsToUpdate) {
+      active.value = undefined
       active.value = item
+    }
 
     return { key, item, needsToUpdate }
   }
@@ -78,20 +80,28 @@ export const useCluster = defineStore('cluster', () => {
       ? await getClusterFromClient()
       : await getClusterFromDatabase()
 
-    const newItem: LocationClusterSet = {
-      memoizedArea: item ? addBBoxToArea(boundingBox.value!, item.memoizedArea) : toMultiPolygon(boundingBox.value!).geometry,
-      memoizedClusters: newClusters,
-      memoizedSingles: newSingles,
+    if (item) {
+      item.memoizedArea = addBBoxToArea(boundingBox.value!, item.memoizedArea)
+      item.memoizedClusters.forEach(cluster => newClusters.push(cluster))
+      item.memoizedSingles.forEach(single => newSingles.push(single))
+    }
+    else {
+      memoized.value.set(key, {
+        memoizedArea: toMultiPolygon(boundingBox.value!).geometry,
+        memoizedClusters: newClusters,
+        memoizedSingles: newSingles,
+      })
     }
 
-    memoized.value.set(key, newItem)
     active.value = memoized.value.get(key)
   }
 
   return {
     cluster,
     clusters: computed(() => active.value?.memoizedClusters || []),
-    singles: computed(() => active.value?.memoizedSingles || []),
+    singles: computed(() => {
+      return active.value?.memoizedSingles || []
+    }),
     getMemoized,
   }
 })
