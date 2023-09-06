@@ -39,7 +39,9 @@ watch(selectedUuid, (uuid) => {
       class="absolute bottom-0 w-full h-[184px] transition-[transform,opacity] will-change-transform pointer-events-none bg-gradient-to-t from-space to-space/0"
     /> -->
     <FilterModal class="absolute top-24 right-5" />
-    <Controls class="absolute bottom-6 right-6" :class="{ hidden: isListShown }" />
+    <transition name="scale">
+      <Controls v-if="singlesInView.length === 0 || !isListShown" class="absolute bottom-6 right-6" />
+    </transition>
     <transition
       enter-from-class="translate-y-[110%] opacity-0" leave-to-class="translate-y-[110%] opacity-0"
       enter-active-class="transition duration-300" leave-active-class="transition duration-300"
@@ -54,3 +56,26 @@ watch(selectedUuid, (uuid) => {
     </transition>
   </div>
 </template>
+
+<style scoped>
+.scale-enter-active {
+  animation: icon-in 200ms ease-out 200ms;
+  opacity: 0;
+}
+
+.scale-leave-active {
+  animation: icon-in 150ms ease-in reverse;
+}
+
+@keyframes icon-in {
+  0% {
+    transform: scale(0.75);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+</style>
