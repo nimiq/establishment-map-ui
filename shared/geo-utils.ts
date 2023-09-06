@@ -46,14 +46,15 @@ export function addBBoxToArea(bbox: BoundingBox, multiPoly?: MultiPolygon) {
 }
 
 /**
- * Given a list of locations and a bounding box, returns the locations that are within the bounding box
+ * Given a list of items (anything that has {lat, lng}, e.g.: locations or clusters) and a bounding box,
+ * returns the items that are within the bounding box
  *
- * 1. We create a list of points (using multiPoint) from the locations
- *    - In the properties of each point, we store the location data
+ * 1. We create a list of points (using multiPoint) from the items
+ *    - In the properties of each point, we store the items data
  * 2. We create a polygon from the bounding box
  * 3. We check which points are within the polygon
- * 4. We return the location data from the points that are within the polygon
+ * 4. We return the origina item data from the points that are within the polygon
  */
-export function getItemsWithinBBox<T extends Point>(locations: T[], bbox: BoundingBox) {
-  return pointsWithinPolygon(featureCollection(locations.map(toPoint)), toPolygon(bbox)).features.flatMap(f => f.properties)
+export function getItemsWithinBBox<T extends Point>(items: T[], bbox: BoundingBox) {
+  return pointsWithinPolygon(featureCollection(items.map(toPoint)), toPolygon(bbox)).features.flatMap(f => f.properties)
 }

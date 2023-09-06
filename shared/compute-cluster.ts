@@ -1,5 +1,5 @@
 import Supercluster from 'supercluster'
-import type { Cluster, ClusterArea, ComputedClusterSet, Point } from '../types/map.ts'
+import type { Cluster, ClusterArea, ComputedClusterSet } from '../types/map.ts'
 import type { Location } from '../types/location.ts'
 import { toPoint } from './index.ts'
 
@@ -13,14 +13,14 @@ export function computeCluster(algorithm: Supercluster, locations: Location[], {
   algorithm.load(locations.map(toPoint) as GeoJSON.Feature<GeoJSON.Point, Location>[])
 
   for (const c of algorithm.getClusters([bbox.swLng, bbox.swLat, bbox.neLng, bbox.neLat], zoom)) {
-    const center: Point = { lng: c.geometry.coordinates[0], lat: c.geometry.coordinates[1] }
     const count = c.properties.point_count || 1
-    const clusterId = c.properties.cluster_id
 
     if (count > 1) {
+      const clusterId = c.properties.cluster_id
       clusters.push({
         id: clusterId,
-        ...center,
+        lng: c.geometry.coordinates[0],
+        lat: c.geometry.coordinates[1],
         count,
 
         // Compute it lazily

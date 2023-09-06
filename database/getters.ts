@@ -6,7 +6,7 @@ enum DbFunction {
   GetLocation = 'get_location_by_uuid',
   SearchLocations = 'search_locations',
   GetLocationsClustersSet = 'get_locations_clusters_set',
-  GetMaxZoom = 'get_max_zoom',
+  GetMaxZoom = 'get_max_zoom_computed_clusters_in_server',
 }
 
 /**
