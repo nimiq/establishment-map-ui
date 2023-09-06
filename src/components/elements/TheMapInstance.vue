@@ -43,7 +43,7 @@ const mapGestureBehaviour
 <template>
   <GoogleMap
     ref="mapInstance" :language="detectLanguage()" disable-default-ui :gesture-handling="mapGestureBehaviour" :keyboard-shortcuts="false"
-    class="w-full h-full" :styles="googleMapStyles" :max-zoom="21" :min-zoom="3" :restriction="restriction"
+    class="w-full h-full" :styles="googleMapStyles" :max-zoom="21" :min-zoom="3" :restriction="restriction" :clickable-icons="false"
     @idle.once="setInitialMapPosition"
   >
     <MapMarkers />
