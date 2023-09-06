@@ -1,3 +1,5 @@
+import type { Category, Currency } from './database.ts'
+
 export * from './database.ts'
 export * from './map.ts'
 export * from './location.ts'
@@ -9,4 +11,9 @@ export enum Issue {
   MISSING_NOT_ACCEPTED = 'missing_not_accepted',
   NO_CRYPTO = 'no_crypto',
   OTHER = 'other',
+}
+
+export interface Filters {
+  categories: Category[]
+  currencies: Currency[]
 }

@@ -1,15 +1,18 @@
 import { getClusterMaxZoom, getClusters } from 'database'
-import { defineStore } from 'pinia'
-import Supercluster from 'supercluster'
-import type { Category, ClusterArea, ComputedClusterSet, Currency, LocationClusterParams, LocationClusterSet } from 'types'
-import { addBBoxToArea, bBoxIsWithinArea, toMultiPolygon } from 'shared'
+import { defineStore, storeToRefs } from 'pinia'
+import type { ComputedClusterSet, LocationClusterParams, LocationClusterSet } from 'types'
+import { addBBoxToArea, algorithm, bBoxIsWithinArea, toMultiPolygon } from 'shared'
 import { computed, shallowRef } from 'vue'
 import { useLocations } from './locations'
+import { useFilters } from './filters'
+import { useMap } from './map'
 import { DATABASE_ARGS, parseLocation } from '@/shared'
 import { computeCluster } from '@/../shared/compute-cluster'
 
 export const useCluster = defineStore('cluster', () => {
   const { setLocations, getLocations } = useLocations()
+  const { filtersToString } = useFilters()
+  const { zoom, boundingBox } = storeToRefs(useMap())
 
   /*
     With memoziation, we reduce redundant calculations/requests and optimizes user map interactions to optimize map performance:
@@ -27,9 +30,21 @@ export const useCluster = defineStore('cluster', () => {
     }
   }
 
-  function getMemoized({ zoom, categories, currencies }: LocationClusterParams): { key: LocationClusterParams; item: LocationClusterSet | undefined } {
-    const key = getKey({ zoom, categories, currencies }) || { zoom, categories, currencies }
-    return { key, item: memoized.value.get(key) }
+  function getMemoized() {
+    const obj = { zoom: zoom.value, ...filtersToString() }
+    // If the key already exists, we need to reference the existing key by memory. Creating a new object, even with the same values, will not work.
+    const key = getKey(obj) || obj
+
+    const item: LocationClusterSet | undefined = memoized.value.get(key)
+
+    // If the item exists and the bounding box is within the memoized area, we can reuse the memoized item and there is no need to re-cluster
+    const needsToUpdate = !item || !bBoxIsWithinArea(boundingBox.value!, item.memoizedArea)
+
+    // Update the memoized item if it exists
+    if (!needsToUpdate)
+      active.value = item
+
+    return { key, item, needsToUpdate }
   }
 
   let maxZoomFromServer: number | undefined
@@ -42,37 +57,33 @@ export const useCluster = defineStore('cluster', () => {
     return zoom > maxZoomFromServer
   }
 
-  const clusterAlgorithm = new Supercluster({ radius: 88 })
-
-  async function getClusterFromClient(clusterArea: ClusterArea): Promise<ComputedClusterSet> {
-    const locations = await getLocations(clusterArea.boundingBox)
-    return computeCluster(clusterAlgorithm, locations, clusterArea)
+  async function getClusterFromClient(): Promise<ComputedClusterSet> {
+    const locations = await getLocations(boundingBox.value!)
+    return computeCluster(algorithm, locations, { boundingBox: boundingBox.value!, zoom: zoom.value })
   }
 
-  async function getClusterFromDatabase({ zoom, boundingBox }: ClusterArea): Promise<ComputedClusterSet> {
-    const res = await getClusters(DATABASE_ARGS, boundingBox, zoom, parseLocation)
+  async function getClusterFromDatabase(): Promise<ComputedClusterSet> {
+    const res = await getClusters(DATABASE_ARGS, boundingBox.value!, zoom.value, parseLocation)
     setLocations(res.singles)
     return res
   }
 
-  async function cluster(clusterArea: ClusterArea, { categories = [], currencies = [] }: { currencies?: Currency[]; categories?: Category[] }) {
-    const { zoom, boundingBox } = clusterArea
-    const { key, item } = getMemoized({ zoom, categories: categories.sort().join(','), currencies: currencies.sort().join(',') })
+  async function cluster() {
+    const { item, key, needsToUpdate } = getMemoized()
 
-    if (item && bBoxIsWithinArea(boundingBox, item.memoizedArea)) {
-      active.value = memoized.value.get(key)
+    if (!needsToUpdate)
       return
-    }
 
     const { clusters: newClusters, singles: newSingles } = await shouldRunInClient(key)
-      ? await getClusterFromClient(clusterArea)
-      : await getClusterFromDatabase(clusterArea)
+      ? await getClusterFromClient()
+      : await getClusterFromDatabase()
 
     const newItem: LocationClusterSet = {
-      memoizedArea: item ? addBBoxToArea(boundingBox, item.memoizedArea) : toMultiPolygon(boundingBox).geometry,
+      memoizedArea: item ? addBBoxToArea(boundingBox.value!, item.memoizedArea) : toMultiPolygon(boundingBox.value!).geometry,
       memoizedClusters: newClusters,
       memoizedSingles: newSingles,
     }
+
     memoized.value.set(key, newItem)
     active.value = memoized.value.get(key)
   }
@@ -81,5 +92,6 @@ export const useCluster = defineStore('cluster', () => {
     cluster,
     clusters: computed(() => active.value?.memoizedClusters || []),
     singles: computed(() => active.value?.memoizedSingles || []),
+    getMemoized,
   }
 })

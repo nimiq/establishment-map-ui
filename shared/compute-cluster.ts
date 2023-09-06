@@ -1,6 +1,8 @@
-import type Supercluster from 'supercluster'
+import Supercluster from 'supercluster'
 import type { Cluster, ClusterArea, ComputedClusterSet, Location, Point } from 'types'
 import { toPoint } from './'
+
+export const algorithm = new Supercluster({ radius: 88 })
 
 export function computeCluster(algorithm: Supercluster, locations: Location[], { zoom, boundingBox: bbox }: ClusterArea): ComputedClusterSet {
   const singles: Location[] = []

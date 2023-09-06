@@ -1,11 +1,10 @@
 import { computed, ref, shallowRef, watch } from 'vue'
-import { defineStore, storeToRefs } from 'pinia'
+import { defineStore } from 'pinia'
 import type { GoogleMap } from 'vue3-google-map'
 import { useDebounceFn } from '@vueuse/core'
 import type { EstimatedMapPosition, MapPosition, Point } from 'types'
 import { useRoute, useRouter } from 'vue-router'
 import { useCluster } from './cluster'
-import { useFilters } from './filters'
 import { useLocations } from './locations'
 
 export const useMap = defineStore('map', () => {
@@ -18,27 +17,17 @@ export const useMap = defineStore('map', () => {
   const router = useRouter()
   const route = useRoute()
 
-  const { cluster } = useCluster()
-  const { selectedUuid } = storeToRefs(useLocations())
-  const { selectedCategories, selectedCurrencies } = storeToRefs(useFilters())
-
   async function onBoundsChanged() {
-    const bbox = boundingBox.value
-    if (!bbox)
-      return
     router.push({
       name: 'coords',
       params: { ...center.value, zoom: zoom.value },
-      query: { ...route.query, uuid: selectedUuid.value ? selectedUuid.value : undefined },
+      query: { ...route.query, uuid: useLocations().selectedUuid || undefined },
       replace: true,
     })
-    cluster(
-      { boundingBox: bbox, zoom: zoom.value },
-      { categories: selectedCategories.value, currencies: selectedCurrencies.value },
-    )
+    useCluster().cluster()
   }
 
-  // Make the API request after the map has not been moved for 300ms or after 700ms
+  // Make the API request after the map has not been moved for 300ms or after 2000ms
   const onBoundsChangedDebounced = useDebounceFn(onBoundsChanged, 300, { maxWait: 2000 })
 
   function boundsToBox(bounds?: google.maps.LatLngBounds) {
@@ -60,7 +49,11 @@ export const useMap = defineStore('map', () => {
     })
     map.addListener('bounds_changed', () => {
       boundingBox.value = boundsToBox(map.getBounds())
-      onBoundsChangedDebounced()
+
+      // If we don't have the item in the memoized map, we need to update the clusters
+      // If we have it, getMemoized will update the active value
+      if (useCluster().getMemoized().needsToUpdate)
+        onBoundsChangedDebounced()
     })
     unwatch()
   })

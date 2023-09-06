@@ -1,7 +1,7 @@
 import { useRouteQuery } from '@vueuse/router'
 import { CATEGORIES, CURRENCIES } from 'database'
 import { defineStore } from 'pinia'
-import type { Category, Currency } from 'types'
+import type { Category, Currency, Location } from 'types'
 import { computed } from 'vue'
 
 export const useFilters = defineStore('filters', () => {
@@ -30,10 +30,26 @@ export const useFilters = defineStore('filters', () => {
     selectedCategoriesQuery.value = categories
   }
 
+  function includeLocation({ accepts, sells, category }: Location) {
+    const currencies = accepts.concat(sells)
+    const isFilteredByCurrencies = selectedCurrencies.value.length === 0 || currencies.some(currency => selectedCurrencies.value.includes(currency))
+    const isFilteredByCategories = selectedCategories.value.length === 0 || selectedCategories.value.includes(category)
+    return isFilteredByCurrencies && isFilteredByCategories
+  }
+
+  function filtersToString() {
+    return {
+      currencies: selectedCurrencies.value.sort().join(','),
+      categories: selectedCategories.value.sort().join(','),
+    } as const
+  }
+
   return {
     selectedCategories,
     selectedCurrencies,
     setSelectedCurrencies,
     setSelectedCategories,
+    filterLocations: (locations: Location[]) => locations.filter(includeLocation),
+    filtersToString,
   }
 })

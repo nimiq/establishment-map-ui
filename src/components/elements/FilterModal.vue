@@ -15,7 +15,6 @@ import FilterIcon from '@/components/icons/icon-filter.vue'
 import { useFilters } from '@/stores/filters'
 import { translateCategory, translateCurrency } from '@/translations'
 import { useCluster } from '@/stores/cluster'
-import { useMap } from '@/stores/map'
 
 const isOpen = ref(false)
 const isMobile = useBreakpoints(screens).smaller('md')
@@ -40,16 +39,10 @@ const nFilters = computed(() => {
   return selectedCategories.value.length + selectedCurrencies.value.length
 })
 
-const { boundingBox, zoom } = storeToRefs(useMap())
-
 function updateFilters() {
   filtersStore.setSelectedCategories(unappliedFiltersCategories.value)
   filtersStore.setSelectedCurrencies(unappliedFiltersCurrencies.value)
-
-  useCluster().cluster(
-    { boundingBox: boundingBox.value!, zoom: zoom.value },
-    { categories: unappliedFiltersCategories.value, currencies: unappliedFiltersCurrencies.value },
-  )
+  useCluster().cluster()
 }
 
 function clearFilters() {
