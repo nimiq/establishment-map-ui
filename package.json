@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "A map of locations where you can pay with Crypto around the world",
   "scripts": {
-    "dev": "vite",
+    "dev": "concurrently 'vue-tsc --noEmit --watch' 'vite'",
     "build": "pnpm i18n:extract && pnpm type-check && pnpm build-only",
     "preview": "vite preview --port 4173",
     "build-only": "vite build",
