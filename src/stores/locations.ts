@@ -1,13 +1,13 @@
+import type { MultiPolygon } from '@turf/helpers'
 import { useRouteQuery } from '@vueuse/router'
 import { getLocations as getDbLocations, getLocation } from 'database'
 import { defineStore } from 'pinia'
-import { addBBoxToArea, bBoxIsWithinArea, getLocationsWithinBBox } from 'shared'
+import { addBBoxToArea, bBoxIsWithinArea, getItemsWithinBBox } from 'shared'
 import type { BoundingBox, Location } from 'types'
 import { shallowReactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import type { MultiPolygon } from '@turf/helpers'
-import { useMap } from './map'
 import { useFilters } from './filters'
+import { useMap } from './map'
 import { DATABASE_ARGS, parseLocation } from '@/shared'
 
 export const useLocations = defineStore('locations', () => {
@@ -27,7 +27,7 @@ export const useLocations = defineStore('locations', () => {
       // We already have scanned this area, no need to fetch from the database
       const locations = [...locationsMap.values()]
       const filteredLocations = filterLocations(locations) // Filter locations by categories and currencies
-      return getLocationsWithinBBox(filteredLocations, boundingBox) // Filter locations by bounding box
+      return getItemsWithinBBox(filteredLocations, boundingBox) // Filter locations by bounding box
     }
 
     // New area, we need to fetch from the database

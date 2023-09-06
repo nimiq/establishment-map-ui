@@ -20,7 +20,7 @@ export function computeCluster(algorithm: Supercluster, locations: Location[], {
     if (count > 1) {
       clusters.push({
         id: clusterId,
-        center,
+        ...center,
         count,
 
         // Compute it lazily

@@ -25,7 +25,8 @@ export interface MapPosition {
 
 export interface Cluster {
   id: number // Used for optimization in the rendering process
-  center: Point
+  lng: number
+  lat: number
   expansionZoom: number // The new zoom when the cluster is expanded
   count: number
 }

@@ -12,7 +12,7 @@ import { useApp } from '@/stores/app'
 import { useLocations } from '@/stores/locations'
 
 const { firstLocationsLoaded } = storeToRefs(useApp())
-const { singles } = storeToRefs(useCluster())
+const { singlesInView } = storeToRefs(useCluster())
 
 const isListShown = ref(false)
 
@@ -39,8 +39,8 @@ watch(selectedUuid, (uuid) => {
       enter-from-class="translate-y-[110%] opacity-0" leave-to-class="translate-y-[110%] opacity-0"
       enter-active-class="transition duration-300" leave-active-class="transition duration-300"
     >
-      <template v-if="singles.length > 0">
-        <MobileList v-if="isListShown" :locations="singles" class="absolute bottom-0 w-full" @close-list="isListShown = false; selectedUuid = undefined;" />
+      <template v-if="singlesInView.length > 0">
+        <MobileList v-if="isListShown" :locations="singlesInView" class="absolute bottom-0 w-full" @close-list="isListShown = false; selectedUuid = undefined;" />
         <ShowListButton
           v-else :first-locations-loaded="firstLocationsLoaded" :list-is-shown="isListShown" chevron-direction="up"
           class="absolute -translate-x-1/2 bottom-6 left-1/2" @click="isListShown = true"

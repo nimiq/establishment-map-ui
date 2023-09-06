@@ -38,13 +38,9 @@ const maxZoom = Number(Deno.env.get('MAX_ZOOM'))
 for (let zoom = minZoom; zoom <= maxZoom; zoom++) {
   const res = computeCluster(algorithm, locations, { zoom, boundingBox: bbox })
   const singles: InsertLocationsClustersSetParamsItem[] = (res.singles as Location[]).map(({ lng, lat, uuid }) => ({ lat, lng, count: 1, locationUuid: uuid }))
-  const clusters: InsertLocationsClustersSetParamsItem[]
-    = (res.clusters as Cluster[]).map((
-      { center: { lat, lng }, count, expansionZoom },
-    ) => ({ lat, lng, count, expansionZoom }))
   await insertLocationsClusterSet(dbArgs, {
     zoom_level: zoom,
-    items: singles.concat(clusters),
+    items: singles.concat(res.clusters as Cluster[]),
   })
   console.log(
     `Added ${clusters.length} clusters and ${singles.length} singles at zoom level ${zoom}`,

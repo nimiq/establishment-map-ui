@@ -11,7 +11,7 @@ import { useCluster } from '@/stores/cluster'
 import { useApp } from '@/stores/app'
 
 const { firstLocationsLoaded } = storeToRefs(useApp())
-const { singles, clusters } = storeToRefs(useCluster())
+const { singlesInView, clustersInView } = storeToRefs(useCluster())
 
 const listIsShown = ref(false)
 
@@ -28,7 +28,7 @@ const openSuggestions = ref(false)
   <aside class="absolute flex flex-col max-w-xs bottom-6 top-6 left-6 h-max pointer-events-none [&>*]:pointer-events-auto">
     <div class="duration-75 bg-white shadow-header transition-border-radius" :class="openSuggestions ? 'rounded-t-2xl' : 'rounded-2xl'" style="mask-image: linear-gradient(white, white);">
       <InteractionBar @open="openSuggestions = $event" />
-      <DesktopList :locations="singles" :clusters="clusters" :list-is-shown="listIsShown" />
+      <DesktopList :locations="singlesInView" :clusters="clustersInView" :list-is-shown="listIsShown" />
     </div>
     <ShowListButton :first-locations-loaded="firstLocationsLoaded" :list-is-shown="listIsShown" class="mt-6" @click="listIsShown = !listIsShown" />
   </aside>

@@ -1,10 +1,9 @@
 import bboxPolygon from '@turf/bbox-polygon'
 import { type MultiPolygon, featureCollection, multiPolygon, point } from '@turf/helpers'
-import booleanPointInPolygon from '@turf/boolean-point-in-polygon'
 import booleanWithin from '@turf/boolean-within'
 import pointsWithinPolygon from '@turf/points-within-polygon'
 import union from '@turf/union'
-import type { BoundingBox, Location, Point } from '../types/index.ts'
+import type { BoundingBox, Point } from '../types/index.ts'
 
 /**
  * Returns a GeoJSON Point from a location. You can pass an object like a Location which will be stored as a property of the point
@@ -40,11 +39,6 @@ export const toMultiPolygon = (bbox: BoundingBox) => multiPolygon([toPolygon(bbo
 export const bBoxIsWithinArea = (bbox: BoundingBox, multiPoly?: MultiPolygon) => !multiPoly ? false : booleanWithin(toPolygon(bbox), multiPoly)
 
 /**
- * Checks if a point is within a bounding box
- */
-export const pointWithingBbox = ({ lat, lng }: Point, bbox: BoundingBox) => booleanPointInPolygon([lng, lat], toPolygon(bbox))
-
-/**
  * Adds a polygon (from a bounding box) to a multipolygon
  */
 export function addBBoxToArea(bbox: BoundingBox, multiPoly?: MultiPolygon) {
@@ -60,6 +54,6 @@ export function addBBoxToArea(bbox: BoundingBox, multiPoly?: MultiPolygon) {
  * 3. We check which points are within the polygon
  * 4. We return the location data from the points that are within the polygon
  */
-export function getLocationsWithinBBox(locations: Location[], bbox: BoundingBox) {
+export function getItemsWithinBBox<T extends Point>(locations: T[], bbox: BoundingBox) {
   return pointsWithinPolygon(featureCollection(locations.map(toPoint)), toPolygon(bbox)).features.flatMap(f => f.properties)
 }

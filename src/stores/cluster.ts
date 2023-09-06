@@ -1,7 +1,7 @@
 import { getClusterMaxZoom, getClusters } from 'database'
 import { defineStore, storeToRefs } from 'pinia'
 import type { ComputedClusterSet, LocationClusterParams, LocationClusterSet } from 'types'
-import { addBBoxToArea, algorithm, bBoxIsWithinArea, toMultiPolygon } from 'shared'
+import { addBBoxToArea, algorithm, bBoxIsWithinArea, getItemsWithinBBox, toMultiPolygon } from 'shared'
 import { computed, ref, shallowRef } from 'vue'
 import { useLocations } from './locations'
 import { useFilters } from './filters'
@@ -11,17 +11,26 @@ import { computeCluster } from '@/../shared/compute-cluster'
 
 export const useCluster = defineStore('cluster', () => {
   const { setLocations, getLocations } = useLocations()
-  const { filtersToString } = useFilters()
+  const { filterLocations, filtersToString } = useFilters()
   const { zoom, boundingBox } = storeToRefs(useMap())
 
   /*
-    With memoziation, we reduce redundant calculations/requests and optimizes user map interactions to optimize map performance:
-      - `memoizedCluster` stores clusters, bounding boxes, and filters by zoom level.
-      - Before re-clustering, we check for existing data matching the current zoom, bounding box, and filters.
-      - If a match is found, we reuse stored clusters; otherwise, new clusters are computed and stored.
+  With memoziation, we reduce redundant calculations/requests and optimizes user map interactions to optimize map performance:
+  - `memoizedCluster` stores clusters, bounding boxes, and filters by zoom level.
+  - Before re-clustering, we check for existing data matching the current zoom, bounding box, and filters.
+  - If a match is found, we reuse stored clusters; otherwise, new clusters are computed and stored.
   */
   const memoized = shallowRef(new Map<LocationClusterParams, LocationClusterSet>())
   const active = ref<LocationClusterSet>()
+
+  /**
+   * The clusters and singles are computed from the memoized clusters and singles. For each zoom level and each filter combination,
+   * we store the clusters and singles.
+   */
+  const clusters = computed(() => active.value?.memoizedClusters || [])
+  const clustersInView = computed(() => boundingBox.value ? getItemsWithinBBox(clusters.value, boundingBox.value) : [])
+  const singles = computed(() => active.value?.memoizedSingles || [])
+  const singlesInView = computed(() => boundingBox.value ? getItemsWithinBBox(filterLocations(singles.value), boundingBox.value) : [])
 
   function getKey({ zoom, categories, currencies }: LocationClusterParams): LocationClusterParams | undefined {
     for (const key of memoized.value.keys()) {
@@ -98,10 +107,10 @@ export const useCluster = defineStore('cluster', () => {
 
   return {
     cluster,
-    clusters: computed(() => active.value?.memoizedClusters || []),
-    singles: computed(() => {
-      return active.value?.memoizedSingles || []
-    }),
+    clusters,
+    singles,
+    clustersInView,
+    singlesInView,
     getMemoized,
   }
 })
