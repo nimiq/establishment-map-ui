@@ -82,8 +82,8 @@ export default async function handler(req: Request) {
       ],
       headers: {
         'content-type': 'image/png',
-        'cache-control': 'public, max-age=31536000, s-maxage=31536000, no-transform, immutable',
-        'cdn-cache-control': 'max-age=31536000',
+        'cache-control': `public, max-age=${60 * 60 * 24 * 7}, s-maxage=${60 * 60 * 24 * 7}, no-transform, immutable`, // 1 week
+        'cdn-cache-control': `max-age=${60 * 60 * 24 * 7}`,
       },
     },
   )

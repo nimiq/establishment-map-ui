@@ -21,7 +21,7 @@
   "tasks": {
     "run": "deno run --allow-env --allow-read --allow-net ./functions/generate-locations-clusters-set/index.ts",
     "dev:og": "npx supabase functions serve og-image --no-verify-jwt --env-file .env",
-    "deploy": "npx supabase functions deploy generate-locations-clusters-set --import-map supabase/import_map.json",
+    "deploy": "npx supabase functions deploy generate-locations-clusters-set --import-map supabase/import_map.json --no-verify-jwt",
     "deploy:og": "npx supabase functions deploy og-image --import-map supabase/import_map.json"
   }
 }
