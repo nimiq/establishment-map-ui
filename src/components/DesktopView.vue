@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
-import TheMapInstance from '@/components/elements/TheMapInstance.vue'
+import Button from '@/components/atoms/Button.vue'
 import Controls from '@/components/elements/Controls.vue'
 import DesktopList from '@/components/elements/DesktopList.vue'
 import FilterModal from '@/components/elements/FilterModal.vue'
 import InteractionBar from '@/components/elements/InteractionBar.vue'
-import ShowListButton from '@/components/elements/ShowListButton.vue'
-import { useCluster } from '@/stores/cluster'
+import TheMapInstance from '@/components/elements/TheMapInstance.vue'
+import IconChevronDown from '@/components/icons/icon-chevron-down.vue'
 import { useApp } from '@/stores/app'
+import { useCluster } from '@/stores/cluster'
 
 const { firstLocationsLoaded } = storeToRefs(useApp())
 const { singlesInView, clustersInView } = storeToRefs(useCluster())
@@ -30,7 +31,12 @@ const openSuggestions = ref(false)
       <InteractionBar @open="openSuggestions = $event" />
       <DesktopList :locations="singlesInView" :clusters="clustersInView" :list-is-shown="listIsShown" />
     </div>
-    <ShowListButton :first-locations-loaded="firstLocationsLoaded" :list-is-shown="listIsShown" class="mt-6" @click="listIsShown = !listIsShown" />
+    <Button bg-color="white" :loading="!firstLocationsLoaded" class="mt-6" @click="listIsShown = !listIsShown">
+      <template v-if="firstLocationsLoaded" #icon>
+        <IconChevronDown :class="{ 'rotate-180': listIsShown }" class="transition-transform delay-500" />
+      </template>
+      <template #label>{{ $t(!firstLocationsLoaded ? 'Loading' : listIsShown ? 'Hide list' : 'Show list') }}</template>
+    </Button>
   </aside>
   <FilterModal class="absolute top-6 right-6" />
   <Controls class="absolute bottom-6 right-6" />

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { ref, watch } from 'vue'
-import TheMapInstance from '@/components/elements/TheMapInstance.vue'
-import MobileList from '@/components/elements/MobileList.vue'
+import Button from '@/components/atoms/Button.vue'
+import Controls from '@/components/elements/Controls.vue'
 import FilterModal from '@/components/elements/FilterModal.vue'
 import InteractionBar from '@/components/elements/InteractionBar.vue'
-import Controls from '@/components/elements/Controls.vue'
-import ShowListButton from '@/components/elements/ShowListButton.vue'
-import { useCluster } from '@/stores/cluster'
+import MobileList from '@/components/elements/MobileList.vue'
+import TheMapInstance from '@/components/elements/TheMapInstance.vue'
 import { useApp } from '@/stores/app'
+import { useCluster } from '@/stores/cluster'
 import { useLocations } from '@/stores/locations'
 
 const { firstLocationsLoaded } = storeToRefs(useApp())
@@ -48,10 +48,9 @@ watch(selectedUuid, (uuid) => {
     >
       <template v-if="singlesInView.length > 0">
         <MobileList v-if="isListShown" :locations="singlesInView" :list-is-shown="isListShown" class="absolute bottom-0 w-full" @close-list="isListShown = false; selectedUuid = undefined;" />
-        <ShowListButton
-          v-else :first-locations-loaded="firstLocationsLoaded" :list-is-shown="isListShown" chevron-direction="up"
-          class="absolute -translate-x-1/2 bottom-6 left-1/2" @click="isListShown = true"
-        />
+        <Button v-else :first-locations-loaded="firstLocationsLoaded" bg-color="white" :loading="!firstLocationsLoaded" class="absolute -translate-x-1/2 bottom-6 left-1/2" @click="isListShown = true">
+          <template #label>{{ $t(!firstLocationsLoaded ? 'Loading' : 'Show list') }}</template>
+        </Button>
       </template>
     </transition>
   </div>
