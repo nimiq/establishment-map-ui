@@ -1,6 +1,6 @@
 import { PROVIDERS } from 'database'
 import type { DatabaseArgs, Location } from 'types'
-import { Category, LocationLink, Provider, Theme } from 'types'
+import { LocationLink, Provider, Theme } from 'types'
 import { providersAssets } from './assets-dev/provider-assets'
 import { translateCategory } from './translations'
 
@@ -41,7 +41,6 @@ export function parseLocation(location: Location) {
   Object.assign(location, providersAssets[location.provider]) // Assing all the keys from the asset to the location
 
   location.isAtm = isAtm
-  location.isShop = location.category === Category.Shop
   location.isDark = location.theme === Theme.Dark
   location.isLight = location.theme === Theme.Light
   location.hasBottomBanner = location.provider !== Provider.DefaultShop && location.provider !== Provider.DefaultAtm

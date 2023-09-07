@@ -48,7 +48,6 @@ export interface Location {
 
   // UI Options
   theme: Theme
-  bgFullCard: boolean
   bg: string
 
   // Provider text
@@ -58,7 +57,6 @@ export interface Location {
 
   // Quick getters
   isAtm: boolean
-  isShop: boolean
   isDark: boolean
   isLight: boolean
   hasBottomBanner: boolean

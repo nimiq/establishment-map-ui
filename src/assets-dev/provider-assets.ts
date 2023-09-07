@@ -17,21 +17,18 @@ const i18nKeyPassThrough = {
 // for providerLabel is happening in i18n-t in ProviderBanner, and providerTooltip is defined as a getter to not be
 // constant but re-computed on language changes. providerLabel can include a {provider} placeholder which gets handled
 // in i18n-t in ProviderBanner.
-export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard' | 'theme' | 'providerLabel' | 'providerTooltip' | 'providerTooltipCta'>> = {
+export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'theme' | 'providerLabel' | 'providerTooltip' | 'providerTooltipCta'>> = {
   [Provider.DefaultShop]: {
     bg: 'white',
-    bgFullCard: false,
     theme: Theme.Light,
 
   },
   [Provider.DefaultAtm]: {
     theme: Theme.Dark,
-    bgFullCard: true,
     bg: 'radial-gradient(100% 100% at 100% 100%, #4D4C96 0%, #5F4B8B 100%)',
   },
   [Provider.GoCrypto]: {
     theme: Theme.Light,
-    bgFullCard: false,
     bg: '#F0BF4C',
     get providerLabel() {
       const i18n = i18nKeyPassThrough
@@ -44,7 +41,6 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
   },
   [Provider.Kurant]: {
     theme: Theme.Dark,
-    bgFullCard: true,
     bg: '#A92E19',
     get providerLabel() {
       const i18n = i18nKeyPassThrough
@@ -57,7 +53,6 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
   },
   [Provider.Bluecode]: {
     bg: '#004899',
-    bgFullCard: false,
     theme: Theme.Dark,
     get providerLabel() {
       const i18n = i18nKeyPassThrough
@@ -71,7 +66,6 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
   [Provider.CryptopaymentLink]: {
     bg: '#5C6CFF',
     theme: Theme.Dark,
-    bgFullCard: false,
     get providerLabel() {
       const i18n = i18nKeyPassThrough
       return i18n.t('Powered by {provider}')
@@ -84,7 +78,6 @@ export const providersAssets: Record<Provider, Pick<Location, 'bg' | 'bgFullCard
   [Provider.Edenia]: {
     bg: '#00B2B0',
     theme: Theme.Dark,
-    bgFullCard: true,
     get providerLabel() {
       const i18n = i18nKeyPassThrough
       return i18n.t('Register with {provider}')
