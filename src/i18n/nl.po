@@ -10,7 +10,7 @@ msgstr ""
 "Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: src/components/elements/DesktopList.vue:30
+#: src/components/elements/DesktopList.vue:31
 msgid "+ {count} grouped"
 msgstr ""
 
@@ -26,7 +26,7 @@ msgstr "Crypto locatie toevoegen "
 msgid "Apply filters"
 msgstr "Filters toepassen"
 
-#: src/components/elements/BasicInfo.vue:12
+#: src/components/elements/BasicInfo.vue:18
 #: src/components/elements/MapMarkers.vue:14
 msgid "ATM"
 msgstr ""
@@ -38,21 +38,21 @@ msgstr ""
 msgid "Back to the Map"
 msgstr "Terug naar de kaart"
 
-#: src/assets-dev/provider-assets.ts:67
+#: src/assets-dev/provider-assets.ts:62
 msgid ""
 "Bluecode is a payment method that allows secure transactions directly "
 "through the smartphone."
 msgstr ""
 
-#: src/components/elements/Card.vue:31
+#: src/components/elements/Card.vue:40
 msgid "Buy"
 msgstr "Kopen"
 
-#: src/components/elements/BasicInfo.vue:41
+#: src/components/elements/BasicInfo.vue:35
 msgid "Buy & sell crypto"
 msgstr ""
 
-#: src/components/elements/BasicInfo.vue:44
+#: src/components/elements/BasicInfo.vue:38
 msgid "Buy crypto only"
 msgstr ""
 
@@ -68,7 +68,7 @@ msgstr "Contant geld"
 msgid "Categories"
 msgstr "Categorieën"
 
-#: src/components/elements/CardDotsMenu.vue:33
+#: src/components/elements/CardDotsMenu.vue:35
 msgid "Check out {locationName} on Nimiq's Crypto Map"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 msgid "Copy URL"
 msgstr ""
 
-#: src/components/elements/CardDotsMenu.vue:42
+#: src/components/elements/CardDotsMenu.vue:44
 msgid "Could not copy URL to clipboard."
 msgstr ""
 
@@ -126,7 +126,7 @@ msgstr "Beschrijving"
 msgid "Describe the issue"
 msgstr "Omschrijf het probleem"
 
-#: src/assets-dev/provider-assets.ts:93
+#: src/assets-dev/provider-assets.ts:86
 msgid ""
 "Edenia enables users to easily purchase cryptocurrencies through a network "
 "of ATMs"
@@ -138,6 +138,10 @@ msgstr "Entertainment"
 
 #: src/components/atoms/SearchBox.vue:65
 msgid "Error loading results."
+msgstr ""
+
+#: src/App.vue:6
+msgid "Explore the Crypto Map"
 msgstr ""
 
 #: src/components/elements/FilterModal.vue:19
@@ -153,7 +157,7 @@ msgstr "Zoek locatie"
 msgid "Food & Drinks"
 msgstr "Eten & drinken"
 
-#: src/assets-dev/provider-assets.ts:41
+#: src/assets-dev/provider-assets.ts:38
 msgid ""
 "GoCrypto is a global payment network that enables merchants to accept crypto"
 " payments."
@@ -165,8 +169,8 @@ msgstr ""
 msgid "Health & Beauty"
 msgstr "Gezondheid & verzorging"
 
-#: src/components/DesktopView.vue:22
 #: src/components/elements/DesktopList.story.vue:17
+#: src/components/elements/ShowListButton.vue:11
 msgid "Hide list"
 msgstr "Verberg lijst"
 
@@ -174,7 +178,7 @@ msgstr "Verberg lijst"
 msgid "Hotel & Lodging"
 msgstr "Hotel & accommodatie"
 
-#: src/assets-dev/provider-assets.ts:54
+#: src/assets-dev/provider-assets.ts:50
 msgid ""
 "Kurant enables users to easily purchase cryptocurrencies through a network "
 "of ATMs."
@@ -188,7 +192,7 @@ msgstr ""
 msgid "Leisure Activities"
 msgstr "Vrije tijd"
 
-#: src/components/DesktopView.vue:19
+#: src/components/elements/ShowListButton.vue:8
 msgid "Loading"
 msgstr "Bezig met laden"
 
@@ -225,12 +229,22 @@ msgstr "Geen resultaten."
 msgid "Other"
 msgstr "Anders"
 
-#: src/assets-dev/provider-assets.ts:38 src/assets-dev/provider-assets.ts:64
-#: src/assets-dev/provider-assets.ts:77
+#: src/components/elements/Card.vue:15
+msgid ""
+"Picture of {name}, a place to buy with crypto in {city}, {country}. "
+"{providedBy}"
+msgstr ""
+
+#: src/assets-dev/provider-assets.ts:35 src/assets-dev/provider-assets.ts:59
+#: src/assets-dev/provider-assets.ts:71
 msgid "Powered by {provider}"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:51 src/assets-dev/provider-assets.ts:90
+#: src/components/elements/Card.vue:20
+msgid "Provided by {provider}"
+msgstr ""
+
+#: src/assets-dev/provider-assets.ts:47 src/assets-dev/provider-assets.ts:83
 msgid "Register with {provider}"
 msgstr "Registreer bij {provider}"
 
@@ -276,11 +290,11 @@ msgstr "Selecteer cryptovaluta"
 msgid "Select issue"
 msgstr "Selecteer probleem"
 
-#: src/components/elements/Card.vue:35
+#: src/components/elements/Card.vue:44
 msgid "Sell"
 msgstr "Verkopen"
 
-#: src/components/elements/BasicInfo.vue:43
+#: src/components/elements/BasicInfo.vue:37
 msgid "Sell crypto only"
 msgstr ""
 
@@ -296,8 +310,8 @@ msgstr ""
 msgid "Shop"
 msgstr "Winkel"
 
-#: src/components/DesktopView.vue:25
 #: src/components/elements/DesktopList.story.vue:20
+#: src/components/elements/ShowListButton.vue:14
 msgid "Show list"
 msgstr "Toon lijst"
 
@@ -371,7 +385,7 @@ msgstr "Vul de naam van de locatie in"
 msgid "USDC on POLYGON"
 msgstr ""
 
-#: src/assets-dev/provider-assets.ts:80
+#: src/assets-dev/provider-assets.ts:74
 msgid ""
 "With CryptoPayment Link, you can quickly and easily receive cryptocurrency "
 "payments from your customers."

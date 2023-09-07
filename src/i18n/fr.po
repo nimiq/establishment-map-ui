@@ -10,7 +10,7 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: src/components/elements/DesktopList.vue:30
+#: src/components/elements/DesktopList.vue:31
 msgid "+ {count} grouped"
 msgstr "+ {count} groupé"
 
@@ -26,7 +26,7 @@ msgstr "Ajouter un emplacement Crypto"
 msgid "Apply filters"
 msgstr "Appliquer les filtres"
 
-#: src/components/elements/BasicInfo.vue:12
+#: src/components/elements/BasicInfo.vue:18
 #: src/components/elements/MapMarkers.vue:14
 msgid "ATM"
 msgstr "Distributeur de billets"
@@ -38,7 +38,7 @@ msgstr "Distributeur de billets"
 msgid "Back to the Map"
 msgstr "Retour à la carte"
 
-#: src/assets-dev/provider-assets.ts:67
+#: src/assets-dev/provider-assets.ts:62
 msgid ""
 "Bluecode is a payment method that allows secure transactions directly "
 "through the smartphone."
@@ -46,15 +46,15 @@ msgstr ""
 "Bluecode est un moyen de paiement qui vous permet d'effectuer des "
 "transactions sécurisées directement via votre smartphone."
 
-#: src/components/elements/Card.vue:31
+#: src/components/elements/Card.vue:40
 msgid "Buy"
 msgstr "Acheter"
 
-#: src/components/elements/BasicInfo.vue:41
+#: src/components/elements/BasicInfo.vue:35
 msgid "Buy & sell crypto"
 msgstr "Acheter et vendre de la crypto-monnaie"
 
-#: src/components/elements/BasicInfo.vue:44
+#: src/components/elements/BasicInfo.vue:38
 msgid "Buy crypto only"
 msgstr "Achat de crypto-monnaie uniquement"
 
@@ -70,7 +70,7 @@ msgstr "Espèces"
 msgid "Categories"
 msgstr "Catégories"
 
-#: src/components/elements/CardDotsMenu.vue:33
+#: src/components/elements/CardDotsMenu.vue:35
 msgid "Check out {locationName} on Nimiq's Crypto Map"
 msgstr "Consultez {locationName} sur la Crypto Map de Nimiq"
 
@@ -90,7 +90,7 @@ msgstr "Copié"
 msgid "Copy URL"
 msgstr "Copier l'URL"
 
-#: src/components/elements/CardDotsMenu.vue:42
+#: src/components/elements/CardDotsMenu.vue:44
 msgid "Could not copy URL to clipboard."
 msgstr "Impossible de copier l'URL dans le presse-papiers."
 
@@ -128,7 +128,7 @@ msgstr "Décrire ici"
 msgid "Describe the issue"
 msgstr "Décrivez le problème"
 
-#: src/assets-dev/provider-assets.ts:93
+#: src/assets-dev/provider-assets.ts:86
 msgid ""
 "Edenia enables users to easily purchase cryptocurrencies through a network "
 "of ATMs"
@@ -142,6 +142,10 @@ msgstr "Divertissement"
 
 #: src/components/atoms/SearchBox.vue:65
 msgid "Error loading results."
+msgstr "Erreur lors du chargement des résultats."
+
+#: src/App.vue:6
+msgid "Explore the Crypto Map"
 msgstr ""
 
 #: src/components/elements/FilterModal.vue:19
@@ -157,7 +161,7 @@ msgstr "Trouver un lieu"
 msgid "Food & Drinks"
 msgstr "Nourriture & boissons"
 
-#: src/assets-dev/provider-assets.ts:41
+#: src/assets-dev/provider-assets.ts:38
 msgid ""
 "GoCrypto is a global payment network that enables merchants to accept crypto"
 " payments."
@@ -169,8 +173,8 @@ msgstr ""
 msgid "Health & Beauty"
 msgstr "Santé & beauté"
 
-#: src/components/DesktopView.vue:22
 #: src/components/elements/DesktopList.story.vue:17
+#: src/components/elements/ShowListButton.vue:11
 msgid "Hide list"
 msgstr "Cacher la liste"
 
@@ -178,7 +182,7 @@ msgstr "Cacher la liste"
 msgid "Hotel & Lodging"
 msgstr "Hôtellerie & hébergement"
 
-#: src/assets-dev/provider-assets.ts:54
+#: src/assets-dev/provider-assets.ts:50
 msgid ""
 "Kurant enables users to easily purchase cryptocurrencies through a network "
 "of ATMs."
@@ -194,7 +198,7 @@ msgstr "En savoir plus"
 msgid "Leisure Activities"
 msgstr "Activités de loisirs"
 
-#: src/components/DesktopView.vue:19
+#: src/components/elements/ShowListButton.vue:8
 msgid "Loading"
 msgstr "Chargement"
 
@@ -231,12 +235,22 @@ msgstr "Aucun résultat."
 msgid "Other"
 msgstr "Autre"
 
-#: src/assets-dev/provider-assets.ts:38 src/assets-dev/provider-assets.ts:64
-#: src/assets-dev/provider-assets.ts:77
+#: src/components/elements/Card.vue:15
+msgid ""
+"Picture of {name}, a place to buy with crypto in {city}, {country}. "
+"{providedBy}"
+msgstr ""
+
+#: src/assets-dev/provider-assets.ts:35 src/assets-dev/provider-assets.ts:59
+#: src/assets-dev/provider-assets.ts:71
 msgid "Powered by {provider}"
 msgstr "Propulsé par {provider}"
 
-#: src/assets-dev/provider-assets.ts:51 src/assets-dev/provider-assets.ts:90
+#: src/components/elements/Card.vue:20
+msgid "Provided by {provider}"
+msgstr ""
+
+#: src/assets-dev/provider-assets.ts:47 src/assets-dev/provider-assets.ts:83
 msgid "Register with {provider}"
 msgstr "S'inscrire sur {provider}"
 
@@ -282,11 +296,11 @@ msgstr "Sélectionner une cryptomonnaie"
 msgid "Select issue"
 msgstr "Sélectionner une question"
 
-#: src/components/elements/Card.vue:35
+#: src/components/elements/Card.vue:44
 msgid "Sell"
 msgstr "Vendre"
 
-#: src/components/elements/BasicInfo.vue:43
+#: src/components/elements/BasicInfo.vue:37
 msgid "Sell crypto only"
 msgstr "Vente de crypto-monnaie uniquement"
 
@@ -302,8 +316,8 @@ msgstr "Partager"
 msgid "Shop"
 msgstr "Boutiques"
 
-#: src/components/DesktopView.vue:25
 #: src/components/elements/DesktopList.story.vue:20
+#: src/components/elements/ShowListButton.vue:14
 msgid "Show list"
 msgstr "Afficher la liste"
 
@@ -377,7 +391,7 @@ msgstr "Taper le nom d'un lieu"
 msgid "USDC on POLYGON"
 msgstr "USDC sur POLYGON"
 
-#: src/assets-dev/provider-assets.ts:80
+#: src/assets-dev/provider-assets.ts:74
 msgid ""
 "With CryptoPayment Link, you can quickly and easily receive cryptocurrency "
 "payments from your customers."
