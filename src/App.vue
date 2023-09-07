@@ -5,6 +5,11 @@ import { RouterView } from 'vue-router'
 <template>
   <RouterView v-slot="{ Component, route }">
     <component :is="route.meta.transition ? 'transition' : 'div'" :name="route.meta.transition ? route.meta.transition : ''">
+      <template v-if="typeof route.name === 'string' && ['coords', 'map'].includes(route.name)">
+        <h1 class="sr-only">
+          {{ $t('Explore the Crypto Map') }}
+        </h1>
+      </template>
       <component :is="Component" />
     </component>
   </RouterView>

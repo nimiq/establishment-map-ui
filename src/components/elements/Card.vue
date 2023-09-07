@@ -40,7 +40,16 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
       v-if="location.photo && progress > 0" class="pt-1.5 px-1.5 transition-height duration-[--duration]"
       :style="`height: ${progress * 184}px;`"
     >
-      <img class="object-cover w-full h-full rounded-sm" :src="location.photo" alt="">
+      <img
+        class="object-cover w-full h-full rounded-sm" :src="location.photo"
+        :alt="$tc('Picture of {name}, a place to buy with crypto in {city}, {country}. {providedBy}',
+                  {
+                    name: location.name,
+                    city: location.address.split(',').at(-2)?.split(' ').at(-1),
+                    country: location.address.split(',').at(-1),
+                    providedBy: $tc('Provided by {provider}', location.provider),
+                  })"
+      >
     </div>
 
     <div class="relative px-6 py-5 space-y-5">
