@@ -58,7 +58,7 @@ export const useCluster = defineStore('cluster', () => {
     return { key, item, needsToUpdate }
   }
 
-  async function needsToUpdate() {
+  function needsToUpdate() {
     // We only need to re-cluster if we are zoomed out enough to see clusters
     return (zoom.value > CLUSTERS_MAX_ZOOM)
       ? !bBoxIsWithinArea(boundingBox.value!, visitedAreas.value) // If we already visited this area, no need to re-cluster
