@@ -41,7 +41,9 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
       :style="`height: ${progress * 184}px;`"
     >
       <img
-        class="object-cover w-full h-full rounded-sm" :src="location.photo"
+        class="object-cover w-full h-full rounded-sm animate-pulse "
+        :class="location.isAtm && location.isDark ? 'bg-white/60' : 'bg-space/10'"
+        :src="location.photo"
         :alt="$tc('Picture of {name}, a place to buy with crypto in {city}, {country}. {providedBy}',
                   {
                     name: location.name,
@@ -49,6 +51,7 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
                     country: location.address.split(',').at(-1),
                     providedBy: $tc('Provided by {provider}', location.provider),
                   })"
+        @load="($event.target as HTMLImageElement).classList.remove('animate-pulse')"
       >
     </div>
 
