@@ -11,7 +11,7 @@ import { computeCluster } from '@/../shared/compute-cluster'
 
 export const useCluster = defineStore('cluster', () => {
   const { setLocations, getLocations } = useLocations()
-  const { visitedAreas, locations } = storeToRefs(useLocations())
+  const { visitedAreas } = storeToRefs(useLocations())
   const { filterLocations, filtersToString } = useFilters()
   const { zoom, boundingBox } = storeToRefs(useMap())
 
