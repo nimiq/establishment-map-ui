@@ -38,7 +38,6 @@ const { smaller } = useBreakpoints(screens)
 const DESKTOP_LAYOUT = 'md' // FIXME This is suppose to be the same value as in the tailwind config
 const isMobile = smaller(DESKTOP_LAYOUT)
 
-const { selectedUuid: initialUuid } = useLocations()
 const { selectedUuid } = storeToRefs(useLocations())
 
 // Needed when bg color is a gradient
@@ -104,7 +103,6 @@ function onClusterClick(center: Point, proposedZoom: number) {
 
     <PopoverRoot
       v-else
-      :default-open="location.uuid === initialUuid"
       @update:open="isOpen => selectedUuid = isOpen ? location.uuid : undefined"
     >
       <PopoverAnchor
