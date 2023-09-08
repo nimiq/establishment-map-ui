@@ -12,22 +12,24 @@ import { useMap } from '@/stores/map'
 // Costa Rica
 export const FALLBACK_POSITION: MapPosition = { center: { lat: 9.6301892, lng: -84.2541844 }, zoom: 9 }
 
-export async function useInitialMapPosition(p: RouteParams, query: LocationQuery) {
-  if (Object.keys(query).includes('uuid')) {
-    // We need to load the location from the uuid, but we want to keep the map position
-    const location = await (await import('@/stores/locations')).useLocations().getLocationByUuid(query.uuid as string /* UUID already valid. See router.ts */)
-    if (location) {
-      // We set the locations in the store, and then we show the card
-      // https://github.com/nimiq/crypto-map/commit/45b8cdf2e7aabba6039d69043190b8357950736d#r126800610
-      (await import ('@/stores/cluster')).useCluster().singles = [location]
-      const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-      await sleep(500) // We need to wait for the marker to be rendered in the right position to avoid CLS
-      ;(document.querySelector(`[data-trigger-uuid="${query.uuid}"]`) as HTMLElement)?.click()
-    }
-    else {
-      console.warn(`Location with uuid ${query.uuid} not found`)
-    }
+async function selectAndOpenCard(uuid: string) {
+  const location = await (await import('@/stores/locations')).useLocations().getLocationByUuid(uuid /* UUID already valid. See router.ts */)
+  if (location) {
+    // We set the locations in the store, and then we show the card
+    // https://github.com/nimiq/crypto-map/commit/45b8cdf2e7aabba6039d69043190b8357950736d#r126800610
+    (await import ('@/stores/cluster')).useCluster().singles = [location]
+    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+    await sleep(500) // We need to wait for the marker to be rendered in the right position to avoid CLS
+    ;(document.querySelector(`[data-trigger-uuid="${uuid}"]`) as HTMLElement)?.click()
   }
+  else {
+    console.warn(`Location with uuid ${uuid} not found`)
+  }
+}
+
+export async function useInitialMapPosition(p: RouteParams, query: LocationQuery) {
+  if (Object.keys(query).includes('uuid'))
+    selectAndOpenCard(query.uuid as string) // No need to await
 
   const validFloat = (n?: string | string[]) => !!n && typeof n === 'string' && !Number.isNaN(Number(n))
   if (validFloat(p.lat) && validFloat(p.lng) && validFloat(p.zoom)) {
