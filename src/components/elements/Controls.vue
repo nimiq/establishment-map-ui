@@ -32,26 +32,27 @@ async function setBrowserPosition() {
   <div class="flex flex-col gap-y-4">
     <Button
       v-if="browserPositionIsSupported"
-      :disabled="geolocatingUserBrowser" style="width: 34px; height: 34px" bg-color="white" size="sm" :aria-label="$t('Show your location')"
+      class="!w-10 !h-10 shadow"
+      :disabled="geolocatingUserBrowser" bg-color="white" :aria-label="$t('Show your location')"
       :title="$t('Show your location')"
       @click="setBrowserPosition"
     >
       <template #icon>
         <GeolocationIcon v-if="!isGeolocationLoading" />
-        <IconCircleSpinner v-else class="w-4 h-4 text-space" />
+        <IconCircleSpinner v-else class="!w-10 h-10 text-space" />
       </template>
     </Button>
 
     <div class="flex flex-col bg-white rounded-full shadow max-desktop:hidden">
-      <Button style="width: 34px; height: 34px" bg-color="white" size="sm" class="rounded-b-0" @click="useMap().increaseZoom">
+      <Button bg-color="white" class="!w-10 !h-10 rounded-b-0" @click="useMap().increaseZoom">
         <template #icon>
           <PlusIcon />
         </template>
       </Button>
 
-      <hr class="self-stretch h-px bg-space/10">
+      <hr class="self-stretch h-[2px] -my-px bg-space/10">
 
-      <Button style="width: 34px; height: 34px" bg-color="white" size="sm" class="rounded-t-0" @click="useMap().decreaseZoom">
+      <Button bg-color="white" class="!w-10 !h-10 rounded-t-0" @click="useMap().decreaseZoom">
         <template #icon>
           <MinusIcon />
         </template>
