@@ -4,7 +4,7 @@ import { getLocations as getDbLocations, getLocation } from 'database'
 import { defineStore } from 'pinia'
 import { addBBoxToArea, bBoxIsWithinArea, getItemsWithinBBox } from 'shared'
 import type { BoundingBox, Location } from 'types'
-import { shallowReactive, watch } from 'vue'
+import { computed, ref, shallowReactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useFilters } from './filters'
 import { useMap } from './map'
@@ -14,16 +14,17 @@ export const useLocations = defineStore('locations', () => {
   const { filterLocations } = useFilters()
 
   // Reduce redundant database fetches by reusing fetched locations by tracking the areas explored by the user
-  let visitedAreas: MultiPolygon
+  const visitedAreas = ref<MultiPolygon>()
 
   const locationsMap = shallowReactive(new Map<string, Location>())
+  const locations = computed(() => [...locationsMap.values()])
 
   function setLocations(locations: Location[]) {
     locations.forEach(location => locationsMap.set(location.uuid, location))
   }
 
   async function getLocations(boundingBox: BoundingBox): Promise<Location[]> {
-    if (bBoxIsWithinArea(boundingBox, visitedAreas)) {
+    if (bBoxIsWithinArea(boundingBox, visitedAreas.value)) {
       // We already have scanned this area, no need to fetch from the database
       const locations = [...locationsMap.values()]
       const filteredLocations = filterLocations(locations) // Filter locations by categories and currencies
@@ -33,7 +34,7 @@ export const useLocations = defineStore('locations', () => {
     // New area, we need to fetch from the database
     const newLocations = await getDbLocations(DATABASE_ARGS, boundingBox, parseLocation)
     setLocations(newLocations)
-    visitedAreas = addBBoxToArea(boundingBox, visitedAreas)
+    visitedAreas.value = addBBoxToArea(boundingBox, visitedAreas.value)
     return filterLocations(newLocations)
   }
 
@@ -74,8 +75,9 @@ export const useLocations = defineStore('locations', () => {
   return {
     getLocations,
     getLocationByUuid,
-    // locations,
+    locations,
     setLocations,
+    visitedAreas,
 
     selectedUuid,
     goToLocation,

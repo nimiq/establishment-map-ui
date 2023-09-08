@@ -44,7 +44,7 @@ export const useMap = defineStore('map', () => {
 
     // If we don't have the item in the memoized map, we need to update the clusters
     // If we have it, getMemoized will update the active value
-    if (useCluster().getMemoized().needsToUpdate)
+    if (useCluster().needsToUpdate())
       clusterDebouncer()
   }
 

@@ -1,7 +1,7 @@
 import { getClusterMaxZoom, getClusters } from 'database'
 import { defineStore, storeToRefs } from 'pinia'
 import type { Cluster, ComputedClusterSet, Location, LocationClusterParams, LocationClusterSet } from 'types'
-import { addBBoxToArea, algorithm, bBoxIsWithinArea, getItemsWithinBBox, toMultiPolygon } from 'shared'
+import { CLUSTERS_MAX_ZOOM, addBBoxToArea, algorithm, bBoxIsWithinArea, getItemsWithinBBox, toMultiPolygon } from 'shared'
 import { computed, shallowRef } from 'vue'
 import { useLocations } from './locations'
 import { useFilters } from './filters'
@@ -11,6 +11,7 @@ import { computeCluster } from '@/../shared/compute-cluster'
 
 export const useCluster = defineStore('cluster', () => {
   const { setLocations, getLocations } = useLocations()
+  const { visitedAreas, locations } = storeToRefs(useLocations())
   const { filterLocations, filtersToString } = useFilters()
   const { zoom, boundingBox } = storeToRefs(useMap())
 
@@ -57,6 +58,13 @@ export const useCluster = defineStore('cluster', () => {
     return { key, item, needsToUpdate }
   }
 
+  async function needsToUpdate() {
+    // We only need to re-cluster if we are zoomed out enough to see clusters
+    return (zoom.value > CLUSTERS_MAX_ZOOM)
+      ? !bBoxIsWithinArea(boundingBox.value!, visitedAreas.value) // If we already visited this area, no need to re-cluster
+      : getMemoized().needsToUpdate
+  }
+
   let maxZoomFromServer: number | undefined
   async function shouldRunInClient({ zoom, categories, currencies }: LocationClusterParams): Promise<boolean> {
     // We cannot compute all clusters combinations in the server, if user has selected currencies or categories
@@ -79,6 +87,13 @@ export const useCluster = defineStore('cluster', () => {
   }
 
   async function cluster() {
+    if (zoom.value > CLUSTERS_MAX_ZOOM) {
+      // We are too zoomed in, no need to cluster
+      singles.value = await getLocations(boundingBox.value!)
+      clusters.value = []
+      return
+    }
+
     const { item, key, needsToUpdate } = getMemoized()
 
     if (!needsToUpdate)
@@ -111,6 +126,6 @@ export const useCluster = defineStore('cluster', () => {
     singles,
     clustersInView,
     singlesInView,
-    getMemoized,
+    needsToUpdate,
   }
 })

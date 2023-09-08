@@ -115,7 +115,7 @@ function onClusterClick(center: Point, proposedZoom: number) {
         <ReuseTemplate :location="location" class="transition-shadow rounded-sm" />
       </PopoverTrigger>
       <PopoverPortal>
-        <PopoverContent side="right" :side-offset="5" class="rounded-lg shadow">
+        <PopoverContent side="right" :side-offset="5" class="rounded-lg shadow" @openAutoFocus.prevent>
           <Card :location="location" :progress="1" :class="location.photo ? 'max-w-xs' : 'max-w-sm'" />
           <PopoverArrow class="w-4 h-2" :style="`fill: ${location.isAtm ? extractColorFromBg(location.bg[0]) : 'white'}`" />
 
