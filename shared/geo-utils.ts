@@ -1,9 +1,9 @@
 import bboxPolygon from '@turf/bbox-polygon'
-import booleanWithin from '@turf/boolean-within'
 import type { MultiPolygon } from '@turf/helpers'
 import { featureCollection, multiPolygon, point } from '@turf/helpers'
 import pointsWithinPolygon from '@turf/points-within-polygon'
 import union from '@turf/union'
+import booleanWithin from '@turf/boolean-within'
 import type { BoundingBox, Point } from '../types/index.ts'
 
 /**
@@ -41,9 +41,13 @@ function toPolygon(bbox: BoundingBox) {
 export const toMultiPolygon = (bbox: BoundingBox) => multiPolygon(toPolygon(bbox).map((p => p.geometry.coordinates)))
 
 /**
- * Checks if a bounding box is within a multipolygon
+ * Checks if a bounding box is within a multipolygon.
+ * Since bounding boxes can cross the antimeridian, we need to check if any of the polygons created by toPolygon
+ * is within the multipolygon
  */
-export const bBoxIsWithinArea = (bbox: BoundingBox, multiPoly?: MultiPolygon) => !multiPoly ? false : booleanWithin(toMultiPolygon(bbox), multiPoly)
+export function bBoxIsWithinArea(bbox: BoundingBox, multiPoly?: MultiPolygon) {
+  return !multiPoly ? false : toPolygon(bbox).some(p => booleanWithin(p, multiPoly))
+}
 
 /**
  * Adds a polygon (from a bounding box) to a multipolygon
