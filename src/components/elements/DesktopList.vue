@@ -59,7 +59,7 @@ watch(selectedUuid, (uuid) => {
     list-tag="ul"
     item-tag="li"
     class="overflow-auto scroll-space transition-[height] will-change-[height]"
-    :class="listIsShown ? 'h-[calc(100vh-10.5rem)]' : 'h-0'"
+    :class="listIsShown ? 'h-[calc(100vh-10.5rem-var(--search-box-hint)*88px)]' : 'h-0'"
     item-class="relative overflow-hidden border-space/10 border-t-xs group/card [&_[data-rings]]:-rotate-90"
   >
     <template #default="{ item: location, active }">
@@ -91,7 +91,7 @@ watch(selectedUuid, (uuid) => {
   <div
     v-else
     class="flex flex-col items-center justify-center gap-6 px-4 transition-height will-change-height"
-    :class="listIsShown ? 'h-[calc(100vh-10.5rem)]' : 'h-0'"
+    :class="listIsShown ? 'h-[calc(100vh-10.5rem-var(--search-box-hint)*88px)]' : 'h-0'"
   >
     <IconCactusDesert />
     <span class="text-base text-center text-space font-regular" :class="!listIsShown && 'h-0'">

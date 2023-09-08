@@ -12,7 +12,18 @@ export const useApp = defineStore('app', () => {
   // The moment any of these two stores are loaded, we set the firstLocationsLoaded to true
   watchOnce([singles, clusters], () => firstLocationsLoaded.value = true)
 
+  // We track if the user has hidden the search box hint using localStorage
+  const shouldShowSearchBoxHint = ref(!localStorage.getItem('hideSearchBoxHint'))
+  document.documentElement.style.setProperty('--search-box-hint', shouldShowSearchBoxHint.value ? '1' : '0')
+  const hideSearchBoxHint = () => {
+    localStorage.setItem('hideSearchBoxHint', 'true')
+    shouldShowSearchBoxHint.value = false
+    document.documentElement.style.setProperty('--search-box-hint', '0')
+  }
+
   return {
     firstLocationsLoaded,
+    shouldShowSearchBoxHint,
+    hideSearchBoxHint,
   }
 })

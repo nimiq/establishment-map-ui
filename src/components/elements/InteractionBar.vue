@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { type Suggestion, SuggestionType } from 'types'
+import { useBreakpoints } from '@vueuse/core'
+import { screens } from 'tailwindcss-nimiq-theme'
+import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import SearchBox from '@/components/atoms/SearchBox.vue'
 import CryptoMapModal from '@/components/elements/CryptoMapModal.vue'
 import { useAutocomplete } from '@/composables/useAutocomplete'
 import { useMap } from '@/stores/map'
 import { useLocations } from '@/stores/locations'
+import { useApp } from '@/stores/app'
 
 defineEmits({
   open: (value: boolean) => value,
@@ -25,7 +30,12 @@ function onSelect(suggestion?: Suggestion) {
       useLocations().goToLocation(suggestion.id)
       break
   }
+
+  useApp().hideSearchBoxHint()
 }
+
+const { shouldShowSearchBoxHint } = storeToRefs(useApp())
+const showHint = computed(() => shouldShowSearchBoxHint.value && useBreakpoints(screens).greaterOrEqual('md'))
 </script>
 
 <template>
@@ -37,9 +47,10 @@ function onSelect(suggestion?: Suggestion) {
       :placeholder="$t('Search Map')" @selected="onSelect" @open="$emit('open', $event)"
     />
     <CryptoMapModal />
-    <!-- TODO -->
-    <!-- <p class="pt-4 text-xs text-space/60" v-if="xl">
-      {{ $t('Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other crypto-currencies.') }}
-    </p> -->
   </header>
+
+  <!-- We need to hardcode the height, otherwise the desktop list will break -->
+  <p v-if="showHint" class="p-5 text-xs text-space/60" style="height: 88px">
+    {{ $t('Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other crypto-currencies.') }}
+  </p>
 </template>
