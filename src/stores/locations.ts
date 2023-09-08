@@ -57,9 +57,11 @@ export const useLocations = defineStore('locations', () => {
   })
 
   async function goToLocation(uuid: string) {
-    const location = await useLocations().getLocationByUuid(uuid)
+    const location = await getLocationByUuid(uuid)
     if (!location)
       return false
+
+    selectedUuid.value = uuid
 
     useMap().setPosition({
       center: { lat: location.lat, lng: location.lng },

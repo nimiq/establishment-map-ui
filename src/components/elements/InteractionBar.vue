@@ -2,7 +2,7 @@
 import { type Suggestion, SuggestionType } from 'types'
 import { useBreakpoints } from '@vueuse/core'
 import { screens } from 'tailwindcss-nimiq-theme'
-import { computed } from 'vue'
+import { computed, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 import SearchBox from '@/components/atoms/SearchBox.vue'
 import CryptoMapModal from '@/components/elements/CryptoMapModal.vue'
@@ -10,6 +10,7 @@ import { useAutocomplete } from '@/composables/useAutocomplete'
 import { useMap } from '@/stores/map'
 import { useLocations } from '@/stores/locations'
 import { useApp } from '@/stores/app'
+import { useCluster } from '@/stores/cluster'
 
 defineEmits({
   open: (value: boolean) => value,
@@ -17,17 +18,25 @@ defineEmits({
 
 const { querySearch, status, suggestions } = useAutocomplete()
 
-function onSelect(suggestion?: Suggestion) {
+const { singles } = storeToRefs(useCluster())
+const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+async function onSelect(suggestion?: Suggestion) {
   if (!suggestion)
     return
-
   switch (suggestion.type) {
     case SuggestionType.GoogleLocation:
     case SuggestionType.Region:
       useMap().goToPlaceId(suggestion.id)
       break
     case SuggestionType.Location:
-      useLocations().goToLocation(suggestion.id)
+      if (await useLocations().goToLocation(suggestion.id)) {
+        while (!singles.value.some(s => s.uuid === suggestion.id))
+          await sleep(100) // Try to wait for the item to be added
+        await nextTick() // Wait for the marker to be rendered
+        ;(document.querySelector(`[data-trigger-uuid="${suggestion.id}"]`) as HTMLElement)?.click()
+      }
+
       break
   }
 
