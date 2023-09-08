@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { TransitionPresets, useTransition } from '@vueuse/core'
 
 const props = defineProps({
   progress: {
@@ -98,7 +99,7 @@ function onEnd(event: PointerEvent) {
   const isClick = Math.abs(initialY - event.clientY) < 10 && Math.abs(initialX - event.clientX) < 10
 
   if (isClick && !initialOpen) {
-    open()
+    open(true)
   }
   else {
     if (initialOpen) {
@@ -131,8 +132,25 @@ function close() {
   emit('update:progress', 0)
 }
 
-function open() {
-  emit('update:progress', 1)
+function open(smooth = false) {
+  if (smooth) {
+    const source = ref(0)
+    const output = useTransition(source, {
+      duration: 500,
+      transition: TransitionPresets.easeOutQuart,
+    })
+    source.value = 1
+    const stop = watch(output, () => {
+      emit('update:progress', output.value / 1)
+      if (output.value >= 1) {
+        source.value = 0
+        stop()
+      }
+    })
+  }
+  else {
+    emit('update:progress', 1)
+  }
 }
 
 function animateShortly() {
