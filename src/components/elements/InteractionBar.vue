@@ -44,7 +44,7 @@ async function onSelect(suggestion?: Suggestion) {
 }
 
 const { shouldShowSearchBoxHint } = storeToRefs(useApp())
-const showHint = computed(() => shouldShowSearchBoxHint.value && useBreakpoints(screens).greaterOrEqual('md'))
+const showHint = computed(() => shouldShowSearchBoxHint.value && useBreakpoints(screens).greaterOrEqual('md').value)
 </script>
 
 <template>
