@@ -10,7 +10,7 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: src/components/elements/DesktopList.vue:31
+#: src/components/elements/DesktopList.vue:36
 msgid "+ {count} grouped"
 msgstr "+ {count} groupé"
 
@@ -27,7 +27,7 @@ msgid "Apply filters"
 msgstr "Appliquer les filtres"
 
 #: src/components/elements/BasicInfo.vue:18
-#: src/components/elements/MapMarkers.vue:14
+#: src/components/elements/MapMarkers.vue:17
 msgid "ATM"
 msgstr "Distributeur de billets"
 
@@ -46,7 +46,7 @@ msgstr ""
 "Bluecode est un moyen de paiement qui vous permet d'effectuer des "
 "transactions sécurisées directement via votre smartphone."
 
-#: src/components/elements/Card.vue:40
+#: src/components/elements/Card.vue:44
 msgid "Buy"
 msgstr "Acheter"
 
@@ -136,6 +136,14 @@ msgstr ""
 "Edenia permet aux utilisateurs d'acheter facilement des crypto-monnaies par "
 "l'intermédiaire d'un réseau de distributeurs automatiques de billets."
 
+#: src/components/elements/InteractionBar.vue:14
+msgid ""
+"Enter country, city or zip code to discover locations that accept Bitcoin, "
+"Nimiq and other crypto-currencies."
+msgstr ""
+"Entrez un pays, une ville ou un code postal pour découvrir des lieux qui "
+"acceptent le Bitcoin, le Nimiq et d'autres cryptomonnaies."
+
 #: src/translations.ts:9
 msgid "Entertainment"
 msgstr "Divertissement"
@@ -146,7 +154,7 @@ msgstr "Erreur lors du chargement des résultats."
 
 #: src/App.vue:6
 msgid "Explore the Crypto Map"
-msgstr ""
+msgstr "Explorer la Crypto Map"
 
 #: src/components/elements/FilterModal.vue:19
 #: src/components/elements/FilterModal.vue:51
@@ -199,6 +207,7 @@ msgid "Leisure Activities"
 msgstr "Activités de loisirs"
 
 #: src/components/elements/ShowListButton.vue:8
+#: src/components/MobileView.vue:19
 msgid "Loading"
 msgstr "Chargement"
 
@@ -231,24 +240,30 @@ msgstr "Pas de crypto"
 msgid "Nothing found."
 msgstr "Aucun résultat."
 
+#: src/components/elements/DesktopList.vue:47 src/components/MobileView.vue:28
+msgid "Oops, no businesses around here"
+msgstr ""
+
 #: src/translations.ts:32
 msgid "Other"
 msgstr "Autre"
 
-#: src/components/elements/Card.vue:15
+#: src/components/elements/Card.vue:17
 msgid ""
 "Picture of {name}, a place to buy with crypto in {city}, {country}. "
 "{providedBy}"
 msgstr ""
+"Illustration de {name}, un lieu où acheter avec de la crypto à{city}, "
+"{country}, {providedBy}"
 
 #: src/assets-dev/provider-assets.ts:35 src/assets-dev/provider-assets.ts:59
 #: src/assets-dev/provider-assets.ts:71
 msgid "Powered by {provider}"
 msgstr "Propulsé par {provider}"
 
-#: src/components/elements/Card.vue:20
+#: src/components/elements/Card.vue:22
 msgid "Provided by {provider}"
-msgstr ""
+msgstr "Fourni par {provider}"
 
 #: src/assets-dev/provider-assets.ts:47 src/assets-dev/provider-assets.ts:83
 msgid "Register with {provider}"
@@ -274,7 +289,7 @@ msgstr "Restaurant & bar"
 msgid "Search Map"
 msgstr "Chercher sur la carte"
 
-#: src/components/elements/MapMarkers.vue:53
+#: src/components/elements/MapMarkers.vue:55
 msgid "See location details"
 msgstr "Voir les détails du lieu"
 
@@ -296,7 +311,7 @@ msgstr "Sélectionner une cryptomonnaie"
 msgid "Select issue"
 msgstr "Sélectionner une question"
 
-#: src/components/elements/Card.vue:44
+#: src/components/elements/Card.vue:48
 msgid "Sell"
 msgstr "Vendre"
 
@@ -318,6 +333,7 @@ msgstr "Boutiques"
 
 #: src/components/elements/DesktopList.story.vue:20
 #: src/components/elements/ShowListButton.vue:14
+#: src/components/MobileView.vue:24
 msgid "Show list"
 msgstr "Afficher la liste"
 

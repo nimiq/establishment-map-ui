@@ -10,7 +10,7 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: src/components/elements/DesktopList.vue:31
+#: src/components/elements/DesktopList.vue:36
 msgid "+ {count} grouped"
 msgstr ""
 
@@ -27,7 +27,7 @@ msgid "Apply filters"
 msgstr "Aplicar filtros"
 
 #: src/components/elements/BasicInfo.vue:18
-#: src/components/elements/MapMarkers.vue:14
+#: src/components/elements/MapMarkers.vue:17
 msgid "ATM"
 msgstr ""
 
@@ -44,7 +44,7 @@ msgid ""
 "through the smartphone."
 msgstr ""
 
-#: src/components/elements/Card.vue:40
+#: src/components/elements/Card.vue:44
 msgid "Buy"
 msgstr ""
 
@@ -132,6 +132,14 @@ msgid ""
 "of ATMs"
 msgstr ""
 
+#: src/components/elements/InteractionBar.vue:14
+msgid ""
+"Enter country, city or zip code to discover locations that accept Bitcoin, "
+"Nimiq and other crypto-currencies."
+msgstr ""
+"Introduzca el país, la ciudad o el código postal para descubrir los lugares "
+"que aceptan Bitcoin, Nimiq y otras criptomonedas."
+
 #: src/translations.ts:9
 msgid "Entertainment"
 msgstr "Entretenimiento"
@@ -193,6 +201,7 @@ msgid "Leisure Activities"
 msgstr "Actividades de ocio"
 
 #: src/components/elements/ShowListButton.vue:8
+#: src/components/MobileView.vue:19
 msgid "Loading"
 msgstr ""
 
@@ -225,11 +234,15 @@ msgstr "No acepta criptomonedas"
 msgid "Nothing found."
 msgstr "No se han encontrado resultados."
 
+#: src/components/elements/DesktopList.vue:47 src/components/MobileView.vue:28
+msgid "Oops, no businesses around here"
+msgstr ""
+
 #: src/translations.ts:32
 msgid "Other"
 msgstr "Otro"
 
-#: src/components/elements/Card.vue:15
+#: src/components/elements/Card.vue:17
 msgid ""
 "Picture of {name}, a place to buy with crypto in {city}, {country}. "
 "{providedBy}"
@@ -240,7 +253,7 @@ msgstr ""
 msgid "Powered by {provider}"
 msgstr ""
 
-#: src/components/elements/Card.vue:20
+#: src/components/elements/Card.vue:22
 msgid "Provided by {provider}"
 msgstr ""
 
@@ -268,7 +281,7 @@ msgstr "Restaurantes & Bares"
 msgid "Search Map"
 msgstr "Buscar mapa"
 
-#: src/components/elements/MapMarkers.vue:53
+#: src/components/elements/MapMarkers.vue:55
 msgid "See location details"
 msgstr ""
 
@@ -290,7 +303,7 @@ msgstr "Seleccionar criptomoneda"
 msgid "Select issue"
 msgstr "Seleccionar un problema"
 
-#: src/components/elements/Card.vue:44
+#: src/components/elements/Card.vue:48
 msgid "Sell"
 msgstr ""
 
@@ -312,6 +325,7 @@ msgstr "Tiendas"
 
 #: src/components/elements/DesktopList.story.vue:20
 #: src/components/elements/ShowListButton.vue:14
+#: src/components/MobileView.vue:24
 msgid "Show list"
 msgstr ""
 

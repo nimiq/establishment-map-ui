@@ -10,7 +10,7 @@ msgstr ""
 "Language: uk\n"
 "Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 
-#: src/components/elements/DesktopList.vue:31
+#: src/components/elements/DesktopList.vue:36
 msgid "+ {count} grouped"
 msgstr ""
 
@@ -27,7 +27,7 @@ msgid "Apply filters"
 msgstr "Застосувати фільтри"
 
 #: src/components/elements/BasicInfo.vue:18
-#: src/components/elements/MapMarkers.vue:14
+#: src/components/elements/MapMarkers.vue:17
 msgid "ATM"
 msgstr ""
 
@@ -44,7 +44,7 @@ msgid ""
 "through the smartphone."
 msgstr ""
 
-#: src/components/elements/Card.vue:40
+#: src/components/elements/Card.vue:44
 msgid "Buy"
 msgstr ""
 
@@ -132,6 +132,14 @@ msgid ""
 "of ATMs"
 msgstr ""
 
+#: src/components/elements/InteractionBar.vue:14
+msgid ""
+"Enter country, city or zip code to discover locations that accept Bitcoin, "
+"Nimiq and other crypto-currencies."
+msgstr ""
+"Введіть країну, місто або поштовий індекс, щоб знайти місця, які приймають "
+"Bitcoin, Nimiq та інші криптовалюти."
+
 #: src/translations.ts:9
 msgid "Entertainment"
 msgstr "Розваги"
@@ -193,6 +201,7 @@ msgid "Leisure Activities"
 msgstr "Дозвілля"
 
 #: src/components/elements/ShowListButton.vue:8
+#: src/components/MobileView.vue:19
 msgid "Loading"
 msgstr ""
 
@@ -225,11 +234,15 @@ msgstr "Немає криптовалюти"
 msgid "Nothing found."
 msgstr "Нічого не знайдено."
 
+#: src/components/elements/DesktopList.vue:47 src/components/MobileView.vue:28
+msgid "Oops, no businesses around here"
+msgstr ""
+
 #: src/translations.ts:32
 msgid "Other"
 msgstr "Інше"
 
-#: src/components/elements/Card.vue:15
+#: src/components/elements/Card.vue:17
 msgid ""
 "Picture of {name}, a place to buy with crypto in {city}, {country}. "
 "{providedBy}"
@@ -240,7 +253,7 @@ msgstr ""
 msgid "Powered by {provider}"
 msgstr ""
 
-#: src/components/elements/Card.vue:20
+#: src/components/elements/Card.vue:22
 msgid "Provided by {provider}"
 msgstr ""
 
@@ -268,7 +281,7 @@ msgstr "Ресторан та бар"
 msgid "Search Map"
 msgstr "Карта пошуку"
 
-#: src/components/elements/MapMarkers.vue:53
+#: src/components/elements/MapMarkers.vue:55
 msgid "See location details"
 msgstr ""
 
@@ -290,7 +303,7 @@ msgstr "Виберіть криптовалюту"
 msgid "Select issue"
 msgstr "Виберіть проблему"
 
-#: src/components/elements/Card.vue:44
+#: src/components/elements/Card.vue:48
 msgid "Sell"
 msgstr ""
 
@@ -312,6 +325,7 @@ msgstr "Магазин"
 
 #: src/components/elements/DesktopList.story.vue:20
 #: src/components/elements/ShowListButton.vue:14
+#: src/components/MobileView.vue:24
 msgid "Show list"
 msgstr ""
 
