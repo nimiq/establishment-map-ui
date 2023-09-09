@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { GoogleMap } from 'vue3-google-map'
+import { computed } from 'vue'
 import { useMap } from '@/stores/map'
 import { i18n } from '@/i18n/i18n-setup'
 import { useInitialMapPosition } from '@/composables/useInitialMapPosition'
@@ -38,11 +39,18 @@ const mapGestureBehaviour
   = typeof gestureBehaviourParam === 'string' && ['cooperative', 'greedy', 'none', 'auto'].includes(gestureBehaviourParam)
     ? gestureBehaviourParam as GestureBehaviour
     : 'greedy'
+
+const apiKey = computed(() => {
+  const apiKey = import.meta.env.VITE_GOOGLE_MAP_KEY
+  if (!apiKey)
+    throw new Error('Google Maps API key not found')
+  return apiKey
+})
 </script>
 
 <template>
   <GoogleMap
-    ref="mapInstance" :language="i18n.locale" disable-default-ui :gesture-handling="mapGestureBehaviour" :keyboard-shortcuts="false"
+    ref="mapInstance" :api-key="apiKey" :language="i18n.locale" disable-default-ui :gesture-handling="mapGestureBehaviour" :keyboard-shortcuts="false"
     class="w-full h-full" :styles="googleMapStyles" :max-zoom="21" :min-zoom="3" :restriction="restriction" :clickable-icons="false"
     @idle.once="setInitialMapPosition"
   >
