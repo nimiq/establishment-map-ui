@@ -30,8 +30,12 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
 
 <template>
   <div
-    class="relative rounded-lg duration-[--duration,0] group/card h-full"
-    :class="{ 'rounded-b-0': progress === 1 && isMobile, 'overflow-hidden': isMobile }"
+    class="relative rounded-lg duration-[--duration,0] group/card h-full select-none"
+    :class="{
+      'rounded-b-0': progress === 1 && isMobile,
+      'overflow-hidden': isMobile,
+      'select-auto': progress === 1 || !isMobile,
+    }"
     :style="`background: ${location.isAtm ? location.bg[0] : 'white'}`"
   >
     <CardBg v-if="location.isAtm" :location="location" />
