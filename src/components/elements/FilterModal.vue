@@ -105,12 +105,16 @@ function applyFilters() {
         <div class="fixed inset-x-0 bottom-0 overflow-y-auto md:inset-0">
           <div class="flex items-center justify-center min-h-full text-center">
             <TransitionChild
-              as="template" enter="duration-300 ease-out" enter-from="opacity-0 scale-95"
-              enter-to="opacity-100 scale-100" leave="duration-200 ease-in" leave-from="opacity-100 scale-100"
-              leave-to="opacity-0 scale-95"
+              as="template"
+              enter="duration-300 ease-out"
+              leave="duration-200 ease-in"
+              :enter-from="`${isMobile ? 'translate-y-full' : ''} opacity-0 scale-95`"
+              :enter-to="`${isMobile ? 'translate-y-0' : ''} opacity-100 scale-100`"
+              :leave-from="`${isMobile ? 'translate-y-0' : ''} opacity-100 scale-100`"
+              :leave-to="`${isMobile ? 'translate-y-full' : ''} opacity-0 scale-95`"
             >
               <DialogPanel
-                class="relative w-full py-8 text-left align-middle transition-all transform bg-white shadow-lg md:max-w-lg rounded-t-8 md:rounded-lg"
+                class="relative w-full py-8 text-left align-middle transition-all transform bg-white shadow-lg rounded-t-2xl md:max-w-lg md:rounded-lg"
               >
                 <CrossIcon
                   class="absolute w-6 h-6 transition-colors rounded-full cursor-pointer top-4 right-4 bg-space/20 hover:bg-space/30 focus-visible:bg-space/30 text-white/80"
