@@ -19,6 +19,12 @@ const emit = defineEmits({
   closeList: () => true,
 })
 
+const isIOS = (
+  navigator.platform?.startsWith('iPhone')
+  || navigator.platform?.startsWith('iPod')
+  || navigator.platform?.startsWith('iPad')
+) || !!navigator.userAgent.match(/(iPhone|iPod|iPad)/g)
+
 // We have only one progress across all elements. If any of the element moves, all of them move.
 const INITIAL_GAP_TO_SCREEN = 20
 
@@ -46,9 +52,10 @@ function handleSelectedUuidUpdate(uuid: string | undefined, smooth = true) {
 
   scrollingIntoView = true
 
-  scrollRoot.value!.scrollTo({
-    left: scrollRoot.value!.scrollLeft + card.getBoundingClientRect().left,
+  card.scrollIntoView({
     behavior: smooth ? 'smooth' : 'instant',
+    block: 'start',
+    inline: 'start',
   })
 
   if (smooth) {
@@ -66,7 +73,19 @@ function handleSelectedUuidUpdate(uuid: string | undefined, smooth = true) {
   }
 }
 
-watch(selectedUuid, uuid => handleSelectedUuidUpdate(uuid))
+if (!isIOS) {
+  watch(selectedUuid, uuid => handleSelectedUuidUpdate(uuid))
+}
+else {
+  // This workaround addresses an issue on iOS where expanding a card after it has been scrolled into view
+  // by handleSelectedUuidUpdate causes it to shift to the right without maintaining its centered, snapped position.
+  watch([selectedUuid, progress], ([uuid, progressValue], [oldUuid, oldProgressValue]) => {
+    if (uuid !== oldUuid)
+      handleSelectedUuidUpdate(uuid)
+    else
+      handleSelectedUuidUpdate(uuid, false)
+  })
+}
 
 onMounted(() => {
   handleSelectedUuidUpdate(selectedUuid.value, false)
