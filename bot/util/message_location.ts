@@ -71,12 +71,12 @@ function cryptosToEmoji(cryptos: string[] = []) {
   if (typeof cryptos.length === 'undefined')
     return ''
   return cryptos?.map(c =>
-    `:${c.toLocaleLowerCase().replace('dash', 'dashh')}:`,
+    `:${c.toLocaleLowerCase().replace('dash', 'dashh').replace('usdc_on_polygon', 'usdc')}:`,
   ).join(' ') || ''
 }
 
 function getCryptoMapLink(name: string, domain: string, uuid: string) {
-  return `See *${name}* in the <${domain}/?e=${uuid}|:cryptomap: Crypto Map>`
+  return `See *${name}* in the <${domain}/?uuid=${uuid}|:cryptomap: Crypto Map>`
 }
 
 export function getMessageString(input: Input) {
@@ -149,10 +149,9 @@ export function getMessageString(input: Input) {
 
   const url = input.gmaps || input.instagram || input.facebook
   if (url) {
-    let socialMedia = `:selfie: \`${
+    const socialMedia = `:selfie: \`${
       input.gmaps ? 'Google Maps' : input.instagram ? 'Instagram' : 'Facebook'
     }\``
-    socialMedia += (input.gmaps ? ` (\`${input.gmaps}\`)` : '')
     const socialMediaLink = input.gmaps
       ? `:gmaps: <${url}|Google Maps>`
       : input.instagram
