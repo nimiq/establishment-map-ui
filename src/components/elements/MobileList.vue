@@ -58,8 +58,7 @@ function handleSelectedUuidUpdate(uuid: string | undefined, smooth = true) {
       }, { once: true })
     }
     else {
-      // @ts-expect-error This should not be a problem...
-      window.setTimeout(() => scrollingIntoView = false, 1000)
+      globalThis.setTimeout(() => scrollingIntoView = false, 1000)
     }
   }
   else {

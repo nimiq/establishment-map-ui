@@ -90,7 +90,7 @@ function getComponent() {
       'bg-white hover:bg-[#F2F2F4] focus-visible:bg-[#F2F2F4]': props.bgColor === 'white',
       'bg-space/10': props.bgColor === 'grey',
       'py-2.5 px-4 sm:py-3 sm:px-5 sm:h-10 gap-3': props.size === 'lg',
-      'px-3 py-1.5 sm:py-2.5 sm:px-3 h-[30px] sm:h-8 gap-2': props.size === 'md',
+      'px-4 py-1.5 sm:py-[11px] h-[30px] sm:h-8 gap-2.5': props.size === 'md',
       'p-2 sm:p-2.5 h-9 gap-2': props.size === 'sm',
       'aspect-square': hasSlot('icon') && !hasSlot('label'),
       'focus-visible:ring-offset-2': props.as !== 'div' && props.bgColor === 'space',

@@ -71,7 +71,7 @@ function applyFilters() {
 <template>
   <div>
     <template v-if="isMobile">
-      <Button bg-color="white" size="lg" class="!w-10 h-10" @click="openModal">
+      <Button bg-color="white" size="lg" @click="openModal">
         <template #icon>
           <FilterIcon class="w-6 h-6 text-space" />
         </template>
