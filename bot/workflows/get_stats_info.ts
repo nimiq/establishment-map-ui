@@ -24,13 +24,21 @@ const statsStep = GetStatsWorkflow.addStep(
   { environment: 'Production' },
 )
 
+const content = `:cryptomap: Crypto Map Statistics :bar_chart:
+
+Message triggered by <@${GetStatsWorkflow.inputs.interactivity.interactor.id}>.
+
+\`\`\`
+${JSON.stringify(statsStep.outputs.stats, null, 2)}
+\`\`\`
+`
+
 GetStatsWorkflow.addStep(
   SendContext,
   {
-    stats: statsStep.outputs.stats,
     environment: 'Production',
-    reviewer: GetStatsWorkflow.inputs.interactivity.interactor.id,
-    type: 'stats',
+    type: 'other',
+    content,
   },
 )
 

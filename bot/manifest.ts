@@ -8,6 +8,7 @@ import GetStatsWorkflow from './workflows/get_stats_info.ts'
 import HandleIssueWorkflow from './workflows/handle_issue.ts'
 import HandleCandidateWorkflow from './workflows/handle_candidate.ts'
 import ShowHelpWorkflow from './workflows/show_help.ts'
+import PostClusterWorkflow from './workflows/post_cluster.ts'
 
 export default Manifest({
   name: 'crypto-map-bot',
@@ -22,6 +23,7 @@ export default Manifest({
     HandleCandidateWorkflow,
     HandleIssueWorkflow,
     ShowHelpWorkflow,
+    PostClusterWorkflow,
   ],
   outgoingDomains: [
     'www.google.com',

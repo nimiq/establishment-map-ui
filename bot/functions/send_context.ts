@@ -18,9 +18,9 @@ export const SendContext = DefineFunction({
         type: LocationType,
         description: 'Name of the location',
       },
-      stats: {
-        type: Schema.types.object,
-        description: 'Stats of the database',
+      content: {
+        type: Schema.types.string,
+        description: 'The content to send',
       },
       reviewer: {
         type: Schema.slack.types.user_id,
@@ -35,12 +35,11 @@ export const SendContext = DefineFunction({
           'location_deleted',
           'location_added',
           'location_info',
-          'stats',
-          'info',
+          'other',
         ],
       },
     },
-    required: ['environment', 'reviewer', 'type'],
+    required: ['environment', 'type'],
   },
 })
 
@@ -84,26 +83,8 @@ export default SlackFunction(
             : env.CRYPTO_MAP_DOMAIN,
         })
         break
-      case 'stats':
-        text = `:cryptomap: Crypto Map Statistics :bar_chart:
-
-Message triggered by <@${inputs.reviewer!}>.
-
-        \`\`\`
-${JSON.stringify(inputs.stats, null, 2)}
-        \`\`\`
-        `
-        break
-      case 'info':
-        text = `:cryptomap: Crypto Map Bot Help :cryptomap:
-
-        Message triggered by <@${inputs.reviewer!}>.
-
-        What can I do?
-        - I will notify in this channel when a user submits a new candidate. You later can decide if you want to add it to the Map or ignore it.
-        - I will notify in this channel when a user submits a new issue. You later can decide if you want to remove it or ignore it.
-        - Write \`/add\` in this channel to add an location. A modal will open and you will add the information.
-        - Write \`/delete\` in this channel to remove an location. A modal will open and you will set the UUID. `
+      default:
+        text = inputs.content || 'No content provided'
     }
     await client.chat.postMessage({
       channel: dev ? env.SLACK_CHANNEL_ID_TEST : env.SLACK_CHANNEL_ID,
