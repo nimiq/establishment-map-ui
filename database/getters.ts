@@ -53,6 +53,6 @@ export async function getClusterMaxZoom(dbArgs: DatabaseArgs): Promise<number> {
   return await fetchDb<number>(DbReadFunction.GetMaxZoom, dbArgs) ?? -1 // FIXME: Show error to user instead of using -1
 }
 
-export async function getStats(dbArgs: DatabaseAuthArgs): Promise<DatabaseStatistics | undefined> {
+export async function getStats(dbArgs: DatabaseArgs): Promise<DatabaseStatistics | undefined> {
   return await fetchDb<DatabaseStatistics>(DbReadFunction.GetStats, dbArgs)
 }
