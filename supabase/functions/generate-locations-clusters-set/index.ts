@@ -5,6 +5,7 @@ import { getLocations } from '../../../database/getters.ts'
 import { algorithm, computeCluster } from '../../../shared/compute-cluster.ts'
 import type { DatabaseAuthArgs, InsertLocationsClustersSetParamsItem } from '../../../types/database.ts'
 import type { BoundingBox, Cluster, Location } from '../../../types/index.ts'
+import { getAuth } from '../../../database/fetch.ts'
 
 async function cluster() {
   const apikey = Deno.env.get('SUPABASE_ANON_KEY')
@@ -24,11 +25,13 @@ async function cluster() {
       email,
       password,
     },
+    token: '',
   }
 
   await flushClusterTable(dbArgs)
 
   const bbox: BoundingBox = { neLat: 90, neLng: 180, swLat: -90, swLng: -180 }
+  dbArgs.token = await getAuth(dbArgs)
   const locations = await getLocations(dbArgs, bbox)
 
   const minZoom = Number(Deno.env.get('MIN_ZOOM'))
