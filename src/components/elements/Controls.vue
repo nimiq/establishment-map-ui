@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import IconCircleSpinner from '../icons/icon-circle-spinner.vue'
 import Button from '@/components/atoms/Button.vue'
-import GeolocationIcon from '@/components/icons/icon-geolocation.vue'
 import MinusIcon from '@/components/icons/icon-minus.vue'
 import PlusIcon from '@/components/icons/icon-plus.vue'
 import { useGeoIp } from '@/composables/useGeoLocation'
@@ -38,8 +36,7 @@ async function setBrowserPosition() {
       @click="setBrowserPosition"
     >
       <template #icon>
-        <GeolocationIcon v-if="!isGeolocationLoading" />
-        <IconCircleSpinner v-else class="!w-10 h-10 text-space" />
+        <IconCircleSpinner class="!w-10 h-10 text-space" />
       </template>
     </Button>
 
