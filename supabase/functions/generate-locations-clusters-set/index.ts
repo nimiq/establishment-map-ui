@@ -59,7 +59,7 @@ async function cluster() {
       promises.push(insertLocationsClusterSet(dbArgs, {
         zoom_level: zoom,
         items: singles.concat(res.clusters as Cluster[]),
-        cryptocity: cryptocity === Cryptocity.None ? undefined : cryptocity,
+        cryptocity,
       }))
       console.log(
       `Added ${res.clusters.length} clusters and ${singles.length} singles at zoom level ${zoom} for cryptocity ${cryptocity}`,
