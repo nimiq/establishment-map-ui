@@ -9,7 +9,7 @@ import { addLocation } from '../../database/functions.ts'
 import { getDbAuthArgs } from '../util/db-args.ts'
 import type { RawLocation } from '../../types/location.ts'
 import { LocationType } from '../types/location.ts'
-import { Provider } from '../../types/database.ts'
+import { Cryptocity, Provider } from '../../types/database.ts'
 import type { Category, Currency } from '../../types/database.ts'
 
 export const CreateRawLocation = DefineFunction({
@@ -99,6 +99,7 @@ export default SlackFunction(
       facebook: inputs.facebook,
       instagram: inputs.instagram,
       gmaps_types: [],
+      cryptocity: Cryptocity.None,
     }
     const res = await addLocation(
       getDbAuthArgs(env, inputs.environment === 'Test'),

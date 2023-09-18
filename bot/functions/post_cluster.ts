@@ -25,11 +25,8 @@ export default SlackFunction(
       return { error: 'No token' }
 
     const headers = { Authorization: `Bearer ${token}`, apikey: auth.apikey }
-    const res = await fetch(fnUrl, { method: 'POST', headers }).catch(error => `Error POST ${fnUrl}: ${error}`)
-    if (!res || typeof res === 'string')
-      return { error: `Error POST ${fnUrl}: ${(JSON.stringify(res))}` }
-    if (res.status !== 201)
-      return { error: `Error POST ${fnUrl}: ${(JSON.stringify(res))}` }
+    // The function takes more than 15 seconds to run, so we cannot wait for it
+    fetch(fnUrl, { method: 'POST', headers }).catch(error => `Error POST ${fnUrl}: ${error}`)
     return { outputs: {} }
   },
 )

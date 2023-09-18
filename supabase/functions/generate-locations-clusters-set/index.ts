@@ -41,9 +41,6 @@ async function cluster() {
     = cryptocities.reduce((acc, cryptocity) => ({
       ...acc, [cryptocity]: locations.filter(l => l.cryptocity === cryptocity),
     }), {} as Record<Cryptocity, Location[]>)
-  console.log(locationsByCryptocity['San Jose'].length)
-  console.log(locationsByCryptocity.Mannheim.length)
-  console.log(locationsByCryptocity.None.length)
 
   const minZoom = Number(Deno.env.get('MIN_ZOOM')) || 3
   const maxZoom = Number(Deno.env.get('MAX_ZOOM')) || 14
@@ -70,8 +67,7 @@ async function cluster() {
     }
   }
 
-  const res = await Promise.allSettled(promises)
-  // console.log(res.filter(({ status }) => status === 'rejected'))
+  await Promise.allSettled(promises)
 }
 
 serve(async () => {
