@@ -4,7 +4,7 @@ import { TooltipArrow, TooltipContent, TooltipPortal, TooltipProvider, TooltipRo
 import { useBreakpoints } from '@vueuse/core'
 import { screens } from 'tailwindcss-nimiq-theme'
 import type { Location } from 'types'
-import CardBg from '@/components/elements/CardBg.vue'
+import CardBg from '@/components/cards/location/LocationCardBg.vue'
 import Button from '@/components/atoms/Button.vue'
 import InfoIcon from '@/components/icons/icon-info.vue'
 import ProviderCircleLogo from '@/components/icons/providers/ProviderCircleLogo.vue'

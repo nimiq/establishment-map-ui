@@ -70,9 +70,9 @@ function applyFilters() {
 
 <template>
   <div>
-    <Button bg-color="white" size="lg" class="max-desktop:px-0" @click="openModal">
+    <Button bg-color="white" class="max-desktop:px-0" @click="openModal">
       <template #icon>
-        <FilterIcon class="w-6 h-4.5 text-space" />
+        <FilterIcon class="w-4 text-space" />
       </template>
       <template v-if="!isMobile" #label>
         {{ $t('Filters') }}

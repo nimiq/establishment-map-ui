@@ -1,6 +1,6 @@
-import { useDebounceFn } from '@vueuse/core'
+import { useDebounceFn, useWindowSize } from '@vueuse/core'
 import { defineStore } from 'pinia'
-import type { EstimatedMapPosition, MapPosition, Point } from 'types'
+import type { BoundingBox, EstimatedMapPosition, MapPosition, Point } from 'types'
 import { computed, ref, shallowRef, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import type { GoogleMap } from 'vue3-google-map'
@@ -12,7 +12,9 @@ export const useMap = defineStore('map', () => {
   const map = computed(() => mapInstance.value?.map as google.maps.Map | undefined)
   const center = ref(map.value?.getCenter()?.toJSON() as Point | undefined)
   const zoom = ref(map.value?.getZoom() ?? 3)
-  const boundingBox = ref(boundsToBox(map.value?.getBounds()))
+  const boundingBox = ref<BoundingBox | undefined>()
+  const lngInPx = ref(0)
+  const latInPx = ref(0)
 
   const router = useRouter()
   const route = useRoute()
@@ -30,18 +32,25 @@ export const useMap = defineStore('map', () => {
   }, 300, { maxWait: 2000 })
   const clusterDebouncer = useDebounceFn(() => useCluster().cluster(), 300, { maxWait: 2000 })
 
-  function boundsToBox(bounds?: google.maps.LatLngBounds) {
-    if (!bounds)
-      return undefined
+  function boundsToBox(bounds: google.maps.LatLngBounds) {
     const { lat: swLat, lng: swLng } = bounds.getSouthWest().toJSON()
     const { lat: neLat, lng: neLng } = bounds.getNorthEast().toJSON()
     return { swLat, swLng, neLat, neLng }
   }
 
+  const { height, width } = useWindowSize()
+
   function onBoundsChanged() {
-    if (!map.value || !map.value.getBounds())
+    const bounds = map.value?.getBounds()
+    if (!bounds)
       return
-    boundingBox.value = boundsToBox(map.value!.getBounds())
+
+    const { neLat, neLng, swLat, swLng } = boundsToBox(bounds)
+    boundingBox.value = { neLat, neLng, swLat, swLng }
+
+    latInPx.value = (neLat - swLat) * height.value
+    lngInPx.value = (neLng - swLng) * width.value
+
     updateRouteDebouncer()
 
     // If we don't have the item in the memoized map, we need to update the clusters
@@ -116,5 +125,8 @@ export const useMap = defineStore('map', () => {
     decreaseZoom,
 
     goToPlaceId,
+
+    latInPx,
+    lngInPx,
   }
 })

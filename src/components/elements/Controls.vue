@@ -31,28 +31,28 @@ async function setBrowserPosition() {
   <div class="flex flex-col gap-y-4">
     <Button
       v-if="browserPositionIsSupported"
-      class="!w-10 !h-10 shadow"
+      class="!w-8 !h-8 shadow"
       :disabled="geolocatingUserBrowser" bg-color="white" :aria-label="$t('Show your location')"
       :title="$t('Show your location')"
       @click="setBrowserPosition"
     >
       <template #icon>
-        <GeolocationIcon />
+        <GeolocationIcon class="w-5" />
       </template>
     </Button>
 
     <div class="flex flex-col bg-white rounded-full shadow max-desktop:hidden">
-      <Button bg-color="white" class="!w-10 !h-10 rounded-b-0" @click="useMap().increaseZoom">
+      <Button bg-color="white" class="!w-8 !h-8 rounded-b-0" @click="useMap().increaseZoom">
         <template #icon>
-          <PlusIcon />
+          <PlusIcon class="w-5" />
         </template>
       </Button>
 
       <hr class="self-stretch h-[2px] -my-px bg-space/10">
 
-      <Button bg-color="white" class="!w-10 !h-10 rounded-t-0" @click="useMap().decreaseZoom">
+      <Button bg-color="white" class="!w-8 !h-8 rounded-t-0" @click="useMap().decreaseZoom">
         <template #icon>
-          <MinusIcon />
+          <MinusIcon class="w-5" />
         </template>
       </Button>
     </div>

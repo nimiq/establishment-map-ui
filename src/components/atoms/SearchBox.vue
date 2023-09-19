@@ -13,7 +13,7 @@ import { useDebounceFn } from '@vueuse/core'
 import type { PredictionSubstring, Suggestion } from 'types'
 import { AutocompleteStatus } from 'types'
 import type { PropType } from 'vue'
-import { computed, ref, useSlots, watchEffect } from 'vue'
+import { Teleport, computed, ref, useSlots, watch } from 'vue'
 import SearchIcon from '@/components/icons/icon-search.vue'
 import CrossIcon from '@/components/icons/icon-cross.vue'
 
@@ -58,6 +58,10 @@ const props = defineProps({
     type: String as PropType<AutocompleteStatus>,
     required: true,
   },
+  teleport: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const emit = defineEmits({
@@ -72,17 +76,15 @@ const userCanCleanInput = computed(() => props.allowClean && query.value !== '' 
 
 const loading = ref(false)
 
-watchEffect(
-  async () => {
-    if (query.value === 'undefined')
-      query.value = undefined
-    if (!query.value)
-      return
-    loading.value = true
-    await props.autocomplete(query.value)
-    loading.value = false
-  },
-)
+watch(() => query.value, async () => {
+  if (query.value === 'undefined')
+    query.value = undefined
+  if (!query.value)
+    return
+  loading.value = true
+  await props.autocomplete(query.value)
+  loading.value = false
+})
 
 const slots = useSlots()
 const hasLabel = computed(() => props.label || hasSlot('label'))
@@ -171,7 +173,7 @@ function onListVisibilityChange(isVisible: boolean) {
           </button>
         </div>
       </div>
-      <Teleport to="body">
+      <component :is="teleport ? Teleport : 'div'" to="body">
         <TransitionRoot leave="transition ease-in duration-100" leave-from="opacity-100" leave-to="opacity-0">
           <ComboboxOptions
             v-element-visibility="onListVisibilityChange"
@@ -236,7 +238,7 @@ function onListVisibilityChange(isVisible: boolean) {
             </ComboboxOption>
           </ComboboxOptions>
         </TransitionRoot>
-      </Teleport>
+      </component>
     </div>
   </Combobox>
 </template>

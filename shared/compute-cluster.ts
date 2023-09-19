@@ -6,7 +6,7 @@ import { toPoint } from './index.ts'
 export const CLUSTERS_MAX_ZOOM = 17
 export const algorithm = (radius: number) => new Supercluster({ radius, maxZoom: CLUSTERS_MAX_ZOOM })
 
-export function computeCluster(algorithm: Supercluster, locations: Location[], { zoom, boundingBox: bbox }: ClusterArea): ComputedClusterSet {
+export function computeCluster(algorithm: Supercluster, locations: Location[], { zoom, boundingBox: bbox }: ClusterArea): Omit<ComputedClusterSet, 'cryptocities'> {
   const singles: Location[] = []
   const clusters: Cluster[] = []
 

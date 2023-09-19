@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type PropType } from 'vue'
 import { type Location } from 'types'
-import LocationSocialButton from './LocationSocialButton.vue'
+import LocationSocialButton from '@/components/elements/LocationSocialButton.vue'
 import StarFilledIcon from '@/components/icons/icon-star-filled.vue'
 import StarIcon from '@/components/icons/icon-star.vue'
 

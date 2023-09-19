@@ -6,7 +6,7 @@ import { useDark } from '@vueuse/core'
 import { useMap } from '@/stores/map'
 import { i18n } from '@/i18n/i18n-setup'
 import { useInitialMapPosition } from '@/composables/useInitialMapPosition'
-import MapMarkers from '@/components/elements/MapMarkers.vue'
+import MapMarkers from '@/components/markers/MapMarkers.vue'
 import { useApp } from '@/stores/app'
 
 const GOOGLE_MAP_KEY = import.meta.env.VITE_GOOGLE_MAP_KEY

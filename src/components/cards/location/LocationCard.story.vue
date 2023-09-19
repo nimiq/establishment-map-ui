@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import Card from './Card.vue'
+import LocationCard from './LocationCard.vue'
 import { locations } from '@/assets-dev/stories/locations'
 
 const progressState = ref<'expanded' | 'not-expanded' | 'loop' | 'custom'>('expanded')
@@ -50,7 +50,7 @@ const progress = computed(() => {
     </template>
 
     <Variant v-for="(l, i) in locations" :key="i" :title="l.provider" class="flex items-end h-full">
-      <Card
+      <LocationCard
         :location="l" :progress="progressState === 'custom' ? customProgress : progress"
         class="relative"
       />

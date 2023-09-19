@@ -47,9 +47,10 @@ async function onSubmit(captcha: string) {
     </template>
     <template #form>
       <SearchBox
+        :teleport="false"
         :autocomplete="(query: string) => querySearch(query, true)" :suggestions="suggestions" :status="status" :label="$t('Find location')"
         :placeholder="$t('Type the name of the location')" combobox-options-classes="w-[calc(100%+4px)] -left-0.5 top-unset rounded-sm"
-        bg-combobox="space" input-id="search-input" :allow-clean="false" @selected="(selectedPlace = $event)"
+        bg-combobox="space" :allow-clean="false" @selected="(selectedPlace = $event)"
       />
 
       <Select

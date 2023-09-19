@@ -3,14 +3,14 @@ import { createReusableTemplate, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { PopoverAnchor, PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import { screens } from 'tailwindcss-nimiq-theme'
-import type { Location, Point } from 'types'
+import type { Location } from 'types'
+import type { PropType } from 'vue'
 import { computed, defineAsyncComponent, ref } from 'vue'
 import { CustomMarker } from 'vue3-google-map'
 import { useMap } from '@/stores/map'
 import { useLocations } from '@/stores/locations'
-import { useCluster } from '@/stores/cluster'
-import Card from '@/components/elements/Card.vue'
 import { useApp } from '@/stores/app'
+import LocationCard from '@/components/cards/location/LocationCard.vue'
 
 // TODO Import this from radix-vue. We need to import it lazily so we don't load it in the mobile version
 // const PopoverArrow = defineAsyncComponent(() => import('radix-vue'))
@@ -19,9 +19,12 @@ import { useApp } from '@/stores/app'
 // const PopoverRoot = defineAsyncComponent(() => import('radix-vue'))
 // const PopoverTrigger = defineAsyncComponent(() => import('radix-vue'))
 
-const { clusters, singles } = storeToRefs(useCluster())
-
-const { setPosition } = useMap()
+defineProps({
+  singles: {
+    type: Object as PropType<Location[]>,
+    required: true,
+  },
+})
 const { zoom } = storeToRefs(useMap())
 const { isListShown } = storeToRefs(useApp())
 
@@ -48,12 +51,6 @@ function extractColorFromBg(bg: string) {
   // TODO: Find a way to know if the arrow is on the left or right side and use the correct color
   const colors = bg.match(regex) || []
   return colors[colors.length - 1]
-}
-
-function onClusterClick(center: Point, proposedZoom: number) {
-  // To make it more fluid if zoom is lower than 13, the minimum zoom change must be 3
-  const newZoom = proposedZoom < 13 ? Math.max(proposedZoom, zoom.value + 3) : proposedZoom
-  setPosition({ center, zoom: newZoom })
 }
 
 const popoverKey = ref(0)
@@ -84,16 +81,6 @@ function handlePopoverOpen(isOpen: boolean, location: Location) {
 </script>
 
 <template>
-  <CustomMarker
-    v-for="({ lat, lng, count, expansionZoom, id }) in clusters" :key="id"
-    :options="{ position: { lat, lng }, anchorPoint: 'CENTER' }"
-    data-custom-marker
-  >
-    <div class="grid text-sm font-bold text-white transition-colors rounded-full shadow cursor-pointer aspect-square place-content-center bg-space hover:bg-[#35395A] focus:bg-[#35395A] ring-white/20 ring-2 ring-offset-1 ring-offset-white/40 max-desktop:clickable" :style="`width: clamp(24px, ${0.24 * count + 24}px, 48px); font-size: clamp(14px, ${0.14 * count + 4}px, 18px)`" @click="onClusterClick({ lat, lng }, expansionZoom)">
-      {{ count < 100 ? count : '99+' }}
-    </div>
-  </CustomMarker>
-
   <DefineTemplate v-slot="{ location: { category, name, isAtm, bg, uuid } }">
     <div class="flex items-center gap-x-2 max-w-[176px] group/marker">
       <div
@@ -144,7 +131,7 @@ function handlePopoverOpen(isOpen: boolean, location: Location) {
       </PopoverTrigger>
       <PopoverPortal :key="popoverKey">
         <PopoverContent side="right" :side-offset="5" class="rounded-lg shadow" :collision-padding="8" sticky="always" @open-auto-focus.prevent>
-          <Card :location="location" :progress="1" :class="location.photo ? 'max-w-xs' : 'max-w-sm'" />
+          <LocationCard :location="location" :progress="1" :class="location.photo ? 'max-w-xs' : 'max-w-sm'" />
           <PopoverArrow class="w-4 h-2" :style="`fill: ${location.isAtm ? extractColorFromBg(location.bg[0]) : 'white'}`" />
 
           <!-- TODO Once this is fixed https://github.com/radix-vue/radix-vue/issues/353 use custom arrow -->

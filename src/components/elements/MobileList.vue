@@ -5,7 +5,7 @@ import { type Location, Theme } from 'types'
 import { useEventListener } from '@vueuse/core'
 import { useLocations } from '@/stores/locations'
 import SheetModal from '@/components/atoms/SheetModal.vue'
-import Card from '@/components/elements/Card.vue'
+import LocationCard from '@/components/cards/location/LocationCard.vue'
 import { useMap } from '@/stores/map'
 
 defineProps({
@@ -200,7 +200,7 @@ if (isIOs) {
             >
           </div>
         </template>
-        <Card :location="location" :progress="progress" />
+        <LocationCard :location="location" :progress="progress" />
       </SheetModal>
     </li>
   </ul>

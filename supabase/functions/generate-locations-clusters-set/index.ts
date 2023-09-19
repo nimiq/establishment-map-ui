@@ -35,8 +35,7 @@ async function cluster() {
   dbArgs.token = await getAuth(dbArgs)
   const locations = await getLocations(dbArgs, boundingBox)
   const cryptocities = Object.values(Cryptocity)
-  // print unique cryptocities
-  console.log(new Set(locations.map(l => l.cryptocity)))
+
   const locationsByCryptocity: Record<Cryptocity, Location[]>
     = cryptocities.reduce((acc, cryptocity) => ({
       ...acc, [cryptocity]: locations.filter(l => l.cryptocity === cryptocity),
@@ -53,7 +52,6 @@ async function cluster() {
   for (let zoom = minZoom; zoom <= maxZoom; zoom++) {
     for (const cryptocity of cryptocities) {
       const res = computeCluster(algorithm(radii[zoom]), locationsByCryptocity![cryptocity], { zoom, boundingBox })
-      console.log({ cryptocity })
       const singles: InsertLocationsClustersSetParamsItem[] = (res.singles as Location[])
         .map(({ lng, lat, uuid }) => ({ lat, lng, count: 1, locationUuid: uuid }))
       promises.push(insertLocationsClusterSet(dbArgs, {

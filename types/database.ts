@@ -54,7 +54,6 @@ export enum Provider {
 }
 
 export enum Cryptocity {
-  Mannheim = 'Mannheim',
   SanJose = 'San Jose',
   None = 'None',
 }

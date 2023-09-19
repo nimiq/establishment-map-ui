@@ -17,3 +17,9 @@ export interface Filters {
   categories: Category[]
   currencies: Currency[]
 }
+
+export interface CryptocityContent {
+  name: string
+  description: string[]
+  url: string
+}

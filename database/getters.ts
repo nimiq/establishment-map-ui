@@ -1,4 +1,4 @@
-import type { BoundingBox, ComputedClusterSet, DatabaseArgs, DatabaseAuthArgs, DatabaseStatistics, Location, Suggestion } from '../types/index.ts'
+import type { BoundingBox, Cluster, ComputedClusterSet, DatabaseArgs, DatabaseAuthArgs, DatabaseStatistics, Location, Suggestion } from '../types/index.ts'
 import { Category, Currency, DbReadFunction, Provider } from '../types/index.ts'
 import { fetchDb } from './fetch.ts'
 
@@ -44,13 +44,15 @@ export async function searchLocations(dbArgs: DatabaseArgs, query: string) {
   return await fetchDb<Omit<Suggestion, 'type'>[]>(DbReadFunction.SearchLocations, dbArgs, params.toString()) ?? []
 }
 
-export async function getClusters(dbArgs: DatabaseArgs, bbox: BoundingBox, zoom: number, parseLocation: (l: Location) => Location = l => l): Promise<ComputedClusterSet> {
+type GetClustersReturn = ComputedClusterSet & { cryptocities: Cluster[] }
+export async function getClusters(dbArgs: DatabaseArgs, bbox: BoundingBox, zoom: number, parseLocation: (l: Location) => Location = l => l): Promise<GetClustersReturn> {
   const params = new URLSearchParams()
   Object.entries(bbox).forEach(([key, value]) => params.append(key.toLocaleLowerCase(), value.toString()))
   params.append('zoom_level', zoom.toString())
   const res = await fetchDb<ComputedClusterSet>(DbReadFunction.GetLocationsClustersSet, dbArgs, params.toString())
   return {
     clusters: res?.clusters ?? [],
+    cryptocities: res?.cryptocities ?? [],
     singles: res?.singles.map(parseLocation) ?? [],
   }
 }

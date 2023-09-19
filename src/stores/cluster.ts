@@ -1,6 +1,6 @@
 import { getClusterMaxZoom, getClusters } from 'database'
 import { defineStore, storeToRefs } from 'pinia'
-import type { Cluster, ComputedClusterSet, Location, LocationClusterParams, LocationClusterSet } from 'types'
+import type { Cluster, ComputedClusterSet, CryptocityCluster, Location, LocationClusterParams, LocationClusterSet } from 'types'
 import { CLUSTERS_MAX_ZOOM, addBBoxToArea, algorithm, bBoxIsWithinArea, getItemsWithinBBox, toMultiPolygon } from 'shared'
 import { computed, shallowRef } from 'vue'
 import { useLocations } from './locations'
@@ -8,6 +8,7 @@ import { useFilters } from './filters'
 import { useMap } from './map'
 import { DATABASE_ARGS, parseLocation } from '@/shared'
 import { computeCluster } from '@/../shared/compute-cluster'
+import { cryptocitiesContent } from '@/assets-dev/cryptocities-assets'
 
 export const useCluster = defineStore('cluster', () => {
   const { setLocations, getLocations } = useLocations()
@@ -29,6 +30,8 @@ export const useCluster = defineStore('cluster', () => {
    */
   const clusters = shallowRef<Cluster[]>([])
   const clustersInView = computed(() => boundingBox.value ? getItemsWithinBBox(clusters.value, boundingBox.value) : [])
+  const cryptocities = shallowRef<CryptocityCluster[]>([]) // same as cluster
+  const cryptocitiesInView = computed(() => boundingBox.value ? getItemsWithinBBox(cryptocities.value, boundingBox.value) : [])
   const singles = shallowRef<Location[]>([])
   const singlesInView = computed(() => boundingBox.value ? getItemsWithinBBox(filterLocations(singles.value), boundingBox.value) : [])
 
@@ -52,6 +55,7 @@ export const useCluster = defineStore('cluster', () => {
     // Update the memoized item if it exists
     if (!needsToUpdate) {
       clusters.value = item.memoizedClusters
+      cryptocities.value = item.memoizedCryptocities
       singles.value = item.memoizedSingles
     }
 
@@ -77,13 +81,15 @@ export const useCluster = defineStore('cluster', () => {
 
   async function getClusterFromClient(): Promise<ComputedClusterSet> {
     const locations = await getLocations(boundingBox.value!)
-    return computeCluster(algorithm(80), locations, { boundingBox: boundingBox.value!, zoom: zoom.value })
+    const res = computeCluster(algorithm(80), locations, { boundingBox: boundingBox.value!, zoom: zoom.value })
+    return { ...res, cryptocities: [] } // When zoom is high, user does not see cryptocities
   }
 
   async function getClusterFromDatabase(): Promise<ComputedClusterSet> {
     const res = await getClusters(DATABASE_ARGS, boundingBox.value!, zoom.value, parseLocation)
     setLocations(res.singles)
-    return res
+    const cryptocities = res.cryptocities.map(c => ({ ...cryptocitiesContent[c.city], ...c } as CryptocityCluster))
+    return { ...res, cryptocities }
   }
 
   async function cluster() {
@@ -99,32 +105,37 @@ export const useCluster = defineStore('cluster', () => {
     if (!needsToUpdate)
       return
 
-    const { clusters: newClusters, singles: newSingles } = await shouldRunInClient(key)
+    const { clusters: newClusters, singles: newSingles, cryptocities: newCryptocities } = await shouldRunInClient(key)
       ? await getClusterFromClient()
       : await getClusterFromDatabase()
 
     if (item) {
       item.memoizedArea = addBBoxToArea(boundingBox.value!, item.memoizedArea)
       item.memoizedClusters.push(...newClusters.filter(c => item.memoizedClusters.every(i => i.id !== c.id)))
+      item.memoizedCryptocities.push(...newCryptocities.filter(c => item.memoizedCryptocities.every(i => i.id !== c.id)))
       item.memoizedSingles.push(...newSingles.filter(s => item.memoizedSingles.every(i => i.uuid !== s.uuid)))
     }
     else {
       memoized.set(key, {
         memoizedArea: toMultiPolygon(boundingBox.value!).geometry,
         memoizedClusters: newClusters,
+        memoizedCryptocities: newCryptocities,
         memoizedSingles: newSingles,
       })
     }
 
     clusters.value = newClusters
+    cryptocities.value = newCryptocities
     singles.value = newSingles
   }
 
   return {
     cluster,
     clusters,
+    cryptocities,
     singles,
     clustersInView,
+    cryptocitiesInView,
     singlesInView,
     needsToUpdate,
   }
