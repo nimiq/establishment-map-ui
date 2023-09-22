@@ -82,4 +82,6 @@ export function bBoxesIntersect(bbox1: BoundingBox, bbox2: BoundingBox) {
   return polygon1.some(p1 => polygon2.some(p2 => intersect(p1, p2)))
 }
 
-export const distance = ({ lat: x1, lng: y1 }: Point, { lat: x2, lng: y2 }: Point) => Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+export function distanceInPx({ lat: y1, lng: x1 }: Point, { lat: y2, lng: x2 }: Point, { lngInPx, latInPx }: { lngInPx: number; latInPx: number }) {
+  return Math.sqrt(((x2 - x1) * lngInPx) ** 2 + ((y2 - y1) * latInPx) ** 2)
+}

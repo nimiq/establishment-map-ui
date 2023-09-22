@@ -48,8 +48,8 @@ export const useMap = defineStore('map', () => {
     const { neLat, neLng, swLat, swLng } = boundsToBox(bounds)
     boundingBox.value = { neLat, neLng, swLat, swLng }
 
-    latInPx.value = (neLat - swLat) * height.value
-    lngInPx.value = (neLng - swLng) * width.value
+    latInPx.value = height.value / (neLat - swLat)
+    lngInPx.value = width.value / (neLng - swLng)
 
     updateRouteDebouncer()
 

@@ -1,11 +1,20 @@
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
+import { PopoverClose, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import Button from '@/components/atoms/Button.vue'
+import CryptocityCard from '@/components/cards/cryptocity/CryptocityCard.vue'
+import CryptocityIcon from '@/components/icons/icon-cryptocity.vue'
 import GeolocationIcon from '@/components/icons/icon-geolocation.vue'
 import MinusIcon from '@/components/icons/icon-minus.vue'
+import CrossIcon from '@/components/icons/icon-cross.vue'
 import PlusIcon from '@/components/icons/icon-plus.vue'
 import { useGeoIp } from '@/composables/useGeoLocation'
+import { useCryptocity } from '@/stores/cryptocity'
 import { useMap } from '@/stores/map'
+
+const { cryptocitiesInView } = storeToRefs(useCryptocity())
+const { zoom } = storeToRefs(useMap())
 
 const isGeolocationLoading = ref(false)
 const { browserPositionIsSupported, ipPosition, ipPositionError, geolocateIp, geolocateUserViaBrowser, geolocatingUserBrowser, errorBrowser } = useGeoIp()
@@ -29,7 +38,7 @@ async function setBrowserPosition() {
 
 <template>
   <div class="flex flex-col gap-y-4">
-    <!-- <PopoverRoot v-if="showCryptocity">
+    <PopoverRoot v-if="zoom >= 13 && cryptocitiesInView.length > 0">
       <PopoverTrigger class="!w-8 !h-8 shadow bg-white rounded-full p-1.5" :aria-label="$t('Information about this Cryptocity')"><CryptocityIcon /></PopoverTrigger>
       <PopoverPortal>
         <PopoverContent
@@ -37,10 +46,10 @@ async function setBrowserPosition() {
           @close-auto-focus.prevent @interact-outside.prevent
         >
           <PopoverClose class="rounded-full outline-none cursor-default" :aria-label="$t('Close')"><CrossIcon /></PopoverClose>
-          <CryptocityCard :cryptocity="cryptocity!" :show-description="true" />
+          <CryptocityCard :cryptocity="cryptocitiesInView[0]!" :show-description="true" />
         </PopoverContent>
       </PopoverPortal>
-    </PopoverRoot> -->
+    </PopoverRoot>
 
     <Button
       v-if="browserPositionIsSupported"

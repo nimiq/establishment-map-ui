@@ -1,16 +1,17 @@
 import { useDebounceFn, useLocalStorage } from '@vueuse/core'
-import { defineStore, storeToRefs } from 'pinia'
-import type { BoundingBox, CryptocityMarker, CryptocityMemoized } from 'types'
 import { getCryptocityPolygon } from 'database'
-import { addBBoxToArea, bBoxIsWithinArea, bBoxesIntersect, distance } from 'shared'
-import { ref, watch } from 'vue'
-import { useMap } from './map'
+import { defineStore, storeToRefs } from 'pinia'
+import { addBBoxToArea, bBoxIsWithinArea, bBoxesIntersect, distanceInPx } from 'shared'
+import type { BoundingBox, Cryptocity, CryptocityMarker, CryptocityMemoized } from 'types'
+import { computed, ref, watch } from 'vue'
 import { useCluster } from './cluster'
-import { cryptocitiesData } from '@/assets-dev/cryptocities-assets.ts'
+import { useMap } from './map'
 import { DATABASE_ARGS } from '@/shared'
+import { cryptocitiesData } from '@/assets-dev/cryptocities-assets.ts'
 
 export const useCryptocity = defineStore('cryptocities', () => {
-  const { map, boundingBox, zoom } = storeToRefs(useMap())
+  const { map, boundingBox, zoom, latInPx, lngInPx } = storeToRefs(useMap())
+
   const { clustersInView } = storeToRefs(useCluster())
 
   const cryptocities = useLocalStorage('cryptocities', cryptocitiesData)
@@ -18,11 +19,19 @@ export const useCryptocity = defineStore('cryptocities', () => {
   // The cryptocities markers will be set:
   // - In the centroid position if they do not clash with any cluster
   // - Attached to the cluster if they clash with any cluster
-  const cryptocitiesMarkers = ref<CryptocityMarker>({})
+  const cryptocitiesMarkers = ref<CryptocityMarker>(new Map())
   const memoizedMarkers = new Map<number /* zoom */, CryptocityMemoized>()
 
+  const cryptocitiesInView = computed(() => {
+    if (!boundingBox.value)
+      return []
+    return Object.values(cryptocities.value).filter(city => bBoxesIntersect(boundingBox.value!, city.boundingBox))
+  })
+
+  const citiesRendered: Cryptocity[] = []
+
   async function loadCryptocities(boundingBox: BoundingBox, zoom: number, map: google.maps.Map) {
-    const memoized = memoizedMarkers.get(zoom) || { area: { type: 'MultiPolygon', coordinates: [] }, markers: {} }
+    const memoized = memoizedMarkers.get(zoom) || { area: { type: 'MultiPolygon', coordinates: [] }, markers: new Map() }
     if (bBoxIsWithinArea(boundingBox, memoized.area)) {
       cryptocitiesMarkers.value = memoized.markers
       return
@@ -33,32 +42,28 @@ export const useCryptocity = defineStore('cryptocities', () => {
     if (cryptocitiesInView.length === 0)
       return
 
-    await Promise.allSettled(cryptocitiesInView.map(async city => city.polygon ||= await getCryptocityPolygon(DATABASE_ARGS, city.cryptocity)!))
-
-    const markers: CryptocityMarker = {}
+    const markers: CryptocityMarker = new Map()
     for (const city of cryptocitiesInView) {
-      city.polygon ||= await getCryptocityPolygon(DATABASE_ARGS, city.cryptocity)!
+      if (!citiesRendered.includes(city.cryptocity)) {
+        getCryptocityPolygon(DATABASE_ARGS, city.cryptocity).then((polygon) => {
+          map.data.addGeoJson(polygon!, { idPropertyName: city.cryptocity })
+          citiesRendered.push(city.cryptocity)
+        })
+      }
 
       // check if it clashes
-      const clusterToBeAttached = clustersInView.value.filter(c => distance(c, city.centroid) < c.diameter + 8 /* padding */)[0]
+      const clusterToBeAttached = clustersInView.value.filter(c => distanceInPx(c, city.centroid, { latInPx: latInPx.value, lngInPx: lngInPx.value }) < c.diameter + 8 /* padding */)[0]
 
       // Add it to
       const key = clusterToBeAttached?.id ?? -1
-      if (!markers[key])
-        markers[key] = []
-      markers[key].push(city)
+      if (!markers.has(key))
+        markers.set(key, [])
+      markers.get(key)!.push(city)
     }
 
     memoized.area = addBBoxToArea(boundingBox, memoized.area)
     memoized.markers = markers
     cryptocitiesMarkers.value = markers
-
-    // map.data.addGeoJson(city.polygon as object)
-    map.data.setStyle({
-      fillColor: 'rgb(31 35 72)',
-      fillOpacity: 0.4,
-      strokeWeight: 0,
-    })
   }
 
   const loadCryptocitiesDebouncer = useDebounceFn(loadCryptocities, 600)
@@ -67,9 +72,12 @@ export const useCryptocity = defineStore('cryptocities', () => {
     if (!boundingBox.value || !map.value)
       return
     loadCryptocitiesDebouncer(boundingBox.value, zoom.value, map.value)
+    const fillOpacity = zoom.value >= 10 && zoom.value <= 18 ? -0.02625 * zoom.value + 0.49083 : 0
+    map.value.data.setStyle({ fillColor: 'rgb(31 35 72)', fillOpacity, strokeWeight: 0 })
   })
 
   return {
+    cryptocitiesInView,
     cryptocities: cryptocitiesMarkers,
   }
 })

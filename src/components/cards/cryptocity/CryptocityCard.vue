@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import type { CryptocityData } from 'types'
+import type { PropType } from 'vue'
+import CryptocityIcon from '@/components/icons/icon-cryptocity.vue'
+
 defineProps({
-  // cryptocity: {
-  //   type: Object as PropType<CryptocityCluster>,
-  //   required: true,
-  // },
+  cryptocity: {
+    type: Object as PropType<CryptocityData>,
+    required: true,
+  },
   showDescription: {
     default: false,
     type: Boolean,
@@ -31,8 +35,8 @@ defineEmits({
     <div class="flex items-center gap-x-2">
       <CryptocityIcon class="w-[31px] h-[27px]" />
       <div>
-        <h3 class="text-base text-space">cryptocity.name</h3>
-        <span class="text-sm text-space/60">{{ $tc('{count} locations', -1) }}</span>
+        <h3 class="text-base text-space">{{ cryptocity.name }}</h3>
+        <span class="text-sm text-space/60">{{ $tc('{count} locations', 100) }}</span>
       </div>
       <!-- <component :is="icon" class="text-[#C9CAD3] p-1 w-6 h-6 ml-auto transition hover:bg-space/10 focus-visible:bg-space/10 rounded-full" data-cryptocity-trigger @click="$emit('iconClick', $event)" /> -->
     </div>
@@ -43,12 +47,12 @@ defineEmits({
       }"
     >
       <div class="overflow-hidden delay-[2s]" :class="{ '[&>*]:opacity-0': !showDescription, '[&>*]:opacity-100': showDescription }">
-        <!-- <p v-for="(p, i) in cryptocity.description" :key="i" class="pt-2 text-xs text-space/70">{{ p }}</p>
+        <p v-for="(p, i) in cryptocity.description" :key="i" class="pt-2 text-xs text-space/70">{{ p }}</p>
         <Button :href="cryptocity.url" class="mt-2 !p-0 !h-auto" bg-color="transparent" size="sm" text-color="sky">
           <template #label>
             {{ cryptocity.url }}
           </template>
-        </Button> -->
+        </Button>
       </div>
     </div>
   </div>
