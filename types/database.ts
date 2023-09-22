@@ -53,11 +53,6 @@ export enum Provider {
   Edenia = 'Edenia',
 }
 
-export enum Cryptocity {
-  SanJose = 'San Jose',
-  None = 'None',
-}
-
 export interface DatabaseArgs {
   url: string
   apikey: string
@@ -86,6 +81,7 @@ export enum DbReadFunction {
   GetLocationsClustersSet = 'get_locations_clusters_set',
   GetMaxZoom = 'get_max_zoom_computed_clusters_in_server',
   GetStats = 'get_stats',
+  GetCryptocityPolygon = 'get_cryptocity_polygon',
 }
 
 export interface InsertLocationsClustersSetParamsItem {
@@ -99,7 +95,6 @@ export interface InsertLocationsClustersSetParamsItem {
 export interface InsertLocationsClustersSetParams {
   zoom_level: number
   items: InsertLocationsClustersSetParamsItem[]
-  cryptocity?: Cryptocity
 }
 
 // ------ Return types --------

@@ -3,6 +3,7 @@ import type { MultiPolygon } from '@turf/helpers'
 import { featureCollection, multiPolygon, point } from '@turf/helpers'
 import pointsWithinPolygon from '@turf/points-within-polygon'
 import union from '@turf/union'
+import intersect from '@turf/intersect'
 import booleanWithin from '@turf/boolean-within'
 import type { BoundingBox, Point } from '../types/index.ts'
 
@@ -70,3 +71,15 @@ export function addBBoxToArea(bbox: BoundingBox, multiPoly?: MultiPolygon) {
 export function getItemsWithinBBox<T extends Point>(items: T[], bbox: BoundingBox) {
   return pointsWithinPolygon(featureCollection(items.map(toPoint)), toMultiPolygon(bbox)).features.flatMap(f => f.properties)
 }
+
+/**
+ * Checks if a bounding box is intersecting another bounding box.
+ * Since bounding boxes can cross the antimeridian, we need to check if any of the polygons created by toPolygon
+ * is within the othe multipolygon
+ */
+export function bBoxesIntersect(bbox1: BoundingBox, bbox2: BoundingBox) {
+  const [polygon1, polygon2] = [bbox1, bbox2].map(toPolygon)
+  return polygon1.some(p1 => polygon2.some(p2 => intersect(p1, p2)))
+}
+
+export const distance = ({ lat: x1, lng: y1 }: Point, { lat: x2, lng: y2 }: Point) => Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)

@@ -23,6 +23,7 @@ export function computeCluster(algorithm: Supercluster, locations: Location[], {
         lng: c.geometry.coordinates[0],
         lat: c.geometry.coordinates[1],
         count,
+        diameter: Math.max(24, Math.min(48, 0.24 * count + 24)),
 
         // Compute it lazily
         get expansionZoom() { return algorithm.getClusterExpansionZoom(clusterId) },

@@ -29,6 +29,19 @@ async function setBrowserPosition() {
 
 <template>
   <div class="flex flex-col gap-y-4">
+    <!-- <PopoverRoot v-if="showCryptocity">
+      <PopoverTrigger class="!w-8 !h-8 shadow bg-white rounded-full p-1.5" :aria-label="$t('Information about this Cryptocity')"><CryptocityIcon /></PopoverTrigger>
+      <PopoverPortal>
+        <PopoverContent
+          side="bottom" :side-offset="-32" class="will-change-[transform,opacity] animate-slideUpAndFade mr-6"
+          @close-auto-focus.prevent @interact-outside.prevent
+        >
+          <PopoverClose class="rounded-full outline-none cursor-default" :aria-label="$t('Close')"><CrossIcon /></PopoverClose>
+          <CryptocityCard :cryptocity="cryptocity!" :show-description="true" />
+        </PopoverContent>
+      </PopoverPortal>
+    </PopoverRoot> -->
+
     <Button
       v-if="browserPositionIsSupported"
       class="!w-8 !h-8 shadow"

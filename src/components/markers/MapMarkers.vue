@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import ClusterMarkers from './ClusterMarkers.vue'
-import CryptocityMarkers from './CryptocityMarkers.vue'
 import SingleMarkers from './SingleMarkers.vue'
 import { useCluster } from '@/stores/cluster'
-import { useMap } from '@/stores/map'
+import { useCryptocity } from '@/stores/cryptocity'
 
-const { clusters, singles, cryptocities } = storeToRefs(useCluster())
+const { clusters, singles } = storeToRefs(useCluster())
+const { cryptocities } = storeToRefs(useCryptocity())
 
-const { zoom } = storeToRefs(useMap())
+// const { zoom } = storeToRefs(useMap())
 </script>
 
 <template>
-  <ClusterMarkers :clusters="clusters" />
+  <ClusterMarkers :clusters="clusters" :cryptocities="cryptocities" />
   <SingleMarkers :singles="singles" />
-  <CryptocityMarkers v-if="zoom <= 12" :cryptocities="cryptocities" />
+  <!-- <CryptocityMarkers v-if="zoom <= 12" :cryptocities="cryptocities" /> -->
 </template>

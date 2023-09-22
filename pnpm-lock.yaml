@@ -35,6 +35,9 @@ dependencies:
   '@turf/helpers':
     specifier: ^6.5.0
     version: 6.5.0
+  '@turf/intersect':
+    specifier: ^6.5.0
+    version: 6.5.0
   '@turf/points-within-polygon':
     specifier: ^6.5.0
     version: 6.5.0
@@ -60,8 +63,8 @@ dependencies:
     specifier: ^2.1.6
     version: 2.1.6(typescript@5.1.6)(vue@3.3.4)
   radix-vue:
-    specifier: ^0.1.33
-    version: 0.1.33(vue@3.3.4)
+    specifier: ^0.2.3
+    version: 0.2.3(vue@3.3.4)
   supercluster:
     specifier: ^8.0.1
     version: 8.0.1
@@ -761,6 +764,14 @@ packages:
 
   /@turf/helpers@6.5.0:
     resolution: {integrity: sha512-VbI1dV5bLFzohYYdgqwikdMVpe7pJ9X3E+dlr425wa2/sMJqYDhTO++ec38/pcPvPE6oD9WEEeU3Xu3gza+VPw==}
+    dev: false
+
+  /@turf/intersect@6.5.0:
+    resolution: {integrity: sha512-2legGJeKrfFkzntcd4GouPugoqPUjexPZnOvfez+3SfIMrHvulw8qV8u7pfVyn2Yqs53yoVCEjS5sEpvQ5YRQg==}
+    dependencies:
+      '@turf/helpers': 6.5.0
+      '@turf/invariant': 6.5.0
+      polygon-clipping: 0.15.3
     dev: false
 
   /@turf/invariant@6.5.0:
@@ -4274,8 +4285,8 @@ packages:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
     dev: true
 
-  /radix-vue@0.1.33(vue@3.3.4):
-    resolution: {integrity: sha512-2nwcjrXNXML//iOxUeqyh2bBXQtQt3Xy1NqM2oHZJTNNEaL2QnMjlSN51DXMzx3QB2uex2IwqA1cFTHbJ34tyw==}
+  /radix-vue@0.2.3(vue@3.3.4):
+    resolution: {integrity: sha512-kA+3XCO5zXStbTrzbibhyKh62TlL+5Nq5FMAfPjS5/Ni8Qf0FGfWb924O2q2sV85HfZKHa9XcACuMN1NKZz0KA==}
     dependencies:
       '@floating-ui/dom': 1.5.1
       '@floating-ui/vue': 1.0.2(vue@3.3.4)

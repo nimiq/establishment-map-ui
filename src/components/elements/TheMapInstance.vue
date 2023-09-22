@@ -60,7 +60,7 @@ const isDark = useDark()
 
   <GoogleMap
     ref="mapInstance" v-bind="$attrs" :api-key="GOOGLE_MAP_KEY" :language="i18n.locale" disable-default-ui :gesture-handling="mapGestureBehaviour"
-    :keyboard-shortcuts="false" :styles="googleMapStyles" :max-zoom="21" :min-zoom="3" :restriction="restriction" :clickable-icons="false"
+    :keyboard-shortcuts="false" :styles="googleMapStyles" :max-zoom="21" :min-zoom="3" :restriction="restriction" :clickable-icons="false" :libraries="['places', 'maps'] as unknown as ['places']"
     @idle.once="() => { mapLoaded = true; setInitialMapPosition() }"
   >
     <MapMarkers />

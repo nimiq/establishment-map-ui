@@ -1,7 +1,5 @@
 import type { MultiPolygon } from '@turf/helpers'
-import type { CryptocityContent } from 'types'
 import type { Location } from './location.ts'
-import type { Cryptocity } from './database.ts'
 
 export interface BoundingBox {
   swLat: number
@@ -31,10 +29,7 @@ export interface Cluster {
   lat: number
   expansionZoom: number // The new zoom when the cluster is expanded
   count: number
-}
-
-export interface CryptocityCluster extends Cluster, CryptocityContent {
-  city: Exclude<Cryptocity, Cryptocity.None>
+  diameter: number // The diameter of the cluster in pixels
 }
 
 export interface ClusterArea {
@@ -50,7 +45,6 @@ export interface LocationClusterParams {
 
 export interface LocationClusterSet {
   memoizedClusters: Cluster[]
-  memoizedCryptocities: CryptocityCluster[]
   memoizedSingles: Location[]
 
   // The different areas where the clusters have been already computed
@@ -59,6 +53,5 @@ export interface LocationClusterSet {
 
 export interface ComputedClusterSet {
   clusters: Cluster[]
-  cryptocities: CryptocityCluster[]
   singles: Location[]
 }

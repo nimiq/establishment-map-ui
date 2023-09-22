@@ -1,14 +1,16 @@
-import type { BoundingBox, Cluster, ComputedClusterSet, DatabaseArgs, DatabaseAuthArgs, DatabaseStatistics, Location, Suggestion } from '../types/index.ts'
-import { Category, Currency, DbReadFunction, Provider } from '../types/index.ts'
+import type { FeatureCollection } from '@turf/helpers'
+import type { BoundingBox, ComputedClusterSet, DatabaseArgs, DatabaseAuthArgs, Location, Suggestion } from '../types/index.ts'
+import { Category, Cryptocity, Currency, DbReadFunction, Provider } from '../types/index.ts'
 import { fetchDb } from './fetch.ts'
 
 /**
- * We hardcode the Currencies, Categories and Providers here, because they are rarely updated.
+ * We hardcode these values here, because they are rarely updated.
  * Even if we update those values in the database, we always need to update UI regardless.
  */
 export const CURRENCIES = Object.values(Currency)
 export const CATEGORIES = Object.values(Category)
 export const PROVIDERS = Object.values(Provider)
+export const CRYPTOCITIES = Object.values(Cryptocity)
 
 // Maximum number of rows from the database
 const MAX_N_ROWS = 1000
@@ -27,7 +29,7 @@ export async function getLocations(dbArgs: DatabaseArgs | DatabaseAuthArgs, bbox
   return locations.map(parseLocations)
 }
 
-export async function getLocation(dbArgs: DatabaseArgs, uuid: string, parseLocation: (l: Location) => Location): Promise<Location | undefined> {
+export async function getLocation(dbArgs: DatabaseArgs | DatabaseAuthArgs, uuid: string, parseLocation: (l: Location) => Location): Promise<Location | undefined> {
   const params = new URLSearchParams()
   params.append('location_uuid', uuid)
   const location = await fetchDb<Location>(DbReadFunction.GetLocation, dbArgs, params.toString())
@@ -38,21 +40,19 @@ export async function getLocation(dbArgs: DatabaseArgs, uuid: string, parseLocat
   return parseLocation(location)
 }
 
-export async function searchLocations(dbArgs: DatabaseArgs, query: string) {
+export async function searchLocations(dbArgs: DatabaseArgs | DatabaseAuthArgs, query: string) {
   const params = new URLSearchParams()
   params.append('p_query', query)
   return await fetchDb<Omit<Suggestion, 'type'>[]>(DbReadFunction.SearchLocations, dbArgs, params.toString()) ?? []
 }
 
-type GetClustersReturn = ComputedClusterSet & { cryptocities: Cluster[] }
-export async function getClusters(dbArgs: DatabaseArgs, bbox: BoundingBox, zoom: number, parseLocation: (l: Location) => Location = l => l): Promise<GetClustersReturn> {
+export async function getClusters(dbArgs: DatabaseArgs | DatabaseAuthArgs, bbox: BoundingBox, zoom: number, parseLocation: (l: Location) => Location = l => l): Promise<ComputedClusterSet> {
   const params = new URLSearchParams()
   Object.entries(bbox).forEach(([key, value]) => params.append(key.toLocaleLowerCase(), value.toString()))
   params.append('zoom_level', zoom.toString())
   const res = await fetchDb<ComputedClusterSet>(DbReadFunction.GetLocationsClustersSet, dbArgs, params.toString())
   return {
     clusters: res?.clusters ?? [],
-    cryptocities: res?.cryptocities ?? [],
     singles: res?.singles.map(parseLocation) ?? [],
   }
 }
@@ -61,10 +61,12 @@ export async function getClusters(dbArgs: DatabaseArgs, bbox: BoundingBox, zoom:
  * The maximum zoom level at which the clusters are computed in the database.
  * If the user zooms in more than this, the clusters will be computed in the client.
  */
-export async function getClusterMaxZoom(dbArgs: DatabaseArgs): Promise<number> {
+export async function getClusterMaxZoom(dbArgs: DatabaseArgs | DatabaseAuthArgs): Promise<number> {
   return await fetchDb<number>(DbReadFunction.GetMaxZoom, dbArgs) ?? -1 // FIXME: Show error to user instead of using -1
 }
 
-export async function getStats(dbArgs: DatabaseArgs): Promise<DatabaseStatistics | undefined> {
-  return await fetchDb<DatabaseStatistics>(DbReadFunction.GetStats, dbArgs)
+export async function getCryptocityPolygon(dbArgs: DatabaseArgs | DatabaseAuthArgs, city: Cryptocity): Promise<FeatureCollection | undefined> {
+  const params = new URLSearchParams()
+  params.append('city', city)
+  return await fetchDb<FeatureCollection>(DbReadFunction.GetCryptocityPolygon, dbArgs, params.toString())
 }

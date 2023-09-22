@@ -2,7 +2,7 @@
 Since the UI is quite flexible, better to define all cases using types, and we develop the UI from these types.
 */
 
-import type { Category, Cryptocity, Currency, Provider } from './database.ts'
+import type { Category, Currency, Provider } from './database.ts'
 
 export enum LocationType {
   Shop = 'shop',
@@ -61,5 +61,4 @@ export interface RawLocation {
   facebook?: string
   gmaps?: string
   gmaps_types: string[]
-  cryptocity: Cryptocity
 }

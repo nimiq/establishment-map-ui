@@ -4,7 +4,6 @@ import { flushClusterTable, insertLocationsClusterSet } from '../../../database/
 import { getLocations } from '../../../database/getters.ts'
 import { algorithm, computeCluster } from '../../../shared/compute-cluster.ts'
 import type { DatabaseAuthArgs, InsertLocationsClustersSetParamsItem } from '../../../types/database.ts'
-import { Cryptocity } from '../../../types/database.ts'
 import type { BoundingBox, Cluster, Location } from '../../../types/index.ts'
 import { getAuth } from '../../../database/fetch.ts'
 
@@ -29,17 +28,17 @@ async function cluster() {
     token: '',
   }
 
+  console.log('Flushing cluster table...')
   await flushClusterTable(dbArgs)
 
   const boundingBox: BoundingBox = { neLat: 90, neLng: 180, swLat: -90, swLng: -180 }
-  dbArgs.token = await getAuth(dbArgs)
-  const locations = await getLocations(dbArgs, boundingBox)
-  const cryptocities = Object.values(Cryptocity)
 
-  const locationsByCryptocity: Record<Cryptocity, Location[]>
-    = cryptocities.reduce((acc, cryptocity) => ({
-      ...acc, [cryptocity]: locations.filter(l => l.cryptocity === cryptocity),
-    }), {} as Record<Cryptocity, Location[]>)
+  dbArgs.token = await getAuth(dbArgs)
+  if (!dbArgs.token)
+    throw new Error('Failed to get auth token')
+  console.log('Got auth token')
+
+  const locations = await getLocations(dbArgs, boundingBox)
 
   const minZoom = Number(Deno.env.get('MIN_ZOOM')) || 3
   const maxZoom = Number(Deno.env.get('MAX_ZOOM')) || 14
@@ -48,28 +47,28 @@ async function cluster() {
   const radii: Radii = Array.from({ length: maxZoom - minZoom + 1 }, (_, i) => 120 + i * 30 / (maxZoom - minZoom))
     .reduce((acc, radius, i) => ({ ...acc, [minZoom + i]: radius }), {})
 
+  console.log('Computing clusters...')
+
   const promises: Promise<unknown>[] = []
   for (let zoom = minZoom; zoom <= maxZoom; zoom++) {
-    for (const cryptocity of cryptocities) {
-      const res = computeCluster(algorithm(radii[zoom]), locationsByCryptocity![cryptocity], { zoom, boundingBox })
-      const singles: InsertLocationsClustersSetParamsItem[] = (res.singles as Location[])
-        .map(({ lng, lat, uuid }) => ({ lat, lng, count: 1, locationUuid: uuid }))
-      promises.push(insertLocationsClusterSet(dbArgs, {
-        zoom_level: zoom,
-        items: singles.concat(res.clusters as Cluster[]),
-        cryptocity,
-      }))
-      console.log(
-      `Added ${res.clusters.length} clusters and ${singles.length} singles at zoom level ${zoom} for cryptocity ${cryptocity}`,
-      )
-    }
+    const res = computeCluster(algorithm(radii[zoom]), locations, { zoom, boundingBox })
+    const singles: InsertLocationsClustersSetParamsItem[] = (res.singles as Location[])
+      .map(({ lng, lat, uuid }) => ({ lat, lng, count: 1, locationUuid: uuid }))
+    promises.push(insertLocationsClusterSet(dbArgs, {
+      zoom_level: zoom,
+      items: singles.concat(res.clusters as Cluster[]),
+    }))
+    console.log(`Added ${res.clusters.length} clusters and ${singles.length} singles at zoom level ${zoom}`)
   }
 
   await Promise.allSettled(promises)
+
+  console.log('Done')
 }
 
 serve(async () => {
   try {
+    console.log('Starting clustering...')
     await cluster()
     return new Response(undefined, { status: 201 })
   }
