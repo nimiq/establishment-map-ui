@@ -53,29 +53,37 @@ export enum Provider {
   Edenia = 'Edenia',
 }
 
+export enum DatabaseUser {
+  Authenticated = 'authenticated',
+  Anonymous = 'anonymous',
+}
+
 export interface DatabaseArgs {
   url: string
   apikey: string
-  token?: string
 }
 
 export interface DatabaseAuthArgs extends DatabaseArgs {
+  authToken: string
+  user: DatabaseUser.Authenticated
+}
+
+export interface DatabaseAnonArgs extends DatabaseArgs {
+  captchaToken: string
+  user: DatabaseUser.Anonymous
+}
+
+export interface DatabaseAuthenticateUserArgs extends DatabaseArgs {
   auth: {
     email: string
     password: string
   }
 }
 
-export enum DbWriteFunction {
-  UpsertRawLocation = 'upsert_location',
-  UpsertLocationsWithGMaps = 'upsert_locations_with_gmaps_api',
-  DeleteLocation = 'delete_location_by_uuid',
-  InsertLocationsClustersSet = 'insert_locations_clusters_set',
-  FlushClustersTable = 'flush_clusters_table',
-  AuthAnonUser = 'auth_anon_user',
-}
-
-export enum DbReadFunction {
+// Functions that both anon and auth users can call.
+// - If user is anon, it is required to pass a captchaToken
+// - If user is auth, it is required to pass a authToken
+export enum AnonDbFunction {
   GetLocations = 'get_locations',
   GetLocation = 'get_location_by_uuid',
   SearchLocations = 'search_locations',
@@ -83,6 +91,16 @@ export enum DbReadFunction {
   GetMaxZoom = 'get_max_zoom_computed_clusters_in_server',
   GetStats = 'get_stats',
   GetCryptocityPolygon = 'get_cryptocity_polygon',
+  AuthAnonUser = 'auth_anon_user',
+}
+
+// Functions that only auth users can call. These functions require an authToken.
+export enum AuthDbFunction {
+  UpsertRawLocation = 'upsert_location',
+  UpsertLocationsWithGMaps = 'upsert_locations_with_gmaps_api',
+  DeleteLocation = 'delete_location_by_uuid',
+  InsertLocationsClustersSet = 'insert_locations_clusters_set',
+  FlushClustersTable = 'flush_clusters_table',
 }
 
 export interface InsertLocationsClustersSetParamsItem {
@@ -119,4 +137,9 @@ export interface InsertWithPlaceIdResponse {
   added: RawLocation[]
   multiples: object[][]
   errors: { input: InsertWithPlaceIdArgs; error: string; apiUrl: string }[]
+}
+
+export interface AuthAnonUserResponse {
+  uuid: string
+  max_age: number
 }

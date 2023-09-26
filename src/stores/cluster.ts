@@ -6,7 +6,7 @@ import { computed, shallowRef } from 'vue'
 import { useLocations } from './locations'
 import { useFilters } from './filters'
 import { useMap } from './map'
-import { DATABASE_ARGS, parseLocation } from '@/shared'
+import { getAnonDatabaseArgs, parseLocation } from '@/shared'
 import { computeCluster } from '@/../shared/compute-cluster'
 
 export const useCluster = defineStore('cluster', () => {
@@ -71,7 +71,8 @@ export const useCluster = defineStore('cluster', () => {
     // we need to compute the clusters in the client
     if (currencies || categories)
       return true
-    maxZoomFromServer ||= await getClusterMaxZoom(DATABASE_ARGS)
+
+    maxZoomFromServer ||= await getClusterMaxZoom(await getAnonDatabaseArgs())
     return zoom > maxZoomFromServer
   }
 
@@ -81,7 +82,7 @@ export const useCluster = defineStore('cluster', () => {
   }
 
   async function getClusterFromDatabase(): Promise<ComputedClusterSet> {
-    const res = await getClusters(DATABASE_ARGS, boundingBox.value!, zoom.value, parseLocation)
+    const res = await getClusters(await getAnonDatabaseArgs(), boundingBox.value!, zoom.value, parseLocation)
     setLocations(res.singles)
     res.clusters.forEach(c => c.diameter = Math.max(24, Math.min(48, 0.24 * c.count + 24)))
     return res

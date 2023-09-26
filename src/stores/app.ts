@@ -1,6 +1,6 @@
+import { watchOnce } from '@vueuse/core'
 import { defineStore, storeToRefs } from 'pinia'
 import { ref, watch } from 'vue'
-import { watchOnce } from '@vueuse/core'
 import { useCluster } from './cluster'
 
 export const useApp = defineStore('app', () => {

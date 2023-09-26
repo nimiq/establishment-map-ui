@@ -6,8 +6,8 @@ import type { BoundingBox, Cryptocity, CryptocityMarker, CryptocityMemoized } fr
 import { computed, ref, watch } from 'vue'
 import { useCluster } from './cluster'
 import { useMap } from './map'
-import { DATABASE_ARGS } from '@/shared'
 import { cryptocitiesData } from '@/assets-dev/cryptocities-assets.ts'
+import { getAnonDatabaseArgs } from '@/shared'
 
 export const useCryptocity = defineStore('cryptocities', () => {
   const { map, boundingBox, zoom, latInPx, lngInPx } = storeToRefs(useMap())
@@ -45,7 +45,7 @@ export const useCryptocity = defineStore('cryptocities', () => {
     const markers: CryptocityMarker = new Map()
     for (const city of cryptocitiesInView) {
       if (!citiesRendered.includes(city.cryptocity)) {
-        getCryptocityPolygon(DATABASE_ARGS, city.cryptocity).then((polygon) => {
+        getCryptocityPolygon(await getAnonDatabaseArgs(), city.cryptocity).then((polygon) => {
           map.data.addGeoJson(polygon!, { idPropertyName: city.cryptocity })
           citiesRendered.push(city.cryptocity)
         })

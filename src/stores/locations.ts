@@ -8,7 +8,7 @@ import { computed, ref, shallowReactive, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useFilters } from './filters'
 import { useMap } from './map'
-import { DATABASE_ARGS, parseLocation } from '@/shared'
+import { getAnonDatabaseArgs, parseLocation } from '@/shared'
 
 export const useLocations = defineStore('locations', () => {
   const { filterLocations } = useFilters()
@@ -32,7 +32,7 @@ export const useLocations = defineStore('locations', () => {
     }
 
     // New area, we need to fetch from the database
-    const newLocations = await getDbLocations(DATABASE_ARGS, boundingBox, parseLocation)
+    const newLocations = await getDbLocations(await getAnonDatabaseArgs(), boundingBox, parseLocation)
     setLocations(newLocations)
     visitedAreas.value = addBBoxToArea(boundingBox, visitedAreas.value)
     return filterLocations(newLocations)
@@ -41,7 +41,7 @@ export const useLocations = defineStore('locations', () => {
   async function getLocationByUuid(uuid: string) {
     if (locationsMap.has(uuid))
       return locationsMap.get(uuid)
-    const location = await getLocation(DATABASE_ARGS, uuid, parseLocation)
+    const location = await getLocation(await getAnonDatabaseArgs(), uuid, parseLocation)
     if (!location)
       return
     locationsMap.set(uuid, location)

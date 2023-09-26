@@ -1,12 +1,12 @@
+import { defineStore } from 'pinia'
 import { authenticateAnonUser } from 'database'
-import { createSharedComposable } from '@vueuse/core'
 import { useExpiringStorage } from '@/composables/useExpiringStorage'
 import { DATABASE_ARGS } from '@/shared'
 
 const CAPTCHA_TOKEN_VALIDITY = 10 * 60 * 1000 // 10 minutes for the captcha token
 const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY
 
-async function _useCaptcha() {
+export const useCaptcha = defineStore('captcha', async () => {
   async function getCaptchaToken() {
     while (!globalThis.grecaptcha)
       await new Promise(resolve => setTimeout(resolve, 100))
@@ -46,6 +46,4 @@ async function _useCaptcha() {
     getCaptchaToken,
     captchaToken,
   }
-}
-
-export const useCaptcha = createSharedComposable(_useCaptcha)
+})

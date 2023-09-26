@@ -20,8 +20,6 @@ const props = defineProps({
   },
 })
 
-const { getToken } = useCaptcha()
-
 enum FormState {
   Initial = 'initial',
   Loading = 'loading',
@@ -39,7 +37,7 @@ async function onSubmit() {
     return
 
   state.value = FormState.Loading
-  const token = await getToken()
+  const token = (await useCaptcha()).captchaToken.value
   props
     .onSubmit(token)
     .then((r: Response) => {

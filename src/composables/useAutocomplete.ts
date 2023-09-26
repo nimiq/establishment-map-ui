@@ -4,7 +4,7 @@ import { AutocompleteStatus, type Suggestion, SuggestionType } from 'types'
 import { searchLocations } from 'database'
 import { detectLanguage } from '@/i18n/i18n-setup'
 import { useMap } from '@/stores/map'
-import { DATABASE_ARGS } from '@/shared'
+import { getAnonDatabaseArgs } from '@/shared'
 
 enum GoogleAutocompleteFor {
   Location = 'establishment',
@@ -58,7 +58,7 @@ export function useAutocomplete() {
   }
 
   async function autocompleteDatabase(query: string) {
-    const locations = await searchLocations(DATABASE_ARGS, query)
+    const locations = await searchLocations(await getAnonDatabaseArgs(), query)
     return locations.map(q => Object.assign(q, { type: SuggestionType.Location }))
   }
 
