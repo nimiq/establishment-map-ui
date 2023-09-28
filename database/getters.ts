@@ -72,6 +72,7 @@ export async function getCryptocityPolygon(dbArgs: DatabaseAuthArgs | DatabaseAn
 export async function getCryptocities(dbArgs: DatabaseAuthArgs | DatabaseAnonArgs, { boundingBox: { neLat, neLng, swLat, swLng }, excludedCities }: Args[AnonReadDbFunction.GetCryptocities]) {
   const query = new URLSearchParams({ nelat: neLat.toString(), nelng: neLng.toString(), swlat: swLat.toString(), swlng: swLng.toString() })
   excludedCities.forEach(city => query.append('excluded_cities', city))
+  query.append('excluded_cities', `{${excludedCities.join(',')}}`)
   return await fetchDb<Returns[AnonReadDbFunction.GetCryptocities]>(AnonReadDbFunction.GetCryptocities, dbArgs, { query })
 }
 

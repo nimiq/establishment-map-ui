@@ -15,5 +15,6 @@ export const cryptocitiesUi: Record<Cryptocity, CryptocityUI> = {
       ]
     },
     url: 'https://www.criptociudad.cr/',
+    showCardAtZoom: 11,
   },
 }

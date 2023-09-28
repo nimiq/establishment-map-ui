@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { PopoverClose, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
+import { useRoute, useRouter } from 'vue-router'
 import Button from '@/components/atoms/Button.vue'
 import CryptocityCard from '@/components/cards/cryptocity/CryptocityCard.vue'
 import CryptocityIcon from '@/components/icons/icon-cryptocity.vue'
@@ -15,6 +16,20 @@ import { useMap } from '@/stores/map'
 
 const { cryptocitiesInView } = storeToRefs(useCryptocities())
 const { zoom } = storeToRefs(useMap())
+const cryptocityControl = computed(() => cryptocitiesInView.value.find(c => c.showCardAtZoom <= zoom.value))
+watch(cryptocityControl, c => c && updateCityQuery(c.name), { immediate: true })
+
+const router = useRouter()
+const route = useRoute()
+
+const cryptocityCardOpen = ref(false)
+watch(() => route.query.cryptocity, c => updateCityQuery(c as string), { immediate: true })
+
+async function updateCityQuery(city: string | undefined) {
+  const isCity = typeof city === 'string'
+  cryptocityCardOpen.value = isCity && !!(cryptocitiesInView.value.some(c => c.name === city))
+  router.push({ query: { ...route.query, cryptocity: isCity ? city : undefined } })
+}
 
 const isGeolocationLoading = ref(false)
 const { browserPositionIsSupported, ipPosition, ipPositionError, geolocateIp, geolocateUserViaBrowser, geolocatingUserBrowser, errorBrowser } = useGeoIp()
@@ -38,14 +53,17 @@ async function setBrowserPosition() {
 
 <template>
   <div class="flex flex-col gap-y-4">
-    <PopoverRoot v-if="zoom >= 13 && cryptocitiesInView.length > 0">
+    <PopoverRoot
+      v-if="cryptocityControl" :open="cryptocityCardOpen"
+      @update:open="updateCityQuery($event ? cryptocityControl.name : undefined)"
+    >
       <PopoverTrigger class="!w-8 !h-8 shadow bg-white rounded-full p-1.5" data-cryptocity-card :aria-label="$t('Information about this Cryptocity')"><CryptocityIcon /></PopoverTrigger>
       <PopoverPortal>
         <PopoverContent
           side="bottom" :side-offset="-32" class="will-change-[transform,opacity] animate-slideUpAndFade mr-6"
-          @close-auto-focus.prevent @interact-outside.prevent
+          @close-auto-focus.prevent @interact-outside.prevent @open-auto-focus.prevent
         >
-          <CryptocityCard :cryptocity="cryptocitiesInView[0]!" :show-description="true">
+          <CryptocityCard :cryptocity="cryptocityControl" :show-description="true">
             <template #close>
               <PopoverClose class="w-6 h-6 p-1 ml-auto transition rounded-full text-space bg-space/10" :aria-label="$t('Close')"><CrossIcon /></PopoverClose>
             </template>

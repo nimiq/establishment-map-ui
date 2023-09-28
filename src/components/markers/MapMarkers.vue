@@ -18,11 +18,12 @@ const { zoom } = storeToRefs(useMap())
   <ClusterMarkers :clusters="clusters" />
   <SingleMarkers :singles="singles" />
 
-  <template v-if="zoom <= 12">
+  <template>
     <CustomMarker
-      v-for="city in cryptocitiesSingles"
-      :key="city.city"
-      :options="{ position: { ...city }, anchorPoint: 'CENTER' }"
+      v-for="({ city, lat, lng }) in cryptocitiesSingles.filter(c => c.showCardAtZoom > zoom)"
+      :key="city"
+      :options="{ position: { lng, lat }, anchorPoint: 'CENTER' }"
+      class="w-8"
     >
       <CryptocityMarker :cryptocity="city" />
     </CustomMarker>

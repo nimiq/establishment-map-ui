@@ -101,12 +101,15 @@ export function useExpiringStorage<T>(_key: string, options: UseExpiringStorageS
     }
   }
 
+  let initialized = false
+
   /**
    * If the value in the storage has expired or it does not exists, it will be updated with the new value
    */
   async function init() {
-    if (!alreadyExists)
+    if (!alreadyExists && !initialized)
       stored.value = await getValue()
+    initialized = true
   }
 
   const remainingTime = (alreadyExists && !!storedValue.value && storedValue.expires) ? new Date(storedValue.expires).getTime() - Date.now() : expiresIn

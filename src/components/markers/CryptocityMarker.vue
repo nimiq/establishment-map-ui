@@ -1,34 +1,43 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import type { CryptocityData } from 'types'
+import type { Cryptocity, CryptocityData } from 'types'
 import type { PropType } from 'vue'
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useMap } from '@/stores/map'
 import CryptocityIcon from '@/components/icons/icon-cryptocity.vue'
+import { useCryptocities } from '@/stores/cryptocities'
 
-defineProps({
+const props = defineProps({
   cryptocity: {
-    type: Object as PropType<CryptocityData>,
+    type: Object as PropType<Cryptocity>,
     required: true,
   },
 })
 
-const { setPosition } = useMap()
-const { zoom } = storeToRefs(useMap())
+const { cryptocities } = storeToRefs(useCryptocities())
+const cryptocity = computed(() => cryptocities.value.data[props.cryptocity]!)
 
-function onCryptocityClick({ lat, lng }: CryptocityData) {
+const { setPosition } = useMap()
+
+const router = useRouter()
+const route = useRoute()
+
+function onCryptocityClick({ lat, lng, name }: CryptocityData) {
   const cardTrigger = (document.querySelector('[data-cryptocity-card]') as HTMLElement)
   if (cardTrigger)
     cardTrigger.click()
   setPosition({ center: { lat, lng }, zoom: 13 })
+  router.push({ query: { ...route.query, cryptocity: name } })
 }
 </script>
 
 <template>
   <div
-    v-if="zoom <= 14"
-    class="absolute top-0 z-0 grid p-1 bg-white rounded-full shadow cursor-pointer clickable-sm aspect-square place-content-center"
+    class="grid p-1 bg-white rounded-full shadow cursor-pointer group/city clickable-sm aspect-square place-content-center"
     @click="onCryptocityClick(cryptocity)"
   >
+    <div class="absolute inset-0 duration-400 transition-[background-color] rounded-full group-hover/city:bg-space/[0.06] group-focus-visible/city:bg-space/[0.06]" />
     <CryptocityIcon class="w-full" />
   </div>
 </template>

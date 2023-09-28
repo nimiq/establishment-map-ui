@@ -64,7 +64,8 @@ export const useMarkers = defineStore('markers', () => {
       : getMemoized().needsToUpdate
   }
 
-  const { init: initMaxZoom, payload: maxZoomFromServer } = useExpiringStorage('max_zoom_from_server', { expiresIn: 7 * 24 * 60 * 60 * 1000, getAsyncValue: async () => getClusterMaxZoom(await getAnonDatabaseArgs()) })
+  const getMaxZoom = async () => getClusterMaxZoom(await getAnonDatabaseArgs())
+  const { init: initMaxZoom, payload: maxZoomFromServer } = useExpiringStorage('max_zoom_from_server', { expiresIn: 7 * 24 * 60 * 60 * 1000, getAsyncValue: getMaxZoom })
 
   async function shouldRunInClient({ zoom, categories, currencies }: LocationClusterParams): Promise<boolean> {
     // We cannot compute all clusters combinations in the server, if user has selected currencies or categories
