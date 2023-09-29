@@ -20,7 +20,7 @@ const { zoom } = storeToRefs(useMap())
 
   <template>
     <CustomMarker
-      v-for="({ city, lat, lng }) in cryptocitiesSingles.filter(c => c.showCardAtZoom > zoom)"
+      v-for="({ city, lat, lng }) in cryptocitiesSingles.filter(c => c.showCardAtZoom + 4 > zoom)"
       :key="city"
       :options="{ position: { lng, lat }, anchorPoint: 'CENTER' }"
       class="w-8"

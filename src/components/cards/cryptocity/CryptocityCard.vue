@@ -1,61 +1,40 @@
 <script setup lang="ts">
 import type { CryptocityData } from 'types'
 import type { PropType } from 'vue'
-import CryptocityIcon from '@/components/icons/icon-cryptocity.vue'
 import Button from '@/components/atoms/Button.vue'
+import CrossIcon from '@/components/icons/icon-cross.vue'
+import CryptocityIcon from '@/components/icons/icon-cryptocity.vue'
 
 defineProps({
   cryptocity: {
     type: Object as PropType<CryptocityData>,
     required: true,
   },
-  showDescription: {
-    default: false,
-    type: Boolean,
-  },
 })
 
-defineEmits({
-  iconClick: (e: MouseEvent) => true,
-})
-
-// const { smaller } = useBreakpoints(screens)
-// const DESKTOP_LAYOUT = 'md' // FIXME This is suppose to be the same value as in the tailwind config
-// const isMobile = smaller(DESKTOP_LAYOUT)
+defineEmits({ close: () => true })
 </script>
 
 <template>
   <div
-    class="transition-all duration-300 bg-white shadow cursor-default ring-white/20 ring-1 ring-offset-1 ring-offset-white/10 desktop:max-w-xs" :class="{
-      'rounded-md p-6': showDescription,
-      'rounded-[50px] px-3 py-1.5': !showDescription,
-    }"
+    class="p-6 transition-all duration-300 bg-white shadow cursor-default rounded-t-md desktop:rounded-md ring-white/20 ring-1 ring-offset-1 ring-offset-white/10 desktop:max-w-xs"
     @pointerdown.capture.stop.prevent
     @dblclick.capture.stop.prevent
   >
-    <div class="flex items-center gap-x-2">
-      <CryptocityIcon class="w-[31px] h-[27px]" />
-      <div>
-        <h3 class="text-base text-space">{{ cryptocity.name }}</h3>
-        <span class="block w-24 h-3 text-sm leading-[1] rounded-sm text-space/60">{{ $tc('{count} locations', cryptocity.locationsCount) }}</span>
-      </div>
+    <div class="grid items-center grid-cols-[auto_1fr_auto] grid-rows-2 grid-flow-dense gap-x-2">
+      <CryptocityIcon style="width: 31px; height: 27px" class="row-span-full" />
+      <h3 class="text-space leading-[1]">{{ cryptocity.name }}</h3>
+      <span class="text-sm leading-[1] text-space/60">{{ $tc('{count} locations', cryptocity.locationsCount) }}</span>
+      <button type="button" class="relative self-start w-6 h-6 col-start-3 p-2 ml-auto transition rounded-full text-space bg-space/10 row-span-full -top-1" :aria-label="$t('Close')" @click="$emit('close')">
+        <CrossIcon />
+      </button>
+    </div>
 
-      <slot class="ml-auto" name="close" />
-    </div>
-    <div
-      class="grid transition-[grid-template-rows] grid-cols-[mEin(290px,calc(100vh-48px))] duration-300" :class="{
-        'grid-rows-[0fr]': !showDescription,
-        'grid-rows-[1fr] mt-3': showDescription,
-      }"
-    >
-      <div class="overflow-hidden delay-[2s]" :class="{ '[&>*]:opacity-0': !showDescription, '[&>*]:opacity-100': showDescription }">
-        <p v-for="(p, i) in cryptocity.description" :key="i" class="pt-2 text-xs text-space/70">{{ p }}</p>
-        <Button :href="cryptocity.url" class="mt-2 !p-0 !h-auto" bg-color="transparent" size="sm" text-color="sky">
-          <template #label>
-            {{ cryptocity.url }}
-          </template>
-        </Button>
-      </div>
-    </div>
+    <p v-for="(p, i) in cryptocity.description" :key="i" class="text-xs text-space/70" :class="i === 0 ? 'pt-3' : 'pt-2'">{{ p }}</p>
+    <Button :href="cryptocity.url" class="mt-2 !p-0 !h-auto text-xs" bg-color="transparent" size="sm" text-color="sky">
+      <template #label>
+        {{ cryptocity.url }}
+      </template>
+    </Button>
   </div>
 </template>

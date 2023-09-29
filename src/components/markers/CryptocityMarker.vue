@@ -23,11 +23,11 @@ const { setPosition } = useMap()
 const router = useRouter()
 const route = useRoute()
 
-function onCryptocityClick({ lat, lng, name }: CryptocityData) {
+function onCryptocityClick({ lat, lng, name, showCardAtZoom }: CryptocityData) {
   const cardTrigger = (document.querySelector('[data-cryptocity-card]') as HTMLElement)
   if (cardTrigger)
     cardTrigger.click()
-  setPosition({ center: { lat, lng }, zoom: 13 })
+  setPosition({ center: { lat, lng }, zoom: showCardAtZoom })
   router.push({ query: { ...route.query, cryptocity: name } })
 }
 </script>

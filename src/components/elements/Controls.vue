@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { computed, ref, watch } from 'vue'
-import { PopoverClose, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
-import { useRoute, useRouter } from 'vue-router'
+import { PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
+import { useRoute } from 'vue-router'
 import Button from '@/components/atoms/Button.vue'
 import CryptocityCard from '@/components/cards/cryptocity/CryptocityCard.vue'
 import CryptocityIcon from '@/components/icons/icon-cryptocity.vue'
 import GeolocationIcon from '@/components/icons/icon-geolocation.vue'
 import MinusIcon from '@/components/icons/icon-minus.vue'
-import CrossIcon from '@/components/icons/icon-cross.vue'
 import PlusIcon from '@/components/icons/icon-plus.vue'
 import { useGeoIp } from '@/composables/useGeoLocation'
 import { useCryptocities } from '@/stores/cryptocities'
@@ -17,19 +16,17 @@ import { useMap } from '@/stores/map'
 const { cryptocitiesInView } = storeToRefs(useCryptocities())
 const { zoom } = storeToRefs(useMap())
 const cryptocityControl = computed(() => cryptocitiesInView.value.find(c => c.showCardAtZoom <= zoom.value))
-watch(cryptocityControl, c => c && updateCityQuery(c.name), { immediate: true })
 
-const router = useRouter()
 const route = useRoute()
 
 const cryptocityCardOpen = ref(false)
-watch(() => route.query.cryptocity, c => updateCityQuery(c as string), { immediate: true })
-
-async function updateCityQuery(city: string | undefined) {
-  const isCity = typeof city === 'string'
-  cryptocityCardOpen.value = isCity && !!(cryptocitiesInView.value.some(c => c.name === city))
-  router.push({ query: { ...route.query, cryptocity: isCity ? city : undefined } })
-}
+watch(
+  [() => route.query.cryptocity, cryptocitiesInView],
+  ([c]) => {
+    cryptocityCardOpen.value = typeof c === 'string' && !!(cryptocitiesInView.value.some(({ name }) => name === c))
+  },
+  { immediate: true },
+)
 
 const isGeolocationLoading = ref(false)
 const { browserPositionIsSupported, ipPosition, ipPositionError, geolocateIp, geolocateUserViaBrowser, geolocatingUserBrowser, errorBrowser } = useGeoIp()
@@ -54,20 +51,17 @@ async function setBrowserPosition() {
 <template>
   <div class="flex flex-col gap-y-4">
     <PopoverRoot
-      v-if="cryptocityControl" :open="cryptocityCardOpen"
-      @update:open="updateCityQuery($event ? cryptocityControl.name : undefined)"
+      v-if="cryptocityControl"
+      :open="cryptocityCardOpen"
+      @update:open="$router.push({ query: { ...$route.query, cryptocity: $event ? cryptocityControl.name : undefined } })"
     >
-      <PopoverTrigger class="!w-8 !h-8 shadow bg-white rounded-full p-1.5" data-cryptocity-card :aria-label="$t('Information about this Cryptocity')"><CryptocityIcon /></PopoverTrigger>
+      <PopoverTrigger class="animate-scale !w-8 !h-8 shadow bg-white rounded-full p-1.5" data-cryptocity-card :aria-label="$t('Information about this Cryptocity')"><CryptocityIcon /></PopoverTrigger>
       <PopoverPortal>
         <PopoverContent
-          side="bottom" :side-offset="-32" class="will-change-[transform,opacity] animate-slideUpAndFade mr-6"
+          align="end" side="bottom" :side-offset="-32" class="max-desktop:-mb-[72px] max-desktop:w-screen will-change-[transform,opacity] animate-slideUpAndFade"
           @close-auto-focus.prevent @interact-outside.prevent @open-auto-focus.prevent
         >
-          <CryptocityCard :cryptocity="cryptocityControl" :show-description="true">
-            <template #close>
-              <PopoverClose class="w-6 h-6 p-1 ml-auto transition rounded-full text-space bg-space/10" :aria-label="$t('Close')"><CrossIcon /></PopoverClose>
-            </template>
-          </CryptocityCard>
+          <CryptocityCard :cryptocity="cryptocityControl" @close="$router.push({ query: { ...$route.query, cryptocity: undefined } })" />
         </PopoverContent>
       </PopoverPortal>
     </PopoverRoot>
