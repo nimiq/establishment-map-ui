@@ -43,7 +43,7 @@ const isMobile = useBreakpoints(screens).smaller('md')
       <TooltipProvider :delay-duration="300">
         <TooltipRoot>
           <TooltipTrigger>
-            <InfoIcon :class="{ 'text-white/50': location.isDark, 'text-space/50': location.isLight }" />
+            <InfoIcon class="w-4" :class="{ 'text-white/50': location.isDark, 'text-space/50': location.isLight }" />
           </TooltipTrigger>
           <TooltipPortal>
             <TooltipContent

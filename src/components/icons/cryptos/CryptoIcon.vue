@@ -11,6 +11,7 @@ import XlmIcon from '@/components/icons/cryptos/icon-xlm.vue'
 import XrpIcon from '@/components/icons/cryptos/icon-xrp.vue'
 import UsdcIcon from '@/components/icons/cryptos/icon-usdc.vue'
 import BchIcon from '@/components/icons/cryptos/icon-bch.vue'
+import BPayIcon from '@/components/icons/cryptos/icon-bpay.vue'
 
 const props = defineProps({
   crypto: {
@@ -60,5 +61,6 @@ const css: string = !props.mono && needBg ? 'ring-1 rounded-full ring-space/10' 
     <LBtcIcon v-else-if="crypto === Currency.LBTC" :class="css" :style="[styles, { width: mono && '28px' }]" />
     <UsdcIcon v-else-if="crypto === Currency.USDC_on_POLYGON" :class="css" :style="[styles, { width: mono && '28px' }]" />
     <BchIcon v-else-if="crypto === Currency.BCH" :class="css" :style="[styles, { width: mono && '28px' }]" />
+    <BPayIcon v-else-if="crypto === Currency.BINANCE_PAY" :class="css" :style="[styles, { width: mono && '28px' }]" />
   </div>
 </template>

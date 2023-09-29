@@ -43,6 +43,7 @@ export enum Currency {
   XRP = 'XRP',
   DASH = 'DASH',
   BCH = 'BCH',
+  BINANCE_PAY = 'BINANCE_PAY',
 }
 
 export enum Provider {

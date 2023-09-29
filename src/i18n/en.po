@@ -3,6 +3,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
 #: src/components/cards/cryptocity/BasicInfoCryptocity.vue:6
+#: src/components/cards/cryptocity/CryptocityCard.vue:15
 msgid "{count} locations"
 msgstr ""
 
@@ -14,7 +15,7 @@ msgstr ""
 msgid "Add a location to the Crypto Map"
 msgstr ""
 
-#: src/components/elements/CryptoMapModal.vue:29
+#: src/components/elements/CryptoMapModal.vue:28
 msgid "Add Crypto location"
 msgstr ""
 
@@ -68,6 +69,10 @@ msgstr ""
 
 #: src/components/elements/FilterModal.vue:90
 msgid "Clear"
+msgstr ""
+
+#: src/components/elements/Controls.vue:12
+msgid "Close"
 msgstr ""
 
 #: src/translations.ts:8
@@ -170,6 +175,10 @@ msgstr ""
 msgid "Hotel & Lodging"
 msgstr ""
 
+#: src/components/elements/Controls.vue:4
+msgid "Information about this Cryptocity"
+msgstr ""
+
 #: src/assets-dev/provider-assets.ts:50
 msgid "Kurant enables users to easily purchase cryptocurrencies through a network of ATMs."
 msgstr ""
@@ -229,6 +238,11 @@ msgstr ""
 #: src/assets-dev/provider-assets.ts:59
 #: src/assets-dev/provider-assets.ts:71
 msgid "Powered by {provider}"
+msgstr ""
+
+#: src/components/elements/CryptoMapModal.vue:21
+#: src/components/elements/TheMapInstance.vue:10
+msgid "Privacy Policy"
 msgstr ""
 
 #: src/components/cards/location/LocationCard.vue:26
@@ -312,8 +326,8 @@ msgstr ""
 msgid "Show more Locations"
 msgstr ""
 
-#: src/components/elements/Controls.vue:6
-#: src/components/elements/Controls.vue:7
+#: src/components/elements/Controls.vue:22
+#: src/components/elements/Controls.vue:23
 msgid "Show your location"
 msgstr ""
 
@@ -334,6 +348,11 @@ msgstr ""
 msgid "Submit Location"
 msgstr ""
 
+#: src/components/elements/CryptoMapModal.vue:22
+#: src/components/elements/TheMapInstance.vue:11
+msgid "Terms of Service"
+msgstr ""
+
 #: src/components/forms/ReportLocation.vue:47
 msgid "Thank you for reporting this issue"
 msgstr ""
@@ -342,7 +361,7 @@ msgstr ""
 msgid "Thank you for submitting a new location to the Crypto Map!"
 msgstr ""
 
-#: src/assets-dev/cryptocities-assets.ts:12
+#: src/assets-dev/cryptocities-assets.ts:13
 msgid "The San Jose Cryptocity Initiative is part of the Cryptocity endeavour led by Nimiq and its partners."
 msgstr ""
 
@@ -351,13 +370,17 @@ msgstr ""
 msgid "There has been a problem on our side."
 msgstr ""
 
-#: src/components/elements/CryptoMapModal.vue:22
-msgid "This app is brought to you by Nimiq, only places that are verified by Google are accepted for this map."
+#: src/components/elements/CryptoMapModal.vue:20
+msgid "This app is brought to you by Nimiq. It is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
 msgstr ""
 
 #: src/components/forms/NewCandidate.vue:45
 #: src/components/forms/ReportLocation.vue:50
 msgid "This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map."
+msgstr ""
+
+#: src/components/elements/TheMapInstance.vue:9
+msgid "This site is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
 msgstr ""
 
 #: src/components/forms/FormContainer.vue:83
@@ -374,7 +397,7 @@ msgstr ""
 msgid "USDC on POLYGON"
 msgstr ""
 
-#: src/assets-dev/cryptocities-assets.ts:13
+#: src/assets-dev/cryptocities-assets.ts:14
 msgid "We are strategically working with local businesses to stimulate the regional economy through the innovative use of cryptocurrency."
 msgstr ""
 
@@ -390,6 +413,10 @@ msgstr ""
 msgid "You can add any location that has a Google Business Profile."
 msgstr ""
 
-#: src/assets-dev/cryptocities-assets.ts:14
+#: src/assets-dev/cryptocities-assets.ts:15
 msgid "You can learn more at"
+msgstr ""
+
+#: src/components/cards/location/LocationCard.vue:57
+msgid "You can sell these cryptos here"
 msgstr ""

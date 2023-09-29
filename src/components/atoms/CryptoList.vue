@@ -20,8 +20,7 @@ const props = defineProps({
 })
 
 const cryptosToDisplay = computed(() => {
-  const max = props.max
-  const cryptos = props.cryptos
+  const { cryptos, max } = props
   if (cryptos.length <= max)
     return cryptos
 
