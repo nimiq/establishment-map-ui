@@ -47,7 +47,7 @@ async function cluster() {
     const singlesToAdd: InsertLocationsClustersSetParamsItem[] = singles.map(({ lng, lat, uuid }) => ({ lat, lng, count: 1, locationUuid: uuid }))
 
     const clustersWithCryptocurrencies = [...locationClusters, ...cryptocities]
-    const { singles: singlesItems, clusters: cryptocitiesClustered } = computeMarkers(algorithm(100), clustersWithCryptocurrencies, { zoom, boundingBox })
+    const { singles: singlesItems, clusters: cryptocitiesClustered } = computeMarkers(algorithm(140), clustersWithCryptocurrencies, { zoom, boundingBox })
 
     const singlesCryptocities: InsertLocationsClustersSetParamsItem[] = (singlesItems.filter(c => 'city' in c) as typeof cryptocities)
       .map(({ lng, lat, city }) => ({ lat, lng, count: 1, cryptocities: [city] }))

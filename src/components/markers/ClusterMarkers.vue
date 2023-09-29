@@ -42,7 +42,7 @@ function onClusterClick({ expansionZoom, lat, lng }: Cluster) {
   <CustomMarker
     v-for="c in clusters"
     :key="c.id"
-    :options="{ position: c, anchorPoint: 'CENTER' }"
+    :options="{ position: c, anchorPoint: c.cryptocities.length === 0 ? 'CENTER' : 'LEFT_CENTER' }"
     data-custom-marker
     :class="c.cryptocities.length > 0 && 'z-10'"
   >
@@ -50,7 +50,10 @@ function onClusterClick({ expansionZoom, lat, lng }: Cluster) {
       <ul
         :data-cluster-id="c.id"
         class="relative group [--expanded:0] hover:[--expanded:1]"
-        :style="`padding-right: calc(var(--expanded) * ${c.diameter * c.cryptocities.length + 8}px)`"
+        :style="`
+          left: calc(-1 * ${c.diameter / 2}px); /* To center it after we set it to the left in the anchor point */
+          padding-right: calc(var(--expanded) * ${c.diameter * c.cryptocities.length + 8}px)
+        `"
       >
         <li class="relative z-10">
           <div

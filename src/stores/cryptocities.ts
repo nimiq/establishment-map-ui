@@ -77,7 +77,6 @@ export const useCryptocities = defineStore('cryptocities', () => {
 
   return {
     cryptocities,
-    loadedCitiesNames,
     getCryptocities,
     setCryptocities,
     cryptocitiesInView,
