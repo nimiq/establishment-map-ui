@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import { Currency } from 'types'
+import { useBreakpoints } from '@vueuse/core'
+import { screens } from 'tailwindcss-nimiq-theme'
+import { PopoverArrow, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } from 'radix-vue'
 import BtcIcon from '@/components/icons/cryptos/icon-btc.vue'
 import DashIcon from '@/components/icons/cryptos/icon-dash.vue'
 import EthIcon from '@/components/icons/cryptos/icon-eth.vue'
@@ -11,16 +14,12 @@ import XlmIcon from '@/components/icons/cryptos/icon-xlm.vue'
 import XrpIcon from '@/components/icons/cryptos/icon-xrp.vue'
 import UsdcIcon from '@/components/icons/cryptos/icon-usdc.vue'
 import BchIcon from '@/components/icons/cryptos/icon-bch.vue'
-import BPayIcon from '@/components/icons/cryptos/icon-bpay.vue'
+import InfoIcon from '@/components/icons/icon-info.vue'
 
 const props = defineProps({
   crypto: {
     type: String as PropType<Currency>,
     required: true,
-  },
-  mono: {
-    type: Boolean,
-    default: false,
   },
   size: {
     type: String as () => 'sm' | 'md' | 'lg',
@@ -30,13 +29,12 @@ const props = defineProps({
     default: 'transparent',
   },
 })
-const styles = props.mono
-  ? { '--bg': 'transparent', '--brandmark': 'rgba(255, 255, 255)' }
-  : {}
 
 const needBg = [Currency.ETH, Currency.XRP, Currency.XLM].includes(props.crypto)
 
-const css: string = !props.mono && needBg ? 'ring-1 rounded-full ring-space/10' : ''
+const css: string = needBg ? 'ring-1 rounded-full ring-space/10' : ''
+
+const isMobile = useBreakpoints(screens).smaller('md')
 </script>
 
 <template>
@@ -49,18 +47,47 @@ const css: string = !props.mono && needBg ? 'ring-1 rounded-full ring-space/10' 
       'bg-white/[0.15]': bg === 'white/15',
       'bg-white': bg === 'white' && needBg,
     }"
-    :title="crypto.toUpperCase()"
+    :title="crypto !== Currency.BINANCE_PAY ? crypto : undefined"
   >
-    <NimIcon v-if="crypto === Currency.NIM" :class="css" :style="[styles, { width: mono && '22px' }]" />
-    <BtcIcon v-else-if="crypto === Currency.BTC" :class="css" :style="[styles, { width: mono && '28px' }]" />
-    <LtcIcon v-else-if="crypto === Currency.LTC" :class="css" :style="[styles, { width: mono && '20px' }]" />
-    <EthIcon v-else-if="crypto === Currency.ETH" :class="css" :style="[styles, { width: mono && '22px' }]" />
-    <XrpIcon v-else-if="crypto === Currency.XRP" :class="css" :style="[styles, { width: mono && '26px' }]" />
-    <DashIcon v-else-if="crypto === Currency.DASH" :class="css" :style="[styles, { width: mono && '26px' }]" />
-    <XlmIcon v-else-if="crypto === Currency.XLM" :class="css" :style="[styles, { width: mono && '28px' }]" />
-    <LBtcIcon v-else-if="crypto === Currency.LBTC" :class="css" :style="[styles, { width: mono && '28px' }]" />
-    <UsdcIcon v-else-if="crypto === Currency.USDC_on_POLYGON" :class="css" :style="[styles, { width: mono && '28px' }]" />
-    <BchIcon v-else-if="crypto === Currency.BCH" :class="css" :style="[styles, { width: mono && '28px' }]" />
-    <BPayIcon v-else-if="crypto === Currency.BINANCE_PAY" :class="css" :style="[styles, { width: mono && '28px' }]" />
+    <NimIcon v-if="crypto === Currency.NIM" :class="css" />
+    <BtcIcon v-else-if="crypto === Currency.BTC" :class="css" />
+    <LtcIcon v-else-if="crypto === Currency.LTC" :class="css" />
+    <EthIcon v-else-if="crypto === Currency.ETH" :class="css" />
+    <XrpIcon v-else-if="crypto === Currency.XRP" :class="css" />
+    <DashIcon v-else-if="crypto === Currency.DASH" :class="css" />
+    <XlmIcon v-else-if="crypto === Currency.XLM" :class="css" />
+    <LBtcIcon v-else-if="crypto === Currency.LBTC" :class="css" />
+    <UsdcIcon v-else-if="crypto === Currency.USDC_on_POLYGON" :class="css" />
+    <BchIcon v-else-if="crypto === Currency.BCH" :class="css" />
+    <PopoverRoot v-else-if="crypto === Currency.BINANCE_PAY">
+      <PopoverTrigger>
+        <div class="relative">
+          <BtcIcon :class="css" class="w-6" />
+          <InfoIcon class="absolute -right-px -bottom-px w-3 [&>[data-info-bg]]:fill-white [&>[data-info-circle]]:text-[#c7c8d1] [&>[data-info-i]]:text-[#8f91a3]" />
+        </div>
+      </PopoverTrigger>
+      <PopoverPortal>
+        <PopoverContent
+          class="max-w-xs p-4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space"
+          :side="isMobile ? 'top' : 'right'"
+          :collision-padding="8" :side-offset="6"
+        >
+          <h4 class="font-semibold truncate">
+            GoCrypto + Binance App
+          </h4>
+
+          <p class="mt-2 text-sm text-white/60">
+            {{ $t('Pay in BTC and many other currencies with the GoCrypto app and its Binance integration.') }}
+          </p>
+
+          <div class="flex items-end justify-end gap-x-1.5" :title="$t('BTC and 49 more')">
+            <BtcIcon :class="css" class="w-6" />
+            <span class="text-sm font-bold text-white/50">+49</span>
+          </div>
+
+          <PopoverArrow class="fill-space" size="8" />
+        </PopoverContent>
+      </PopoverPortal>
+    </PopoverRoot>
   </div>
 </template>
