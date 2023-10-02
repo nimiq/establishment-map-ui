@@ -3,7 +3,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
 #: src/components/cards/cryptocity/BasicInfoCryptocity.vue:6
-#: src/components/cards/cryptocity/CryptocityCard.vue:15
+#: src/components/cards/cryptocity/CryptocityCard.vue:10
 msgid "{count} locations"
 msgstr ""
 
@@ -15,11 +15,11 @@ msgstr ""
 msgid "Add a location to the Crypto Map"
 msgstr ""
 
-#: src/components/elements/CryptoMapModal.vue:28
+#: src/components/elements/CryptoMapModal.vue:30
 msgid "Add Crypto location"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:95
+#: src/components/elements/FilterModal.vue:70
 msgid "Apply filters"
 msgstr ""
 
@@ -35,8 +35,16 @@ msgstr ""
 msgid "Back to the Map"
 msgstr ""
 
+#: src/translations.ts:40
+msgid "Binance Pay"
+msgstr ""
+
 #: src/assets-dev/provider-assets.ts:62
 msgid "Bluecode is a payment method that allows secure transactions directly through the smartphone."
+msgstr ""
+
+#: src/components/icons/cryptos/CryptoIcon.vue:44
+msgid "BTC and 49 more"
 msgstr ""
 
 #: src/components/cards/location/LocationCard.vue:48
@@ -59,7 +67,7 @@ msgstr ""
 msgid "Cash"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:75
+#: src/components/elements/FilterModal.vue:48
 msgid "Categories"
 msgstr ""
 
@@ -67,11 +75,12 @@ msgstr ""
 msgid "Check out {locationName} on Nimiq's Crypto Map"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:90
+#: src/components/elements/FilterModal.vue:65
 msgid "Clear"
 msgstr ""
 
-#: src/components/elements/Controls.vue:12
+#: src/components/atoms/Modal.vue:26
+#: src/components/cards/cryptocity/CryptocityCard.vue:11
 msgid "Close"
 msgstr ""
 
@@ -105,7 +114,7 @@ msgstr ""
 msgid "Crypto Map logo"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:53
+#: src/components/elements/FilterModal.vue:26
 msgid "Cryptocurrencies"
 msgstr ""
 
@@ -146,8 +155,8 @@ msgstr ""
 msgid "Explore the Crypto Map"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:43
-#: src/components/elements/FilterModal.vue:8
+#: src/components/elements/FilterModal.vue:16
+#: src/components/elements/FilterModal.vue:9
 msgid "Filters"
 msgstr ""
 
@@ -175,7 +184,7 @@ msgstr ""
 msgid "Hotel & Lodging"
 msgstr ""
 
-#: src/components/elements/Controls.vue:4
+#: src/components/elements/Controls.vue:8
 msgid "Information about this Cryptocity"
 msgstr ""
 
@@ -183,7 +192,7 @@ msgstr ""
 msgid "Kurant enables users to easily purchase cryptocurrencies through a network of ATMs."
 msgstr ""
 
-#: src/components/elements/ProviderBanner.vue:46
+#: src/components/elements/ProviderBanner.vue:45
 msgid "Learn more"
 msgstr ""
 
@@ -208,7 +217,7 @@ msgstr ""
 msgid "Miscellaneous"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:63
+#: src/components/elements/FilterModal.vue:36
 #: src/components/forms/NewCandidate.vue:29
 msgid "More cryptocurrencies supported in the future"
 msgstr ""
@@ -228,6 +237,10 @@ msgstr ""
 
 #: src/translations.ts:32
 msgid "Other"
+msgstr ""
+
+#: src/components/icons/cryptos/CryptoIcon.vue:41
+msgid "Pay in BTC and many other currencies with the GoCrypto app and its Binance integration."
 msgstr ""
 
 #: src/components/cards/location/LocationCard.vue:21
@@ -283,11 +296,11 @@ msgstr ""
 msgid "Select an option"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:71
+#: src/components/elements/FilterModal.vue:44
 msgid "Select category"
 msgstr ""
 
-#: src/components/elements/FilterModal.vue:48
+#: src/components/elements/FilterModal.vue:21
 #: src/components/forms/NewCandidate.vue:22
 msgid "Select Cryptocurrency"
 msgstr ""
@@ -361,7 +374,7 @@ msgstr ""
 msgid "Thank you for submitting a new location to the Crypto Map!"
 msgstr ""
 
-#: src/assets-dev/cryptocities-assets.ts:13
+#: src/assets-dev/cryptocities-assets.ts:12
 msgid "The San Jose Cryptocity Initiative is part of the Cryptocity endeavour led by Nimiq and its partners."
 msgstr ""
 
@@ -397,7 +410,7 @@ msgstr ""
 msgid "USDC on POLYGON"
 msgstr ""
 
-#: src/assets-dev/cryptocities-assets.ts:14
+#: src/assets-dev/cryptocities-assets.ts:13
 msgid "We are strategically working with local businesses to stimulate the regional economy through the innovative use of cryptocurrency."
 msgstr ""
 
@@ -413,10 +426,6 @@ msgstr ""
 msgid "You can add any location that has a Google Business Profile."
 msgstr ""
 
-#: src/assets-dev/cryptocities-assets.ts:15
+#: src/assets-dev/cryptocities-assets.ts:14
 msgid "You can learn more at"
-msgstr ""
-
-#: src/components/cards/location/LocationCard.vue:57
-msgid "You can sell these cryptos here"
 msgstr ""

@@ -36,5 +36,7 @@ export function translateIssue(issue: Issue) {
 export function translateCurrency(currency: Currency) {
   if (currency === Currency.USDC_on_POLYGON)
     return i18n.t('USDC on POLYGON')
+  if (currency === Currency.BINANCE_PAY)
+    return i18n.t('Binance Pay')
   return currency
 }
