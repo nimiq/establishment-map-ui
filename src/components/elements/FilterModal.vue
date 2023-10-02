@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watchEffect } from 'vue'
 import { useBreakpoints } from '@vueuse/core'
@@ -10,11 +9,11 @@ import Button from '@/components/atoms/Button.vue'
 import CategoryIcon from '@/components/icons/categories/CategoryIcon.vue'
 import CryptoIcon from '@/components/icons/cryptos/CryptoIcon.vue'
 import Select from '@/components/atoms/Select.vue'
-import CrossIcon from '@/components/icons/icon-cross.vue'
 import FilterIcon from '@/components/icons/icon-filter.vue'
 import { useFilters } from '@/stores/filters'
 import { translateCategory, translateCurrency } from '@/translations'
 import { useMarkers } from '@/stores/markers'
+import Modal from '@/components/atoms/Modal.vue'
 
 const isOpen = ref(false)
 const isMobile = useBreakpoints(screens).smaller('md')
@@ -58,10 +57,6 @@ function closeModal({ shouldClearFilters }: { shouldClearFilters: boolean }) {
   isOpen.value = false
 }
 
-function openModal() {
-  isOpen.value = true
-}
-
 function applyFilters() {
   updateFilters()
   closeModal({ shouldClearFilters: false })
@@ -69,7 +64,82 @@ function applyFilters() {
 </script>
 
 <template>
-  <div>
+  <Modal @close="closeModal({ shouldClearFilters: false })">
+    <template #trigger>
+      <Button bg-color="white" class="max-desktop:px-0" v-bind="$attrs">
+        <template #icon>
+          <FilterIcon class="w-4 text-space" />
+        </template>
+        <template v-if="!isMobile" #label>
+          {{ $t('Filters') }}
+        </template>
+        <template v-if="nFilters > 0" #badge>
+          {{ nFilters }}
+        </template>
+      </Button>
+    </template>
+    <template #title>{{ $t('Filters') }}</template>
+    <template #content="{ Separator }">
+      <component :is="Separator" />
+
+      <Select
+        v-model="unappliedFiltersCurrencies" :placeholder="$t('Select Cryptocurrency')"
+        :options="CURRENCIES"
+      >
+        <template #label>
+          <h3 class="mb-6 text-sm font-semibold tracking-wider uppercase text-space/40 md:mb-8">
+            {{ $t('Cryptocurrencies') }}
+          </h3>
+        </template>
+        <template #option="{ option: currency }">
+          <div class="flex items-center gap-x-2">
+            <CryptoIcon :crypto="currency" size="sm" bg="white" />
+            <b>{{ translateCurrency(currency) }}</b>
+          </div>
+        </template>
+        <template #after-options>
+          {{ $t('More cryptocurrencies supported in the future') }}
+        </template>
+        <template #selected-option="{ option: currency }">
+          {{ translateCurrency(currency) }}
+        </template>
+      </Select>
+      <Select
+        v-model="unappliedFiltersCategories" :options="CATEGORIES"
+        :placeholder="$t('Select category')" class="mt-9"
+      >
+        <template #label>
+          <h3 class="mb-6 text-sm font-semibold tracking-wider uppercase text-space/40 md:mb-8">
+            {{ $t('Categories') }}
+          </h3>
+        </template>
+        <template #option="{ option: category }">
+          <CategoryIcon class="w-6 h-6" :category="category" />
+          {{ translateCategory(category) }}
+        </template>
+        <template #selected-option="{ option: category }">
+          {{ translateCategory(category) }}
+        </template>
+      </Select>
+
+      <component :is="Separator" />
+
+      <div class="flex justify-between">
+        <Button bg-color="grey" @click="closeModal({ shouldClearFilters: true })">
+          <template #label>
+            {{ $t('Clear') }}
+          </template>
+        </Button>
+        <Button bg-color="sky" gradient @click="applyFilters">
+          <template #label>
+            {{ $t('Apply filters') }}
+          </template>
+        </Button>
+      </div>
+    </template>
+  </Modal>
+
+  <!-- <div>
     <Button bg-color="white" class="max-desktop:px-0" @click="openModal">
       <template #icon>
         <FilterIcon class="w-4 text-space" />
@@ -172,5 +242,5 @@ function applyFilters() {
         </div>
       </Dialog>
     </TransitionRoot>
-  </div>
+  </div> -->
 </template>

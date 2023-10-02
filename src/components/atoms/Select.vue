@@ -131,7 +131,7 @@ function hasSlot(slotName: 'selected-option' | 'after-options' | 'label') {
         <span>
           <slot name="selected-option" v-bind="{ option }" />
         </span>
-        <CrossIcon class="w-4 h-5 cursor-pointer text-space" @click="selected = selected.filter(o => o !== option)" />
+        <CrossIcon class="w-2 cursor-pointer text-space" @click="selected = selected.filter(o => o !== option)" />
       </li>
     </ul>
   </div>
