@@ -28,7 +28,7 @@ const separator = h('hr', { class: 'w-full h-px my-8 bg-space/10' })
     </DialogTrigger>
     <DialogPortal>
       <DialogOverlay class="bg-space/60 data-[state=open]:animate-fade data-[state=close]:animate-fade-out fixed inset-0 z-20" />
-      <DialogContent class="fixed max-desktop:bottom-0 desktop:top-1/2 desktop:left-1/2 max-h-[85dvh] max-w-lg desktop:-translate-x-1/2 desktop:-translate-y-1/2 rounded-[6px] z-20 overflow-y-auto data-[state=open]:animate-fade md:rounded-lg md:max-w-lg focus:outline-none w-full py-8 text-left  bg-white rounded-t-lg shadow-lg">
+      <DialogContent class="fixed max-desktop:bottom-0 desktop:top-1/2 desktop:left-1/2 max-h-[85dvh] max-w-lg desktop:-translate-x-1/2 desktop:-translate-y-1/2 rounded-[6px] z-20 overflow-y-auto data-[state=open]:animate-fade md:rounded-lg md:max-w-lg focus:outline-none w-full py-8 text-left  bg-white border border-[#e9e9ed] rounded-t-lg shadow-lg">
         <div v-if="hasSlot('pre-title')" class="px-6 mb-4 md:px-10">
           <slot name="pre-title" />
         </div>
