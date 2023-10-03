@@ -47,6 +47,12 @@ msgstr "Retour à la carte"
 msgid "Binance Pay"
 msgstr ""
 
+#: src/components/icons/cryptos/CryptoIcon.vue:44
+msgid ""
+"Binance Pay is a cryptocurrency payment service that empowers users to pay "
+"with crypto at shops and establishments supporting Binance Pay."
+msgstr ""
+
 #: src/assets-dev/provider-assets.ts:62
 msgid ""
 "Bluecode is a payment method that allows secure transactions directly "
@@ -55,8 +61,8 @@ msgstr ""
 "Bluecode est un moyen de paiement qui vous permet d'effectuer des "
 "transactions sécurisées directement via votre smartphone."
 
-#: src/components/icons/cryptos/CryptoIcon.vue:44
-msgid "BTC and 49 more"
+#: src/components/icons/cryptos/CryptoIcon.vue:47
+msgid "BTC +50"
 msgstr ""
 
 #: src/components/cards/location/LocationCard.vue:48
@@ -91,7 +97,7 @@ msgstr "Consultez {locationName} sur la Crypto Map de Nimiq"
 msgid "Clear"
 msgstr "Effacer"
 
-#: src/components/atoms/Modal.vue:26
+#: src/components/atoms/Modal.vue:28
 #: src/components/cards/cryptocity/CryptocityCard.vue:11
 msgid "Close"
 msgstr ""
@@ -115,6 +121,12 @@ msgstr "Impossible de copier l'URL dans le presse-papiers."
 #: src/components/forms/NewCandidate.vue:10
 msgid "Create Google Business profile"
 msgstr "Créer un profil Google Business"
+
+#: src/assets-dev/cryptocities-assets.ts:12
+msgid ""
+"Criptociudad San José is part of the global Cryptocity Initiative led by "
+"Nimiq and its partners."
+msgstr ""
 
 #: src/components/elements/CryptoMapModal.vue:16
 msgid "Crypto Map"
@@ -196,6 +208,10 @@ msgstr ""
 "GoCrypto est un réseau de paiement mondial qui permet aux commerçants "
 "d'accepter les paiements en cryptomonnaie."
 
+#: src/components/icons/cryptos/CryptoIcon.vue:40
+msgid "GoCrypto supports Binance Pay"
+msgstr ""
+
 #: src/translations.ts:11
 msgid "Health & Beauty"
 msgstr "Santé & beauté"
@@ -212,6 +228,12 @@ msgstr "Hôtellerie & hébergement"
 msgid "Information about this Cryptocity"
 msgstr ""
 
+#: src/assets-dev/cryptocities-assets.ts:25
+msgid ""
+"Kryptostadt Mannheim is part of the global Cryptocity Initiative led by "
+"Nimiq and its partners."
+msgstr ""
+
 #: src/assets-dev/provider-assets.ts:50
 msgid ""
 "Kurant enables users to easily purchase cryptocurrencies through a network "
@@ -223,6 +245,12 @@ msgstr ""
 #: src/components/elements/ProviderBanner.vue:45
 msgid "Learn more"
 msgstr "En savoir plus"
+
+#: src/assets-dev/cryptocities-assets.ts:14
+#: src/assets-dev/cryptocities-assets.ts:27
+#: src/assets-dev/cryptocities-assets.ts:40
+msgid "Learn more at"
+msgstr ""
 
 #: src/translations.ts:13
 msgid "Leisure Activities"
@@ -264,12 +292,6 @@ msgstr "Oups, aucun commerce dans le coin"
 #: src/translations.ts:32
 msgid "Other"
 msgstr "Autre"
-
-#: src/components/icons/cryptos/CryptoIcon.vue:41
-msgid ""
-"Pay in BTC and many other currencies with the GoCrypto app and its Binance "
-"integration."
-msgstr ""
 
 #: src/components/cards/location/LocationCard.vue:21
 msgid ""
@@ -403,10 +425,10 @@ msgstr "Merci de nous avoir signalé ce problème"
 msgid "Thank you for submitting a new location to the Crypto Map!"
 msgstr "Merci d'avoir ajouté un nouveau lieu sur la Crypto Map !"
 
-#: src/assets-dev/cryptocities-assets.ts:12
+#: src/assets-dev/cryptocities-assets.ts:38
 msgid ""
-"The San Jose Cryptocity Initiative is part of the Cryptocity endeavour led "
-"by Nimiq and its partners."
+"Thanks to GoCrypto, Slovenia's capital, Ljubljana, has become a top "
+"destination for crypto enthusiasts."
 msgstr ""
 
 #: src/components/forms/NewCandidate.vue:56
@@ -450,6 +472,7 @@ msgid "USDC on POLYGON"
 msgstr "USDC sur POLYGON"
 
 #: src/assets-dev/cryptocities-assets.ts:13
+#: src/assets-dev/cryptocities-assets.ts:26
 msgid ""
 "We are strategically working with local businesses to stimulate the regional"
 " economy through the innovative use of cryptocurrency."
@@ -463,6 +486,13 @@ msgstr ""
 "Avec CryptoPayment Link, vous pouvez recevoir des paiements en crypto-"
 "monnaie de la part de vos clients rapidement et facilement."
 
+#: src/assets-dev/cryptocities-assets.ts:39
+msgid ""
+"With over 600 acceptance locations, Ljubljana not only stands as the most "
+"crypto-friendly city in Europe but also secures a prominent position in "
+"international rankings."
+msgstr ""
+
 #: src/components/forms/ReportLocation.vue:36
 msgid "Write your problem here"
 msgstr "Écrivez votre problème ici"
@@ -472,7 +502,3 @@ msgid "You can add any location that has a Google Business Profile."
 msgstr ""
 "Vous pouvez ajouter n'importe quel lieu disposant d'un profil Google "
 "Business."
-
-#: src/assets-dev/cryptocities-assets.ts:14
-msgid "You can learn more at"
-msgstr ""

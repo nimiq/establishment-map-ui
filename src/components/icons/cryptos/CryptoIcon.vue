@@ -83,7 +83,7 @@ const isMobile = useBreakpoints(screens).smaller('md')
             {{ $t('Binance Pay is a cryptocurrency payment service that empowers users to pay with crypto at shops and establishments supporting Binance Pay.') }}
           </p>
 
-          <div class="flex items-end justify-end gap-x-1.5" :title="$t('BTC and 49 more')">
+          <div class="flex items-end justify-end gap-x-1.5" :title="$t('BTC +50')">
             <BtcIcon :class="css" class="w-6" />
             <span class="text-sm font-bold text-white/50">50+</span>
           </div>
