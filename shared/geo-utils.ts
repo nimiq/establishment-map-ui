@@ -5,7 +5,7 @@ import pointsWithinPolygon from '@turf/points-within-polygon'
 import union from '@turf/union'
 import intersect from '@turf/intersect'
 import booleanWithin from '@turf/boolean-within'
-import { type BoundingBox, Cryptocity, type Point } from '../types/index.ts'
+import { type BoundingBox, type Point } from '../types/index.ts'
 
 /**
  * Returns a GeoJSON Point from a location. You can pass an object like a Location which will be stored as a property of the point
@@ -84,8 +84,4 @@ export function bBoxesIntersect(bbox1: BoundingBox, bbox2: BoundingBox) {
 
 export function euclideanDistance({ lat: y1, lng: x1 }: Point, { lat: y2, lng: x2 }: Point) {
   return Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2)
-}
-
-export const cryptocitiesCentroids: Record<Cryptocity, Point & { city: Cryptocity }> = {
-  [Cryptocity.SanJose]: { lat: 9.935, lng: -84.102, city: Cryptocity.SanJose },
 }

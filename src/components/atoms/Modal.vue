@@ -9,10 +9,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from 'radix-vue'
-import { h, useSlots } from 'vue'
+import { h, useModel, useSlots } from 'vue'
 import CrossIcon from '@/components/icons/icon-cross.vue'
 
+const props = defineProps({
+  open: {
+    type: Boolean,
+    default: false,
+  },
+})
+
 defineEmits({ open: Function, close: Function })
+
+const open = useModel(props, 'open')
 
 function hasSlot(slot: 'pre-title' | 'title' | 'description' | 'content') {
   return !!useSlots()[slot]
@@ -22,8 +31,8 @@ const separator = h('hr', { class: 'w-full h-px my-8 bg-space/10' })
 </script>
 
 <template>
-  <DialogRoot @update:open="$event ? $emit('open') : $emit('close')">
-    <DialogTrigger>
+  <DialogRoot v-model:open="open" @update:open="$event ? $emit('open') : $emit('close')">
+    <DialogTrigger v-bind="$attrs">
       <slot name="trigger" />
     </DialogTrigger>
     <DialogPortal>

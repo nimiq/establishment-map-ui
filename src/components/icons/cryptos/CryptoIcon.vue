@@ -76,7 +76,7 @@ const isMobile = useBreakpoints(screens).smaller('md')
           :collision-padding="8" :side-offset="6"
         >
           <h4 class="font-semibold truncate">
-            GoCrypto + Binance App
+            {{ $t('GoCrypto supports Binance Pay') }}
           </h4>
 
           <p class="mt-2 text-sm text-white/60">

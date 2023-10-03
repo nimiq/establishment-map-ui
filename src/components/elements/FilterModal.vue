@@ -15,7 +15,7 @@ import { translateCategory, translateCurrency } from '@/translations'
 import { useMarkers } from '@/stores/markers'
 import Modal from '@/components/atoms/Modal.vue'
 
-const isOpen = ref(false)
+const open = ref(false)
 const isMobile = useBreakpoints(screens).smaller('md')
 
 const filtersStore = useFilters()
@@ -54,7 +54,7 @@ function closeModal({ shouldClearFilters }: { shouldClearFilters: boolean }) {
   if (shouldClearFilters)
     clearFilters()
 
-  isOpen.value = false
+  open.value = false
 }
 
 function applyFilters() {
@@ -64,9 +64,9 @@ function applyFilters() {
 </script>
 
 <template>
-  <Modal @close="closeModal({ shouldClearFilters: false })">
+  <Modal v-bind="$attrs" v-model="open" @close="closeModal({ shouldClearFilters: false })">
     <template #trigger>
-      <Button bg-color="white" class="max-desktop:px-0 border border-[#e9e9ed]" v-bind="$attrs">
+      <Button bg-color="white" as="div" class="max-desktop:px-0 border border-[#e9e9ed]">
         <template #icon>
           <FilterIcon class="w-4 text-space" />
         </template>

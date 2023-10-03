@@ -2,11 +2,10 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { authenticateUser } from '../../../database/auth.ts'
 import { flushMarkersTable, insertMarkers } from '../../../database/functions.ts'
-import { getLocations } from '../../../database/getters.ts'
+import { getCryptocities, getLocations } from '../../../database/getters.ts'
 import { algorithm, computeMarkers } from '../../../shared/compute-markers.ts'
 import type { Args, AuthWriteDbFunction } from '../../../types/database.ts'
 import type { BoundingBox } from '../../../types/index.ts'
-import { cryptocitiesCentroids } from '../../../shared/index.ts'
 import { euclideanDistance } from '../../../shared/geo-utils.ts'
 
 async function cluster() {
@@ -32,14 +31,17 @@ async function cluster() {
   const locations = await getLocations(dbArgs, boundingBox)
   console.log(`Found ${locations.length} locations`)
 
-  type Radii = Record<number /* minZoom, maxZoom */, number /* radius in minZoom is 120, maxZoom is 150 */>
+  type Radii = Record<number /* minZoom, maxZoom */, number /* the radius for minZoom is 120, the radius for maxZoom is 150 */>
   const radii: Radii = Array.from({ length: maxZoom - minZoom + 1 }, (_, i) => 120 + i * 30 / (maxZoom - minZoom))
     .reduce((acc, radius, i) => ({ ...acc, [minZoom + i]: radius }), {})
 
   console.log('Computing clusters...')
 
   const promises: Promise<unknown>[] = []
-  const cryptocities = Object.values(cryptocitiesCentroids)
+
+  const cryptocities = await getCryptocities(dbArgs, { boundingBox, excludedCities: [] })
+  if (!cryptocities || cryptocities.length === 0)
+    throw new Error('No cryptocities found')
 
   for (let zoom = minZoom; zoom <= maxZoom; zoom++) {
     const { singles, clusters: locationClusters } = computeMarkers(algorithm(radii[zoom]), locations, { zoom, boundingBox })
@@ -47,25 +49,26 @@ async function cluster() {
     const singlesToAdd: Args[AuthWriteDbFunction.InsertMarkers]['items'] = singles.map(({ lng, lat, uuid }) => ({ lat, lng, count: 1, locationUuid: uuid }))
 
     const clustersWithCryptocurrencies = [...locationClusters, ...cryptocities]
-    const { singles: singlesItems, clusters: cryptocitiesClustered } = computeMarkers(algorithm(140), clustersWithCryptocurrencies, { zoom, boundingBox })
+    const { singles: singlesItems, clusters: cryptocitiesClustered } = computeMarkers(algorithm(radii[zoom]), clustersWithCryptocurrencies, { zoom, boundingBox })
 
-    const singlesCryptocities: Args[AuthWriteDbFunction.InsertMarkers]['items'] = (singlesItems.filter(c => 'city' in c) as typeof cryptocities)
-      .map(({ lng, lat, city }) => ({ lat, lng, count: 1, cryptocities: [city] }))
+    const singlesCryptocities: Args[AuthWriteDbFunction.InsertMarkers]['items']
+      = (singlesItems.filter(c => 'city' in c) as typeof cryptocities)
+        .map(({ lng, lat, city }) => ({ lat, lng, count: 1, cryptocities: [city] }))
 
-    cryptocitiesClustered.filter(c => c.count > 1).forEach((c) => {
+    for (const cryptocityClustered of cryptocitiesClustered.filter(c => c.count > 1)) {
       const closestClusterId = locationClusters
-        .map(cluster => ({ ...cluster, distance: euclideanDistance(cluster, c) }))
+        .map(cluster => ({ ...cluster, distance: euclideanDistance(cluster, cryptocityClustered) }))
         .sort((a, b) => a.distance - b.distance)[0].id
       const closestCluster = locationClusters.find(c => c.id === closestClusterId)
       if (!closestCluster)
         return
 
       closestCluster.cryptocities = cryptocities
-        .map(cryptocity => ({ city: cryptocity.city, distance: euclideanDistance(cryptocity, c) }))
+        .map(cryptocity => ({ city: cryptocity.city, distance: euclideanDistance(cryptocity, cryptocityClustered) }))
         .sort((a, b) => a.distance - b.distance)
-        .slice(0, c.count - 1)
+        .slice(0, cryptocityClustered.count - 1)
         .map(({ city }) => city)
-    })
+    }
 
     promises.push(insertMarkers(dbArgs, { zoom_level: zoom, items: singlesToAdd.concat(locationClusters).concat(singlesCryptocities) }))
 

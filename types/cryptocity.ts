@@ -2,6 +2,8 @@ import type { FeatureCollection, MultiPolygon } from '@turf/helpers'
 
 export enum Cryptocity {
   SanJose = 'San_Jose',
+  Mannheim = 'Mannheim',
+  Ljubljana = 'Ljubljana',
 }
 
 // Information that we get from the database
