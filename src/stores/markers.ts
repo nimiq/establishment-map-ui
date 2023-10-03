@@ -57,13 +57,6 @@ export const useMarkers = defineStore('markers', () => {
     return { key, item, needsToUpdate }
   }
 
-  function needsToUpdate() {
-    // We only need to re-cluster if we are zoomed out enough to see clusters
-    return (zoom.value > CLUSTERS_MAX_ZOOM)
-      ? !bBoxIsWithinArea(boundingBox.value!, visitedAreas.value) // If we already visited this area, no need to re-cluster
-      : getMemoized().needsToUpdate
-  }
-
   const getMaxZoom = async () => getClusterMaxZoom(await getAnonDatabaseArgs())
   const { init: initMaxZoom, payload: maxZoomFromServer } = useExpiringStorage('max_zoom_from_server', { expiresIn: 7 * 24 * 60 * 60 * 1000, getAsyncValue: getMaxZoom })
 
@@ -143,7 +136,6 @@ export const useMarkers = defineStore('markers', () => {
     singles,
     clustersInView,
     singlesInView,
-    needsToUpdate,
     loaded,
     clearMarkers: () => setMarkers([], []),
   }

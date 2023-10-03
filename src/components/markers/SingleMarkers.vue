@@ -69,7 +69,7 @@ function handlePopoverOpen(isOpen: boolean, location: Location) {
     useMap().setPosition({
       center: { lat: location.lat, lng: location.lng },
       zoom: zoom.value,
-    }, true)
+    }, { smooth: true })
     const stop = setInterval(() => {
       popoverKey.value += 1
       if (popoverKey.value === 50)

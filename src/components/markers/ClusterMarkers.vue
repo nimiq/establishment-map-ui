@@ -35,7 +35,7 @@ function toggleClusterExpansion({ id }: Cluster, event?: Event) {
 
 function onClusterClick({ expansionZoom, lat, lng }: Cluster) {
   // To make it more fluid if zoom is lower than 13, the minimum zoom change must be 3
-  const newZoom = expansionZoom < 13 ? Math.max(expansionZoom, zoom.value + 3) : expansionZoom
+  const newZoom = expansionZoom < 13 ? Math.max(expansionZoom, zoom.value + 3) : Math.max(expansionZoom, zoom.value + 1)
   setPosition({ center: { lat, lng }, zoom: newZoom })
 }
 </script>

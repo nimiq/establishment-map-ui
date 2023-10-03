@@ -25,7 +25,7 @@ const route = useRoute()
 
 function onCryptocityClick() {
   const { lat, lng, name, showCardAtZoom } = cryptocity.value as CryptocityData
-  setPosition({ center: { lat, lng }, zoom: showCardAtZoom })
+  setPosition({ center: { lat, lng }, zoom: showCardAtZoom }, { clearMarkers: true })
   router.push({ query: { ...route.query, cryptocity: name } })
 }
 </script>

@@ -46,10 +46,7 @@ export const useMap = defineStore('map', () => {
 
     updateRouteDebouncer()
 
-    // If we don't have the item in the memoized map, we need to update the clusters
-    // If we have it, getMemoized will update the active value
-    if (useMarkers().needsToUpdate())
-      clusterDebouncer()
+    clusterDebouncer()
   }
 
   // The bounds event is fired a lot, so we debounce it
@@ -71,7 +68,23 @@ export const useMap = defineStore('map', () => {
   const increaseZoom = () => map.value?.setZoom(zoom.value + 1)
   const decreaseZoom = () => map.value?.setZoom(zoom.value - 1)
 
-  function setPosition(p?: MapPosition | EstimatedMapPosition | google.maps.LatLngBounds, smooth = false) {
+  interface SetPositionOptions {
+    /*
+      * If true, the map will pan to the new position instead of setting it directly
+      * This is useful when the map is not centered on the user's location
+      *
+      * @default false
+      */
+    smooth?: boolean
+
+    /**
+     * If true, the markers will be cleared before setting the position
+     *
+     * @default false
+     */
+    clearMarkers?: boolean
+  }
+  function setPosition(p?: MapPosition | EstimatedMapPosition | google.maps.LatLngBounds, { clearMarkers, smooth }: SetPositionOptions = {}) {
     if (!map.value || !p)
       return
 
@@ -96,7 +109,8 @@ export const useMap = defineStore('map', () => {
     }
 
     // It takes a few seconds to recompute the clusters, so we clear the markers to avoid showing them
-    useMarkers().clearMarkers()
+    if (clearMarkers)
+      useMarkers().clearMarkers()
   }
 
   async function goToPlaceId(placeId?: string) {
