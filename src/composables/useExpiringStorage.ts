@@ -96,7 +96,6 @@ export function useExpiringStorage<T>(_key: string, options: UseExpiringStorageS
         console.log(`LocalStorage ${key}: ♻️ Refreshing value. Expires in ${expiresIn}ms`)
         stored.value = await getValue()
         refreshData(expiresIn)
-        throw new Error('Refreshed')
       }, expiresIn)
     }
   }

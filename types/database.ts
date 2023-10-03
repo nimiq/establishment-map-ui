@@ -123,7 +123,7 @@ export interface Args {
   [AnonReadDbFunction.GetMarkers]: { zoom: number; boundingBox: BoundingBox }
   [AnonReadDbFunction.GetCryptocities]: { boundingBox: BoundingBox; excludedCities: Cryptocity[] }
   [AuthWriteDbFunction.UpsertLocationsWithGMaps]: (Partial<RawLocation> & { accepts: RawLocation['accepts']; place_id?: string })[]
-  [AuthWriteDbFunction.InsertMarkers]: { zoom_level: number; items: InsertMarkersItem[] }
+  [AuthWriteDbFunction.InsertMarkers]: { zoom_level: number; items: (InsertMarkersSingle | InsertMarkersSingleCryptocity | InsertMarkersCluster)[] }
 }
 
 export interface Returns {
@@ -134,6 +134,6 @@ export interface Returns {
   [AnonWriteDbFunction.AuthAnonUser]: { uuid: string; max_age: number }
 }
 
-export type InsertMarkersItem =
-  { lat: number; lng: number }
-  & /* Single */ ({ count: 1; locationUuid?: string } | /* Clusters */ { count: number; expansionZoom: number; cryptocities?: Cryptocity[] })
+export interface InsertMarkersSingle { lat: number; lng: number; count: 1; locationUuid?: string }
+export interface InsertMarkersSingleCryptocity { lat: number; lng: number; count: 1; cryptocities: Cryptocity[] }
+export interface InsertMarkersCluster { lat: number; lng: number; count: number; expansionZoom: number; cryptocities: Cryptocity[] }
