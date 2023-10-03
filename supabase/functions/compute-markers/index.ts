@@ -4,11 +4,11 @@ import { authenticateUser } from '../../../database/auth.ts'
 import { flushMarkersTable, insertMarkers } from '../../../database/functions.ts'
 import { getCryptocities, getLocations } from '../../../database/getters.ts'
 import { algorithm, computeMarkers } from '../../../shared/compute-markers.ts'
-import type { Args, AuthWriteDbFunction } from '../../../types/database.ts'
-import type { BoundingBox } from '../../../types/index.ts'
 import { euclideanDistance } from '../../../shared/geo-utils.ts'
+import type { Args, AuthWriteDbFunction, InsertMarkersSingleCryptocity } from '../../../types/database.ts'
+import type { BoundingBox } from '../../../types/index.ts'
 
-async function cluster() {
+async function markers() {
   const url = Deno.env.get('SUPABASE_URL')
   const apikey = Deno.env.get('SUPABASE_ANON_KEY')
   const email = Deno.env.get('DB_AUTH_EMAIL')
@@ -49,25 +49,21 @@ async function cluster() {
     const singlesToAdd: Args[AuthWriteDbFunction.InsertMarkers]['items'] = singles.map(({ lng, lat, uuid }) => ({ lat, lng, count: 1, locationUuid: uuid }))
 
     const clustersWithCryptocurrencies = [...locationClusters, ...cryptocities]
-    const { singles: singlesItems, clusters: cryptocitiesClustered } = computeMarkers(algorithm(radii[zoom]), clustersWithCryptocurrencies, { zoom, boundingBox })
+    const { singles: singlesItems } = computeMarkers(algorithm(radii[zoom]), clustersWithCryptocurrencies, { zoom, boundingBox })
 
-    const singlesCryptocities: Args[AuthWriteDbFunction.InsertMarkers]['items']
+    const singlesCryptocities: InsertMarkersSingleCryptocity[]
       = (singlesItems.filter(c => 'city' in c) as typeof cryptocities)
         .map(({ lng, lat, city }) => ({ lat, lng, count: 1, cryptocities: [city] }))
 
-    for (const cryptocityClustered of cryptocitiesClustered.filter(c => c.count > 1)) {
-      const closestClusterId = locationClusters
-        .map(cluster => ({ ...cluster, distance: euclideanDistance(cluster, cryptocityClustered) }))
-        .sort((a, b) => a.distance - b.distance)[0].id
-      const closestCluster = locationClusters.find(c => c.id === closestClusterId)
-      if (!closestCluster)
-        return
+    // Cryptocities no in singles
+    const attachedCryptocities = cryptocities.filter(c => !singlesCryptocities.find(s => s.cryptocities[0] === c.city))
 
-      closestCluster.cryptocities = cryptocities
-        .map(cryptocity => ({ city: cryptocity.city, distance: euclideanDistance(cryptocity, cryptocityClustered) }))
-        .sort((a, b) => a.distance - b.distance)
-        .slice(0, cryptocityClustered.count - 1)
-        .map(({ city }) => city)
+    // Find the closest cluster for each cryptocity
+    for (const attachedCity of attachedCryptocities) {
+      const closestCluster = locationClusters
+        .map(cluster => ({ ...cluster, distance: euclideanDistance(cluster, attachedCity) }))
+        .sort((a, b) => a.distance - b.distance)[0]
+      closestCluster.cryptocities.push(attachedCity.city)
     }
 
     promises.push(insertMarkers(dbArgs, { zoom_level: zoom, items: singlesToAdd.concat(locationClusters).concat(singlesCryptocities) }))
@@ -82,8 +78,8 @@ async function cluster() {
 
 serve(async () => {
   try {
-    console.log('Starting clustering...')
-    await cluster()
+    console.log('Starting markers...')
+    await markers()
     return new Response(undefined, { status: 201 })
   }
   catch (error) {

@@ -65,12 +65,6 @@ module.exports = {
           from: { opacity: 0, transform: 'scale(0.6)' },
           to: { opacity: 1, transform: 'scale(1)' },
         },
-        cryptocity: {
-          '0%': { opacity: 0, transform: 'translateX(0) rotate(-100deg)' },
-          '40%': { opacity: 1, transform: 'translateX(24px) rotate(0)' },
-          '80%': { opacity: 1, transform: 'translateX(24px) rotate(0)' },
-          '100%': { opacity: 1, transform: 'translateX(12px) rotate(-90deg)' },
-        },
       },
       animation: {
         'slideDownAndFade': 'slideDownAndFade 400ms cubic-bezier(0.16, 1, 0.3, 1)',
@@ -80,7 +74,6 @@ module.exports = {
         'fade': `fade 300ms ${tailwindTheme.transitionTimingFunction.DEFAULT}`,
         'fade-out': `fade 300ms ${tailwindTheme.transitionTimingFunction.DEFAULT} reverse`,
         'scale': `scale 300ms ${tailwindTheme.transitionTimingFunction.DEFAULT}`,
-        'cryptocity': `cryptocity 2000ms ${tailwindTheme.transitionTimingFunction.DEFAULT}`,
         'modal-content': `modal-content 300ms ${tailwindTheme.transitionTimingFunction.DEFAULT}`,
       },
     },
