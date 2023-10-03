@@ -8,7 +8,6 @@ import { screens } from 'tailwindcss-nimiq-theme'
 import { OnClickOutside } from '@vueuse/components'
 import CryptocityMarker from './CryptocityMarker.vue'
 import { useMap } from '@/stores/map'
-import { useCryptocities } from '@/stores/cryptocities'
 
 defineProps({
   clusters: {
@@ -19,8 +18,11 @@ defineProps({
 
 const { setPosition } = useMap()
 const { zoom } = storeToRefs(useMap())
-const { newCitiesInView } = storeToRefs(useCryptocities())
 const isMobile = useBreakpoints(screens).smaller('md')
+
+function setExpansionCluster(id: number, open: '0' | '1') {
+  (document.querySelector(`[data-cluster-id="${id}"]`) as HTMLElement).style.setProperty('--expanded', open)
+}
 
 function toggleClusterExpansion({ id }: Cluster, event?: Event) {
   const clusterUl = document.querySelector(`[data-cluster-id="${id}"]`) as HTMLElement
@@ -28,7 +30,7 @@ function toggleClusterExpansion({ id }: Cluster, event?: Event) {
   // If it is outside the cluster and it is 0, do nothing
   if (event && current === '0' && !clusterUl.contains(event.target as Node))
     return
-  clusterUl.style.setProperty('--expanded', current === '1' ? '0' : '1')
+  setExpansionCluster(id, current === '1' ? '0' : '1')
 }
 
 function onClusterClick({ expansionZoom, lat, lng }: Cluster) {
@@ -46,14 +48,17 @@ function onClusterClick({ expansionZoom, lat, lng }: Cluster) {
     data-custom-marker
     :class="c.cryptocities.length > 0 && 'z-10'"
   >
-    <OnClickOutside @trigger="toggleClusterExpansion(c, $event)">
+    <OnClickOutside @trigger="isMobile && toggleClusterExpansion(c, $event)">
       <ul
         :data-cluster-id="c.id"
-        class="relative group [--expanded:0] hover:[--expanded:1]"
+        class="relative"
         :style="`
+          --expanded: 0;
           left: calc(-1 * ${c.diameter / 2}px); /* To center it after we set it to the left in the anchor point */
           padding-right: calc(var(--expanded) * ${c.diameter * c.cryptocities.length + 8}px)
         `"
+        @pointerover="!isMobile && c.cryptocities.length > 0 ? setExpansionCluster(c.id, '1') : undefined"
+        @pointerout="!isMobile && c.cryptocities.length > 0 ? setExpansionCluster(c.id, '0') : undefined"
       >
         <li class="relative z-10">
           <div
@@ -66,13 +71,12 @@ function onClusterClick({ expansionZoom, lat, lng }: Cluster) {
 
         <li
           v-for="(city, i) in c.cryptocities" :key="city"
-          class="absolute top-0 z-0 transition"
-          :class="newCitiesInView.includes(city) && 'animate-cryptocity'"
+          class="absolute top-0 transition"
           :style="`
-          --index: ${i + 1};
+          z-index: ${c.cryptocities.length - i};
           width: ${c.diameter}px;
-          --offset-1: calc(var(--index) * 12px); /* If is not expanded */
-          --offset-2: calc((100% * var(--index)) + (var(--index) * 8px)); /* If is expanded */
+          --offset-1: calc(${i + 1} * 12px); /* If is not expanded */
+          --offset-2: calc((100% * ${i + 1}) + (${i + 1} * 8px)); /* If is expanded */
           transform: translateX(calc(var(--offset-1) * (1 - var(--expanded)) + var(--offset-2) * var(--expanded))) rotate(calc((1 - var(--expanded)) * -90deg));
           padding-left: calc(1 - var(--expanded) * 2px);
         `"

@@ -145,5 +145,6 @@ export const useMarkers = defineStore('markers', () => {
     singlesInView,
     needsToUpdate,
     loaded,
+    clearMarkers: () => setMarkers([], []),
   }
 })

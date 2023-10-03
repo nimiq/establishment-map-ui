@@ -18,7 +18,7 @@ defineProps({
 <template>
   <div class="grid w-8 h-8 bg-white rounded-full children:w-5 children:h-5 place-content-center">
     <BluecodeIcon v-if="provider === Provider.Bluecode" />
-    <CryptopaymentLinkIcon v-else-if="provider === Provider.CryptopaymentLink" />
+    <CryptopaymentLinkIcon v-else-if="provider === Provider.CryptopaymentLink" class="-ml-px" />
     <DefaultAtmIcon v-else-if="provider === Provider.DefaultAtm" />
     <EdeniaIcon v-else-if="provider === Provider.Edenia" class="[&_path]:!fill-[#22afad] [&_path]:!opacity-100" />
     <GoCryptoIcon v-else-if="provider === Provider.GoCrypto" class="[&_path]:!fill-space" />

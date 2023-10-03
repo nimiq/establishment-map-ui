@@ -25,7 +25,7 @@ const route = useRoute()
 
 function onCryptocityClick() {
   const { lat, lng, name, showCardAtZoom } = cryptocity.value as CryptocityData
-  const cardTrigger = (document.querySelector('[data-cryptocity-card]') as HTMLElement)
+  const cardTrigger = (document.querySelector('[data-cryptocity-card-trigger]') as HTMLElement)
   if (cardTrigger)
     cardTrigger.click()
   setPosition({ center: { lat, lng }, zoom: showCardAtZoom })

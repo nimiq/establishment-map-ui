@@ -1,7 +1,7 @@
 import { defineStore, storeToRefs } from 'pinia'
 import type { Feature, MultiPolygon } from '@turf/helpers'
 import { multiPolygon } from '@turf/helpers'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import type { BoundingBox, Cryptocity, CryptocityData, CryptocityDatabase } from 'types'
 import { addBBoxToArea, bBoxIsWithinArea, getItemsWithinBBox } from 'shared'
 import { getCryptocities as getDbCryptocities } from 'database'
@@ -45,11 +45,6 @@ export const useCryptocities = defineStore('cryptocities', () => {
   // Cryptocities no in attachedCryptocities
   const cryptocitiesSingles = computed(() => allCryptocities.value.filter(cryptocity => !attachedCryptocities.value.includes(cryptocity.city)))
 
-  const newCitiesInView = ref<Cryptocity[]>([])
-  watch(cryptocitiesInView, (newInView, oldInView) => {
-    newCitiesInView.value = newInView.filter(city => !oldInView.includes(city)).map(({ city }) => city)
-  })
-
   const CRYPTOCITY_MIN_ZOOM = 7
   const CRYPTOCITY_MIN_OPACITY = 0.01
   const CRYPTOCITY_MAX_ZOOM = 21
@@ -65,15 +60,15 @@ export const useCryptocities = defineStore('cryptocities', () => {
   }
 
   const addedShapes = ref<Cryptocity[]>([])
-  watchDebounced([boundingBox, zoom], () => {
+  watchDebounced([allCryptocities, boundingBox], () => {
     if (!map.value)
       return
     allCryptocities.value.filter(({ city }) => !addedShapes.value.includes(city)).forEach(({ city, shape }) => {
       map.value?.data.addGeoJson(shape)
       addedShapes.value.push(city)
     })
-    map.value?.data.setStyle({ fillColor: 'rgb(31, 35, 72)', fillOpacity: linearRegression(zoom.value), strokeWeight: 1.5, strokeColor: 'rgb(31, 35, 72)', strokeOpacity: 0.8 })
-  }, { debounce: 300 })
+    map.value?.data.setStyle({ fillColor: 'rgb(31, 35, 72)', fillOpacity: linearRegression(zoom.value), strokeWeight: 1.5, strokeColor: 'rgb(31, 35, 72)', strokeOpacity: 0.8, cursor: 'default' })
+  }, { debounce: 300, immediate: true })
 
   return {
     cryptocities,
@@ -82,6 +77,5 @@ export const useCryptocities = defineStore('cryptocities', () => {
     cryptocitiesInView,
     cryptocitiesSingles,
     attachedCryptocities,
-    newCitiesInView,
   }
 })

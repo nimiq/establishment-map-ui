@@ -94,6 +94,9 @@ export const useMap = defineStore('map', () => {
     else if (p instanceof google.maps.LatLngBounds) {
       map.value?.fitBounds(p)
     }
+
+    // It takes a few seconds to recompute the clusters, so we clear the markers to avoid showing them
+    useMarkers().clearMarkers()
   }
 
   async function goToPlaceId(placeId?: string) {
