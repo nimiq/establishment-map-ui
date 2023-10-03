@@ -13,7 +13,6 @@ import { useExpiringStorage } from '@/composables/useExpiringStorage'
 
 export const useMarkers = defineStore('markers', () => {
   const { setLocations, getLocations } = useLocations()
-  const { visitedAreas } = storeToRefs(useLocations())
   const { filterLocations, filtersToString } = useFilters()
   const { zoom, boundingBox } = storeToRefs(useMap())
   const loaded = ref(false)
@@ -57,14 +56,17 @@ export const useMarkers = defineStore('markers', () => {
     return { key, item, needsToUpdate }
   }
 
-  const getMaxZoom = async () => getClusterMaxZoom(await getAnonDatabaseArgs())
-  const { init: initMaxZoom, payload: maxZoomFromServer } = useExpiringStorage('max_zoom_from_server', { expiresIn: 7 * 24 * 60 * 60 * 1000, getAsyncValue: getMaxZoom })
+  const { init: initMaxZoom, payload: maxZoomFromServer } = useExpiringStorage('max_zoom_from_server', {
+    expiresIn: 7 * 24 * 60 * 60 * 1000,
+    getAsyncValue: async () => getClusterMaxZoom(await getAnonDatabaseArgs()),
+  })
 
   async function shouldRunInClient({ zoom, categories, currencies }: LocationClusterParams): Promise<boolean> {
+    // FIXME Not the best solution, but it works for now
     // We cannot compute all clusters combinations in the server, if user has selected currencies or categories
     // we need to compute the clusters in the client
-    if (currencies || categories)
-      return true
+    // if (currencies || categories)
+    //   return true
 
     await initMaxZoom() // Get the value from the server if it doesn't exist
     return zoom > maxZoomFromServer.value
@@ -137,6 +139,7 @@ export const useMarkers = defineStore('markers', () => {
     clustersInView,
     singlesInView,
     loaded,
+    maxZoomFromServer,
     clearMarkers: () => setMarkers([], []),
   }
 })

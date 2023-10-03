@@ -10,9 +10,11 @@ import TheMapInstance from '@/components/elements/TheMapInstance.vue'
 import IconChevronDown from '@/components/icons/icon-chevron-down.vue'
 import { useApp } from '@/stores/app'
 import { useMarkers } from '@/stores/markers'
+import { useMap } from '@/stores/map'
 
 const { isListShown } = storeToRefs(useApp())
-const { singlesInView, clustersInView } = storeToRefs(useMarkers())
+const { singlesInView, clustersInView, maxZoomFromServer } = storeToRefs(useMarkers())
+const { zoom } = storeToRefs(useMap())
 
 const openSuggestions = ref(false)
 </script>
@@ -36,6 +38,6 @@ const openSuggestions = ref(false)
       <template #label>{{ $t(isListShown ? 'Hide list' : 'Show list') }}</template>
     </Button>
   </aside>
-  <FilterModal class="absolute top-6 right-6" />
+  <FilterModal v-if="maxZoomFromServer < zoom" class="absolute top-6 right-6" />
   <Controls class="absolute bottom-6 right-6" />
 </template>

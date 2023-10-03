@@ -9,7 +9,7 @@ export const useApp = defineStore('app', () => {
 
   const { loaded: markersLoaded } = storeToRefs(useMarkers())
 
-  const until = Date.now() + 200 // Show the splash screen at least for 200ms
+  const until = Date.now() + 300 // Show the splash screen at least for 200ms
   const showSplashScreen = ref(true)
   watch([mapLoaded, markersLoaded], () => {
     if (mapLoaded.value && markersLoaded.value)

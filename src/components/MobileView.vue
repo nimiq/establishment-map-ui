@@ -10,6 +10,7 @@ import TheMapInstance from '@/components/elements/TheMapInstance.vue'
 import { useApp } from '@/stores/app'
 import { useMarkers } from '@/stores/markers'
 import { useLocations } from '@/stores/locations'
+import { useMap } from '@/stores/map'
 
 const { isListShown } = storeToRefs(useApp())
 const { singlesInView, clustersInView } = storeToRefs(useMarkers())
@@ -25,6 +26,9 @@ watch(selectedUuid, (uuid) => {
   if (uuid)
     isListShown.value = true
 }, { immediate: true })
+
+const { zoom } = storeToRefs(useMap())
+const { maxZoomFromServer } = storeToRefs(useMarkers())
 </script>
 
 <template>
@@ -36,7 +40,7 @@ watch(selectedUuid, (uuid) => {
       :class="{ 'translate-y-0 delay-100 duration-500 opacity-20': isListShown, 'translate-y-full duration-500 opacity-0': !isListShown }"
       class="absolute bottom-0 w-full h-[184px] transition-[transform,opacity] will-change-transform pointer-events-none bg-gradient-to-t from-space to-space/0"
     /> -->
-    <FilterModal class="absolute top-24 right-5" />
+    <FilterModal v-if="maxZoomFromServer < zoom" class="absolute top-24 right-5" />
     <transition name="scale">
       <Controls v-if="singlesInView.length === 0 || !isListShown" class="absolute bottom-6 right-6" />
     </transition>
