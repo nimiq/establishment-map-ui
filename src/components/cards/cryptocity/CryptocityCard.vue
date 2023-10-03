@@ -30,7 +30,7 @@ defineEmits({ close: () => true })
       </button>
     </div>
 
-    <p v-for="(p, i) in cryptocity.description" :key="i" class="text-sm text-space/80" :class="i === 0 ? 'pt-3' : 'pt-2'">{{ p }}</p>
+    <p v-for="(p, i) in cryptocity.description" :key="i" class="text-sm text-space/80 [text-wrap:pretty]" :class="i === 0 ? 'pt-3' : 'pt-2'">{{ p }}</p>
     <Button :href="cryptocity.url" class="mt-2 !p-0 !h-auto [&_span]:!text-sm" bg-color="transparent" size="sm" text-color="sky">
       <template #label>
         {{ cryptocity.url }}

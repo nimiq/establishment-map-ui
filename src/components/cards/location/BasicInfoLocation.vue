@@ -57,7 +57,7 @@ defineProps({
       <template v-else-if="location.sells.length > 0">{{ $t('Buy crypto only') }}</template>
     </span>
     <p
-      class="text-xs leading-[1.5] grid-cols-1 row-start-3" :class="{
+      class="text-xs leading-[1.5] grid-cols-1 row-start-3 [text-wrap:pretty]" :class="{
         'text-white/70': location.isAtm && location.isDark,
         'text-space/60': !location.isAtm || location.isLight,
         'col-span-2': location.photo,
