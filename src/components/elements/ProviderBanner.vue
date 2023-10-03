@@ -56,12 +56,12 @@ const isMobile = useBreakpoints(screens).smaller('md')
             <div>
               <header class="flex items-center justify-start gap-x-2">
                 <ProviderCircleLogo :provider="location.provider" />
-                <h4 class="font-semibold truncate">
+                <h4 class="font-semibold truncate [text-wrap:balance]">
                   {{ location.provider }}
                 </h4>
               </header>
 
-              <p class="mt-2 text-sm text-white/60">
+              <p class="mt-2 text-sm text-white/60 [text-wrap:pretty]">
                 {{ location.providerTooltip }}
               </p>
 

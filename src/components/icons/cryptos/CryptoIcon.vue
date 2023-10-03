@@ -79,7 +79,7 @@ const isMobile = useBreakpoints(screens).smaller('md')
             {{ $t('GoCrypto supports Binance Pay') }}
           </h4>
 
-          <p class="mt-2 text-sm text-white/60">
+          <p class="mt-2 text-sm text-white/60 [text-wrap:pretty]">
             {{ $t('Binance Pay is a cryptocurrency payment service that empowers users to pay with crypto at shops and establishments supporting Binance Pay.') }}
           </p>
 
