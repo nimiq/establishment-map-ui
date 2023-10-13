@@ -177,8 +177,7 @@ if (isIOs) {
   >
     <li
       v-for="(location, index) in locations" :key="location.uuid" ref="cards"
-
-      class="relative shrink-0 snap-center pointer-events-auto"
+      class="relative pointer-events-auto shrink-0 snap-center"
       :data-card-uuid="location.uuid"
     >
       <SheetModal

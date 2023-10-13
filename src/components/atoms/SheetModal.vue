@@ -189,7 +189,7 @@ onBeforeUnmount(() => {
 
 <template>
   <article
-    ref="container" class="sheet-modal absolute h-full touch-pan-x sheet-transition will-change-auto min-h-fit" :style="style"
+    ref="container" class="absolute w-screen h-full touch-pan-x sheet-transition will-change-auto min-h-fit" :style="style"
     @pointerdown="onStart" @pointermove="onMove" @pointerup="onEnd" @pointercancel="onCancel"
   >
     <slot name="dragger" />
@@ -198,10 +198,6 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.sheet-modal {
-  width: 100vw;
-}
-
 .sheet-transition {
   transition: margin-bottom var(--duration), margin-left var(--duration), width var(--duration), border-bottom-right-radius var(--duration), border-bottom-left-radius var(--duration), height var(--duration);
 }
