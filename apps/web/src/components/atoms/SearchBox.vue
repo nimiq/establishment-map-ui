@@ -157,8 +157,8 @@ function onListVisibilityChange(isVisible: boolean) {
           :class="{
             'text-space': !open,
             'text-ocean': open,
-            'text-sm py-[5px]': size === 'sm',
-            'text-base py-2': size === 'md',
+            'text-14 py-[5px]': size === 'sm',
+            'text-16 py-2': size === 'md',
           }" autocomplete="off" :placeholder="placeholder" :display-value="(v) => (v as Suggestion)?.label"
           @change="query = $event.target.value"
         />
@@ -183,7 +183,7 @@ function onListVisibilityChange(isVisible: boolean) {
                 'bg-space': bgCombobox === 'space',
               },
             ]"
-            class="absolute z-40 overflow-auto text-base shadow-lg scroll-space focus:outline-none"
+            class="absolute z-40 overflow-auto text-16 shadow-lg scroll-space focus:outline-none"
           >
             <div
               v-if="AutocompleteStatus.WithResults !== status" class="relative px-4 py-2 text-center cursor-default select-none h-[100px]" :class="{

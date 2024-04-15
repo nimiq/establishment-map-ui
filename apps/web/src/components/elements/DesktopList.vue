@@ -83,7 +83,7 @@ watch(selectedUuid, (uuid) => {
     </template>
 
     <template v-if="clusters.length" #after>
-      <div class="px-6 py-5 text-sm font-semibold border-space/10 border-t-xs text-space/50">
+      <div class="px-6 py-5 text-14 font-semibold border-space/10 border-t-xs text-space/50">
         {{ $tc('+ {count} grouped', clusters.reduce((sum, cluster) => sum + cluster.count, 0)) }}
       </div>
     </template>
@@ -94,7 +94,7 @@ watch(selectedUuid, (uuid) => {
     :class="listIsShown ? 'h-[calc(100vh-10.5rem-var(--search-box-hint)*88px)]' : 'h-0'"
   >
     <IconCactusDesert />
-    <span class="text-base text-center text-space font-regular" :class="!listIsShown && 'h-0'">
+    <span class="text-16 text-center text-space font-regular" :class="!listIsShown && 'h-0'">
       {{ $t('Oops, no businesses around here') }}
     </span>
   </div>

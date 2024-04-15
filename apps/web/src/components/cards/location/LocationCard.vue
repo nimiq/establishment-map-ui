@@ -20,10 +20,10 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
 
 <template>
   <div
-    class="relative rounded-lg duration-[--duration,0] group/card h-full select-none"
+    relative rounded-12 duration="[var(--duration,0)]" group h-full select-none
     :class="{
       'rounded-b-0': progress === 1 && isMobile,
-      'overflow-hidden': isMobile,
+      'of-hidden': isMobile,
       'select-auto': progress === 1 || !isMobile,
     }"
     :style="`background: ${location.isAtm ? location.bg[0] : 'white'}`"
@@ -31,12 +31,12 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
     <CardBg v-if="location.isAtm" :location="location" />
 
     <div
-      v-if="location.photo && progress > 0" class="pt-1.5 px-1.5 transition-height duration-[--duration]"
+      v-if="location.photo && progress > 0" pt-6 px-5 transition-height duration="[--duration]" 
       :style="`height: ${progress * 184}px;`"
     >
       <img
-        class="object-cover w-full h-full rounded-sm animate-pulse "
-        :class="location.isAtm && location.isDark ? 'bg-white/60' : 'bg-space/10'"
+        object-cover w-full h-full rounded-8
+        :class="location.isAtm && location.isDark ? 'bg-neutral-0/60' : 'bg-neutral/10'"
         :src="location.photo"
         :alt="$tc('Picture of {name}', { name: location.name })"
         draggable="false"
@@ -44,9 +44,9 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
       >
     </div>
 
-    <div class="relative px-6 py-5 space-y-5">
+    <div relative px-24 py-20 space-y-20>
       <BasicInfo :location="location" :progress="progress" />
-      <CardDotsMenu v-if="progress === 1" :location="location" class="absolute top-0 right-4" />
+      <CardDotsMenu v-if="progress === 1" :location="location" absolute top-0 right-4 />
 
       <transition
         enter-active-class="transition duration-100 ease-out"
@@ -55,21 +55,19 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
         leave-to-class="transform translate-y-3 opacity-0"
       >
         <template v-if="progress > 0.5 && location.accepts.length && location.sells.length && !arrayEquals(location.accepts, location.sells)">
-          <div
-            class="grid grid-flow-col grid-cols-[auto,auto] grid-rows-[auto,1fr] gap-y-1 gap-x-2 w-max h-max relative z-20"
-          >
-            <h5 class="text-xs text-white/60">
+          <div grid="~ flow-col cols-[auto,auto] rows-[auto,1fr] gap-x-8 gap-y-4" w-max h-max relative z-20>
+            <h5 text="12 neutral-700">
               {{ $t('Buy') }}
             </h5>
             <CryptoList :cryptos="location.sells" />
-            <h5 class="text-xs text-white/60">
+            <h5 class="text-12 text-white/60">
               {{ $t('Sell') }}
             </h5>
             <CryptoList :cryptos="location.accepts" />
           </div>
         </template>
         <template v-else>
-          <CryptoList :cryptos="[...new Set(location.accepts.concat(location.sells))]" class="relative z-20" />
+          <CryptoList :cryptos="[...new Set(location.accepts.concat(location.sells))]" relative z-20 />
         </template>
       </transition>
     </div>

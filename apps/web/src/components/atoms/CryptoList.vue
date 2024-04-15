@@ -3,6 +3,7 @@ import type { PropType } from 'vue'
 import { computed } from 'vue'
 import type { Currency } from 'types'
 import CryptoIcon from '@/components/icons/cryptos/CryptoIcon.vue'
+import { getCurrencyIcon } from '@/composables/useIcon';
 
 const props = defineProps({
   cryptos: {
@@ -34,12 +35,12 @@ const n = computed(() => {
 </script>
 
 <template>
-  <div v-if="cryptosToDisplay.length > 0" class="flex items-center gap-x-2">
-    <ul class="flex items-center p-1 bg-white rounded-full w-max gap-x-2 ring-1 ring-space/10">
+  <div v-if="cryptosToDisplay.length > 0" flex="~ items-center gap-x-8">
+    <ul flex="~ items-center gap-x-8" p-4 bg-neutral-0 rounded-full w-max ring="1.5 ring-neutral/10">
       <li v-for="c in cryptosToDisplay " :key="c">
-        <CryptoIcon :crypto="c" size="md" bg="transparent" />
+        <div text-24 :class="getCurrencyIcon(c)" />
       </li>
-      <li v-if="n > 0" class="pr-1 text-sm text-space/60">
+      <li v-if="n > 0" pr-4 text="14 neutral-700">
         +{{ n }}
       </li>
     </ul>

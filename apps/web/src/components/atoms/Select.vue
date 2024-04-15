@@ -95,7 +95,7 @@ function hasSlot(slotName: 'selected-option' | 'after-options' | 'label') {
           leave-to-class="opacity-0"
         >
           <ListboxOptions
-            class="absolute -top-px -left-px w-[calc(100%+2px)] overflow-auto rounded-sm bg-white py-1 text-base ring-1 ring-space ring-opacity-5 focus:outline-none sm:text-sm scroll-grey z-40 bg-gradient-space pb-4 max-h-60 shadow-select space-y-1"
+            class="absolute -top-px -left-px w-[calc(100%+2px)] overflow-auto rounded-sm bg-white py-1 text-16 ring-1 ring-space ring-opacity-5 focus:outline-none sm:text-14 scroll-grey z-40 bg-gradient-space pb-4 max-h-60 shadow-select space-y-1"
           >
             <ListboxOption
               v-for="(option, i) in options" v-slot="{ active, selected: optionIsSelected }" :key="i" :value="option"
@@ -116,7 +116,7 @@ function hasSlot(slotName: 'selected-option' | 'after-options' | 'label') {
                 </div>
               </li>
             </ListboxOption>
-            <div v-if="hasSlot('after-options')" class="text-sm text-white/60 px-4 mt-2.5">
+            <div v-if="hasSlot('after-options')" class="text-14 text-white/60 px-4 mt-2.5">
               <slot name="after-options" />
             </div>
           </ListboxOptions>
@@ -126,7 +126,7 @@ function hasSlot(slotName: 'selected-option' | 'after-options' | 'label') {
     <ul v-if="hasSlot('selected-option')" class="flex flex-wrap gap-2 mt-2">
       <li
         v-for="(option, i) in selected" :key="i"
-        class="w-max bg-space/[0.07] rounded-sm px-2 pt-1.5 pb-1 text-sm text-space flex gap-x-2.5 items-center"
+        class="w-max bg-space/[0.07] rounded-sm px-2 pt-1.5 pb-1 text-14 text-space flex gap-x-2.5 items-center"
       >
         <span>
           <slot name="selected-option" v-bind="{ option }" />

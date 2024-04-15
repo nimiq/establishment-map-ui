@@ -22,13 +22,13 @@ function hasSlot(slot: 'pre-title' | 'title' | 'description' | 'content') {
         class="data-[state=open]:animate-fade data-[state=close]:animate-fade-out"
       />
       <Dialog.Content fixed max-desktop="bottom-0 rounded-t-8" desktop="top-1/2 left-1/2 -translate-1/2 rounded-8" max-h-85dvh w-full max-w-512 py-32 rounded-md z-20 of-y-auto ring="1 neutral/10" shadow-lg bg-neutral-0
-        class="data-[state=open]:animate-fade md:rounded-lg md:max-w-lg"
+        class="data-[state=open]:animate-fade md:rounded-lg md:max-w-512"
       >
         <div v-if="hasSlot('pre-title')" px-24 desktop:px-40 mb-16>
           <slot name="pre-title" />
         </div>
 
-        <Dialog.Title v-if="hasSlot('title')" px-24 desktop:px-40 mb-8 text-18 font-bold text-neutral lh-18 as="h2">
+        <Dialog.Title v-if="hasSlot('title')" px-24 desktop:px-40 mb-8 text-18 font-bold text-neutral lh-none as="h2">
           <slot name="title" />
         </Dialog.Title>
         <Dialog.Description v-if="hasSlot('description')" as="div" px-24 desktop:px-40 text-neutral-800>

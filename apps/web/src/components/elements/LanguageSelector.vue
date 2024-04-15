@@ -96,7 +96,7 @@ function handleClick() {
 
 <template>
   <div
-    class="text-base font-semibold tracking-[.125rem] uppercase cursor-pointer relative"
+    class="text-16 font-semibold tracking-[.125rem] uppercase cursor-pointer relative"
     :tabindex="!isListShown && languages.length > 1 ? 0 : -1" @click.once="handleClick" @focus.capture="_showList" @blur.capture="
       // Do not hide the list immediately to wait whether the next focused element is also a language list entry,
       // because blurs also occur when moving between the list entries.

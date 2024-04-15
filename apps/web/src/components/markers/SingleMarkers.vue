@@ -4,13 +4,14 @@ import { storeToRefs } from 'pinia'
 import { breakpointsTailwind } from '@vueuse/core'
 import type { Location } from 'types'
 import type { PropType } from 'vue'
-import { computed, defineAsyncComponent, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { CustomMarker } from 'vue3-google-map'
 import { Popover } from 'radix-vue/namespaced'
 import { useMap } from '@/stores/map'
 import { useLocations } from '@/stores/locations'
 import { useApp } from '@/stores/app'
 import LocationCard from '@/components/cards/location/LocationCard.vue'
+import { getCategoryIcon } from '../../composables/useIcon'
 
 // TODO Async components loading does not work
 // const { PopoverArrow, PopoverAnchor, PopoverContent, PopoverPortal, PopoverRoot, PopoverTrigger } = defineAsyncComponent(() => import('radix-vue'))
@@ -26,10 +27,6 @@ const { isListShown } = storeToRefs(useApp())
 
 const showSingleName = computed(() => zoom.value >= 11)
 const showCategoryIcon = computed(() => zoom.value >= 13)
-
-const CategoryIcon = defineAsyncComponent(
-  () => import('@/components/icons/categories/CategoryIcon.vue'),
-)
 
 // Since the Desktop requires a Popover, we need to create a reusable template where the trigger is the same component
 // as in the mobile version, but without the Popover
@@ -74,35 +71,38 @@ function handlePopoverOpen(isOpen: boolean, location: Location) {
   }
   selectedUuid.value = location.uuid
 }
+
 </script>
 
 <template>
   <DefineTemplate v-slot="{ location: { category, name, isAtm, bg, uuid } }">
-    <div class="flex items-center gap-x-2 max-w-[176px] group/marker">
+    <div flex="~ items-center gap-8" max-w-176 group>
       <div
         v-if="isAtm"
-        class="grid w-8 h-8 text-white rounded-full shadow ring-white/40 ring-2 place-content-center bg-[--bg-1] hocus:bg-[--bg-2] transition-colors max-desktop:clickable"
+        size-32 grid="~ place-content-center" ring="1.5 neutral-0" bg="[var(--bg-1)] hocus:[var(--bg02)]" transition-colors max-desktop:clickable
         :style="{ '--bg-1': bg[0], '--bg-2': bg[1] }"
       >
         {{ $t('ATM') }}
       </div>
       <div
         v-else-if="showCategoryIcon"
-        class="grid w-8 h-8 text-white transition-colors rounded-full shadow ring-white/40 ring-2 place-content-center max-desktop:clickable"
-        :class="uuid === selectedUuid ? 'bg-sky' : 'bg-space group-hover/marker:bg-[#494d6c] group-focus/marker:bg-[#494d6c]'"
+        size-32 grid="~ place-content-center" ring="1.5 neutral-0" shadow transition-colors max-desktop:clickable
+        :class="uuid === selectedUuid ? 'bg-blue' : 'bg-neutral group-hocus:bg-blue-1100'"
       >
-        <CategoryIcon :category="category" class="w-7" />
+        <div :class="getCategoryIcon(category)" text-28 />
       </div>
       <div
         v-else
-        class="grid w-3 h-3 text-sm font-bold text-white transition-colors rounded-full shadow ring-white/40 ring-2 place-content-center clickable"
-        :class="uuid === selectedUuid ? 'bg-sky' : 'bg-space group-hover/marker:bg-[#494d6c] group-focus/marker:bg-[#494d6c]'"
+        ring="2 neutral-0" text="12 neutral-0" size-12 transition-colors rounded-full shadow max-desktop:clickable
+        :class="uuid === selectedUuid ? 'bg-blue' : 'bg-neutral group-hocus:bg-blue-1100'"
       />
+
       <!-- <PopoverAnchor class="mx-1" /> -->
       <span
         v-if="!isAtm && showSingleName"
-        class="flex-1 text-base font-semibold leading-none text-left transition-[color,-webkit-text-stroke] select-none [-webkit-text-stroke:_3px_white] relative before:content-[attr(data-outline)] before:absolute before:[-webkit-text-stroke:0] max-desktop:clickable"
-        :class="[uuid === selectedUuid ? 'text-sky' : 'text-space group-hover/marker:text-space/80 group-focus/marker:bg-[#35395A]', { invisible: !isMobile && uuid === selectedUuid }]"
+        flex-1 :text="`16 left ${uuid===selectedUuid ? 'blue' : 'neutral group-hocus:blue-1100'}`" font-bold lh-none select-none relative max-desktop:clickable
+        class="transition-[color,-webkit-text-stroke] [-webkit-text-stroke:_3px_white] before:content-[attr(data-outline)] before:absolute before:[-webkit-text-stroke:0]"
+        :class="[{ invisible: !isMobile && uuid === selectedUuid }]"
         :data-outline="name"
       >
         {{ name }}
@@ -130,7 +130,7 @@ function handlePopoverOpen(isOpen: boolean, location: Location) {
           side="right" :side-offset="5" class="rounded-lg shadow" :collision-padding="8" sticky="always"
           @open-auto-focus.prevent
         >
-          <LocationCard :location="location" :progress="1" :class="location.photo ? 'max-w-xs' : 'max-w-sm'" />
+          <LocationCard :location="location" :progress="1" :class="location.photo ? 'max-w-320' : 'max-w-384'" />
           <Popover.Arrow
             class="w-4 h-2"
             :style="`fill: ${location.isAtm ? extractColorFromBg(location.bg[0]) : 'white'}`"

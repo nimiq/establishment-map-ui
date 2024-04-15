@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { GoogleMap } from 'vue3-google-map'
-import { useDark } from '@vueuse/core'
 import { useMap } from '@/stores/map'
 import { i18n } from '@/i18n/i18n-setup'
 import { useInitialMapPosition } from '@/composables/useInitialMapPosition'
@@ -43,19 +42,16 @@ const mapGestureBehaviour
   = typeof gestureBehaviourParam === 'string' && ['cooperative', 'greedy', 'none', 'auto'].includes(gestureBehaviourParam)
     ? gestureBehaviourParam as GestureBehaviour
     : 'greedy'
-
-const isDark = useDark()
 </script>
 
 <template>
   <transition leave-active-class="duration-150 ease-in" leave-from-class="opacity-100" leave-to-class="opacity-0">
     <div
       v-if="showSplashScreen"
-      class="absolute inset-0 grid supports-[height:100dvh]:h-[100dvh] h-screen px-12 z-100 place-content-center"
-      :class="isDark ? 'bg-space' : 'bg-white'"
+      absolute inset-0 grid h-screen h-100dvh px-48 z-100 place-content-center bg-neutral-0
     >
-      <img :src="`logo-horizontal-${isDark ? 'dark' : 'light'}.svg`" loading="eager" :alt="$t('Crypto Map logo')" class="animate-fade">
-      <i18n-t class="absolute inset-x-0 w-screen px-4 text-xs md:text-center bottom-4 text-space/80 dark:text-white/50" tag="div" keypath="This site is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply.">
+      <div i-nimiq:logos-crypto-map-horizontal dark:i-nimiq:logos-crypto-map-white-horizontal aria-hidden class="!h-64 !w-[min(510px,90vw)] animate-fade" />
+      <i18n-t absolute inset-x-0 bottom-0 w-screen p-16 text="12 desktop:center neutral-800" tag="div" keypath="This site is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply.">
         <template #privacyPolicy>
           <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="underline text-space/80 dark:text-white/60">{{ $t('Privacy Policy') }}</a>
         </template>

@@ -82,7 +82,7 @@ function hasSlot(name: string) {
 
         <div
           v-if="hasSlot('link')"
-          class="text-sky font-bold text-sm group flex justify-center items-center gap-x-1.5 mt-4"
+          class="text-sky font-bold text-14 group flex justify-center items-center gap-x-1.5 mt-4"
         >
           <slot name="link" />
           <ArrowLinkIcon class="w-2.5 h-2.5 group-hover:left-0.5 group-hover:-top-0.5 transition-all duration-300" />

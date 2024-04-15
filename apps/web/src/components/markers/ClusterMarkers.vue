@@ -51,7 +51,7 @@ function onClusterClick({ expansionZoom, lat, lng }: Cluster) {
     <OnClickOutside @trigger="isMobile && toggleClusterExpansion(c, $event)">
       <ul
         :data-cluster-id="c.id"
-        class="relative"
+        relative
         :style="`
           --expanded: 0;
           left: calc(-1 * ${c.diameter / 2}px); /* To center it after we set it to the left in the anchor point */
@@ -60,9 +60,8 @@ function onClusterClick({ expansionZoom, lat, lng }: Cluster) {
         @pointerover="!isMobile && c.cryptocities.length > 0 ? setExpansionCluster(c.id, '1') : undefined"
         @pointerout="!isMobile && c.cryptocities.length > 0 ? setExpansionCluster(c.id, '0') : undefined"
       >
-        <li class="relative z-10">
-          <div
-            class="grid text-sm font-bold text-white transition-colors rounded-full shadow cursor-pointer aspect-square place-content-center bg-space hover:bg-[#35395A] focus:bg-[#35395A] border border-white/20 max-desktop:clickable" :style="`width: ${c.diameter}px; font-size: clamp(14px, ${0.14 * c.count + 4}px, 18px)`"
+        <li relative z-10>
+          <div grid="~ place-content-center" text="14 neutral-0" bg="neutral hover:neutral-900" ring="1.5 neutral/10" transition-colors font-bold rounded-full shadow cursor-pointer aspect-square max-desktop:clickable :style="`width: ${c.diameter}px; font-size: clamp(14px, ${0.14 * c.count + 4}px, 18px)`"
             @pointerdown="isMobile && c.cryptocities.length > 0 ? toggleClusterExpansion(c) : onClusterClick(c)"
           >
             {{ c.count < 1000 ? c.count : '999+' }}
@@ -71,7 +70,7 @@ function onClusterClick({ expansionZoom, lat, lng }: Cluster) {
 
         <li
           v-for="(city, i) in c.cryptocities" :key="city"
-          class="absolute top-0 transition"
+          absolute top-0 transition-all
           :style="`
           z-index: ${c.cryptocities.length - i};
           width: ${c.diameter}px;

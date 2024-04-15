@@ -24,7 +24,7 @@
     "@headlessui/vue": "^1.7.19",
     "@nimiq/utils": "^0.10.1",
     "@nimiq/vue3-components": "github:nimiq/vue3-components#build/full",
-    "@turf/turf": "^7.0.0-alpha.114",
+    "@turf/turf": "7.0.0-alpha.113",
     "@vueuse/components": "^10.9.0",
     "@vueuse/core": "^10.9.0",
     "@vueuse/math": "^10.9.0",
@@ -41,6 +41,8 @@
   "devDependencies": {
     "@antfu/eslint-config": "^2.13.3",
     "@histoire/plugin-vue": "^0.17.17",
+    "@iconify-json/cryptocurrency-color": "^1.1.7",
+    "@iconify-json/logos": "^1.1.42",
     "@types/geojson": "^7946.0.14",
     "@types/google.maps": "^3.55.7",
     "@types/grecaptcha": "^3.0.9",

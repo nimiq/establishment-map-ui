@@ -17,7 +17,7 @@ defineEmits({ close: () => true })
 
 <template>
   <div
-    class="p-6 transition-all duration-300 bg-white shadow cursor-default rounded-t-md desktop:rounded-md border border-[#e9e9ed] desktop:max-w-xs"
+    class="p-6 transition-all duration-300 bg-white shadow cursor-default rounded-t-md desktop:rounded-md border border-[#e9e9ed] desktop:max-w-320"
     @pointerdown.capture.stop.prevent @dblclick.capture.stop.prevent
   >
     <div class="grid items-center grid-cols-[auto_1fr_auto] grid-rows-2 grid-flow-dense gap-x-2">
@@ -25,7 +25,7 @@ defineEmits({ close: () => true })
       <h3 class="text-space leading-[1]" :class="cryptocity.locationsCount <= 1 ? 'row-span-full' : ''">
         {{ cryptocity.name }}
       </h3>
-      <span v-if="cryptocity.locationsCount > 1" class="text-sm leading-[1] text-space/70">
+      <span v-if="cryptocity.locationsCount > 1" class="text-14 leading-[1] text-space/70">
         {{ $tc('{count} locations', cryptocity.locationsCount) }}
       </span>
       <button
@@ -39,13 +39,13 @@ defineEmits({ close: () => true })
     </div>
 
     <p
-      v-for="(p, i) in cryptocity.description" :key="i" class="text-sm text-space/80 text-pretty"
+      v-for="(p, i) in cryptocity.description" :key="i" class="text-14 text-space/80 text-pretty"
       :class="i === 0 ? 'pt-3' : 'pt-2'"
     >
       {{ p }}
     </p>
     <Button
-      :href="cryptocity.url" class="mt-2 !p-0 !h-auto [&_span]:!text-sm" bg-color="transparent" size="sm"
+      :href="cryptocity.url" class="mt-2 !p-0 !h-auto [&_span]:!text-14" bg-color="transparent" size="sm"
       text-color="sky"
     >
       <template #label>

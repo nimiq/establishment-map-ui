@@ -6,7 +6,6 @@ import { breakpointsTailwind } from '@vueuse/core'
 import { CATEGORIES, CURRENCIES } from 'database'
 import type { Category, Currency } from 'types'
 import Button from '@/components/atoms/Button.vue'
-import CategoryIcon from '@/components/icons/categories/CategoryIcon.vue'
 import CryptoIcon from '@/components/icons/cryptos/CryptoIcon.vue'
 import Select from '@/components/atoms/Select.vue'
 import FilterIcon from '@/components/icons/icon-filter.vue'
@@ -14,6 +13,7 @@ import { useFilters } from '@/stores/filters'
 import { translateCategory, translateCurrency } from '@/translations'
 import { useMarkers } from '@/stores/markers'
 import Modal from '@/components/atoms/Modal.vue'
+import { getCategoryIcon } from '@/composables/useIcon'
 
 const open = ref(false)
 const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
@@ -89,7 +89,7 @@ function applyFilters() {
         :options="CURRENCIES"
       >
         <template #label>
-          <h3 class="mb-6 text-sm font-semibold tracking-wider uppercase text-space/40 md:mb-8">
+          <h3 class="mb-6 text-14 font-semibold tracking-wider uppercase text-space/40 md:mb-8">
             {{ $t('Cryptocurrencies') }}
           </h3>
         </template>
@@ -111,12 +111,12 @@ function applyFilters() {
         :placeholder="$t('Select category')" class="mt-9"
       >
         <template #label>
-          <h3 class="mb-6 text-sm font-semibold tracking-wider uppercase text-space/40 md:mb-8">
+          <h3 class="mb-6 text-14 font-semibold tracking-wider uppercase text-space/40 md:mb-8">
             {{ $t('Categories') }}
           </h3>
         </template>
         <template #option="{ option: category }">
-          <CategoryIcon class="w-6 h-6" :category="category" />
+          <div :class="getCategoryIcon(category)" text-24 />
           {{ translateCategory(category) }}
         </template>
         <template #selected-option="{ option: category }">
@@ -174,7 +174,7 @@ function applyFilters() {
               :leave-to="`${isMobile ? 'translate-y-full' : ''} opacity-0 scale-95`"
             >
               <DialogPanel
-                class="relative w-full py-8 text-left align-middle transition-all transform bg-white shadow-lg rounded-t-2xl md:max-w-lg md:rounded-lg"
+                class="relative w-full py-8 text-left align-middle transition-all transform bg-white shadow-lg rounded-t-2xl md:max-w-512 md:rounded-lg"
               >
                 <CrossIcon
                   class="absolute w-6 h-6 transition-colors rounded-full cursor-pointer top-4 right-4 bg-space/20 hover:bg-space/30 focus-visible:bg-space/30 text-white/80"
@@ -191,7 +191,7 @@ function applyFilters() {
                   :options="CURRENCIES" class="px-6 md:px-10"
                 >
                   <template #label>
-                    <h3 class="mb-6 text-sm font-semibold tracking-wider uppercase text-space/40 md:mb-8">
+                    <h3 class="mb-6 text-14 font-semibold tracking-wider uppercase text-space/40 md:mb-8">
                       {{ $t('Cryptocurrencies') }}
                     </h3>
                   </template>
@@ -213,7 +213,7 @@ function applyFilters() {
                   :placeholder="$t('Select category')" class="px-6 mt-9 md:px-10"
                 >
                   <template #label>
-                    <h3 class="mb-6 text-sm font-semibold tracking-wider uppercase text-space/40 md:mb-8">
+                    <h3 class="mb-6 text-14 font-semibold tracking-wider uppercase text-space/40 md:mb-8">
                       {{ $t('Categories') }}
                     </h3>
                   </template>

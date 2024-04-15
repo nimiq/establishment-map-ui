@@ -72,14 +72,14 @@ const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
       </Popover.Trigger>
       <Popover.Portal>
         <Popover.Content
-          class="max-w-xs p-4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space"
+          class="max-w-320 p-4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space"
           :side="isMobile ? 'top' : 'right'" :collision-padding="8" :side-offset="6"
         >
           <h4 class="font-semibold truncate">
             {{ $t('GoCrypto supports Binance Pay') }}
           </h4>
 
-          <p class="mt-2 text-sm text-white/60 text-pretty">
+          <p class="mt-2 text-14 text-white/60 text-pretty">
             {{
               $t(`Binance Pay is a cryptocurrency payment service that empowers users to pay with crypto at shops and
             establishments supporting Binance Pay.`)
@@ -88,7 +88,7 @@ const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
 
           <div class="flex items-end justify-end gap-x-1.5" :title="$t('BTC +50')">
             <BtcIcon :class="css" class="w-6" />
-            <span class="text-sm font-bold text-white/50">50+</span>
+            <span class="text-14 font-bold text-white/50">50+</span>
           </div>
 
           <Popover.Arrow class="fill-space" size="8" />

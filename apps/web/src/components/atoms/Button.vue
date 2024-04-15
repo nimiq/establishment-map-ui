@@ -130,9 +130,9 @@ function getComponent() {
         'text-sky': textColor === 'sky',
         'text-white': textColor === 'white',
         'text-opacity-40': isDisabled,
-        'text-sm md:text-base': props.size === 'lg',
-        'text-xs md:text-sm': props.size === 'md',
-        'text-11 md:text-xs': props.size === 'sm',
+        'text-14 md:text-16': props.size === 'lg',
+        'text-12 md:text-14': props.size === 'md',
+        'text-11 md:text-12': props.size === 'sm',
         'font-bold': getComponent() !== 'a' && getComponent() !== 'arouter-link',
       }"
     >
@@ -161,7 +161,7 @@ function getComponent() {
     >
       <div
         v-if="hasSlot('badge')"
-        class="rounded-full absolute translate-x-1/2 -translate-y-1/2 top-0.5 right-0.5 bg-space text-white text-xs grid place-content-center font-bold w-4 h-4"
+        class="rounded-full absolute translate-x-1/2 -translate-y-1/2 top-0.5 right-0.5 bg-space text-white text-12 grid place-content-center font-bold w-4 h-4"
       >
         <slot name="badge" />
       </div>

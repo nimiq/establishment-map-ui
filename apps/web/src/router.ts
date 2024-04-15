@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { detectLanguage, setLanguage } from './i18n/i18n-setup'
 import MapView from '@/components/MapView.vue'
-import './index.css'
 
 const NewCandidate = () => import('@/components/forms/NewCandidate.vue')
 const ReportLocation = () => import('@/components/forms/ReportLocation.vue')

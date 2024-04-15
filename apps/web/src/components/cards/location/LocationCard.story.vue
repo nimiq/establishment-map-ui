@@ -25,7 +25,7 @@ const progress = computed(() => {
 <template>
   <Story title="Card" :layout="{ type: 'grid', width: '360px' }">
     <template #controls>
-      <div class="flex flex-col px-4 py-4 gap-x-2">
+      <div flex="~ flex-col gap-x-8" p-16>
         <label for="expanded" class="select-none">Progress State</label>
         <select v-model="progressState" class="text-black bg-transparent bg-snow">
           <option name="expanded" value="expanded" class="text-black">
@@ -43,7 +43,7 @@ const progress = computed(() => {
         </select>
       </div>
 
-      <div v-if="progressState === 'custom'" class="flex flex-col px-4 py-4 gap-x-2">
+      <div v-if="progressState === 'custom'" class="flex flex-col px4 py4 gap-x-2">
         <label for="expanded">Custom Progress</label>
         <input id="customProgress" v-model="customProgress" name="customProgress" class="text-black" type="number">
       </div>

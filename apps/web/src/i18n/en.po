@@ -15,7 +15,7 @@ msgstr ""
 msgid "Add a location to the Crypto Map"
 msgstr ""
 
-#: src/components/elements/CryptoMapModal.vue:41
+#: src/components/elements/CryptoMapModal.vue:38
 msgid "Add Crypto location"
 msgstr ""
 
@@ -23,7 +23,7 @@ msgstr ""
 msgid "Apply filters"
 msgstr ""
 
-#: src/components/cards/location/BasicInfoLocation.vue:17
+#: src/components/cards/location/BasicInfoLocation.vue:6
 #: src/components/markers/SingleMarkers.vue:9
 msgid "ATM"
 msgstr ""
@@ -53,15 +53,15 @@ msgstr ""
 msgid "BTC +50"
 msgstr ""
 
-#: src/components/cards/location/LocationCard.vue:42
+#: src/components/cards/location/LocationCard.vue:40
 msgid "Buy"
 msgstr ""
 
-#: src/components/cards/location/BasicInfoLocation.vue:41
+#: src/components/cards/location/BasicInfoLocation.vue:29
 msgid "Buy & sell crypto"
 msgstr ""
 
-#: src/components/cards/location/BasicInfoLocation.vue:44
+#: src/components/cards/location/BasicInfoLocation.vue:32
 msgid "Buy crypto only"
 msgstr ""
 
@@ -85,7 +85,7 @@ msgstr ""
 msgid "Clear"
 msgstr ""
 
-#: src/components/atoms/Modal.vue:35
+#: src/components/atoms/Modal.vue:29
 #: src/components/cards/cryptocity/CryptocityCard.vue:17
 msgid "Close"
 msgstr ""
@@ -110,12 +110,10 @@ msgstr ""
 msgid "Criptociudad San José is part of the global Cryptocity Initiative led by Nimiq and its partners."
 msgstr ""
 
-#: src/components/elements/CryptoMapModal.vue:16
+#: src/components/elements/CryptoMapModal.vue:14
 msgid "Crypto Map"
 msgstr ""
 
-#: src/components/elements/InteractionBar.vue:3
-#: src/components/elements/TheMapInstance.vue:8
 #: src/components/forms/FormContainer.vue:3
 msgid "Crypto Map logo"
 msgstr ""
@@ -130,6 +128,11 @@ msgstr ""
 
 #: src/translations.ts:28
 msgid "Currency not accepted"
+msgstr ""
+
+#: src/components/elements/Controls.vue:31
+#: src/components/elements/Controls.vue:32
+msgid "Decrease zoom"
 msgstr ""
 
 #: src/components/atoms/TextAreaInput.vue:11
@@ -153,7 +156,7 @@ msgstr ""
 msgid "Edenia enables users to easily purchase cryptocurrencies through a network of ATMs"
 msgstr ""
 
-#: src/components/elements/InteractionBar.vue:14
+#: src/components/elements/InteractionBar.vue:18
 msgid "Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other crypto-currencies."
 msgstr ""
 
@@ -198,7 +201,12 @@ msgstr ""
 msgid "Hotel & Lodging"
 msgstr ""
 
-#: src/components/elements/Controls.vue:9
+#: src/components/elements/Controls.vue:26
+#: src/components/elements/Controls.vue:27
+msgid "Increase zoom"
+msgstr ""
+
+#: src/components/elements/Controls.vue:6
 msgid "Information about this Cryptocity"
 msgstr ""
 
@@ -234,6 +242,10 @@ msgstr ""
 
 #: src/translations.ts:26
 msgid "Location gone"
+msgstr ""
+
+#: src/components/atoms/NewSearchBox.vue:14
+msgid "Locations"
 msgstr ""
 
 #: src/translations.ts:14
@@ -285,8 +297,8 @@ msgstr ""
 msgid "Powered by {provider}"
 msgstr ""
 
-#: src/components/elements/CryptoMapModal.vue:26
-#: src/components/elements/TheMapInstance.vue:11
+#: src/components/elements/CryptoMapModal.vue:24
+#: src/components/elements/TheMapInstance.vue:10
 msgid "Privacy Policy"
 msgstr ""
 
@@ -311,11 +323,15 @@ msgstr ""
 msgid "Restaurant & Bar"
 msgstr ""
 
-#: src/components/elements/InteractionBar.vue:7
+#: src/components/atoms/NewSearchBox.vue:25
+msgid "Results from Google"
+msgstr ""
+
+#: src/components/elements/InteractionBar.vue:10
 msgid "Search Map"
 msgstr ""
 
-#: src/components/markers/SingleMarkers.vue:47
+#: src/components/markers/SingleMarkers.vue:49
 msgid "See location details"
 msgstr ""
 
@@ -338,11 +354,11 @@ msgstr ""
 msgid "Select issue"
 msgstr ""
 
-#: src/components/cards/location/LocationCard.vue:46
+#: src/components/cards/location/LocationCard.vue:44
 msgid "Sell"
 msgstr ""
 
-#: src/components/cards/location/BasicInfoLocation.vue:43
+#: src/components/cards/location/BasicInfoLocation.vue:31
 msgid "Sell crypto only"
 msgstr ""
 
@@ -363,12 +379,8 @@ msgstr ""
 msgid "Show list"
 msgstr ""
 
-#: src/components/atoms/Button.story.vue:12
-msgid "Show more Locations"
-msgstr ""
-
-#: src/components/elements/Controls.vue:29
-#: src/components/elements/Controls.vue:30
+#: src/components/elements/Controls.vue:20
+#: src/components/elements/Controls.vue:21
 msgid "Show your location"
 msgstr ""
 
@@ -389,8 +401,8 @@ msgstr ""
 msgid "Submit Location"
 msgstr ""
 
-#: src/components/elements/CryptoMapModal.vue:31
-#: src/components/elements/TheMapInstance.vue:14
+#: src/components/elements/CryptoMapModal.vue:29
+#: src/components/elements/TheMapInstance.vue:13
 msgid "Terms of Service"
 msgstr ""
 
@@ -411,7 +423,7 @@ msgstr ""
 msgid "There has been a problem on our side."
 msgstr ""
 
-#: src/components/elements/CryptoMapModal.vue:22
+#: src/components/elements/CryptoMapModal.vue:20
 msgid "This app is brought to you by Nimiq. It is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
 msgstr ""
 
@@ -420,7 +432,7 @@ msgstr ""
 msgid "This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map."
 msgstr ""
 
-#: src/components/elements/TheMapInstance.vue:9
+#: src/components/elements/TheMapInstance.vue:8
 msgid "This site is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
 msgstr ""
 

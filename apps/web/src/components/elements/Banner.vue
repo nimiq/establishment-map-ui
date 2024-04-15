@@ -34,7 +34,7 @@ function handleProviderPlaceholder({banner, provider}: Location) {
   <footer class="relative flex items-center" :class="{ 'h-16': location.bannerLabel, 'h-9': !location.bannerLabel }">
     <CardBg v-if="!location.isAtm && location.bannerLabel" :location="location" />
 
-    <div v-if="location.bannerLabel" class="z-20 flex items-center pt-1.5 pl-6 pr-[72px] text-xs gap-x-1.5">
+    <div v-if="location.bannerLabel" class="z-20 flex items-center pt-1.5 pl-6 pr-[72px] text-12 gap-x-1.5">
       <i18n-t
         :keypath="location.bannerLabel" tag="p" :class="{
           'text-white/60 [&>b]:text-white': location.isDark,
@@ -54,7 +54,7 @@ function handleProviderPlaceholder({banner, provider}: Location) {
         <Popover.Portal>
           <Popover.Content
             as-child
-            class="max-w-xs p-4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space [&[data-side=right]_[data-arrow]]:right-1.5  [&[data-side=left]_[data-arrow]]:left-1.5"
+            class="max-w-320 p-4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space [&[data-side=right]_[data-arrow]]:right-1.5  [&[data-side=left]_[data-arrow]]:left-1.5"
             :side-offset="4" :collision-padding="8" :side="isMobile ? 'top' : 'right'"
           >
             <div>
@@ -65,13 +65,13 @@ function handleProviderPlaceholder({banner, provider}: Location) {
                 </h4>
                 <div
                   v-if="location.bannerTooltipLabel"
-                  class="ml-auto uppercase text-xs text-white/60 tracking-wider bg-white/[0.08] shadow-sm shadow-white/[0.2] font-semibold px-2 py-0.5 ring-1 ring-white/20 rounded-full"
+                  class="ml-auto uppercase text-12 text-white/60 tracking-wider bg-white/[0.08] shadow-sm shadow-white/[0.2] font-semibold px-2 py-0.5 ring-1 ring-white/20 rounded-full"
                 >
                   {{ location.bannerTooltipLabel }}
                 </div>
               </header>
 
-              <p class="mt-2 text-sm text-white/60 text-pretty">
+              <p class="mt-2 text-14 text-white/60 text-pretty">
                 {{ location.bannerTooltip }}
               </p>
 
