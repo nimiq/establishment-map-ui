@@ -6,6 +6,7 @@ import { createApp, markRaw } from 'vue'
 import App from './App.vue'
 import { detectLanguage, i18nRegistration, setLanguage } from './i18n/i18n-setup'
 import './index.css'
+import 'virtual:uno.css'
 
 import { router } from './router'
 
