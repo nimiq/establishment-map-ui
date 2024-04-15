@@ -18,7 +18,7 @@ defineProps({
 
 <template>
   <div
-    class="grid w-8 h-8 bg-white rounded-full children:w-5 children:h-5 place-content-center"
+    class="grid w8 h8 bg-white rounded-full children:w-5 children:h-5 place-content-center"
     :class="{
       '!bg-[#1F2348]': banner === 'Nimiq-Pay',
       '!bg-[#b7ff00]': banner === Provider.NAKA,

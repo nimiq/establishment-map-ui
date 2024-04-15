@@ -5,8 +5,6 @@ import { useBreakpoints } from '@vueuse/core'
 import { breakpointsTailwind } from '@vueuse/core'
 import type { Location } from 'types'
 import CardBg from '@/components/cards/location/LocationCardBg.vue'
-import Button from '@/components/atoms/Button.vue'
-import InfoIcon from '@/components/icons/icon-info.vue'
 import BannerCircleLogo from '@/components/icons/providers/BannerCircleLogo.vue'
 
 defineProps({
@@ -31,16 +29,11 @@ function handleProviderPlaceholder({banner, provider}: Location) {
 </script>
 
 <template>
-  <footer class="relative flex items-center" :class="{ 'h-16': location.bannerLabel, 'h-9': !location.bannerLabel }">
+  <footer class="relative flex items-center" :h="location.bannerLabel ? '64' : '36'">
     <CardBg v-if="!location.isAtm && location.bannerLabel" :location="location" />
 
-    <div v-if="location.bannerLabel" class="z-20 flex items-center pt-1.5 pl-6 pr-[72px] text-12 gap-x-1.5">
-      <i18n-t
-        :keypath="location.bannerLabel" tag="p" :class="{
-          'text-white/60 [&>b]:text-white': location.isDark,
-          'text-space/60 [&>b]:text-space': location.isLight,
-        }"
-      >
+    <div v-if="location.bannerLabel" flex="~ items-center gap-8" pt-6 pl-24 pr-72 text-12>
+      <i18n-t :keypath="location.bannerLabel" tag="p" text-neutral-50>
         <!-- The name in the label can optionally be written bold by including a {provider} placeholder -->
         <template #provider>
           <b>{{ handleProviderPlaceholder(location) }}</b>
@@ -49,52 +42,45 @@ function handleProviderPlaceholder({banner, provider}: Location) {
 
       <Popover.Root :delay-duration="300">
         <Popover.Trigger>
-          <InfoIcon class="w-4" :class="{ 'text-white/50': location.isDark, 'text-space/50': location.isLight }" />
+          <div i-nimiq:info text="14 neutral-0/50 inverted:neutral/50" />
         </Popover.Trigger>
         <Popover.Portal>
+          <!-- class="max-w320 p4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space [&[data-side=right]_[data-arrow]]:right-1.5 [&[data-side=left]_[data-arrow]]:left-1.5" -->
           <Popover.Content
             as-child
-            class="max-w-320 p-4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space [&[data-side=right]_[data-arrow]]:right-1.5  [&[data-side=left]_[data-arrow]]:left-1.5"
+            max-w-320 p-16 text-neutral-0 rounded-6 shadow z-100 bg-gradient-neutral
             :side-offset="4" :collision-padding="8" :side="isMobile ? 'top' : 'right'"
           >
             <div>
-              <header class="flex items-center justify-start gap-x-2">
+              <header flex="~ items-center justify-start gap-8">
                 <BannerCircleLogo :banner="location.banner" />
-                <h4 class="font-semibold truncate [text-wrap:balance]">
+                <h4 font-semibold truncate text-16 text-neutral-400 lh-20>
                   {{ handleProviderPlaceholder(location) }}
                 </h4>
-                <div
-                  v-if="location.bannerTooltipLabel"
-                  class="ml-auto uppercase text-12 text-white/60 tracking-wider bg-white/[0.08] shadow-sm shadow-white/[0.2] font-semibold px-2 py-0.5 ring-1 ring-white/20 rounded-full"
-                >
+                <div v-if="location.bannerTooltipLabel" ml-auto text-neutral-600 text-10 whitespace-nowrap label>
                   {{ location.bannerTooltipLabel }}
                 </div>
               </header>
 
-              <p class="mt-2 text-14 text-white/60 text-pretty">
+              <p text="14 neutral-600" mt-8>
                 {{ location.bannerTooltip }}
               </p>
 
-              <Button
-                v-if="location.bannerTooltipCta" :href="location.bannerTooltipCta" bg-color="transparent"
-                text-color="white" class="!px-0 opacity-60"
-              >
-                <template #label>
-                  {{ $t('Learn more') }}
-                </template>
-              </Button>
+              <a v-if="location.bannerTooltipCta" :href="location.bannerTooltipCta" target="_blank" rel="noopener noreferrer" arrow un-text-neutral-600 block mt-12 before:op-80 flex="~ items-center">
+                {{ $t('Learn more') }}
+              </a>
 
               <template v-if="location.bannerAppStore || location.bannerGooglePlay">
-                <div class="flex items-center gap-6 text-white/70 !mt-4">
-                  <a v-if="location.bannerAppStore" :href="location.bannerAppStore" target="_blank" rel="noopener noreferrer" class="flex-1">
-                    <img src="@/assets/app-store-badge.svg" :alt="$t('Download on App Store')" class="w-full" />
+                <div flex="~ items-center gap-24" mt-16>
+                  <a v-if="location.bannerAppStore" :href="location.bannerAppStore" target="_blank" rel="noopener noreferrer" flex-1>
+                    <img src="@/assets/app-store-badge.svg" :alt="$t('Download on App Store')" w-full />
                   </a>
-                  <a v-if="location.bannerGooglePlay" :href="location.bannerGooglePlay" target="_blank" rel="noopener noreferrer" class="flex-1">
-                    <img src="@/assets/google-play-badge.svg" :alt="$t('Download on Play Store')" class="w-full" />
+                  <a v-if="location.bannerGooglePlay" :href="location.bannerGooglePlay" target="_blank" rel="noopener noreferrer" flex-1>
+                    <img src="@/assets/google-play-badge.svg" :alt="$t('Download on Play Store')" w-full />
                   </a>
                 </div>
               </template>
-              <Popover.Arrow data-arrow class="fill-space desktop:relative" size="10" />
+              <Popover.Arrow data-arrow fill-neutral desktop:relative size="10" />
 
               <!-- TODO Once this is fixed https://github.com/radix-vue/radix-vue/issues/353 use custom arrow -->
               <!-- <PopoverArrow as-child>

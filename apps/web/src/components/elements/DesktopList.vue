@@ -59,7 +59,7 @@ watch(selectedUuid, (uuid) => {
     list-tag="ul"
     item-tag="li"
     class="overflow-auto scroll-space transition-[height] will-change-[height]"
-    :class="listIsShown ? 'h-[calc(100vh-10.5rem-var(--search-box-hint)*88px)]' : 'h-0'"
+    :class="listIsShown ? 'h-[calc(100vh-10.5rem-var(--search-box-hint)*88px)]' : 'h0'"
     item-class="relative overflow-hidden border-space/10 border-t-xs group/card [&_[data-rings]]:-rotate-90"
   >
     <template #default="{ item: location, active }">
@@ -69,7 +69,7 @@ watch(selectedUuid, (uuid) => {
         :active="active"
       >
         <button
-          class="w-full px-6 py-5 text-left bg-[--bg-1] hocus:bg-[--bg-2] transition-colors"
+          class="w-full px6 py5 text-left bg-$bg-1 hocus:bg-$bg-2 transition-colors"
           :style="{
             '--bg-1': location.isAtm && location.isDark ? location.bg[0] : 'white',
             '--bg-2': location.isAtm && location.isDark && location.bg[1] ? location.bg[1] : '#f4f4f6',
@@ -83,18 +83,18 @@ watch(selectedUuid, (uuid) => {
     </template>
 
     <template v-if="clusters.length" #after>
-      <div class="px-6 py-5 text-14 font-semibold border-space/10 border-t-xs text-space/50">
+      <div class="px6 py5 text-14 font-semibold border-space/10 border-t-xs text-space/50">
         {{ $tc('+ {count} grouped', clusters.reduce((sum, cluster) => sum + cluster.count, 0)) }}
       </div>
     </template>
   </DynamicScroller>
   <div
     v-else
-    class="flex flex-col items-center justify-center gap-6 px-4 transition-height will-change-height"
-    :class="listIsShown ? 'h-[calc(100vh-10.5rem-var(--search-box-hint)*88px)]' : 'h-0'"
+    class="flex flex-col items-center justify-center gap6 px4 transition-height will-change-height"
+    :class="listIsShown ? 'h-[calc(100vh-10.5rem-var(--search-box-hint)*88px)]' : 'h0'"
   >
     <IconCactusDesert />
-    <span class="text-16 text-center text-space font-regular" :class="!listIsShown && 'h-0'">
+    <span class="text-16 text-center text-space font-regular" :class="!listIsShown && 'h0'">
       {{ $t('Oops, no businesses around here') }}
     </span>
   </div>

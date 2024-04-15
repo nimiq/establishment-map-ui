@@ -141,6 +141,9 @@ importers:
       unocss:
         specifier: ^0.59.2
         version: 0.59.2(postcss@8.4.38)(vite@5.2.8)
+      unocss-preset-animations:
+        specifier: ^1.0.2
+        version: 1.0.2(@unocss/preset-wind@0.59.2)(unocss@0.59.2)
       vite:
         specifier: ^5.2.8
         version: 5.2.8(@types/node@20.12.7)
@@ -10133,6 +10136,16 @@ packages:
   /universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
+    dev: true
+
+  /unocss-preset-animations@1.0.2(@unocss/preset-wind@0.59.2)(unocss@0.59.2):
+    resolution: {integrity: sha512-AacFdOvHwvKZKqjn9/paKQ50LmU0qk4n6350/toQcSX3XEQIE7rTZwm/68Aag5jP2Z8M4Y8IvDf8Q7Qc0MNdTw==}
+    peerDependencies:
+      '@unocss/preset-wind': '>= 0.56.0 < 1'
+      unocss: '>= 0.56.0 < 1'
+    dependencies:
+      '@unocss/preset-wind': 0.59.2
+      unocss: 0.59.2(postcss@8.4.38)(vite@5.2.8)
     dev: true
 
   /unocss@0.59.2(postcss@8.4.38)(vite@5.2.8):

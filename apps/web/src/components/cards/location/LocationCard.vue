@@ -79,7 +79,7 @@ function arrayEquals(arrA: string[], arrB: string[]): boolean {
     <Banner
       v-if="progress > 0 && location.banner !== 'None'" :location="location"
       class="absolute max-desktop:w-screen -mt-9"
-      :class="{ 'rounded-b-lg': progress < 1 || !isMobile }"
+      :class="{ 'rounded-b-12': progress < 1 || !isMobile }"
       :style="{
         backgroundColor: !location.isAtm ? location.bg[0] : 'transparent',
         opacity: progress / 0.8,

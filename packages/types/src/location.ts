@@ -22,7 +22,7 @@ export enum LocationLink {
 }
 
 // The different Banner designs
-export type Banner = Provider.Bluecode | Provider.CryptopaymentLink | Provider.Edenia | Provider.Kurant | Provider.NAKA | 'Nimiq-Pay' | Provider.DefaultAtm | 'None'
+export type Banner = Provider.Bluecode | Provider.CryptopaymentLink | Provider.Edenia | Provider.Kurant | Provider.NAKA | Provider.Edenia | 'Nimiq-Pay' | Provider.DefaultAtm | 'None'
 
 export interface Location extends RawLocation {
   category_label: string

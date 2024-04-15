@@ -58,6 +58,7 @@
     "types": "workspace:*",
     "typescript": "5.3.3",
     "unocss": "^0.59.2",
+    "unocss-preset-animations": "^1.0.2",
     "vite": "^5.2.8",
     "vite-plugin-checker": "^0.6.4",
     "vue-tsc": "^2.0.13",

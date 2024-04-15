@@ -57,11 +57,11 @@ msgstr ""
 msgid "Buy"
 msgstr ""
 
-#: src/components/cards/location/BasicInfoLocation.vue:29
+#: src/components/cards/location/BasicInfoLocation.vue:27
 msgid "Buy & sell crypto"
 msgstr ""
 
-#: src/components/cards/location/BasicInfoLocation.vue:32
+#: src/components/cards/location/BasicInfoLocation.vue:30
 msgid "Buy crypto only"
 msgstr ""
 
@@ -77,7 +77,7 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: src/components/cards/location/LocationCardDotsMenu.vue:22
+#: src/components/cards/location/LocationCardDotsMenu.vue:20
 msgid "Check out {locationName} on Nimiq's Crypto Map"
 msgstr ""
 
@@ -98,7 +98,7 @@ msgstr ""
 msgid "Computer & Electronics"
 msgstr ""
 
-#: src/components/cards/location/LocationCardDotsMenu.vue:34
+#: src/components/cards/location/LocationCardDotsMenu.vue:27
 msgid "Copy URL"
 msgstr ""
 
@@ -144,11 +144,11 @@ msgstr ""
 msgid "Describe the issue"
 msgstr ""
 
-#: src/components/elements/Banner.vue:58
+#: src/components/elements/Banner.vue:53
 msgid "Download on App Store"
 msgstr ""
 
-#: src/components/elements/Banner.vue:61
+#: src/components/elements/Banner.vue:56
 msgid "Download on Play Store"
 msgstr ""
 
@@ -218,7 +218,7 @@ msgstr ""
 msgid "Kurant enables users to easily purchase cryptocurrencies through a network of ATMs."
 msgstr ""
 
-#: src/components/elements/Banner.vue:51
+#: src/components/elements/Banner.vue:46
 msgid "Learn more"
 msgstr ""
 
@@ -307,7 +307,7 @@ msgstr ""
 msgid "Register with {provider}"
 msgstr ""
 
-#: src/components/cards/location/LocationCardDotsMenu.vue:41
+#: src/components/cards/location/LocationCardDotsMenu.vue:19
 msgid "Report"
 msgstr ""
 
@@ -358,7 +358,7 @@ msgstr ""
 msgid "Sell"
 msgstr ""
 
-#: src/components/cards/location/BasicInfoLocation.vue:31
+#: src/components/cards/location/BasicInfoLocation.vue:29
 msgid "Sell crypto only"
 msgstr ""
 
@@ -366,7 +366,7 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: src/components/cards/location/LocationCardDotsMenu.vue:27
+#: src/components/cards/location/LocationCardDotsMenu.vue:17
 msgid "Share"
 msgstr ""
 

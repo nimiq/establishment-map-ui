@@ -38,17 +38,16 @@ const options = [
     </DropdownMenu.Trigger>
 
     <DropdownMenu.Portal>
-      <!-- TODO unocss/animations -->
-      <DropdownMenu.Content bg-gradient-neutral rounded-6 p-4 will-change="[colors]" shadow absolute top--24 right--8
+      <DropdownMenu.Content bg-gradient-neutral rounded-6 p-4 will-change-colors shadow absolute top--24 right--10 animate-in fade-in slide-in-r-4 duration-150
         min-w-max flex="~ col" :side-offset="0">
-        <DropdownMenu.Item v-for="({ action, text, icon }) in options" :key="text" flex="~ items-center" px-16 py-8 hocus:bg-neutral-900
+        <DropdownMenu.Item v-for="({ action, text, icon }) in options" :key="text" flex="~ items-center" px-16 py-8 bg="hocus:neutral-0/10" rounded-6
           text="neutral-0 hover:text-neutral-100" select-none cursor-pointer @click="action">
           <div :class="icon" text-16 mr-12 />
           <span text-16 font-semibold>{{ text }}</span>
         </DropdownMenu.Item>
 
         <DropdownMenu.Item as="a" :href="`/location/report?uuid=${location.uuid}`" flex="~ items-center" px-16 py-8
-          text-red select-none cursor-pointer>
+          text-red select-none cursor-pointer bg="hocus:red/20" rounded-6>
           <div i-nimiq:flag text-16 mr-12 />
           <span text-16 font-semibold>{{ $t('Report') }}</span>
         </DropdownMenu.Item>
