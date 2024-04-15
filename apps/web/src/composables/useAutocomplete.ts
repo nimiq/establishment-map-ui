@@ -1,6 +1,6 @@
 import { useDebounceFn } from '@vueuse/core'
 import { ref } from 'vue'
-import { AutocompleteStatus, type Suggestion, SuggestionType } from 'types'
+import { AutocompleteStatus, GoogleSuggestion, LocationSuggestion } from 'types'
 import { searchLocations } from 'database'
 import { detectLanguage } from '@/i18n/i18n-setup'
 import { useMap } from '@/stores/map'
@@ -12,20 +12,26 @@ enum GoogleAutocompleteFor {
 }
 
 export function useAutocomplete() {
+  const query = ref<string>('')
   const status = ref<AutocompleteStatus>(AutocompleteStatus.Initial)
-  const googleSuggestions = ref<Suggestion[]>([])
-  const suggestions = ref<Suggestion[]>([])
+  const googleSuggestions = ref<GoogleSuggestion[]>([])
+  const locationSuggestions = ref<LocationSuggestion[]>([])
+
+  function clearSuggestions() {
+    googleSuggestions.value = []
+    locationSuggestions.value = []
+  }
 
   // Google Autocomplete
   const sessionToken = ref<google.maps.places.AutocompleteSessionToken>()
   const autocompleteService = ref<google.maps.places.AutocompleteService>()
 
-  async function autocompleteGoogle(query: string, autocompleteFor: GoogleAutocompleteFor) {
+  async function autocompleteGoogle(autocompleteFor: GoogleAutocompleteFor) {
     sessionToken.value ||= new google.maps.places.AutocompleteSessionToken()
     autocompleteService.value ||= new google.maps.places.AutocompleteService()
 
     const request: google.maps.places.AutocompletionRequest = {
-      input: query,
+      input: query.value,
       sessionToken: sessionToken.value,
       types: [autocompleteFor],
       language: detectLanguage(),
@@ -38,45 +44,41 @@ export function useAutocomplete() {
     await autocompleteService.value?.[fn](request, (predictions, status) => {
       if (status !== google.maps.places.PlacesServiceStatus.OK || !predictions)
         return
-      const suggestions = predictions
+      googleSuggestions.value = predictions
         .filter(p => !!p.place_id)
         .map(p => ({
-          id: p.place_id as string,
+          placeId: p.place_id as string,
           label: p.description,
-          type: SuggestionType.GoogleLocation,
           matchedSubstrings: p.matched_substrings,
-        }))
+        } satisfies GoogleSuggestion))
 
       /* eslint-disable no-console */
       console.group(`🔍 Google Autocomplete "${query}"`)
-      console.table(suggestions)
+      console.table(googleSuggestions)
       console.groupEnd()
       /* eslint-enable no-console */
-
-      googleSuggestions.value = suggestions
     })
   }
 
-  async function autocompleteDatabase(query: string) {
-    const locations = await searchLocations(await getAnonDatabaseArgs(), query)
-    return locations.map(q => Object.assign(q, { type: SuggestionType.Location }))
+  async function autocompleteLocations() {
+    locationSuggestions.value = await searchLocations(await getAnonDatabaseArgs(), query.value)
   }
 
   // If we search just for new candidates, we don't need to search in the database
   // and we just search locations in Google
-  async function querySearch(query: string, justNewCandidates = false) {
+  async function querySearch(justNewCandidates = false) {
     // eslint-disable-next-line no-console
     console.group(`🔍 Autocomplete "${query}"`)
 
     status.value = AutocompleteStatus.Loading
     if (!query) {
-      suggestions.value = []
+      clearSuggestions()
       return
     }
 
     const result = justNewCandidates
-      ? await Promise.allSettled([autocompleteGoogle(query, GoogleAutocompleteFor.Location)])
-      : await Promise.allSettled([autocompleteDatabase(query), autocompleteGoogle(query, GoogleAutocompleteFor.Regions)])
+      ? await Promise.allSettled([autocompleteGoogle(GoogleAutocompleteFor.Location)])
+      : await Promise.allSettled([autocompleteLocations(), autocompleteGoogle(GoogleAutocompleteFor.Regions)])
 
     /* eslint-disable no-console */
     console.log(`Got ${result.length} results`)
@@ -88,24 +90,17 @@ export function useAutocomplete() {
       status.value = AutocompleteStatus.Error
       return
     }
-    if (justNewCandidates) {
-      suggestions.value = googleSuggestions.value
-    }
-    else {
-      const db = result[0].status === 'fulfilled' ? result[0].value : [] as Suggestion[]
-      suggestions.value = [...db!, ...googleSuggestions.value]
-    }
+    
 
-    status.value = suggestions.value.length ? AutocompleteStatus.WithResults : AutocompleteStatus.NoResults
+    status.value = googleSuggestions.value.length || locationSuggestions.value.length ? AutocompleteStatus.WithResults : AutocompleteStatus.NoResults
   }
 
-  const debouncer = useDebounceFn((query: string, justNewCandidates: boolean) => querySearch(query, justNewCandidates), 400)
+  const debouncer = useDebounceFn((justNewCandidates: boolean) => querySearch(justNewCandidates), 400)
   return {
+    query,
     status,
-    suggestions,
-    querySearch(query: string, justNewCandidates = false) {
-      status.value = AutocompleteStatus.Loading
-      debouncer(query, justNewCandidates)
-    },
+    googleSuggestions,
+    locationSuggestions,
+    querySearch: debouncer
   }
 }

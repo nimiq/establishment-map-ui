@@ -7,9 +7,14 @@ export default defineConfig({
     presetUno({ attributifyPseudo: true }),
     presetNimiq({
       utilities: true,
-      
+      reset: 'tailwind'
     }),
     presetRemToPx({ baseFontSize: 4 }),
     presetAttributify(),
   ],
+  theme: {
+    breakpoints: {
+      desktop: '768px',
+    }
+  }
 })

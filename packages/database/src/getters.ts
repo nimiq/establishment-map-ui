@@ -1,5 +1,5 @@
 import type { FeatureCollection } from 'geojson'
-import type { Args, BoundingBox, DatabaseAnonArgs, DatabaseArgs, DatabaseAuthArgs, DatabaseAuthenticateUserArgs, Location, Returns, Suggestion } from '../../types/src/index.ts'
+import type { Args, BoundingBox, DatabaseAnonArgs, DatabaseArgs, DatabaseAuthArgs, DatabaseAuthenticateUserArgs, Location, Returns, LocationSuggestion, PredictionSubstring } from '../../types/src/index.ts'
 import { AnonReadDbFunction, AnyUserReadDbFunction, AuthReadDbFunction, Category, Cryptocity, Currency, DatabaseUser, Provider } from '../../types/src/index.ts'
 import { fetchDb } from './fetch.ts'
 import { authenticateUser } from './auth.ts'
@@ -41,7 +41,8 @@ export async function getLocation(dbArgs: DatabaseAuthArgs | DatabaseAnonArgs, u
 export async function searchLocations(dbArgs: DatabaseAuthArgs | DatabaseAnonArgs, queryInput: string) {
   const query = new URLSearchParams()
   query.append('p_query', queryInput)
-  return await fetchDb<Omit<Suggestion, 'type'>[]>(AnonReadDbFunction.SearchLocations, dbArgs, { query }) ?? []
+  const res = await fetchDb<{label: string,id:string,matchedSubstrings:PredictionSubstring[]}[]>(AnonReadDbFunction.SearchLocations, dbArgs, { query }) ?? []
+  return res.map(r => ({name: r.label, matchedSubstrings: r.matchedSubstrings, uuid: r.id} satisfies LocationSuggestion))
 }
 
 export async function getMarkers(

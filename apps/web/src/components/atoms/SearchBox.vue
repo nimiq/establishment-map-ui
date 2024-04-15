@@ -8,7 +8,6 @@ import {
   ComboboxOptions,
   TransitionRoot,
 } from '@headlessui/vue'
-import { vElementVisibility } from '@vueuse/components'
 import { useDebounceFn } from '@vueuse/core'
 import type { PredictionSubstring, Suggestion } from 'types'
 import { AutocompleteStatus } from 'types'

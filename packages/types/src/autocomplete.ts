@@ -1,3 +1,5 @@
+import { Location } from "./location.ts"
+
 export enum AutocompleteStatus {
   Initial = 'initial',
   Loading = 'loading',
@@ -11,26 +13,16 @@ export interface SearchFor {
   searchForRegions?: boolean
 }
 
-export enum SuggestionType {
-  Location = 'location',
-  GoogleLocation = 'googleLocation',
-  Region = 'regions',
-}
-
 export interface PredictionSubstring {
   /**
    * The length of the substring.
    */
   length: number
   /**
-   * The offset to the substring&#39;s start within the description string.
+   * The offset to the substring start within the description string.
    */
   offset: number
 }
 
-export interface Suggestion {
-  label: string
-  id: string // Google Place ID | Location UUID
-  type: SuggestionType.GoogleLocation | SuggestionType.Region | SuggestionType.Location
-  matchedSubstrings: PredictionSubstring[]
-}
+export type LocationSuggestion = Pick<Location, 'uuid' | 'name'> & { matchedSubstrings: PredictionSubstring[] }
+export type GoogleSuggestion = { label: string, placeId: string, matchedSubstrings: PredictionSubstring[] }

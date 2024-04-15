@@ -15,15 +15,13 @@ function _onLanguagesChange(language: string) {
 <template>
   <Modal>
     <template #trigger>
-      <Button bg-color="transparent" size="md" class="!p-0">
-        <template #icon>
-          <GearIcon class="text-space/30 w-4.5 h-4.5" />
-        </template>
-      </Button>
+      <div group bg="neutral-0 hover:neutral-200" p-8 mx--8 rounded-full transition-colors>
+        <div i-nimiq:gear text="neutral-600 group-hover:neutral-700" transition-colors text-18 />
+      </div>
     </template>
 
     <template #pre-title>
-      <CryptoMapIcon class="h-6" />
+      <div i-nimiq:logos-crypto-map text-26 />
     </template>
 
     <template #title>
@@ -36,12 +34,12 @@ function _onLanguagesChange(language: string) {
         keypath="This app is brought to you by Nimiq. It is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
       >
         <template #privacyPolicy>
-          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" class="underline">
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" underline text-neutral-800>
             {{ $t('Privacy Policy') }}
           </a>
         </template>
         <template #termsOfService>
-          <a href="https://policies.google.com/terms" target="_blank" rel="noopener" class="underline">
+          <a href="https://policies.google.com/terms" target="_blank" rel="noopener" underline text-neutral-800>
             {{ $t('Terms of Service') }}
           </a>
         </template>
@@ -49,12 +47,10 @@ function _onLanguagesChange(language: string) {
     </template>
 
     <template #content>
-      <div class="flex items-center justify-between mt-8">
-        <Button bg-color="sky" gradient href="/location/add">
-          <template #label>
+      <div flex="~ items-center justify-between" mt-32>
+        <a href="/location/add" pill-blue pill-sm>
             {{ $t('Add Crypto location') }}
-          </template>
-        </Button>
+        </a>
 
         <LanguageSelector :value="i18n.locale" :languages="SUPPORTED_LANGUAGES" @update:language="_onLanguagesChange" />
       </div>

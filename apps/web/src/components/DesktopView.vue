@@ -28,8 +28,8 @@ const openSuggestions = ref(false)
   />
   <aside absolute max-w-sm inset-24 right-initial h-max pointer-events-none children:pointer-events-auto flex="~ col">
     <!-- This element if for the shadow in the header. We cannot use a normal shadow because the use of mask-image restrict us of using shadows -->
-    <div class="absolute inset-0 shadow rounded-2xl pointer-events-none h-[calc(64px+(88px*var(--search-box-hint)))]" />
-    <div class="duration-75 bg-white border border-[#e9e9ed] shadow-header transition-border-radius" :class="openSuggestions && !isListShown ? 'rounded-t-2xl' : 'rounded-2xl'" style="mask-image: linear-gradient(white, white);">
+    <div class="absolute inset-0 shadow rounded-16 pointer-events-none h-[calc(64px+(88px*var(--search-box-hint)))]" />
+    <div w-max duration-75 bg-neutral-0 ring="1 neutral/10" shadow-header transition-border-radius :class="openSuggestions && !isListShown ? 'rounded-t-16' : 'rounded-16'" style="mask-image: linear-gradient(white, white);">
       <InteractionBar @open="openSuggestions = $event" />
       <DesktopList :singles="singlesInView" :clusters="clustersInView" :list-is-shown="isListShown" />
     </div>
