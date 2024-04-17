@@ -1,12 +1,6 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import type { Cluster, Location } from 'types'
-import { ref, watch } from 'vue'
 import { DynamicScroller, DynamicScrollerItem } from 'vue-virtual-scroller'
-import BasicInfo from '@/components/cards/location/BasicInfoLocation.vue'
-import CardBg from '@/components/cards/location/LocationCardBg.vue'
-import IconCactusDesert from '@/components/icons/icon-cactus-desert.vue'
-import { useLocations } from '@/stores/locations'
 import 'vue-virtual-scroller/dist/vue-virtual-scroller.css'
 
 const props = defineProps<{singles: Location[], clusters: Cluster[], listIsShown: boolean}>()
@@ -45,8 +39,8 @@ watch(selectedUuid, (uuid) => {
     :min-item-size="99"
     list-tag="ul"
     item-tag="li"
-    of-auto transition-height will-change-height
-    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--search-box-hint) * 90px)' : '0' }"
+    of-auto transition-height will-change-height duration-300
+    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--search-box-hint) * 88px)' : '0' }"
     item-class="relative of-hidden ring-neutral-100 border-t-1 group/card [&_[data-rings]]:-rotate-90"
   >
     <template #default="{ item: location, active }">
@@ -58,8 +52,8 @@ watch(selectedUuid, (uuid) => {
         <button
           w-full px-24 py-20 text-left bg="$bg-1 hocus:$bg-2" transition-colors
           :style="{
-            '--bg-1': location.isAtm && location.isDark ? location.bg[0] : 'white',
-            '--bg-2': location.isAtm && location.isDark && location.bg[1] ? location.bg[1] : '#f4f4f6',
+            '--bg-1': location.isAtm && location.isDark ? location.bg[0] : 'rgb(var(--nq-neutral-0))',
+            '--bg-2': location.isAtm && location.isDark && location.bg[1] ? location.bg[1] : 'rgb(var(--nq-neutral-100))'
           }"
           @click="onLocationClicked(location)"
         >
@@ -77,11 +71,12 @@ watch(selectedUuid, (uuid) => {
   </DynamicScroller>
   <div
     v-else
-    class="flex flex-col items-center justify-center gap6 px4 transition-height will-change-height"
-    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--search-box-hint) * 90px)' : '0' }"
+    flex="~ col items-center justify-center gap-24" px-20 transition-height will-change-height 
+    duration-300
+    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--search-box-hint) * 88px)' : '0' }"
   >
-    <IconCactusDesert />
-    <span class="text-16 text-center text-space font-regular" :class="!listIsShown && 'h0'">
+    <div i-nimiq:icons-lg-cactus text-80 op-80 />
+    <span text="16 center">
       {{ $t('Oops, no businesses around here') }}
     </span>
   </div>

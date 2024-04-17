@@ -27,10 +27,11 @@ export default defineConfig({
     // checker({ vueTsc: true, typescript: true }), // Waiting for https://github.com/fi3ework/vite-plugin-checker/issues/306#issuecomment-1995606874
     UnoCSS(),
     
-          // https://github.com/antfu/unplugin-auto-import
+    // https://github.com/antfu/unplugin-auto-import
     AutoImport({
       imports: [
         'vue',
+        'pinia',
         '@vueuse/core',
         VueRouterAutoImports,
       ],

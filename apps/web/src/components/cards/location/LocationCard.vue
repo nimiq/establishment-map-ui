@@ -1,13 +1,6 @@
 <script setup lang="ts">
-import { createReusableTemplate, useBreakpoints } from '@vueuse/core'
 import { Currency, LocationLink, type Location } from 'types'
-import BasicInfo from '@/components/cards/location/BasicInfoLocation.vue'
-import CardBg from '@/components/cards/location/LocationCardBg.vue'
-import Banner from '@/components/elements/Banner.vue'
-import CardDotsMenu from '@/components/cards/location/LocationCardDotsMenu.vue'
 import { breakpointsTailwind } from '@vueuse/core'
-import { computed } from 'vue'
-import { getCurrencyIcon } from '@/composables/useIcon'
 
 const props = defineProps<{ location: Location, progress: number }>()
 
@@ -42,7 +35,7 @@ const [DefineCryptoList, ReuseCryptoList] = createReusableTemplate<{ cryptosToDi
     'rounded-b-0': progress === 1 && isMobile,
     'of-hidden': isMobile,
     'select-auto': progress === 1 || !isMobile,
-  }" :style="`background: ${location.isAtm ? location.bg[0] : 'white'}`">
+  }" :style="`background: ${location.isAtm ? location.bg[0] : 'rgb(var(--nq-neutral-0,0))'}`">
     <CardBg v-if="location.isAtm" :location="location" />
 
     <div v-if="location.photo && progress > 0" pt-6 px-5 transition-height duration="[--duration]"
@@ -87,7 +80,7 @@ const [DefineCryptoList, ReuseCryptoList] = createReusableTemplate<{ cryptosToDi
       </a>
     </transition>
 
-    <Banner v-if="progress > 0 && location.banner !== 'None'" :location="location"
+    <Banner v-if="progress > 0 && location.banner !== 'None'" :location="location" :is-atm="location.isAtm"
       absolute max-desktop:w-screen :class="{ 'rounded-b-12': progress < 1 || !isMobile }" :style="{
         backgroundColor: !location.isAtm ? location.bg[0] : 'transparent',
         opacity: progress / 0.8,

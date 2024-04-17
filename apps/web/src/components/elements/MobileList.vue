@@ -1,19 +1,7 @@
 <script setup lang="ts">
-import { type PropType, nextTick, onMounted, ref, watch } from 'vue'
-import { storeToRefs } from 'pinia'
 import { type Location, Theme } from 'types'
-import { useEventListener } from '@vueuse/core'
-import { useLocations } from '@/stores/locations'
-import SheetModal from '@/components/atoms/SheetModal.vue'
-import LocationCard from '@/components/cards/location/LocationCard.vue'
-import { useMap } from '@/stores/map'
 
-defineProps({
-  locations: {
-    type: Array as PropType<Location[]>,
-    required: true,
-  },
-})
+defineProps<{locations: Location[]}>()
 
 const emit = defineEmits({
   closeList: () => true,
@@ -189,11 +177,11 @@ if (isIOs) {
         <template #dragger>
           <div class="relative">
             <hr
-              class="absolute inset-x-0 z-10 w-32 h-1 mx-auto mt-2 ml-auto border-0 rounded-full" :class="[
-                { 'mt-3': progress === 1 },
+              class="absolute inset-x-0 z-10 w32 h1 mx-auto mt2 ml-auto border-0 rounded-full" :class="[
+                { 'mt3': progress === 1 },
                 [
                   location.isAtm && location.theme === Theme.Dark
-                    ? (location.photo && progress > 0.1 ? 'bg-white/80 mix-blend-lighten' : 'bg-white/30 mix-blend-lighten')
+                    ?!location.photo !&& !progress !> !0.1 !? !'bg-white/80 !mix-blend-lighten' !: !'bg-white/30 !mix-blend-lighten'
                     : (location.photo && progress > 0.1 ? 'bg-space/60 mix-blend-darken' : 'bg-space/20 mix-blend-darken'),
                 ],
               ]"

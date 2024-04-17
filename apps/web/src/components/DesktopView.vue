@@ -1,17 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
-import Button from '@/components/atoms/Button.vue'
-import Controls from '@/components/elements/Controls.vue'
-import DesktopList from '@/components/elements/DesktopList.vue'
-import FilterModal from '@/components/elements/FilterModal.vue'
-import InteractionBar from '@/components/elements/InteractionBar.vue'
-import TheMapInstance from '@/components/elements/TheMapInstance.vue'
-import { useApp } from '@/stores/app'
-import { useMarkers } from '@/stores/markers'
-import { useMap } from '@/stores/map'
-import { useToggle } from '@vueuse/core'
-
 const { isListShown } = storeToRefs(useApp())
 const { singlesInView, clustersInView, maxZoomFromServer } = storeToRefs(useMarkers())
 const { zoom } = storeToRefs(useMap())

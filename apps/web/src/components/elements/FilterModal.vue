@@ -64,7 +64,7 @@ function applyFilters() {
 </script>
 
 <template>
-  <Modal v-bind="$attrs" v-model="open" @close="closeModal({ shouldClearFilters: false })">
+  <!-- <Modal v-bind="$attrs" v-model="open" @close="closeModal({ shouldClearFilters: false })">
     <template #trigger>
       <Button bg-color="white" as="div" class="max-desktop:px-0 border animate-scale border-[#e9e9ed]">
         <template #icon>
@@ -139,7 +139,7 @@ function applyFilters() {
         </Button>
       </div>
     </template>
-  </Modal>
+  </Modal> -->
 
   <!-- <div>
     <Button bg-color="white" class="max-desktop:px-0" @click="openModal">

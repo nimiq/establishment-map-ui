@@ -7,7 +7,7 @@ const options = computed(() => props.options.filter(option => option !== selecte
 <template>
   <SelectRoot v-model="selected">
     <SelectTrigger px-12 py-4 group outline-none focus-visible:outline-blue rounded-4>
-      <SelectValue flex="~ items-center gap-8" label text="14 neutral" as="div" />
+      <SelectValue flex="~ items-center gap-8" label text="14 neutral-900" as="div" />
     </SelectTrigger>
     <SelectPortal>
       <SelectContent bg-gradient-neutral text-neutral-0 shadow rounded-6 bottom-0 drop-shadow relative side="bottom" position="item-aligned" py-6 animate-fade-in animate-duration-100 z-100>

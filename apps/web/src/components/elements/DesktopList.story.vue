@@ -5,7 +5,6 @@ import type { Location } from 'types'
 import Button from '../atoms/Button.vue'
 import DesktopList from './DesktopList.vue'
 import InteractionBar from '@/components/elements/InteractionBar.vue'
-import IconChevronDown from '@/components/icons/icon-chevron-down.vue'
 import { locations as defaultLocations } from '@/assets-dev/stories/locations'
 import { locations as locationsEdgeCases } from '@/assets-dev/stories/locations-edge-cases'
 
@@ -19,24 +18,14 @@ const listIsShown = ref(true)
     <DefineTemplate v-slot="{ locations }">
       <div class="relative h-screen">
         <img src="@/assets-dev/stories/map-new-york-square.png" alt="" class="object-cover h-full">
-        <div class="absolute flex flex-col max-w-320 bottom-6 top-6 left-6 h-max pointer-events-none [&>*]:pointer-events-auto">
+        <div class="absolute flex flex-col max-w320 bottom-6 top-6 left-6 h-max pointer-events-none [&>*]:pointer-events-auto">
           <div class="bg-white shadow-header rounded-2xl" style="mask-image: linear-gradient(white, white);">
             <InteractionBar />
             <DesktopList :singles="Object.values(locations)" :clusters="[]" :list-is-shown="listIsShown" />
           </div>
-          <Button bg-color="white" class="mt-6 border border-[#e9e9ed]" @click="listIsShown = !listIsShown">
-            <template #icon>
-              <IconChevronDown :class="{ 'rotate-180': listIsShown }" class="transition-transform delay-500" />
-            </template>
-            <template #label>
-              <template v-if="listIsShown">
-                {{ $t('Hide list') }}
-              </template>
-              <template v-else>
-                {{ $t('Show list') }}
-              </template>
-            </template>
-          </Button>
+          <button pill-blue @click="listIsShown = !listIsShown" class="mt6">
+            {{ listIsShown ? $t('Hide list') : $t('Show list') }}
+          </button>
         </div>
       </div>
     </DefineTemplate>

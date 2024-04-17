@@ -9,15 +9,12 @@ function hasSlot(slot: 'pre-title' | 'title' | 'description' | 'content') {
 </script>
 
 <template>
-  <DialogRoot v-model:open="open" @update:open="$event ? $emit('open') : $emit('close')">
+  <DialogRoot v-model:open="open" @update:open="$event ? $emit('open') : $emit('close')" group>
     <DialogTrigger v-bind="$attrs">
       <slot name="trigger" />
     </DialogTrigger>
     <DialogPortal>
-      <DialogOverlay
-        bg="neutral/60" fixed inset-0 z-20
-        class="data-[state=open]:animate-fade data-[state=close]:animate-fade-out"
-      />
+      <DialogOverlay bg-darkblue bg-op-60 fixed inset-0 z-20 item-open:animate-fade-in item-closed:animate-fade-out />
       <DialogContent fixed max-desktop="bottom-0 rounded-t-8" desktop="top-1/2 left-1/2 -translate-1/2 rounded-8" max-h-85dvh w-full max-w-512 py-32 rounded-md z-20 of-y-auto ring-neutral-100 shadow-lg bg-neutral-0
         class="data-[state=open]:animate-fade md:rounded-lg md:max-w512"
       >

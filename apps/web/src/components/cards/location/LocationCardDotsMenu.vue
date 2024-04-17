@@ -47,7 +47,7 @@ const options = [
         </DropdownMenu.Item>
 
         <DropdownMenu.Item as="a" :href="`/location/report?uuid=${location.uuid}`" flex="~ items-center" px-16 py-8
-          text-red select-none cursor-pointer bg="hocus:red/20" rounded-6>
+          text-red-1100 select-none cursor-pointer bg="hocus:red/20" rounded-6>
           <div i-nimiq:flag text-16 mr-12 />
           <span text-16 font-semibold>{{ $t('Report') }}</span>
         </DropdownMenu.Item>

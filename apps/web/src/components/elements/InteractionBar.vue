@@ -1,16 +1,6 @@
 <script setup lang="ts">
-import { useBreakpoints } from '@vueuse/core'
-import { breakpointsTailwind } from '@vueuse/core'
-import { computed, nextTick } from 'vue'
-import { storeToRefs } from 'pinia'
-import SearchBox from '@/components/atoms/NewSearchBox.vue'
-import CryptoMapModal from '@/components/elements/CryptoMapModal.vue'
-import { useAutocomplete } from '@/composables/useAutocomplete'
-import { useMap } from '@/stores/map'
-import { useLocations } from '@/stores/locations'
-import { useApp } from '@/stores/app'
-import { useMarkers } from '@/stores/markers'
-import { GoogleSuggestion, LocationSuggestion } from 'types'
+import { breakpointsTailwind } from '@vueuse/core';
+import { GoogleSuggestion, LocationSuggestion } from 'types';
 
 defineEmits({
   open: (value: boolean) => value,
@@ -22,17 +12,6 @@ const { singles } = storeToRefs(useMarkers())
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 async function onSelect(suggestion?: Suggestion) {
-  if (!suggestion)
-    return
-  switch (suggestion.type) {
-    case SuggestionType.GoogleLocation:
-    case SuggestionType.Region:
-      break
-    case SuggestionType.Location:
-
-      break
-  }
-
   useApp().hideSearchBoxHint()
 }
 
@@ -74,7 +53,7 @@ const showHint = computed(() => shouldShowSearchBoxHint.value && useBreakpoints(
   </header>
 
   <!-- We need to hardcode the height, otherwise the desktop list will break -->
-  <p v-if="showHint" class="p-5 text-12 border-t text-space/60 border-space/10 text-pretty" style="height: 88px">
+  <p v-if="showHint" px-20 py-16 text-12 border-t text-neutral-700 h-88 max-w-320>
     {{ $t('Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other crypto-currencies.')
     }}
   </p>

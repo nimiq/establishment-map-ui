@@ -1,17 +1,4 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { watch } from 'vue'
-import Button from '@/components/atoms/Button.vue'
-import Controls from '@/components/elements/Controls.vue'
-import FilterModal from '@/components/elements/FilterModal.vue'
-import InteractionBar from '@/components/elements/InteractionBar.vue'
-import MobileList from '@/components/elements/MobileList.vue'
-import TheMapInstance from '@/components/elements/TheMapInstance.vue'
-import { useApp } from '@/stores/app'
-import { useMarkers } from '@/stores/markers'
-import { useLocations } from '@/stores/locations'
-import { useMap } from '@/stores/map'
-
 const { isListShown } = storeToRefs(useApp())
 const { singlesInView, clustersInView } = storeToRefs(useMarkers())
 
@@ -44,23 +31,19 @@ const { maxZoomFromServer } = storeToRefs(useMarkers())
     <transition name="scale">
       <Controls v-if="singlesInView.length === 0 || !isListShown" class="absolute bottom-6 right-6" />
     </transition>
-    <transition
-      enter-from-class="translate-y-[110%] opacity-0" leave-to-class="translate-y-[110%] opacity-0"
-      enter-active-class="transition duration-300" leave-active-class="transition duration-300"
-    >
+    <transition enter-from-class="translate-y-[110%] opacity-0" leave-to-class="translate-y-[110%] opacity-0"
+      enter-active-class="transition duration-300" leave-active-class="transition duration-300">
       <template v-if="singlesInView.length > 0">
-        <MobileList v-if="isListShown" :locations="singlesInView" class="absolute bottom-0 w-full" @close-list="isListShown = false; selectedUuid = undefined;" />
-        <Button v-else bg-color="white" class="absolute -translate-x-1/2 shadow bottom-6 left-1/2" @click="isListShown = true">
-          <template #label>
-            {{ $t('Show list') }}
-          </template>
-        </Button>
+        <MobileList v-if="isListShown" :locations="singlesInView" class="absolute bottom-0 w-full"
+          @close-list="isListShown = false; selectedUuid = undefined;" />
+        <button pill-tertiary @click="isListShown = true" v-else absolute shadow translate--x="50%" bottom-6 left="50%">
+          {{ $t('Show list') }}
+        </button>
       </template>
-      <Button v-else-if="clustersInView.length && clustersInView.length === 0" bg-color="white" class="shadow absolute -translate-x-1/2 bottom-6 left-1/2 [&>span]:text-pumpkin" as="label">
-        <template #label>
-          {{ $t('Oops, no businesses around here') }}
-        </template>
-      </Button>
+      <button pill-tertiary text-orange @click="isListShown = true" v-else absolute shadow translate--x="50%" bottom-6
+        left="50%">
+        {{ $t('Oops, no businesses around here') }}
+      </button>
     </transition>
   </div>
 </template>

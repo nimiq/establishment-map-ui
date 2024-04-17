@@ -20,7 +20,7 @@ const i18nKeyPassThrough = {
 type BannerConfiguration = Pick<Location, 'bg' | 'theme' | 'bannerLabel' | 'bannerTooltip' | 'bannerTooltipCta' | 'bannerTooltipLabel' | 'bannerGooglePlay' | 'bannerAppStore'>
 const cardConfiguration: Record<Banner, BannerConfiguration> = {
   'None': {
-    bg: ['white', undefined],
+    bg: ['rgb(var(--nq-neutral-0))', undefined],
     theme: Theme.Light,
   },
   [Provider.DefaultAtm]: {

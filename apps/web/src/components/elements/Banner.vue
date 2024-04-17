@@ -1,22 +1,8 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
-import { Popover } from 'radix-vue/namespaced'
-import { useBreakpoints } from '@vueuse/core'
-import { breakpointsTailwind } from '@vueuse/core'
+import { breakpointsTailwind } from '@vueuse/core';
 import type { Location } from 'types'
-import CardBg from '@/components/cards/location/LocationCardBg.vue'
-import BannerCircleLogo from '@/components/icons/providers/BannerCircleLogo.vue'
 
-defineProps({
-  location: {
-    type: Object as PropType<Location>,
-    required: true,
-  },
-  isAtm: {
-    type: Boolean,
-    default: false,
-  },
-})
+defineProps<{location: Location, isAtm: boolean}>()
 
 const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
 
@@ -24,7 +10,6 @@ const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
 function handleProviderPlaceholder({banner, provider}: Location) {
   if (banner === 'Nimiq-Pay') return 'Nimiq Pay'
   return provider
-
 }
 </script>
 
@@ -40,13 +25,13 @@ function handleProviderPlaceholder({banner, provider}: Location) {
         </template>
       </i18n-t>
 
-      <Popover.Root :delay-duration="300">
-        <Popover.Trigger>
+      <PopoverRoot :delay-duration="300">
+        <PopoverTrigger>
           <div i-nimiq:info text="14 neutral-0/50 inverted:neutral/50" />
-        </Popover.Trigger>
-        <Popover.Portal>
+        </PopoverTrigger>
+        <PopoverPortal>
           <!-- class="max-w320 p4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space [&[data-side=right]_[data-arrow]]:right-1.5 [&[data-side=left]_[data-arrow]]:left-1.5" -->
-          <Popover.Content
+          <PopoverContent
             as-child
             max-w-320 p-16 text-neutral-0 rounded-6 shadow z-100 bg-gradient-neutral
             :side-offset="4" :collision-padding="8" :side="isMobile ? 'top' : 'right'"
@@ -80,7 +65,7 @@ function handleProviderPlaceholder({banner, provider}: Location) {
                   </a>
                 </div>
               </template>
-              <Popover.Arrow data-arrow fill-neutral desktop:relative size="10" />
+              <PopoverArrow data-arrow fill-neutral desktop:relative size="10" />
 
               <!-- TODO Once this is fixed https://github.com/radix-vue/radix-vue/issues/353 use custom arrow -->
               <!-- <PopoverArrow as-child>
@@ -92,9 +77,9 @@ function handleProviderPlaceholder({banner, provider}: Location) {
                   </svg>
                 </PopoverArrow> -->
             </div>
-          </Popover.Content>
-        </Popover.Portal>
-      </Popover.Root>
+          </PopoverContent>
+        </PopoverPortal>
+      </PopoverRoot>
     </div>
   </footer>
 </template>
