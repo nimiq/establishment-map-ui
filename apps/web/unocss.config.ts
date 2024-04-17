@@ -4,6 +4,7 @@ import { presetRemToPx } from '@unocss/preset-rem-to-px'
 import presetAnimations from 'unocss-preset-animations'
 import { Provider } from 'types'
 
+
 export default defineConfig({
   presets: [
     presetUno({ attributifyPseudo: true }),
@@ -25,7 +26,25 @@ export default defineConfig({
     }),
     presetRemToPx({ baseFontSize: 4 }),
     presetAttributify(),
-    presetAnimations()
+    presetAnimations(),
+
+    {
+      name: 'radix-variants',
+      variants: [
+        (matcher) => {
+          if (!matcher.startsWith('item-'))
+            return matcher
+          const re = /^item-(\w+):/
+          const match = matcher.match(re)
+          if(!match)
+            return matcher
+          return {
+            matcher: matcher.replace(re, ''),
+            selector: s => `[data-state="${match[1]}"] ${s}`,
+          }
+        },
+      ]
+    }
   ],
   theme: {
     breakpoints: {

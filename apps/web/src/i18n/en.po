@@ -287,7 +287,7 @@ msgstr ""
 msgid "Pay with {provider}"
 msgstr ""
 
-#: src/components/cards/location/LocationCard.vue:21
+#: src/components/cards/location/LocationCard.vue:24
 msgid "Picture of {name}"
 msgstr ""
 
