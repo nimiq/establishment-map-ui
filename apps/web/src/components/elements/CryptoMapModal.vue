@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import Modal from '@/components/atoms/Modal.vue'
-import TriangleSelector from '@/components/elements/TriangleSelector.vue'
-import { ref, watch } from 'vue';
-import { SUPPORTED_LANGUAGES, i18n, setLanguage } from '@/i18n/i18n-setup'
-
 const lang = ref(i18n.locale)
 watch(lang, () => setLanguage(lang.value))
 </script>
@@ -48,7 +43,7 @@ watch(lang, () => setLanguage(lang.value))
             {{ $t('Add Crypto location') }}
         </a>
 
-        <TriangleSelector :v-model:selected="lang" :options="SUPPORTED_LANGUAGES" />
+        <TriangleSelector v-model:selected="lang" :options="SUPPORTED_LANGUAGES" />
       </div>
     </template>
   </Modal>
