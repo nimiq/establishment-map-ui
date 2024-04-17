@@ -40,7 +40,7 @@ export default defineConfig({
             return matcher
           return {
             matcher: matcher.replace(re, ''),
-            selector: s => `[data-state="${match[1]}"] ${s}`,
+            selector: s => `[data-state="${match[1]}"] :is(& ${s}, &:is(${s}))`,
           }
         },
       ]

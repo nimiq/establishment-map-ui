@@ -13,7 +13,7 @@ const options = computed(() => props.options.filter(option => option !== selecte
       <Select.Value flex="~ items-center gap-8" label text="14 neutral" as="div" />
     </Select.Trigger>
     <Select.Portal>
-      <Select.Content bg-gradient-neutral text-neutral-0 shadow rounded-6 bottom-0 drop-shadow relative side="bottom" position="item-aligned" py-6>
+      <Select.Content bg-gradient-neutral text-neutral-0 shadow rounded-6 bottom-0 drop-shadow relative side="bottom" position="item-aligned" py-6 animate-fade-in animate-duration-100>
         <Select.Viewport>
           <Select.Item v-for="option in options" :key="option" :value="option" px-12 py-4 cursor-pointer group  outline="none hover:none focus-visible:blue">
             <Select.ItemText label text="14 neutral-600/80 group-hover:neutral-0" transition-colors flex="~ items-center gap-8">
