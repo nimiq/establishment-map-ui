@@ -1,15 +1,8 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { CURRENCIES } from 'database'
 import type { Currency, Suggestion } from 'types'
-import SearchBox from '../atoms/SearchBox.vue'
-import Select from '../atoms/Select.vue'
-import FormContainer from '@/components/forms/FormContainer.vue'
-import CryptoIcon from '@/components/icons/cryptos/CryptoIcon.vue'
-import { useAutocomplete } from '@/composables/useAutocomplete'
-import { translateCurrency } from '@/translations'
 
-const { suggestions, status, querySearch } = useAutocomplete()
+const { googleSuggestions: suggestions, status, query } = useAutocomplete({autocomplete: [Autocomplete.GoogleBussines]})
 
 const selectedCurrencies = ref<Currency[]>([])
 const selectedPlace = ref<Suggestion>()
@@ -50,7 +43,7 @@ async function onSubmit(captcha: string) {
       />
 
       <Select
-        v-model="selectedCurrencies" class="mt-6"
+        v-model="selectedCurrencies" class="mt6"
         :label="$t('Select Cryptocurrency')" :options="CURRENCIES" :placeholder="$t('Select Cryptocurrency')"
       >
         <template #option="{ option: currency }">

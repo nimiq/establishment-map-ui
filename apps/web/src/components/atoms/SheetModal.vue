@@ -2,36 +2,14 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { TransitionPresets, useTransition } from '@vueuse/core'
 
-const props = defineProps({
-  progress: {
-    type: Number,
-    default: 0,
-  },
-  initialHeight: {
-    type: Number,
-    required: false,
-  },
-  maxHeight: {
-    type: Number,
-    required: true,
-  },
-  initialBorderRadius: {
-    type: Number,
-    default: 0,
-  },
-  initialGapToScreen: {
-    type: Number,
-    default: 20,
-  },
-})
+const props = defineProps<{ maxHeight: number, initialBorderRadius: number, initialGapToScreen: number }>()
 
-const emit = defineEmits({
-  'update:progress': (_: number) => true,
-  'closeList': () => true,
-})
+const progress = defineModel<number>('progress', {default:0})
+
+const emit = defineEmits({ 'closeList': () => true })
 
 const containerHeight = ref(0)
-const initialHeight = computed(() => Math.max(props.initialHeight || 0, containerHeight.value))
+const initialHeight = computed(() => containerHeight.value)
 const heightDifference = computed(() => props.maxHeight - initialHeight.value)
 
 let initialY = 0
@@ -43,7 +21,7 @@ let speedY = 0
 let timerId: number | null = null
 const dragging = ref(false)
 const container = ref<HTMLElement | null>(null)
-const isOpen = computed(() => props.progress === 1)
+const isOpen = computed(() => progress.value === 1)
 
 function onStart(event: PointerEvent) {
   dragging.value = true
@@ -87,7 +65,7 @@ function onMove(event: PointerEvent) {
       // Dragging down to close list
       newProgress = Math.min(yDelta, initialHeight.value) / initialHeight.value
   }
-  emit('update:progress', newProgress)
+  progress.value = newProgress
 }
 
 function onEnd(event: PointerEvent) {
@@ -103,16 +81,16 @@ function onEnd(event: PointerEvent) {
   }
   else {
     if (initialOpen) {
-      props.progress < 0.85 ? close() : open()
+      progress.value < 0.85 ? close() : open()
     }
     else {
-      props.progress > 0.15 ? open() : close()
+      progress.value > 0.15 ? open() : close()
 
       // Close list if dragged down fast enough
-      if (props.progress < 0 && speedY > 0.8)
+      if (progress.value < 0 && speedY > 0.8)
         emit('closeList')
 
-      if (props.progress < -0.5)
+      if (progress.value < -0.5)
         emit('closeList')
     }
   }
@@ -129,7 +107,7 @@ function onCancel(event: PointerEvent) {
 }
 
 function close() {
-  emit('update:progress', 0)
+  progress.value = 0
 }
 
 function open(smooth = false) {
@@ -141,7 +119,7 @@ function open(smooth = false) {
     })
     source.value = 1
     const stop = watch(output, () => {
-      emit('update:progress', output.value)
+      progress.value = output.value
       if (output.value >= 1) {
         source.value = 0
         stop()
@@ -149,7 +127,7 @@ function open(smooth = false) {
     })
   }
   else {
-    emit('update:progress', 1)
+    progress.value = 1
   }
 }
 
@@ -171,10 +149,10 @@ function onCardDrag(progress: number) {
     width: `${window.innerWidth - (1 - Math.max(progress, 0)) * 40}px`,
   }
 }
-watch(() => props.progress, onCardDrag, { immediate: true })
+watch(() => progress.value, onCardDrag, { immediate: true })
 
 function resizeListener() {
-  onCardDrag(props.progress)
+  onCardDrag(progress.value)
 }
 
 onMounted(() => {
@@ -190,7 +168,7 @@ onBeforeUnmount(() => {
 
 <template>
   <article
-    ref="container" class="absolute h-full touch-pan-x sheet-transition will-change-auto min-h-fit" :style="style"
+    ref="container" absolute h-full touch-pan-x will-change-auto min-h-fit class="sheet-transition" :style="style"
     @pointerdown="onStart" @pointermove="onMove" @pointerup="onEnd" @pointercancel="onCancel"
   >
     <slot name="dragger" />

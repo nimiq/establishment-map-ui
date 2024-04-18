@@ -1,243 +1,61 @@
 <script setup lang="ts">
-import {
-  Combobox,
-  ComboboxButton,
-  ComboboxInput,
-  ComboboxLabel,
-  ComboboxOption,
-  ComboboxOptions,
-  TransitionRoot,
-} from '@headlessui/vue'
-import { useDebounceFn } from '@vueuse/core'
-import type { PredictionSubstring, Suggestion } from 'types'
-import { AutocompleteStatus } from 'types'
-import type { PropType } from 'vue'
-import { Teleport, computed, ref, useSlots, watch } from 'vue'
-import SearchIcon from '@/components/icons/icon-search.vue'
-import CrossIcon from '@/components/icons/icon-cross.vue'
+const autocomplete = Object.values(Autocomplete)
+const { q, status, googleSuggestions, locationSuggestions, highlightMatches } = useAutocomplete({ autocomplete })
 
-const props = defineProps({
-  roundedFull: {
-    type: Boolean,
-    default: false,
-  },
-  comboboxOptionsClasses: {
-    type: String,
-    default: '',
-  },
-  bgCombobox: {
-    type: String as () => 'space' | 'white',
-    default: 'white',
-  },
-  size: {
-    type: String as () => 'sm' | 'md',
-    default: 'md',
-  },
-  label: {
-    type: String,
-    default: '',
-  },
-  placeholder: {
-    type: String,
-    default: '',
-  },
-  autocomplete: {
-    type: Function,
-    required: true,
-  },
-  suggestions: {
-    type: Array as () => Suggestion[],
-    required: true,
-  },
-  allowClean: {
-    type: Boolean,
-    default: false,
-  },
-  status: {
-    type: String as PropType<AutocompleteStatus>,
-    required: true,
-  },
-  teleport: {
-    type: Boolean,
-    default: true,
-  },
-})
-
-const emit = defineEmits({
-  selected: (value?: Suggestion) => value,
-  open: (value: boolean) => value,
-})
-
-const selected = ref<Suggestion>()
-const query = ref<string>()
-
-const userCanCleanInput = computed(() => props.allowClean && query.value !== '' && query.value !== undefined)
-
-const loading = ref(false)
-
-watch(() => query.value, async () => {
-  if (query.value === 'undefined')
-    query.value = undefined
-  if (!query.value)
-    return
-  loading.value = true
-  await props.autocomplete(query.value)
-  loading.value = false
-})
-
-const slots = useSlots()
-const hasLabel = computed(() => props.label || hasSlot('label'))
-function hasSlot(slotName: 'label') {
-  return slots[slotName] !== undefined
-}
-
-function sanitizeAndHighlightMatches(str: string, matches: PredictionSubstring[]) {
-  // Split into unicode chars because match positions in google.maps.places.AutocompletePrediction["matched_substrings"]
-  // are based on unicode chars, as opposed to surrogate pairs of Javascript strings for Unicode chars on astral planes
-  // (see https://mathiasbynens.be/notes/javascript-unicode)
-  const parts = [...str]
-
-  // Sanitize potential html in input string to mitigate risk of XSS because the result will be fed to v-html. Note that
-  // this manipulation does not change indices/positions of our string parts (initial unicode characters).
-  for (let i = 0; i < parts.length; ++i) {
-    if (parts[i] === '<')
-      parts[i] = '&lt;'
-    else if (parts[i] === '>')
-      parts[i] = '&gt;'
-  }
-
-  // Make matches bold. Note that our manipulations do not change indices/positions of our string parts (initial unicode
-  // characters), thus we don't have to adapt match offsets of subsequent matches. Additionally, matches are probably
-  // not overlapping, but it would also not hurt.
-  for (const match of matches || []) {
-    parts[match.offset] = `<b>${parts[match.offset]}`
-    parts[match.offset + match.length - 1] = `${parts[match.offset + match.length - 1]}</b>`
-  }
-
-  return parts.join('')
-}
-
-function clearInput() {
-  selected.value = undefined
-  query.value = undefined
-}
-
-const debouncedRequest = useDebounceFn(
-  (isVisible: boolean) => {
-    emit('open', isVisible)
-  },
-  50,
-)
-
-function onListVisibilityChange(isVisible: boolean) {
-  debouncedRequest(isVisible)
-}
+// The first time the user types something, we hide the hint
+watchOnce(q, useApp().hideSearchBoxHint)
 </script>
 
 <template>
-  <Combobox
-    v-slot="{ open }" v-model="selected" as="div" nullable by="id"
-    @update:model-value="emit('selected', selected)"
-  >
-    <ComboboxLabel v-if="hasLabel" class="capitalize text-space/40">
-      {{ label }}
-    </ComboboxLabel>
-    <div class="relative" :class="{ 'mt-1': hasLabel }">
-      <div
-        class="relative w-full cursor-default overflow-hidden text-left ring-[1.5px]" :class="{
-          'ring-space/[0.15] focus-within:ring-sky/30': !open,
-          'ring-ocean/30': open,
-          'rounded-full': roundedFull,
-          'rounded-sm': !roundedFull,
-        }"
-      >
-        <ComboboxInput
-          class="w-full border-none placeholder:text-space/60 focus-within:placeholder:text-sky/60 focus:ring-0 outline-none pr-[3.25rem] pl-4"
-          spellcheck="false"
-          :class="{
-            'text-space': !open,
-            'text-ocean': open,
-            'text-14 py-[5px]': size === 'sm',
-            'text-16 py-2': size === 'md',
-          }" autocomplete="off" :placeholder="placeholder" :display-value="(v) => (v as Suggestion)?.label"
-          @change="query = $event.target.value"
-        />
+  <ComboboxRoot v-model:searchTerm="q" name="search-box">
+    <ComboboxAnchor flex="~ items-center justify-between" relative>
+      <ComboboxInput :placeholder="$t('Search Map')" input-text rounded-full text-14 peer />
+      <div v-if="q === ''" i-nimiq:magnifying-glass absolute right-16 text="14 neutral/40 peer-focus-visible:blue" />
+      <ComboboxCancel v-else i-nimiq:cross absolute right-16 text="10  neutral-700 peer-focus-visible:blue/80" />
+    </ComboboxAnchor>
 
-        <div class="absolute inset-y-0 right-0 flex items-center pr-4">
-          <ComboboxButton v-if="!userCanCleanInput">
-            <SearchIcon class="w-4 h-5 text-space/40" />
-          </ComboboxButton>
-          <button v-else>
-            <CrossIcon class="w-4 h-5 text-space/40" @click="clearInput()" />
-          </button>
+    <ComboboxContent absolute bg-neutral-0 rounded-b-16 top-66 inset-x-0 data-suggestions>
+      <ComboboxViewport>
+        <div p-16 text-neutral-800 v-if="status !== AutocompleteStatus.WithResults">
+          <ComboboxEmpty v-if="status === AutocompleteStatus.NoResults">
+            {{ $t('Nothing found.') }}
+          </ComboboxEmpty>
+          <span v-else-if="status === AutocompleteStatus.Loading">
+            {{ $t('Loading...') }}
+          </span>
+          <span v-else-if="status === AutocompleteStatus.Initial">
+            {{ $t('Start typing...') }}
+          </span>
+          <span v-else-if="status === AutocompleteStatus.Error">
+            {{ $t('Error loading results.') }}
+          </span>
         </div>
-      </div>
-      <component :is="teleport ? Teleport : 'div'" to="body">
-        <TransitionRoot leave="transition ease-in duration-100" leave-from="opacity-100" leave-to="opacity-0">
-          <ComboboxOptions
-            v-element-visibility="onListVisibilityChange"
-            :class="[
-              comboboxOptionsClasses,
-              {
-                'bg-white': bgCombobox === 'white',
-                'bg-space': bgCombobox === 'space',
-              },
-            ]"
-            class="absolute z-40 overflow-auto text-16 shadow-lg scroll-space focus:outline-none"
-          >
-            <div
-              v-if="AutocompleteStatus.WithResults !== status" class="relative px-4 py-2 text-center cursor-default select-none h-[100px]" :class="{
-                'text-space/80': bgCombobox === 'white',
-                'text-white/80': bgCombobox === 'space',
-              }"
-            >
-              <span v-if="status === AutocompleteStatus.Loading">
-                {{ $t('Loading...') }}
-              </span>
-              <span v-else-if="status === AutocompleteStatus.Initial">
-                {{ $t('Start typing...') }}
-              </span>
-              <span v-else-if="status === AutocompleteStatus.Error">
-                {{ $t('Error loading results.') }}
-              </span>
-              <span v-else-if="status === AutocompleteStatus.NoResults && query !== ''">
-                {{ $t('Nothing found.') }}
-              </span>
-            </div>
+        <template v-else>
+          <ComboboxGroup flex="~ col">
+            <ComboboxLabel label text="12 neutral-700" px-16 py-8>
+              {{ $t('Crypto Locations') }}
+            </ComboboxLabel>
 
-            <ComboboxOption
-              v-for="suggestion in suggestions" v-else :key="suggestion.id" v-slot="{ selected: optionIsSelected, active }" as="template"
-              :value="suggestion"
-            >
-              <li
-                class="relative select-none py-1.5 flex items-center transition-colors cursor-pointer" :class="{
-                  'hover:bg-space/[0.06] focus:bg-space/[0.06]': bgCombobox === 'white',
-                  'hover:bg-white/10 focus:bg-white/10': bgCombobox === 'space',
-                  'bg-space/[0.06]': bgCombobox === 'white' && active,
-                  'bg-white/10': bgCombobox === 'space' && active,
-                  'px-6 gap-x-6': size === 'sm',
-                  'px-3 gap-x-2': size === 'md',
-                }"
-              >
-                <span
-                  class="block truncate" :class="{
-                    'text-space': bgCombobox === 'white',
-                    'text-white': bgCombobox === 'space',
-                  }" v-html="sanitizeAndHighlightMatches(suggestion.label, suggestion.matchedSubstrings)"
-                />
-                <span
-                  v-if="optionIsSelected" class="absolute inset-y-0 left-0 flex items-center pl-3" :class="{
-                    'text-white':
-                      (active && bgCombobox === 'white') || (!active && bgCombobox === 'space'),
-                    'text-space':
-                      (!active && bgCombobox === 'white') || (active && bgCombobox === 'space'),
-                  }"
-                />
-              </li>
-            </ComboboxOption>
-          </ComboboxOptions>
-        </TransitionRoot>
-      </component>
-    </div>
-  </Combobox>
+            <ComboboxItem v-for="s in locationSuggestions" :key="s.uuid" :value="s" px-16 py-12 hocus:bg-neutral-100
+              transition-colors cursor-pointer @click="() => useLocations().goToLocation(s.uuid, { open: true })">
+              <span class="block truncate" v-html="highlightMatches(s.name, s.matchedSubstrings)" />
+            </ComboboxItem>
+          </ComboboxGroup>
+          <ComboboxSeparator bg-neutral-100 h-2 my-12 />
+
+          <ComboboxGroup>
+            <ComboboxLabel label text="12 neutral-700" px-16 py-8>
+              {{ $t('Results from Google') }}
+            </ComboboxLabel>
+
+            <ComboboxItem v-for="s in googleSuggestions" :key="s.placeId" :value="s" px-16 py-12 hocus:bg-neutral-100
+              transition-colors cursor-pointer @click="() => useMap().goToPlaceId(s.placeId)">
+              <span class="block truncate" v-html="highlightMatches(s.label, s.matchedSubstrings)" />
+            </ComboboxItem>
+          </ComboboxGroup>
+        </template>
+
+      </ComboboxViewport>
+    </ComboboxContent>
+  </ComboboxRoot>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const { isListShown } = storeToRefs(useApp())
-const { singlesInView, clustersInView } = storeToRefs(useMarkers())
+const { singlesInView } = storeToRefs(useMarkers())
 
 // TODO: Only show list when user searched for something
 // watch(firstLocationsLoaded, () => {
@@ -14,8 +14,8 @@ watch(selectedUuid, (uuid) => {
     isListShown.value = true
 }, { immediate: true })
 
-const { zoom } = storeToRefs(useMap())
-const { maxZoomFromServer } = storeToRefs(useMarkers())
+// const { zoom } = storeToRefs(useMap())
+// const { maxZoomFromServer } = storeToRefs(useMarkers())
 </script>
 
 <template>
@@ -27,7 +27,7 @@ const { maxZoomFromServer } = storeToRefs(useMarkers())
       :class="{ 'translate-y-0 delay-100 duration-500 opacity-20': isListShown, 'translate-y-full duration-500 opacity-0': !isListShown }"
       class="absolute bottom-0 w-full h-[184px] transition-[transform,opacity] will-change-transform pointer-events-none bg-gradient-to-t from-space to-space/0"
     /> -->
-    <FilterModal v-if="maxZoomFromServer < zoom" class="absolute top-24 right-5" />
+    <!-- <FilterModal v-if="maxZoomFromServer < zoom" class="absolute top-24 right-5" /> -->
     <transition name="scale">
       <Controls v-if="singlesInView.length === 0 || !isListShown" class="absolute bottom-6 right-6" />
     </transition>

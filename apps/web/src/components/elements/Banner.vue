@@ -15,7 +15,7 @@ function handleProviderPlaceholder({banner, provider}: Location) {
 
 <template>
   <footer class="relative flex items-center" :h="location.bannerLabel ? '64' : '36'">
-    <CardBg v-if="!location.isAtm && location.bannerLabel" :location="location" />
+    <LocationCardBg v-if="!location.isAtm && location.bannerLabel" :location="location" />
 
     <div v-if="location.bannerLabel" flex="~ items-center gap-8" pt-6 pl-24 pr-72 text-12>
       <i18n-t :keypath="location.bannerLabel" tag="p" text-neutral-50>

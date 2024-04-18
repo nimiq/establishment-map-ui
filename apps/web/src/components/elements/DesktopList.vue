@@ -42,6 +42,7 @@ watch(selectedUuid, (uuid) => {
     of-auto transition-height will-change-height duration-300
     :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--search-box-hint) * 88px)' : '0' }"
     item-class="relative of-hidden ring-neutral-100 border-t-1 group/card [&_[data-rings]]:-rotate-90"
+    :data-state="listIsShown ? 'open' : 'closed'"
   >
     <template #default="{ item: location, active }">
       <DynamicScrollerItem
@@ -57,8 +58,8 @@ watch(selectedUuid, (uuid) => {
           }"
           @click="onLocationClicked(location)"
         >
-          <CardBg v-if="location.isAtm" :location="location" :with-gradient="false" translate-y-1 />
-          <BasicInfo :location="location" />
+          <LocationCardBg v-if="location.isAtm" :location="location" :with-gradient="false" translate-y-1 />
+          <BasicInfoLocation :location="location" />
         </button>
       </DynamicScrollerItem>
     </template>

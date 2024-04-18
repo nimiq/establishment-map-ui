@@ -1,6 +1,3 @@
-import '@fontsource/mulish/latin-400.css'
-import '@fontsource/mulish/latin-600.css'
-import '@fontsource/mulish/latin-700.css'
 import { createPinia } from 'pinia'
 import { createApp, markRaw } from 'vue'
 import App from './App.vue'

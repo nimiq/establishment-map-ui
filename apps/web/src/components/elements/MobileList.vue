@@ -171,8 +171,7 @@ if (isIOs) {
     >
       <SheetModal
         :max-height="location.photo ? 363 : 179" :initial-border-radius="8"
-        :initial-gap-to-screen="INITIAL_GAP_TO_SCREEN" class="relative w-full rounded-t-lg" :progress="progress"
-        @update:progress="progress = $event" @close-list="() => $emit('closeList')"
+        :initial-gap-to-screen="INITIAL_GAP_TO_SCREEN" class="relative w-full rounded-t-lg" v-model:progress="progress" @close-list="() => $emit('closeList')"
       >
         <template #dragger>
           <div class="relative">

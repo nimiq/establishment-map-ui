@@ -62,17 +62,30 @@ export const useLocations = defineStore('locations', () => {
       router.push({ query: { uuid: newUuid, ...route.query } })
   })
 
-  async function goToLocation(uuid: string) {
+  interface GoToLocationOptions {
+    open?: boolean
+  }
+
+  async function goToLocation(uuid: string, { open = false }: GoToLocationOptions = {}) {
     const location = await getLocationByUuid(uuid)
     if (!location)
       return false
 
     selectedUuid.value = uuid
 
-    useMap().setPosition({
-      center: { lat: location.lat, lng: location.lng },
-      zoom: 19,
-    })
+    useMap().setPosition({ center: { lat: location.lat, lng: location.lng }, zoom: 19 })
+
+    if (open) {
+      const { singles } = storeToRefs(useMarkers())
+      const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+      while (!singles.value.some(s => s.uuid === uuid))
+        await sleep(100) // Try to wait for the item to be added
+      await nextTick() // Wait for the marker to be rendered
+
+      // once the marker is rendered, we can trigger the click event to open the modal
+      const trigger = document.querySelector(`[data-trigger-uuid="${uuid}"]`) as HTMLElement
+      trigger?.click()
+    }
 
     return true
   }

@@ -37,6 +37,7 @@ async function setBrowserPosition() {
 
 function clearStorage() {
   if(!import.meta.env.DEV) return
+  localStorage.clear()
   document.cookie.split(';').forEach(function(c) {
     document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
   })
@@ -49,7 +50,7 @@ function clearStorage() {
       @update:open="$router.push({ query: { ...$route.query, cryptocity: $event ? cryptocityControl?.name : undefined } })">
       <PopoverTrigger class="border border-[#e9e9ed] border-solid animate-scale !w8 !h8 shadow bg-white rounded-full p1.5"
         data-cryptocity-card-trigger :aria-label="$t('Information about this Cryptocity')">
-        <CryptocityIcon />
+        <div i-nimiq:logos-cryptocity />
       </PopoverTrigger>
       <PopoverPortal>
         <PopoverContent align="end" side="bottom" :side-offset="-32"

@@ -1,17 +1,7 @@
 <script setup lang="ts">
 import type { CryptocityData } from 'types'
-import type { PropType } from 'vue'
-import Button from '@/components/atoms/Button.vue'
-import CrossIcon from '@/components/icons/icon-cross.vue'
-import CryptocityIcon from '@/components/icons/icon-cryptocity.vue'
 
-defineProps({
-  cryptocity: {
-    type: Object as PropType<CryptocityData>,
-    required: true,
-  },
-})
-
+defineProps<{ cryptocity: CryptocityData }>()
 defineEmits({ close: () => true })
 </script>
 
@@ -21,27 +11,22 @@ defineEmits({ close: () => true })
     @pointerdown.capture.stop.prevent @dblclick.capture.stop.prevent
   >
     <div class="grid items-center grid-cols-[auto_1fr_auto] grid-rows-2 grid-flow-dense gap-x-2">
-      <CryptocityIcon style="width: 31px; height: 27px" class="row-span-full" />
-      <h3 class="text-space leading-[1]" :class="cryptocity.locationsCount <= 1 ? 'row-span-full' : ''">
+      <div i-nimiq:logos-cryptocity text-28 row-span-full />
+      <h3 text="neutral lh-none" :class="cryptocity.locationsCount <= 1 ? 'row-span-full' : ''">
         {{ cryptocity.name }}
       </h3>
-      <span v-if="cryptocity.locationsCount > 1" class="text-14 leading-[1] text-space/70">
+      <span v-if="cryptocity.locationsCount > 1" text="14 lh-none neutral-700">
         {{ $tc('{count} locations', cryptocity.locationsCount) }}
       </span>
       <button
         type="button"
-        class="relative w6 h6 col-start-3 p2 ml-auto transition rounded-full text-space bg-space/10 row-span-full -top-1"
+        relative size-24 col-start-3 p-8 ml-auto transition rounded-full text-neutral-100 top--4
         :aria-label="$t('Close')" :class="cryptocity.locationsCount > 1 ? 'self-start' : 'row-span-full'"
-        @click="$emit('close')"
-      >
-        <CrossIcon />
-      </button>
+        @click="$emit('close')" close-btn
+      />
     </div>
 
-    <p
-      v-for="(p, i) in cryptocity.description" :key="i" class="text-14 text-space/80 text-pretty"
-      :class="i === 0 ? 'pt3' : 'pt2'"
-    >
+    <p v-for="(p, i) in cryptocity.description" :key="i" text="14 neutral-800" :pt="i === 0 ? '12' : '8'">
       {{ p }}
     </p>
     <button pill-sm pill-blue mt-2 text-14>

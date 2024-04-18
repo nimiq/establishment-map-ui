@@ -3,6 +3,8 @@ import { defineConfig, presetAttributify, presetUno, presetIcons } from 'unocss'
 import { presetRemToPx } from '@unocss/preset-rem-to-px'
 import presetAnimations from 'unocss-preset-animations'
 import { Provider } from 'types'
+import { match } from 'assert'
+import { matchedRouteKey } from 'vue-router'
 
 
 export default defineConfig({
@@ -36,7 +38,7 @@ export default defineConfig({
             return matcher
           const re = /^item-(\w+):/
           const match = matcher.match(re)
-          if(!match)
+          if (!match)
             return matcher
           return {
             matcher: matcher.replace(re, ''),
@@ -44,14 +46,14 @@ export default defineConfig({
           }
         },
       ]
-    }
+    },
   ],
   theme: {
     breakpoints: {
       desktop: '768px',
     }
   },
-  // TODO Remove
+  // TODO Move to nimiq-css?
   variants: [
     (matcher) => {
       if (!matcher.startsWith('hocus:'))
@@ -62,5 +64,4 @@ export default defineConfig({
       }
     },
   ],
-
 })

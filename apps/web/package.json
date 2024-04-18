@@ -19,7 +19,6 @@
     "i18n:sync": "pnpm i18n:extract && pnpm i18n:push; pnpm i18n:pull"
   },
   "dependencies": {
-    "@fontsource/mulish": "^5.0.17",
     "@googlemaps/js-api-loader": "^1.16.6",
     "@headlessui/vue": "^1.7.19",
     "@nimiq/utils": "^0.10.1",
@@ -28,7 +27,7 @@
     "@vueuse/components": "^10.9.0",
     "@vueuse/core": "^10.9.0",
     "@vueuse/router": "^10.9.0",
-    "nimiq-css": "^0.0.80",
+    "nimiq-css": "^0.0.81",
     "pinia": "^2.1.7",
     "radix-vue": "^1.7.0",
     "vue": "^3.4.21",

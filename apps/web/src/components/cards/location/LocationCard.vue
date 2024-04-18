@@ -36,7 +36,7 @@ const [DefineCryptoList, ReuseCryptoList] = createReusableTemplate<{ cryptosToDi
     'of-hidden': isMobile,
     'select-auto': progress === 1 || !isMobile,
   }" :style="`background: ${location.isAtm ? location.bg[0] : 'rgb(var(--nq-neutral-0,0))'}`">
-    <CardBg v-if="location.isAtm" :location="location" />
+    <LocationCardBg v-if="location.isAtm" :location="location" />
 
     <div v-if="location.photo && progress > 0" pt-6 px-5 transition-height duration="[--duration]"
       :style="`height: ${progress * 184}px;`">
@@ -47,7 +47,7 @@ const [DefineCryptoList, ReuseCryptoList] = createReusableTemplate<{ cryptosToDi
     </div>
 
     <div relative px-24 pt-20 pb-32>
-      <BasicInfo :location="location" :progress="progress" />
+      <BasicInfoLocation :location="location" :progress="progress" />
       <CardDotsMenu v-if="progress === 1" :location="location" absolute top-20 right-4 />
 
       <transition enter-active-class="transition duration-100 ease-out"

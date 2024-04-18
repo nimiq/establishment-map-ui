@@ -1,19 +1,7 @@
 <script setup lang="ts">
 import type { Cryptocity, CryptocityData } from 'types'
-import type { PropType } from 'vue'
-import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useMap } from '@/stores/map'
-import CryptocityIcon from '@/components/icons/icon-cryptocity.vue'
-import { useCryptocities } from '@/stores/cryptocities'
 
-const props = defineProps({
-  cryptocity: {
-    type: String as PropType<Cryptocity>,
-    required: true,
-  },
-})
+const props = defineProps<{ cryptocity: Cryptocity}>()
 
 const { cryptocities } = storeToRefs(useCryptocities())
 const cryptocity = computed(() => cryptocities.value.data[props.cryptocity]!)
@@ -31,11 +19,8 @@ function onCryptocityClick() {
 </script>
 
 <template>
-  <div
-    class="grid p-1 bg-white rounded-full shadow cursor-pointer group/city clickable-sm aspect-square place-content-center"
-    @click="onCryptocityClick()"
-  >
-    <div class="absolute inset-0 duration-400 transition-[background-color] rounded-full group-hover/city:bg-space/[0.06] group-focus-visible/city:bg-space/[0.06]" />
-    <CryptocityIcon class="w-full" />
+  <div grid="~ place-content-center" p-4 bg-neutral-0 rounded-full shadow cursor-pointer aspect-square  @click="onCryptocityClick()">
+    <div absolute inset-0 duration-400 transition-background-color rounded-full group-hocus="bg-neutral/6" />
+    <div i-nimiq:logos-cryptocity />
   </div>
 </template>
