@@ -9,7 +9,7 @@ const showHint = computed(() => shouldShowSearchBoxHint.value && useBreakpoints(
   <header relative z-10 flex="~ items-center gap-8 desktop:gap-16" w-full p-24 desktop:p-16 pl-16 z-100>
     <div i-nimiq:logos-crypto-map text-24 aria-hidden shrink-0 />
     <SearchBox />
-    <CryptoMapModal />
+    <CryptoMapModal id="crypto-map-modal" />
   </header>
 
   <!-- We need to hardcode the height, otherwise the desktop list will break -->

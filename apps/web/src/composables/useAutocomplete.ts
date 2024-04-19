@@ -27,11 +27,14 @@ interface UseAutocompleteOptions {
 export function useAutocomplete({ autocomplete }: UseAutocompleteOptions) {
   const status = ref<AutocompleteStatus>(AutocompleteStatus.Initial)
   const query = ref<string>('')
-  watch(() => query.value, () => {
+  watch(() => query.value, ([newValue, oldValue]) => {
+    if (newValue === oldValue) return
     if (!query.value) {
       status.value = AutocompleteStatus.Initial
       clearSuggestions()
     } else {
+      if(newValue !== '' && (oldValue === '') || (googleSuggestions.value.length === 0 && locationSuggestions.value.length === 0)) status.value = AutocompleteStatus.Loading
+      if(newValue === '' && oldValue !== '') status.value = AutocompleteStatus.Initial
       querySearch()
     }
   })
@@ -97,12 +100,10 @@ export function useAutocomplete({ autocomplete }: UseAutocompleteOptions) {
     // eslint-disable-next-line no-console
     console.group(`🔍 Autocomplete "${query}"`)
 
-    status.value = query.value === '' ? AutocompleteStatus.Loading : status.value
     if (!query.value) {
       clearSuggestions()
       return
     }
-    console.log('ayaya', query.value)
 
     const result = await Promise.allSettled([autocompleteLocations(), autocompleteGoogle()])
 

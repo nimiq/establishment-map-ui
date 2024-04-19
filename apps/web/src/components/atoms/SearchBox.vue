@@ -14,7 +14,7 @@ watchOnce(q, useApp().hideSearchBoxHint)
       <ComboboxCancel v-else i-nimiq:cross absolute right-16 text="10  neutral-700 peer-focus-visible:blue/80" />
     </ComboboxAnchor>
 
-    <ComboboxContent absolute bg-neutral-0 rounded-b-16 top-66 inset-x-0 data-suggestions>
+    <ComboboxContent absolute bg-neutral-0 shadow rounded-b-16 top-66 inset-x-0 data-suggestions>
       <ComboboxViewport>
         <div p-16 text-neutral-800 v-if="status !== AutocompleteStatus.WithResults">
           <ComboboxEmpty v-if="status === AutocompleteStatus.NoResults">

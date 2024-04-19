@@ -3,8 +3,6 @@ import { defineConfig, presetAttributify, presetUno, presetIcons } from 'unocss'
 import { presetRemToPx } from '@unocss/preset-rem-to-px'
 import presetAnimations from 'unocss-preset-animations'
 import { Provider } from 'types'
-import { match } from 'assert'
-import { matchedRouteKey } from 'vue-router'
 
 
 export default defineConfig({
@@ -42,7 +40,7 @@ export default defineConfig({
             return matcher
           return {
             matcher: matcher.replace(re, ''),
-            selector: s => `[data-state="${match[1]}"] :is(& ${s}, &:is(${s}))`,
+            selector: s => `[data-state="${match[1]}"]:is(${s}, & ${s})`,
           }
         },
       ]

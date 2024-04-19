@@ -39,9 +39,25 @@ watch(lang, () => setLanguage(lang.value))
 
     <template #content>
       <div flex="~ items-center justify-between" mt-32>
-        <a href="/location/add" pill-blue pill-sm>
+        <NestedModal>
+          <template #trigger>
+            <button pill-blue pill-sm>
+                {{ $t('Add Crypto location') }}
+            </button>
+          </template>
+          <template #title>
+            Lo
+          </template>
+          <template #description>
+            jj
+          </template>
+          <template #content>
+            Your content
+          </template>
+        </NestedModal>
+        <!-- <a href="/location/add" pill-blue pill-sm>
             {{ $t('Add Crypto location') }}
-        </a>
+        </a> -->
 
         <TriangleSelector v-model:selected="lang" :options="SUPPORTED_LANGUAGES" />
       </div>
