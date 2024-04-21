@@ -9,7 +9,7 @@ const { share, isSupported: shareIsSupported } = useShare({
   title: props.location.name,
   text: `${i18n.t('Check out {locationName} on Nimiq\'s Crypto Map', { locationName: props.location.name })}\n\n${url}`,
 })
-const { copy, isSupported: copyIsSupported, copied } = useClipboard({ source: url, copiedDuring: 2000 })
+const { copy, isSupported: copyIsSupported, copied } = useClipboard({ source: url, copiedDuring: 3000 })
 </script>
 
 <template>
@@ -29,12 +29,19 @@ const { copy, isSupported: copyIsSupported, copied } = useClipboard({ source: ur
             <span text-16 font-semibold>{{ $t('Share') }}</span>
           </DropdownMenuItem>
 
-          <DropdownMenuItem v-if="copyIsSupported" @select.prevent="() => copy()" px-14 py-8 bg="hocus:neutral-0/10"
-            cursor-pointer flex="~ items-center" rounded-2 text="neutral-0 hover:text-neutral-100">
-            <div>
-              <span i-nimiq:copy block text-16 mr-12 />
-              <span text-16 font-semibold>{{ $t('Copy Link') }}</span>
-            </div>
+          <DropdownMenuItem v-if="copyIsSupported" @select.prevent="() => copy()" px-14 py-8
+            :class="{ 'bg-green delay-50 duration-700': copied, 'transparent hocus:bg-neutral-0/10 duration-300 cursor-pointer': !copied }"
+            transition-colors rounded-2 text="neutral-0 hover:text-neutral-100">
+            <transition name="fade-slide" mode="out-in">
+              <div v-if="copied" key="copied" flex="~ items-center" data-copied>
+                <div i-nimiq:check text-16 mr-12 />
+                <span>Copied</span>
+              </div>
+              <div v-else key="copy" flex="~ items-center" data-copy>
+                <div i-nimiq:copy text-16 mr-12 />
+                <span>Copy Link</span>
+              </div>
+            </transition>
           </DropdownMenuItem>
 
           <ReportLocation :location>
@@ -70,5 +77,21 @@ const { copy, isSupported: copyIsSupported, copied } = useClipboard({ source: ur
   opacity: 0;
   transform: translateX(50%);
   left: 20rem;
+}
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: transform 75ms ease-out, opacity 100ms var(--nq-ease);
+}
+
+[data-copy]:is(.fade-slide-enter-from, .fade-slide-leave-to) {
+  transform: translateY(-0.5rem);
+  opacity: 0;
+}
+
+[data-copied]:is(.fade-slide-enter-from, .fade-slide-leave-to) {
+  transform: translateY(0.5rem);
+  opacity: 0;
+
 }
 </style>
