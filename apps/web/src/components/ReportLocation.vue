@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ModalName } from '@/router'
 import { Issue, Location } from 'types'
 import { translateIssue } from '@/translations'
 defineProps<{ location: Location }>()
@@ -7,7 +8,7 @@ const issue = ref<Issue>()
 </script>
 
 <template>
-  <Modal name="report">
+  <Modal :name="ModalName.Report">
     <template #trigger>
       <slot name="trigger" />
     </template>

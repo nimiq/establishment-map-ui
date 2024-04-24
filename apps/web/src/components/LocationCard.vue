@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { Currency, LocationLink, type Location } from 'types'
-import { breakpointsTailwind } from '@vueuse/core'
 
 const props = defineProps<{ location: Location, progress: number }>()
 
-const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
+const { isMobile } = storeToRefs(useApp())
 
 function arrayEquals(arrA: string[], arrB: string[]): boolean {
   return arrA.length === arrB.length && arrA.every((value, index) => value === arrB[index])
@@ -32,7 +31,7 @@ const [DefineCryptoList, ReuseCryptoList] = createReusableTemplate<{ cryptosToDi
     </ul>
   </DefineCryptoList>
 
-  <div relative rounded-12 duration="$duration,0" max-w-352 group h-full select-none :class="{
+  <div relative rounded-12 duration="$duration,0" desktop:max-w-352 w-full group h-full select-none :class="{
     'rounded-b-0': progress === 1 && isMobile,
     'of-hidden': isMobile,
     'select-auto': progress === 1 || !isMobile,

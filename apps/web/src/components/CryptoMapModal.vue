@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import { ModalName } from '@/router';
+
 const lang = ref(i18n.locale)
 watch(lang, () => setLanguage(lang.value))
 </script>
 
 <template>
-  <Modal name="crypto-map">
+  <Modal :name="ModalName.CryptoMap">
     <template #trigger>
       <div group bg="neutral-0 hover:neutral-200" p-8 mx--8 rounded-full transition-colors>
         <div i-nimiq:gear text="neutral-600 group-hover:neutral-700" transition-colors text-18 />

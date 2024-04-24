@@ -1,19 +1,22 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{ name: string, nested?: boolean }>(), { nested: false })
+import { ModalName } from '@/router';
+import { useRouteQuery } from '@vueuse/router';
+
+const props = withDefaults(defineProps<{ name: ModalName, nested?: boolean }>(), { nested: false })
 const emit = defineEmits<{ close: [] }>()
-const slots = useSlots()
 
 // Keep state in the URL
-const queryName = props.nested ? 'nested' : 'modal'
-const router = useRouter()
-const route = useRoute()
-const open = ref(route.query[queryName] === props.name)
-watch(open, (v) => requestAnimationFrame(() => router.push({ query: { ...route.query, [queryName]: v ? props.name : undefined } })))
-onUnmounted(() => router.replace({ query: route.query, [queryName]: undefined }))
+const query = useRouteQuery<ModalName | undefined>(props.nested ? 'nested' : 'modal')
+const open = ref(query.value === props.name)
+watch(open, v => {
+  query.value = v ? props.name : undefined
+  if (!v) emit('close')
+})
+onUnmounted(() => query.value = undefined)
 </script>
 
 <template>
-  <DialogRoot v-model:open="open" @update:open="!$event && $emit('close')">
+  <DialogRoot v-model:open="open">
     <DialogTrigger v-bind="$attrs">
       <slot name="trigger" />
     </DialogTrigger>
@@ -25,14 +28,14 @@ onUnmounted(() => router.replace({ query: route.query, [queryName]: undefined })
         <DialogContent :key="name" fixed bottom-0 desktop="top-1/2 left-1/2 translate--1/2" op-100 h-max max-h-85dvh
           w-full max-w-512 py-32 z-20 of-y-auto ring="1.5 neutral-50" shadow-lg bg-neutral-0 rounded="t-8 desktop:8"
           outline-none data-modal :data-nested="nested ? '' : undefined" @openAutoFocus.prevent>
-          <DialogTitle v-if="slots.title" px-24 desktop:px-40 mb-8 text-18 font-bold text-neutral lh-none as="h2">
+          <DialogTitle px-24 desktop:px-40 mb-8 text-18 font-bold text-neutral lh-none as="h2">
             <slot name="title" />
           </DialogTitle>
-          <DialogDescription v-if="slots.description" block px-24 desktop:px-40 text-neutral-800>
+          <DialogDescription block px-24 desktop:px-40 text-neutral-800>
             <slot name="description" />
           </DialogDescription>
 
-          <div v-if="slots.content" px-24 desktop:px-40>
+          <div px-24 desktop:px-40>
             <slot name="content" />
           </div>
 

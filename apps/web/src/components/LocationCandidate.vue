@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { GoogleSuggestion } from '@/composables/useAutocomplete';
+import { ModalName } from '@/router';
 import { Currency } from 'types';
 
 const selectedPlace = ref<GoogleSuggestion>()
@@ -17,7 +18,7 @@ const feedbackScreen = computed(() => isError || isSuccess)
 </script>
 
 <template>
-  <Modal nested name="candidate" pill-blue pill-sm>
+  <Modal nested :name="ModalName.Candidate" pill-blue pill-sm>
     <template #trigger>
       {{ $t('Add Crypto location') }}
     </template>

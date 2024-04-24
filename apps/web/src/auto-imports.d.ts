@@ -7,10 +7,13 @@ export {}
 declare global {
   const Autocomplete: typeof import('./composables/useAutocomplete')['Autocomplete']
   const AutocompleteStatus: typeof import('./composables/useAutocomplete')['AutocompleteStatus']
+  const DATABASE_ARGS: typeof import('./shared')['DATABASE_ARGS']
   const DatabaseArgs: typeof import('types')['DatabaseArgs']
   const EffectScope: typeof import('vue')['EffectScope']
   const FormState: typeof import('./composables/useForm')['FormState']
   const Location: typeof import('types')['Location']
+  const Modal: typeof import('./router')['Modal']
+  const ModalName: typeof import('./router')['ModalName']
   const SUPPORTED_LANGUAGES: typeof import('./i18n/i18n-setup')['SUPPORTED_LANGUAGES']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
@@ -43,7 +46,9 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const fillMarker: typeof import('./composables/useUI')['fillMarker']
   const getActivePinia: typeof import('pinia')['getActivePinia']
+  const getAnonDatabaseArgs: typeof import('./shared')['getAnonDatabaseArgs']
   const getBannerIcon: typeof import('./composables/useIcon')['getBannerIcon']
   const getCategoryIcon: typeof import('./composables/useIcon')['getCategoryIcon']
   const getCurrencyIcon: typeof import('./composables/useIcon')['getCurrencyIcon']
@@ -56,10 +61,12 @@ declare global {
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
   const isDefined: typeof import('@vueuse/core')['isDefined']
+  const isMobile: typeof import('./composables/useUI')['isMobile']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const layout: typeof import('./composables/useUI')['layout']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const mapActions: typeof import('pinia')['mapActions']
   const mapGetters: typeof import('pinia')['mapGetters']
@@ -87,6 +94,7 @@ declare global {
   const onStartTyping: typeof import('@vueuse/core')['onStartTyping']
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
+  const parseLocation: typeof import('./shared')['parseLocation']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
   const provide: typeof import('vue')['provide']
   const provideLocal: typeof import('@vueuse/core')['provideLocal']
@@ -106,12 +114,16 @@ declare global {
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
+  const router: typeof import('./router')['router']
   const setActivePinia: typeof import('pinia')['setActivePinia']
   const setLanguage: typeof import('./i18n/i18n-setup')['setLanguage']
   const setMapStoreSuffix: typeof import('pinia')['setMapStoreSuffix']
+  const setupVue3: typeof import('./histoire-setup')['setupVue3']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
+  const shimsVueD: typeof import('./shims-vue.d')['default']
+  const showLocationName: typeof import('./composables/useUI')['showLocationName']
   const storeToRefs: typeof import('pinia')['storeToRefs']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
@@ -123,6 +135,9 @@ declare global {
   const toRef: typeof import('vue')['toRef']
   const toRefs: typeof import('vue')['toRefs']
   const toValue: typeof import('vue')['toValue']
+  const translateCategory: typeof import('./translations')['translateCategory']
+  const translateCurrency: typeof import('./translations')['translateCurrency']
+  const translateIssue: typeof import('./translations')['translateIssue']
   const triggerRef: typeof import('vue')['triggerRef']
   const tryOnBeforeMount: typeof import('@vueuse/core')['tryOnBeforeMount']
   const tryOnBeforeUnmount: typeof import('@vueuse/core')['tryOnBeforeUnmount']
@@ -305,6 +320,7 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
+  const vueVirtualScrollerD: typeof import('./vue-virtual-scroller.d')['default']
   const watch: typeof import('vue')['watch']
   const watchArray: typeof import('@vueuse/core')['watchArray']
   const watchAtMost: typeof import('@vueuse/core')['watchAtMost']
@@ -369,6 +385,7 @@ declare module 'vue' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly fillMarker: UnwrapRef<typeof import('./composables/useUI')['fillMarker']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
     readonly getBannerIcon: UnwrapRef<typeof import('./composables/useIcon')['getBannerIcon']>
     readonly getCategoryIcon: UnwrapRef<typeof import('./composables/useIcon')['getCategoryIcon']>
@@ -382,10 +399,12 @@ declare module 'vue' {
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
+    readonly isMobile: UnwrapRef<typeof import('./composables/useUI')['isMobile']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly layout: UnwrapRef<typeof import('./composables/useUI')['layout']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
@@ -438,6 +457,7 @@ declare module 'vue' {
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly showLocationName: UnwrapRef<typeof import('./composables/useUI')['showLocationName']>
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
@@ -688,6 +708,7 @@ declare module '@vue/runtime-core' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly fillMarker: UnwrapRef<typeof import('./composables/useUI')['fillMarker']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
     readonly getBannerIcon: UnwrapRef<typeof import('./composables/useIcon')['getBannerIcon']>
     readonly getCategoryIcon: UnwrapRef<typeof import('./composables/useIcon')['getCategoryIcon']>
@@ -701,10 +722,12 @@ declare module '@vue/runtime-core' {
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
+    readonly isMobile: UnwrapRef<typeof import('./composables/useUI')['isMobile']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly layout: UnwrapRef<typeof import('./composables/useUI')['layout']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly mapActions: UnwrapRef<typeof import('pinia')['mapActions']>
     readonly mapGetters: UnwrapRef<typeof import('pinia')['mapGetters']>
@@ -757,6 +780,7 @@ declare module '@vue/runtime-core' {
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
+    readonly showLocationName: UnwrapRef<typeof import('./composables/useUI')['showLocationName']>
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>

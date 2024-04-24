@@ -1,15 +1,7 @@
 import { getClusterMaxZoom, getMarkers } from 'database'
-import { defineStore, storeToRefs } from 'pinia'
 import { CLUSTERS_MAX_ZOOM, addBBoxToArea, algorithm, bBoxIsWithinArea, computeMarkers, getItemsWithinBBox, toMultiPolygon } from 'geo'
 import type { Cluster, Location, LocationClusterParams, Markers, MemoizedMarkers } from 'types'
-import { computed, ref, shallowRef } from 'vue'
-import { useCryptocities } from './cryptocities'
-import { useFilters } from './filters'
-import { useLocations } from './locations'
-import { useMap } from './map'
-import { useApp } from './app'
 import { getAnonDatabaseArgs, parseLocation } from '@/shared'
-import { useExpiringStorage } from '@/composables/useExpiringStorage'
 
 export const useMarkers = defineStore('markers', () => {
   const { setLocations, getLocations } = useLocations()

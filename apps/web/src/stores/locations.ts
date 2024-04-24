@@ -1,16 +1,9 @@
 import type { Feature, MultiPolygon } from 'geojson'
-import { useRouteQuery } from '@vueuse/router'
 import { getLocations as getDbLocations, getLocation } from 'database'
-import { defineStore } from 'pinia'
 import { addBBoxToArea, bBoxIsWithinArea, getItemsWithinBBox } from 'geo'
 import type { BoundingBox, Location } from 'types'
-import { computed, ref, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useFilters } from './filters'
-import { useMap } from './map'
-import { useApp } from './app'
-import { getAnonDatabaseArgs, parseLocation } from '@/shared'
-import { useExpiringStorage } from '@/composables/useExpiringStorage'
+import { useRouteQuery } from '@vueuse/router'
+import { parseLocation } from '@/shared'
 
 export const useLocations = defineStore('locations', () => {
   const { filterLocations } = useFilters()
@@ -53,14 +46,7 @@ export const useLocations = defineStore('locations', () => {
     return location
   }
 
-  const router = useRouter()
-  const route = useRoute()
-
   const selectedUuid = useRouteQuery<string | undefined>('uuid') // No need to check for string[]. UUID checked in router.ts
-  watch(() => selectedUuid.value, (newUuid) => {
-    if (newUuid)
-      router.push({ query: { uuid: newUuid, ...route.query } })
-  })
 
   interface GoToLocationOptions {
     open?: boolean

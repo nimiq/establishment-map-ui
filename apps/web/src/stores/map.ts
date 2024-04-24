@@ -1,11 +1,5 @@
-import { useDebounceFn } from '@vueuse/core'
-import { defineStore } from 'pinia'
 import type { BoundingBox, EstimatedMapPosition, MapPosition, Point } from 'types'
-import { computed, ref, shallowRef, watch } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
 import type { GoogleMap } from 'vue3-google-map'
-import { useLocations } from './locations'
-import { useMarkers } from './markers'
 
 export const useMap = defineStore('map', () => {
   const mapInstance = shallowRef<typeof GoogleMap>()
@@ -120,6 +114,11 @@ export const useMap = defineStore('map', () => {
     const res = await geocoder.geocode({ placeId })
     setPosition(res.results[0]?.geometry.viewport)
   }
+
+  // UI related
+
+  // Whether to show content inside the marker
+
 
   return {
     map,

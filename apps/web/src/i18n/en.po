@@ -6,49 +6,36 @@ msgstr ""
 msgid "{count} locations"
 msgstr ""
 
-#: src/components/DesktopList.vue:37
+#: src/components/DesktopList.vue:21
 msgid "+ {count} grouped"
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:4
-#: src/components/NewCandidate.vue:7
+#: src/components/LocationCandidate.vue:11
 msgid "Add a location to the Crypto Map"
 msgstr ""
 
-#: src/components/NewCandidate.vue:4
+#: src/components/LocationCandidate.vue:4
 msgid "Add Crypto location"
 msgstr ""
 
 #: src/components/BasicInfoLocation.vue:6
-#: src/components/SingleMarkers.vue:9
+#: src/components/SingleMarker.vue:11
 msgid "ATM"
 msgstr ""
 
-#: src/components/forms/FormContainer.vue:4
-#: src/components/forms/NewCandidateOld.vue:48
-#: src/components/forms/ReportLocation.vue:53
+#: src/components/LocationCandidate.vue:55
 msgid "Back to the Map"
 msgstr ""
 
-#: src/translations.ts:42
+#: src/translations.ts:41
 msgid "Binance Pay"
-msgstr ""
-
-#: src/components/icons/cryptos/CryptoIcon.vue:45
-msgid ""
-"Binance Pay is a cryptocurrency payment service that empowers users to pay with crypto at shops and\n"
-"            establishments supporting Binance Pay."
 msgstr ""
 
 #: src/assets-dev/banner-assets.ts:75
 msgid "Bluecode is a payment method that allows secure transactions directly through the smartphone."
 msgstr ""
 
-#: src/components/icons/cryptos/CryptoIcon.vue:50
-msgid "BTC +50"
-msgstr ""
-
-#: src/components/LocationCard.vue:40
+#: src/components/LocationCard.vue:42
 msgid "Buy"
 msgstr ""
 
@@ -60,26 +47,24 @@ msgstr ""
 msgid "Buy crypto only"
 msgstr ""
 
-#: src/components/NewCandidate.vue:42
-#: src/components/ReportLocation.vue:21
+#: src/components/LocationCandidate.vue:33
 msgid "Cancel"
 msgstr ""
 
-#: src/translations.ts:6
+#: src/translations.ts:5
 msgid "Cars & Bikes"
 msgstr ""
 
-#: src/translations.ts:7
+#: src/translations.ts:6
 msgid "Cash"
 msgstr ""
 
-#: src/components/LocationCardDotsMenu.vue:20
+#: src/components/LocationCardDotsMenu.vue:10
 msgid "Check out {locationName} on Nimiq's Crypto Map"
 msgstr ""
 
 #: src/components/CryptocityCard.vue:17
-#: src/components/Modal.vue:28
-#: src/components/NestedModal.vue:22
+#: src/components/Modal.vue:25
 msgid "Close"
 msgstr ""
 
@@ -87,16 +72,11 @@ msgstr ""
 msgid "Coming soon"
 msgstr ""
 
-#: src/translations.ts:8
+#: src/translations.ts:7
 msgid "Computer & Electronics"
 msgstr ""
 
-#: src/components/LocationCardDotsMenu.vue:27
-msgid "Copy URL"
-msgstr ""
-
-#: src/components/forms/NewCandidateOld.vue:10
-#: src/components/NewCandidate.vue:16
+#: src/components/LocationCandidate.vue:22
 msgid "Create Google Business profile"
 msgstr ""
 
@@ -108,19 +88,15 @@ msgstr ""
 msgid "Crypto Locations"
 msgstr ""
 
-#: src/components/CryptoMapModal.vue:14
+#: src/components/CryptoMapModal.vue:12
 msgid "Crypto Map"
 msgstr ""
 
-#: src/components/forms/FormContainer.vue:3
-msgid "Crypto Map logo"
-msgstr ""
-
-#: src/translations.ts:27
+#: src/translations.ts:26
 msgid "Currency missing"
 msgstr ""
 
-#: src/translations.ts:28
+#: src/translations.ts:27
 msgid "Currency not accepted"
 msgstr ""
 
@@ -134,15 +110,11 @@ msgstr ""
 msgid "Describe here"
 msgstr ""
 
-#: src/components/forms/ReportLocation.vue:37
-msgid "Describe the issue"
-msgstr ""
-
-#: src/components/Banner.vue:46
+#: src/components/Banner.vue:43
 msgid "Download on App Store"
 msgstr ""
 
-#: src/components/Banner.vue:49
+#: src/components/Banner.vue:46
 msgid "Download on Play Store"
 msgstr ""
 
@@ -154,11 +126,11 @@ msgstr ""
 msgid "Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other crypto-currencies."
 msgstr ""
 
-#: src/translations.ts:9
+#: src/translations.ts:8
 msgid "Entertainment"
 msgstr ""
 
-#: src/components/LocationSearchBox.vue:22
+#: src/components/LocationSearchBox.vue:23
 #: src/components/SearchBox.vue:22
 msgid "Error loading results."
 msgstr ""
@@ -167,24 +139,19 @@ msgstr ""
 msgid "Explore the Crypto Map"
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:15
-msgid "Find location"
+#: src/components/FAQ.vue:7
+msgid "FAQ"
 msgstr ""
 
-#: src/components/NewCandidate.vue:20
-#: src/components/ReportLocation.vue:15
+#: src/components/LocationCandidate.vue:26
 msgid "Find Location"
 msgstr ""
 
-#: src/translations.ts:10
+#: src/translations.ts:9
 msgid "Food & Drinks"
 msgstr ""
 
-#: src/components/icons/cryptos/CryptoIcon.vue:40
-msgid "GoCrypto supports Binance Pay"
-msgstr ""
-
-#: src/translations.ts:11
+#: src/translations.ts:10
 msgid "Health & Beauty"
 msgstr ""
 
@@ -192,8 +159,12 @@ msgstr ""
 msgid "Hide list"
 msgstr ""
 
-#: src/translations.ts:12
+#: src/translations.ts:11
 msgid "Hotel & Lodging"
+msgstr ""
+
+#: src/components/FAQ.vue:10
+msgid "If you need more details, feel free to reach us on {telegram}"
 msgstr ""
 
 #: src/components/Controls.vue:26
@@ -213,7 +184,7 @@ msgstr ""
 msgid "Kurant enables users to easily purchase cryptocurrencies through a network of ATMs."
 msgstr ""
 
-#: src/components/Banner.vue:40
+#: src/components/Banner.vue:37
 msgid "Learn more"
 msgstr ""
 
@@ -223,30 +194,22 @@ msgstr ""
 msgid "Learn more at"
 msgstr ""
 
-#: src/translations.ts:13
+#: src/translations.ts:12
 msgid "Leisure Activities"
 msgstr ""
 
-#: src/components/forms/ReportLocation.vue:17
-msgid "Loading information"
-msgstr ""
-
-#: src/components/LocationSearchBox.vue:16
+#: src/components/LocationSearchBox.vue:17
 #: src/components/SearchBox.vue:16
 msgid "Loading..."
 msgstr ""
 
-#: src/translations.ts:26
+#: src/translations.ts:25
 msgid "Location gone"
 msgstr ""
 
-#: src/translations.ts:14
-#: src/translations.ts:20
+#: src/translations.ts:13
+#: src/translations.ts:19
 msgid "Miscellaneous"
-msgstr ""
-
-#: src/components/forms/NewCandidateOld.vue:29
-msgid "More cryptocurrencies supported in the future"
 msgstr ""
 
 #: src/assets-dev/banner-assets.ts:51
@@ -257,25 +220,25 @@ msgstr ""
 msgid "Nimiq Pay enables self-custodial payments with NIM wherever BTC Lightning is accepted."
 msgstr ""
 
-#: src/translations.ts:29
+#: src/translations.ts:28
 msgid "No crypto"
 msgstr ""
 
-#: src/components/MultiSelector.vue:16
+#: src/components/MultiSelector.vue:17
 msgid "No options"
 msgstr ""
 
-#: src/components/LocationSearchBox.vue:13
+#: src/components/LocationSearchBox.vue:14
 #: src/components/SearchBox.vue:13
 msgid "Nothing found."
 msgstr ""
 
-#: src/components/DesktopList.vue:49
-#: src/components/MobileView.vue:19
+#: src/components/DesktopList.vue:30
+#: src/components/MobileView.vue:20
 msgid "Oops, no businesses around here"
 msgstr ""
 
-#: src/translations.ts:32
+#: src/translations.ts:31
 msgid "Other"
 msgstr ""
 
@@ -283,7 +246,7 @@ msgstr ""
 msgid "Pay with {provider}"
 msgstr ""
 
-#: src/components/LocationCard.vue:24
+#: src/components/LocationCard.vue:26
 msgid "Picture of {name}"
 msgstr ""
 
@@ -293,7 +256,7 @@ msgstr ""
 msgid "Powered by {provider}"
 msgstr ""
 
-#: src/components/CryptoMapModal.vue:22
+#: src/components/CryptoMapModal.vue:21
 #: src/components/TheMapInstance.vue:10
 msgid "Privacy Policy"
 msgstr ""
@@ -303,24 +266,11 @@ msgstr ""
 msgid "Register with {provider}"
 msgstr ""
 
-#: src/components/LocationCardDotsMenu.vue:22
+#: src/components/LocationCardDotsMenu.vue:41
 msgid "Report"
 msgstr ""
 
-#: src/components/ReportLocation.vue:5
-msgid "Report an issue with {locationName}"
-msgstr ""
-
-#: src/components/forms/ReportLocation.vue:4
-msgid "Report an issue with a location"
-msgstr ""
-
-#: src/components/forms/ReportLocation.vue:42
-#: src/components/ReportLocation.vue:22
-msgid "Report Location"
-msgstr ""
-
-#: src/translations.ts:15
+#: src/translations.ts:14
 msgid "Restaurant & Bar"
 msgstr ""
 
@@ -333,28 +283,23 @@ msgstr ""
 msgid "Search Map"
 msgstr ""
 
-#: src/components/SingleMarkers.vue:49
+#: src/components/SingleMarkersDesktop.vue:8
 msgid "See location details"
 msgstr ""
 
 #: src/components/MultiSelector.vue:4
-#: src/components/Select.vue:33
-#: src/components/Select.vue:37
 msgid "Select an option"
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:22
-#: src/components/NewCandidate.vue:23
-#: src/components/ReportLocation.vue:18
+#: src/components/LocationCandidate.vue:29
 msgid "Select Cryptocurrency"
 msgstr ""
 
-#: src/components/forms/ReportLocation.vue:24
-#: src/components/forms/ReportLocation.vue:25
+#: src/components/Select.vue:4
 msgid "Select issue"
 msgstr ""
 
-#: src/components/LocationCard.vue:44
+#: src/components/LocationCard.vue:46
 msgid "Sell"
 msgstr ""
 
@@ -362,20 +307,16 @@ msgstr ""
 msgid "Sell crypto only"
 msgstr ""
 
-#: src/components/forms/FormContainer.vue:30
-msgid "Send"
-msgstr ""
-
-#: src/components/LocationCardDotsMenu.vue:17
+#: src/components/LocationCardDotsMenu.vue:16
 msgid "Share"
 msgstr ""
 
-#: src/translations.ts:16
+#: src/translations.ts:15
 msgid "Shop"
 msgstr ""
 
 #: src/components/DesktopList.story.vue:12
-#: src/components/MobileView.vue:14
+#: src/components/MobileView.vue:15
 msgid "Show list"
 msgstr ""
 
@@ -384,53 +325,41 @@ msgstr ""
 msgid "Show your location"
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:53
-#: src/components/forms/ReportLocation.vue:58
+#: src/components/LocationCandidate.vue:44
 msgid "Something went wrong"
 msgstr ""
 
-#: src/translations.ts:17
+#: src/translations.ts:16
 msgid "Sports & Fitness"
 msgstr ""
 
-#: src/components/LocationSearchBox.vue:19
+#: src/components/LocationSearchBox.vue:20
 #: src/components/SearchBox.vue:19
 msgid "Start typing..."
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:37
-#: src/components/NewCandidate.vue:43
+#: src/components/LocationCandidate.vue:35
 msgid "Submit Location"
 msgstr ""
 
-#: src/components/CryptoMapModal.vue:27
+#: src/components/CryptoMapModal.vue:26
 #: src/components/TheMapInstance.vue:13
 msgid "Terms of Service"
-msgstr ""
-
-#: src/components/forms/ReportLocation.vue:47
-msgid "Thank you for reporting this issue"
-msgstr ""
-
-#: src/components/forms/NewCandidateOld.vue:42
-msgid "Thank you for submitting a new location to the Crypto Map!"
 msgstr ""
 
 #: src/assets-dev/cryptocities-assets.ts:38
 msgid "Thanks to GoCrypto, Slovenia's capital, Ljubljana, has become a top destination for crypto enthusiasts."
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:56
-#: src/components/forms/ReportLocation.vue:61
+#: src/components/LocationCandidate.vue:51
 msgid "There has been a problem on our side."
 msgstr ""
 
-#: src/components/CryptoMapModal.vue:19
+#: src/components/CryptoMapModal.vue:18
 msgid "This app is brought to you by Nimiq. It is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:45
-#: src/components/forms/ReportLocation.vue:50
+#: src/components/LocationCandidate.vue:52
 msgid "This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map."
 msgstr ""
 
@@ -438,16 +367,11 @@ msgstr ""
 msgid "This site is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:59
-#: src/components/forms/ReportLocation.vue:64
+#: src/components/LocationCandidate.vue:56
 msgid "Try again"
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:16
-msgid "Type the name of the location"
-msgstr ""
-
-#: src/translations.ts:41
+#: src/translations.ts:40
 msgid "USDC on POLYGON"
 msgstr ""
 
@@ -464,11 +388,10 @@ msgstr ""
 msgid "With over 600 acceptance locations, Ljubljana not only stands as the most crypto-friendly city in Europe but also secures a prominent position in international rankings."
 msgstr ""
 
-#: src/components/forms/ReportLocation.vue:36
-msgid "Write your problem here"
+#: src/components/LocationCandidate.vue:15
+msgid "You can add any location that has a Google Business Profile."
 msgstr ""
 
-#: src/components/forms/NewCandidateOld.vue:7
-#: src/components/NewCandidate.vue:10
-msgid "You can add any location that has a Google Business Profile."
+#: src/components/LocationCandidate.vue:44
+msgid "You did it!"
 msgstr ""

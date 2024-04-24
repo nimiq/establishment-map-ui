@@ -1,8 +1,6 @@
 import { useRouteQuery } from '@vueuse/router'
 import { CATEGORIES, CURRENCIES } from 'database'
-import { defineStore } from 'pinia'
 import type { Category, Currency, Location } from 'types'
-import { computed } from 'vue'
 
 export const useFilters = defineStore('filters', () => {
   const selectedCategoriesQuery = useRouteQuery<Category | Category[]>('categories')

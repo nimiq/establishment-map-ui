@@ -1,11 +1,6 @@
 import { getTimestamps } from 'database'
-import { defineStore, storeToRefs } from 'pinia'
 import type { AnyUserReadDbFunction, Returns } from 'types'
-import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import { useMarkers } from '@/stores/markers'
 import { DATABASE_ARGS } from '@/shared'
-import { useCaptcha } from '@/composables/useCaptcha'
 
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
@@ -13,6 +8,7 @@ export const useApp = defineStore('app', () => {
   // We just track the first load, so we can show a loading indicator
   const isListShown = ref(false)
   const mapLoaded = ref(false)
+
 
   const route = useRoute()
 

@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useBreakpoints } from '@vueuse/core'
-import { breakpointsTailwind } from '@vueuse/core'
-import DesktopView from '@/components/DesktopView.vue'
-import MobileView from '@/components/MobileView.vue'
+const MobileView = defineAsyncComponent(() => import('@/components/MobileView.vue'))
+const DesktopView = defineAsyncComponent(() => import('@/components/DesktopView.vue'))
 
-const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
+const { isMobile } = storeToRefs(useApp())
 </script>
 
 <template>

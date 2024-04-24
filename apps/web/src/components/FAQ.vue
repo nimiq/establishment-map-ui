@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ModalName } from '@/router';
+
 withDefaults(defineProps<{ nested?: boolean }>(), { nested: false })
 
 const items = [
@@ -26,7 +28,7 @@ onUnmounted(() => router.replace({ query: route.query, q: undefined }))
 </script>
 
 <template>
-  <Modal :nested @close="() => questionsOpen = []" name="faq">
+  <Modal :nested @close="questionsOpen = []" :name="ModalName.FAQ">
     <template #trigger>
       <slot name="trigger" />
     </template>

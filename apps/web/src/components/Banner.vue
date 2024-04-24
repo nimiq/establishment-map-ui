@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { breakpointsTailwind } from '@vueuse/core';
 import type { Location } from 'types'
 
 defineProps<{ location: Location, isAtm: boolean }>()
 
-const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
+const { isMobile } = storeToRefs(useApp())
 
 // For the banner Nimiq Pay, the label should be Nimiq Pay
 function handleProviderPlaceholder({ banner, provider }: Location) {
@@ -30,7 +29,6 @@ function handleProviderPlaceholder({ banner, provider }: Location) {
           <div i-nimiq:info text="14 neutral-0/50 inverted:neutral/50" />
         </PopoverTrigger>
         <PopoverPortal>
-          <!-- class="max-w320 p4 space-y-2 text-white rounded-sm shadow z-100 bg-gradient-space [&[data-side=right]_[data-arrow]]:right-1.5 [&[data-side=left]_[data-arrow]]:left-1.5" -->
           <PopoverContent as-child max-w-320 p-16 text-neutral-0 rounded-6 shadow z-100 bg-gradient-neutral
             :side-offset="4" :collision-padding="8" :side="isMobile ? 'top' : 'right'">
             <div>
@@ -65,15 +63,9 @@ function handleProviderPlaceholder({ banner, provider }: Location) {
               </template>
               <PopoverArrow data-arrow fill-neutral desktop:relative size="10" />
 
-              <!-- TODO Once this is fixed https://github.com/radix-vue/radix-vue/issues/353 use custom arrow -->
-              <!-- <PopoverArrow as-child>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 10" class="relative h-3 text-space w-max left-2" :style="`color: ${location.bg}`">
-                    <path
-                      fill="currentColor"
-                      d="M12.63 1.83 8.27 8.25A4 4 0 0 1 4.97 10h17.8a4 4 0 0 1-3.3-1.75L15.1 1.83a1.5 1.5 0 0 0-2.48 0z"
-                    />
-                  </svg>
-                </PopoverArrow> -->
+              <PopoverArrow as-child>
+                <div w-16 h-8 i-nimiq:tooltip-triangle aria-hidden :style="`color: ${location.bg}`" />
+              </PopoverArrow>
             </div>
           </PopoverContent>
         </PopoverPortal>

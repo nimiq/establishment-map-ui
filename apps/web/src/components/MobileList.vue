@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { type Location, Theme } from 'types'
 
-defineProps<{locations: Location[]}>()
+defineProps<{ locations: Location[] }>()
 
 const emit = defineEmits({
   closeList: () => true,
@@ -155,36 +155,28 @@ if (isIOs) {
 </script>
 
 <template>
-  <ul
-    ref="scrollRoot"
+  <ul ref="scrollRoot"
     class="flex items-end w-full overflow-x-auto hide-scrollbar snap-x snap-mandatory gap-x-3 scroll-mx-[var(--spacing)] bg-gradient-to-t from-space/20 to-space/0 bg-bottom bg-no-repeat"
     :class="{
       'pointer-events-none': !isIOs,
     }"
-    :style="`--spacing: ${(1 - Math.max(progress, 0)) * INITIAL_GAP_TO_SCREEN}px; background-size: 100% 184px;--tw-gradient-from: rgb(31 35 72 / ${0.2 * Math.min((1 + progress * 2), 1)}) var(--tw-gradient-from-position); --initial-gap-to-screen: ${INITIAL_GAP_TO_SCREEN}px; max-height: ${maxUlHeight};`"
-  >
-    <li
-      v-for="location in locations" :key="location.uuid" ref="cards"
-
+    :style="`--spacing: ${(1 - Math.max(progress, 0)) * INITIAL_GAP_TO_SCREEN}px; background-size: 100% 184px;--tw-gradient-from: rgb(31 35 72 / ${0.2 * Math.min((1 + progress * 2), 1)}) var(--tw-gradient-from-position); --initial-gap-to-screen: ${INITIAL_GAP_TO_SCREEN}px; max-height: ${maxUlHeight};`">
+    <li v-for="location in locations" :key="location.uuid" ref="cards"
       class="relative shrink-0 snap-center first:pl-[var(--spacing)] last:pr-[var(--spacing)] pointer-events-auto"
-      :data-card-uuid="location.uuid"
-    >
-      <SheetModal
-        :max-height="location.photo ? 363 : 179" :initial-border-radius="8"
-        :initial-gap-to-screen="INITIAL_GAP_TO_SCREEN" class="relative w-full rounded-t-lg" v-model:progress="progress" @close-list="() => $emit('closeList')"
-      >
+      :data-card-uuid="location.uuid">
+      <SheetModal :max-height="location.photo ? 363 : 179" :initial-border-radius="8"
+        :initial-gap-to-screen="INITIAL_GAP_TO_SCREEN" class="relative w-full rounded-t-lg" v-model:progress="progress"
+        @close-list="() => $emit('closeList')">
         <template #dragger>
           <div class="relative">
-            <hr
-              class="absolute inset-x-0 z-10 w32 h1 mx-auto mt2 ml-auto border-0 rounded-full" :class="[
-                { 'mt3': progress === 1 },
-                [
-                  location.isAtm && location.theme === Theme.Dark
-                    ?!location.photo !&& !progress !> !0.1 !? !'bg-white/80 !mix-blend-lighten' !: !'bg-white/30 !mix-blend-lighten'
-                    : (location.photo && progress > 0.1 ? 'bg-space/60 mix-blend-darken' : 'bg-space/20 mix-blend-darken'),
-                ],
-              ]"
-            >
+            <hr class="absolute inset-x-0 z-10 w-32 h-1 mx-auto mt-2 ml-auto border-0 rounded-full" :class="[
+              { 'mt-3': progress === 1 },
+              [
+                location.isAtm && location.theme === Theme.Dark
+                  ? !location.photo! && !progress! > !0.1! ? !'bg-white/80 !mix-blend-lighten'! : !'bg-white/30 !mix-blend-lighten'
+                  : (location.photo && progress > 0.1 ? 'bg-space/60 mix-blend-darken' : 'bg-space/20 mix-blend-darken'),
+              ],
+            ]">
           </div>
         </template>
         <LocationCard :location="location" :progress="progress" />
@@ -194,7 +186,7 @@ if (isIOs) {
 </template>
 
 <style scoped>
-ul::-webkit-scrollbar{
+ul::-webkit-scrollbar {
   display: none;
 }
 </style>
