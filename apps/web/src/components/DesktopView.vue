@@ -24,7 +24,6 @@ const toggleList = useToggle(isListShown)
       {{ $t(isListShown ? 'Hide list' : 'Show list') }}
     </button>
   </aside>
-  <!-- <FilterModal v-if="maxZoomFromServer < zoom" absolute top-24 right-24 /> -->
   <Controls absolute bottom-24 right-24 />
   <FAQ name="faq" absolute bottom-6 left-78 px-4 py-1 text-12 rounded-4 ghost-btn text-neutral font-bold bg-neutral-200>
     <template #trigger>

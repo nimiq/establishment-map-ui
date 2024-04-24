@@ -5,7 +5,6 @@ import { getAnonDatabaseArgs, parseLocation } from '@/shared'
 
 export const useMarkers = defineStore('markers', () => {
   const { setLocations, getLocations } = useLocations()
-  const { filterLocations, filtersToString } = useFilters()
   const { zoom, boundingBox } = storeToRefs(useMap())
   const loaded = ref(false)
   const { setCryptocities, getCryptocities } = useCryptocities()
@@ -30,14 +29,14 @@ export const useMarkers = defineStore('markers', () => {
   const clusters = shallowRef<Cluster[]>([])
   const clustersInView = computed(() => boundingBox.value ? getItemsWithinBBox(clusters.value, boundingBox.value) : [])
   const singles = shallowRef<Location[]>([])
-  const singlesInView = computed(() => boundingBox.value ? getItemsWithinBBox(filterLocations(singles.value), boundingBox.value) : [])
+  const singlesInView = computed(() => boundingBox.value ? getItemsWithinBBox(singles.value, boundingBox.value) : [])
 
   function getIndex({ zoom, categories, currencies }: LocationClusterParams) {
     return memoized.value.findIndex(m => m.key.zoom === zoom && m.key.categories === categories && m.key.currencies === currencies)
   }
 
   function getMemoized() {
-    const key = { zoom: zoom.value, ...filtersToString() }
+    const key = { zoom: zoom.value }
 
     const index = getIndex(key)
     const item = index !== -1 ? memoized.value[index].value : undefined

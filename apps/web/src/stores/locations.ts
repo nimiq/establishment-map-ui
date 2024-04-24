@@ -6,8 +6,6 @@ import { useRouteQuery } from '@vueuse/router'
 import { parseLocation } from '@/shared'
 
 export const useLocations = defineStore('locations', () => {
-  const { filterLocations } = useFilters()
-
   // Reduce redundant database fetches by reusing fetched locations by tracking the areas explored by the user
   const visitedAreas = ref<Feature<MultiPolygon>>()
 
@@ -25,15 +23,14 @@ export const useLocations = defineStore('locations', () => {
   async function getLocations(boundingBox: BoundingBox): Promise<Location[]> {
     if (bBoxIsWithinArea(boundingBox, visitedAreas.value)) {
       // We already have scanned this area, no need to fetch from the database
-      const filteredLocations = filterLocations(locations.value) // Filter locations by categories and currencies
-      return getItemsWithinBBox(filteredLocations, boundingBox) // Filter locations by bounding box
+      return getItemsWithinBBox(locations.value, boundingBox) // Filter locations by bounding box
     }
 
     // New area, we need to fetch from the database
     const newLocations = await getDbLocations(await getAnonDatabaseArgs(), boundingBox, parseLocation)
     setLocations(newLocations)
     visitedAreas.value = addBBoxToArea(boundingBox, visitedAreas.value)
-    return filterLocations(newLocations)
+    return newLocations
   }
 
   async function getLocationByUuid(uuid: string) {
