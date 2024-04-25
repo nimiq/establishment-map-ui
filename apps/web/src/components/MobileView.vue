@@ -3,6 +3,8 @@ const { isListShown } = storeToRefs(useApp())
 const { singlesInView } = storeToRefs(useMarkers())
 const { selectedUuid } = storeToRefs(useLocations())
 
+const searchOpen = ref(false)
+
 watch(selectedUuid, (uuid) => {
   if (uuid)
     isListShown.value = true
@@ -11,7 +13,15 @@ watch(selectedUuid, (uuid) => {
 
 <template>
   <div flex="~ col" h="screen 100dvh">
-    <InteractionBar />
+    <InteractionBar>
+      <template #search>
+        <button input-box flex-1 flex="~ justify-between items-center" group rounded-full @click="searchOpen = true">
+          <span text="neutral-700 group-hocus:$color">{{ $t('Search Map') }}</span>
+          <div i-nimiq:magnifying-glass absolute right-16 text="14 neutral-600 group-hocus:$color" />
+        </button>
+        <MobileSearch v-model:open="searchOpen" fixed inset-0 bg-neutral-0 />
+      </template>
+    </InteractionBar>
     <TheMapInstance flex-1 />
     <transition name="scale">
       <MapControls v-if="singlesInView.length === 0 || !isListShown" class="absolute bottom-6 right-6" />
