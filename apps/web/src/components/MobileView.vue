@@ -14,7 +14,7 @@ watch(selectedUuid, (uuid) => {
     <InteractionBar />
     <TheMapInstance flex-1 />
     <transition name="scale">
-      <Controls v-if="singlesInView.length === 0 || !isListShown" class="absolute bottom-6 right-6" />
+      <MapControls v-if="singlesInView.length === 0 || !isListShown" class="absolute bottom-6 right-6" />
     </transition>
     <transition enter-from-class="translate-y-[110%] opacity-0" leave-to-class="translate-y-[110%] opacity-0"
       enter-active-class="transition duration-300" leave-active-class="transition duration-300">

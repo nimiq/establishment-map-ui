@@ -35,7 +35,7 @@ function handleProviderPlaceholder({ banner, provider }: Location) {
                 <h4 font-semibold truncate text-16 text-neutral-400 lh-20>
                   {{ handleProviderPlaceholder(location) }}
                 </h4>
-                <div v-if="location.bannerTooltipLabel" ml-auto text-neutral-600 text-10 whitespace-nowrap label>
+                <div v-if="location.bannerTooltipLabel" ml-auto text="10 neutral-600" whitespace-nowrap label>
                   {{ location.bannerTooltipLabel }}
                 </div>
               </header>

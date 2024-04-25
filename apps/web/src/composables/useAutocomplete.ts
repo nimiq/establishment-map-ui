@@ -1,6 +1,8 @@
 import { Location } from 'types'
 import { searchLocations } from 'database'
 import { getAnonDatabaseArgs } from '@/shared'
+import { useRouteQuery } from '@vueuse/router'
+
 
 export enum Autocomplete {
   GoogleBussines = 'establishment',
@@ -16,7 +18,7 @@ export enum AutocompleteStatus {
   Error = 'error',
 }
 
-type PredictionSubstring = { length: number, offset: number }
+export type PredictionSubstring = { length: number, offset: number }
 export type LocationSuggestion = Pick<Location, 'uuid' | 'name'> & { matchedSubstrings: PredictionSubstring[] }
 export type GoogleSuggestion = { label: string, placeId: string, matchedSubstrings: PredictionSubstring[] }
 
@@ -26,9 +28,20 @@ interface UseAutocompleteOptions {
 
 export function useAutocomplete({ autocomplete }: UseAutocompleteOptions) {
   const status = ref<AutocompleteStatus>(AutocompleteStatus.Initial)
-  const query = ref<string>('')
-  watch(() => query.value, ([newValue, oldValue]) => {
+  const googleSuggestions = ref<GoogleSuggestion[]>([])
+  const locationSuggestions = ref<LocationSuggestion[]>([])
+  const querySearch = useDebounceFn(_querySearch, 400)
+
+  const queryName = 'search'
+  const route = useRoute()
+  const router = useRouter()
+  const initialQuery = Array.isArray(route.query[queryName]) ? route.query[queryName][0] : route.query[queryName] || ''
+  const query = ref(initialQuery)
+  watch(query, (newValue, oldValue) => {
     if (newValue === oldValue) return
+
+    router.replace({ query: { ...route.query, [queryName]: newValue !== '' ? newValue : undefined } })
+
     if (!query.value) {
       status.value = AutocompleteStatus.Initial
       clearSuggestions()
@@ -37,10 +50,11 @@ export function useAutocomplete({ autocomplete }: UseAutocompleteOptions) {
       if (newValue === '' && oldValue !== '') status.value = AutocompleteStatus.Initial
       querySearch()
     }
-  })
+  }, { immediate: true })
 
-  const googleSuggestions = ref<GoogleSuggestion[]>([])
-  const locationSuggestions = ref<LocationSuggestion[]>([])
+  // The first time the user types something, we hide the hint
+  watchOnce(query, useApp().hideSearchBoxHint)
+
 
   function clearSuggestions() {
     googleSuggestions.value = []
@@ -125,39 +139,11 @@ export function useAutocomplete({ autocomplete }: UseAutocompleteOptions) {
     status.value = googleSuggestions.value.length || locationSuggestions.value.length ? AutocompleteStatus.WithResults : AutocompleteStatus.NoResults
   }
 
-  const querySearch = useDebounceFn(_querySearch, 400)
-
-  function highlightMatches(str: string, matches: PredictionSubstring[]) {
-    // Split into unicode chars because match positions in google.maps.places.AutocompletePrediction["matched_substrings"]
-    // are based on unicode chars, as opposed to surrogate pairs of Javascript strings for Unicode chars on astral planes
-    // (see https://mathiasbynens.be/notes/javascript-unicode)
-    const parts = [...str]
-
-    // Sanitize potential html in input string to mitigate risk of XSS because the result will be fed to v-html. Note that
-    // this manipulation does not change indices/positions of our string parts (initial unicode characters).
-    for (let i = 0; i < parts.length; ++i) {
-      if (parts[i] === '<')
-        parts[i] = '&lt;'
-      else if (parts[i] === '>')
-        parts[i] = '&gt;'
-    }
-
-    // Make matches bold. Note that our manipulations do not change indices/positions of our string parts (initial unicode
-    // characters), thus we don't have to adapt match offsets of subsequent matches. Additionally, matches are probably
-    // not overlapping, but it would also not hurt.
-    for (const match of matches || []) {
-      parts[match.offset] = `<b>${parts[match.offset]}`
-      parts[match.offset + match.length - 1] = `${parts[match.offset + match.length - 1]}</b>`
-    }
-
-    return parts.join('')
-  }
 
   return {
-    q: query,
+    query,
     status,
     googleSuggestions,
     locationSuggestions,
-    highlightMatches,
   }
 }

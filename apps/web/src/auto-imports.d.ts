@@ -101,6 +101,8 @@ declare global {
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
   const provide: typeof import('vue')['provide']
   const provideLocal: typeof import('@vueuse/core')['provideLocal']
+  const queryName: typeof import('./composables/useAutocomplete')['queryName']
+  const querySearchName: typeof import('./composables/useAutocomplete')['querySearchName']
   const reactify: typeof import('@vueuse/core')['reactify']
   const reactifyObject: typeof import('@vueuse/core')['reactifyObject']
   const reactive: typeof import('vue')['reactive']
