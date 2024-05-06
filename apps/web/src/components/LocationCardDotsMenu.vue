@@ -66,20 +66,7 @@ const initialOpen = useRoute().query['modal'] === 'report'
   </DropdownMenuRoot>
 </template>
 
-<style>
-.slide-left-enter-active,
-.slide-left-leave-active {
-  transition:
-    opacity 250ms cubic-bezier(.4, 0, .2, 1),
-    margin-left 450ms var(--nq-ease);
-}
-
-.slide-left-enter-from,
-.slide-left-leave-to {
-  opacity: 0;
-  margin-left: 0.25rem;
-}
-
+<style scoped>
 .fade-slide-enter-active,
 .fade-slide-leave-active {
   transition: transform 75ms ease-out, opacity 100ms var(--nq-ease);
