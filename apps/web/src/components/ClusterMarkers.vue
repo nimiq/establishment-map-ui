@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CustomMarker } from 'vue3-google-map'
 import { OnClickOutside } from '@vueuse/components';
-import { Cluster } from 'types';
+import { Cluster, Cryptocity } from 'types';
 
 const { setPosition } = useMap()
 const { zoom } = storeToRefs(useMap())
@@ -48,6 +48,18 @@ function getClusterStyles(c: Cluster) {
     'padding-right': `calc(var(--expanded) * ${c.diameter * c.cryptocities.length + 8}px)`
   }
 }
+
+const { showCryptocityBanner } = useUIParams()
+const { cryptocities } = storeToRefs(useCryptocities())
+
+const router = useRouter()
+const route = useRoute()
+
+function onCryptocityClick(cryptocityName: Cryptocity) {
+  const { lat, lng, name, showCardAtZoom } = cryptocities.value.data[cryptocityName]!
+  setPosition({ center: { lat, lng }, zoom: showCardAtZoom }, { clearMarkers: true })
+  router.push({ query: { ...route.query, cryptocity: name } })
+}
 </script>
 
 <template>
@@ -66,16 +78,22 @@ function getClusterStyles(c: Cluster) {
             {{ c.count < 1000 ? c.count : '999+' }} </button>
         </li>
 
-        <li v-for="(city, i) in c.cryptocities" :key="city" absolute top-0 transition-all :style="`
-          z-index: ${c.cryptocities.length - i};
-          width: ${c.diameter}px;
-          --offset-1: calc(${i + 1} * 12px); /* If is not expanded */
-          --offset-2: calc((100% * ${i + 1}) + (${i + 1} * 8px)); /* If is expanded */
-          transform: translateX(calc(var(--offset-1) * (1 - var(--expanded)) + var(--offset-2) * var(--expanded))) rotate(calc((1 - var(--expanded)) * -90deg));
+        <template v-if="!showCryptocityBanner">
+          <li v-for="(city, i) in c.cryptocities" :key="city" absolute top-0 transition-all :style="`
+        z-index: ${c.cryptocities.length - i};
+        width: ${c.diameter}px;
+        --offset-1: calc(${i + 1} * 12px); /* If is not expanded */
+        --offset-2: calc((100% * ${i + 1}) + (${i + 1} * 8px)); /* If is expanded */
+        transform: translateX(calc(var(--offset-1) * (1 - var(--expanded)) + var(--offset-2) * var(--expanded))) rotate(calc((1 - var(--expanded)) * -90deg));
           padding-left: calc(1 - var(--expanded) * 2px);
-        `">
-          <CryptocityMarker :cryptocity="city" />
-        </li>
+          `">
+            <div grid="~ place-content-center" p-4 bg-neutral-0 rounded-full shadow cursor-pointer aspect-square
+              @click="onCryptocityClick(city)">
+              <div absolute inset-0 duration-400 transition-background-color rounded-full group-hocus="bg-neutral/6" />
+              <div i-nimiq:logos-cryptocity text-24 />
+            </div>
+          </li>
+        </template>
       </ul>
     </OnClickOutside>
   </CustomMarker>

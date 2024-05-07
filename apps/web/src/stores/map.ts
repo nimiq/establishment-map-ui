@@ -6,6 +6,7 @@ export const useMap = defineStore('map', () => {
   const map = computed(() => mapInstance.value?.map as google.maps.Map | undefined)
   const center = ref(map.value?.getCenter()?.toJSON() as Point | undefined)
   const zoom = ref(map.value?.getZoom() ?? 3)
+  const mapLoaded = ref(false)
   const boundingBox = ref<BoundingBox>()
 
   const router = useRouter()
@@ -123,6 +124,7 @@ export const useMap = defineStore('map', () => {
   return {
     map,
     mapInstance,
+    mapLoaded,
 
     setPosition,
 

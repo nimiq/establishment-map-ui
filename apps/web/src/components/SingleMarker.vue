@@ -15,7 +15,7 @@ const { fillMarker, showLocationName } = useUIParams()
 
     <!-- Markers for ATMs -->
     <div v-else-if="location.isAtm" size-32 grid="~ place-content-center" ring="1.5 $c1 op-10" text-white
-      bg="$c1 hocus:$c2" bg-image="$c1 hocus:$c2" transition-colors rounded-full>
+      bg="$c1 image-$c1 hocus:$c2 hocus:image-$c2" transition-colors rounded-full>
       {{ $t('ATM') }}
     </div>
 

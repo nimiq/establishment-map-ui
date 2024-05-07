@@ -2,6 +2,7 @@
 const { isListShown } = storeToRefs(useApp())
 const { singlesInView, clustersInView } = storeToRefs(useMarkers())
 
+const { showDynamicBlock } = useUIParams()
 const toggleList = useToggle(isListShown)
 </script>
 
@@ -12,7 +13,7 @@ const toggleList = useToggle(isListShown)
   <aside absolute max-w-384 inset-24 right-initial h-max pointer-events-none children:pointer-events-auto flex="~ col">
     <!-- This element if for the shadow in the header. We cannot use a normal shadow because the use of mask-image restrict us of using shadows -->
     <div absolute inset-0 shadow ring="1.5 neutral/3" pointer-events-none id="shadow"
-      style="height: calc(66px + (88px * var(--search-box-hint)))" />
+      style="height: calc(66px + var(--dynamic-block, 0) * 88px)" />
     <div w-max bg-neutral-0 id="wrapper">
       <InteractionBar>
         <template #search>

@@ -28,7 +28,7 @@ watch(selectedUuid, (uuid) => {
 <template>
   <DynamicScroller v-if="singles.length || clusters.length" ref="scroller" key-field="uuid" :items="singles"
     :min-item-size="99" list-tag="ul" item-tag="li" of-auto transition-height will-change-height duration-300 max-w-320
-    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--search-box-hint) * 88px)' : '0' }"
+    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--dynamic-block, 0) * 88px)' : '0' }"
     item-class="relative of-hidden ring-neutral-100 border-t-1 group/card [&_[data-rings]]:-rotate-90"
     :data-state="listIsShown ? 'open' : 'closed'">
     <template #default="{ item: location, active }">
@@ -52,7 +52,7 @@ watch(selectedUuid, (uuid) => {
   </DynamicScroller>
   <div v-else flex="~ col items-center justify-center gap-24" px-20 transition-height will-change-height duration-300
     max-w-320 of-hidden
-    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--search-box-hint) * 88px)' : '0' }">
+    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--dynamic-block, 0)) * 88px' : '0' }">
     <div i-nimiq:icons-lg-cactus text-80 op-80 />
     <span text="16 center">
       {{ $t('Oops, no businesses around here') }}

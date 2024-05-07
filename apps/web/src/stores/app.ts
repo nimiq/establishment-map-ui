@@ -9,7 +9,6 @@ const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 export const useApp = defineStore('app', () => {
   // We just track the first load, so we can show a loading indicator
   const isListShown = ref(false)
-  const mapLoaded = ref(false)
 
   // Allow to change the language from the URI. Useful for iframe embeds
   const lang = useRouteQuery<string>('lang')
@@ -17,6 +16,7 @@ export const useApp = defineStore('app', () => {
 
   const route = useRoute()
 
+  const { mapLoaded } = storeToRefs(useMap())
   const { loaded: markersLoaded } = storeToRefs(useMarkers())
 
   const until = Date.now() + 300 // Show the splash screen at least for 300ms
@@ -33,15 +33,6 @@ export const useApp = defineStore('app', () => {
       }, Math.max(0, until - Date.now()))
     }
   })
-
-  // We track if the user has hidden the search box hint using localStorage
-  const shouldShowSearchBoxHint = ref(!localStorage.getItem('hideSearchBoxHint'))
-  document.documentElement.style.setProperty('--search-box-hint', shouldShowSearchBoxHint.value ? '1' : '0')
-  function hideSearchBoxHint() {
-    localStorage.setItem('hideSearchBoxHint', 'true')
-    shouldShowSearchBoxHint.value = false
-    document.documentElement.style.setProperty('--search-box-hint', '0')
-  }
 
   // The timestamps are used to invalidate the local storage values
   const timestamps = ref<Returns[AnyUserReadDbFunction.GetTimestamps]>()
@@ -62,9 +53,6 @@ export const useApp = defineStore('app', () => {
 
   return {
     isListShown,
-    shouldShowSearchBoxHint,
-    hideSearchBoxHint,
-    mapLoaded,
     showSplashScreen,
     timestamps,
     init,

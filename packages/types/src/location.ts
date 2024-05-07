@@ -36,12 +36,12 @@ export interface Location extends RawLocation {
   theme: Theme
   bg: [string /* primary color */, string | undefined /* Active for atm */]
 
-  
+
   // Quick getters
   isAtm: boolean
   isDark: boolean
   isLight: boolean
-  
+
   // Banner: The design of the banner can be a provider or a Nimiq-Pay banner for specific providers.
   banner: Banner
   bannerLabel?: string
@@ -68,4 +68,5 @@ export interface RawLocation {
   facebook?: string
   gmaps?: string
   gmaps_types: string[]
+  cryptocity: string
 }

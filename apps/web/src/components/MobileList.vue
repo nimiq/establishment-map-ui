@@ -160,8 +160,8 @@ if (isIOs) {
         'pointer-events-none': !isIOs,
       }"
       :style="`--spacing: ${(1 - Math.max(progress, 0)) * INITIAL_GAP_TO_SCREEN}px; --un-gradient-from: rgb(var(--nq-neutral) / ${0.2 * Math.min((1 + progress * 2), 1)}) var(--un-gradient-from-position); --initial-gap-to-screen: ${INITIAL_GAP_TO_SCREEN}px; max-height: ${maxUlHeight};`">
-      <li v-for="location in locations" :key="location.uuid" ref="cards" relative shrink-0 snap-center first:pl-$spacing
-        last:pr-$spacing pointer-events-auto :data-card-uuid="location.uuid">
+      <li v-for="location in locations" :key="location.uuid" ref="cards" relative shrink-0 snap-center
+        first:pl="$spacing" last:pr-$spacing pointer-events-auto :data-card-uuid="location.uuid">
         <SheetModal :max-height="location.photo ? 363 : 179" :initial-border-radius="8"
           :initial-gap-to-screen="INITIAL_GAP_TO_SCREEN" relative w-full rounded-t-lg v-model:progress="progress"
           @close-list="() => $emit('closeList')">

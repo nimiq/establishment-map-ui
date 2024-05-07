@@ -1,21 +1,6 @@
 <script setup lang="ts">
 const isDev = import.meta.env.DEV
 
-const { cryptocitiesInView } = storeToRefs(useCryptocities())
-const { zoom } = storeToRefs(useMap())
-const cryptocityControl = computed(() => cryptocitiesInView.value.find(c => c.showCardAtZoom <= zoom.value))
-
-const route = useRoute()
-
-const cryptocityCardOpen = ref(false)
-watch(
-  [() => route.query.cryptocity, cryptocitiesInView],
-  ([c]) => {
-    cryptocityCardOpen.value = typeof c === 'string' && !!(cryptocitiesInView.value.some(({ name }) => name === c))
-  },
-  { immediate: true },
-)
-
 const isGeolocationLoading = ref(false)
 const { browserPositionIsSupported, ipPosition, ipPositionError, geolocateIp, geolocateUserViaBrowser, geolocatingUserBrowser, errorBrowser } = useGeoIp()
 
@@ -46,23 +31,6 @@ function clearStorage() {
 
 <template>
   <div flex="~ col items-end gap-y-16">
-    <PopoverRoot v-if="cryptocityControl" :open="cryptocityCardOpen"
-      @update:open="$router.push({ query: { ...$route.query, cryptocity: $event ? cryptocityControl?.name : undefined } })">
-      <PopoverTrigger
-        class="border border-[#e9e9ed] border-solid animate-scale !w-8 !h-8 shadow bg-white rounded-full p-1.5"
-        data-cryptocity-card-trigger :aria-label="$t('Information about this Cryptocity')">
-        <div i-nimiq:logos-cryptocity />
-      </PopoverTrigger>
-      <PopoverPortal>
-        <PopoverContent align="end" side="bottom" :side-offset="-32"
-          class="max-desktop:-mb-[72px] max-desktop:w-screen will-change-[transform,opacity] animate-slideUpAndFade"
-          @close-auto-focus.prevent @interact-outside.prevent @open-auto-focus.prevent>
-          <CryptocityCard :cryptocity="cryptocityControl"
-            @close="$router.push({ query: { ...$route.query, cryptocity: undefined } })" />
-        </PopoverContent>
-      </PopoverPortal>
-    </PopoverRoot>
-
     <button size-32 shadow ring="1.5 neutral/3" rounded-full bg="neutral-0 hover:neutral-100" text-14
       flex="~ items-center justify-center" v-if="browserPositionIsSupported" :disabled="geolocatingUserBrowser"
       :aria-label="$t('Show your location')" :title="$t('Show your location')" @click="setBrowserPosition">

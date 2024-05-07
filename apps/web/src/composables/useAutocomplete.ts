@@ -52,8 +52,8 @@ export function useAutocomplete({ autocomplete }: UseAutocompleteOptions) {
   }, { immediate: true })
 
   // The first time the user types something, we hide the hint
-  watchOnce(query, useApp().hideSearchBoxHint)
-
+  const { showSearchBoxHintStorage } = useUIParams()
+  watchOnce(query, () => showSearchBoxHintStorage.value = false)
 
   function clearSuggestions() {
     googleSuggestions.value = []

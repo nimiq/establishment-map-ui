@@ -46,6 +46,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.Coinmap),
   },
   [Provider.AcceptLightning]: {
@@ -58,6 +59,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.BtcMap),
   },
   [Provider.BtcMap]: {
@@ -70,6 +72,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.BtcMap),
   },
   [Provider.Bridge2Bitcoin]: {
@@ -82,6 +85,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.Bridge2Bitcoin),
   },
   [Provider.NAKA]: {
@@ -94,6 +98,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.NAKA),
   },
   [Provider.Bluecode]: {
@@ -106,6 +111,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     photo: 'https://images.unsplash.com/photo-1543007631-283050bb3e8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.Bluecode),
   },
   [Provider.CryptopaymentLink]: {
@@ -118,6 +124,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.CryptopaymentLink),
   },
   [Provider.DefaultAtm]: {
@@ -129,6 +136,7 @@ export const locations: Record<Provider, Location> = {
     lat: 1,
     lng: 1,
     rating: 4,
+    cryptocity: 'San Jose',
     ...getExtra(Provider.DefaultAtm, [Currency.NIM, Currency.BTC, Currency.ETH, Currency.DASH, Currency.XLM]),
   },
   [Provider.Kurant]: {
@@ -141,6 +149,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     gmaps: 'https://goo.gl/maps/ujJkv9DFuPfkwqat9',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.Kurant, [Currency.NIM, Currency.BTC]),
   },
   [Provider.Edenia]: {
@@ -152,6 +161,7 @@ export const locations: Record<Provider, Location> = {
     lat: 1,
     lng: 1,
     rating: 4,
+    cryptocity: 'San Jose',
     ...getExtra(Provider.Edenia, [Currency.NIM, Currency.BTC, Currency.USDC_on_POLYGON], LocationLink.Facebook),
   },
   [Provider.DefaultShop]: {
@@ -164,6 +174,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.DefaultShop, [], LocationLink.Instagram),
   },
   [Provider.BitcoinJungle]: {
@@ -176,6 +187,7 @@ export const locations: Record<Provider, Location> = {
     lng: 1,
     rating: 4,
     photo: 'https://images.unsplash.com/photo-1646491946169-76e0668b8b3f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+    cryptocity: 'San Jose',
     ...getExtra(Provider.BitcoinJungle),
   },
 }

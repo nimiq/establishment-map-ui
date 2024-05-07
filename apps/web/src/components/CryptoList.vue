@@ -19,7 +19,7 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ cryptosToDispla
 <template>
   <DefineTemplate v-slot="{ cryptosToDisplay, n }">
     <ul v-if="cryptosToDisplay.length > 0" flex="~ items-center gap-x-8" p-4 bg-neutral-0 rounded-full w-max
-      ring-neutral-100 absolute bottom-0 z-20>
+      ring-neutral-100 absolute bottom-0 z-20 ring="~ 1.5 neutral-100">
       <li v-for="c in cryptosToDisplay " :key="c">
         <div text-24 v-if="c !== Currency.BINANCE_PAY" :class="getCurrencyIcon(c)" :title="c" />
         <PopoverRoot v-else>

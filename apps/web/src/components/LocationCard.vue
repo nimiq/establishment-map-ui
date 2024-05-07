@@ -24,9 +24,16 @@ defineProps<{ location: Location, progress: number }>()
         @load="($event.target as HTMLImageElement).classList.remove('animate-pulse')">
     </div>
 
-    <div relative px-24 py-20 space-y-20 :data-inverted="location.isDark && location.isAtm ? true : undefined">
+    <div relative px-24 py-20 :data-inverted="location.isDark && location.isAtm ? true : undefined">
       <BasicInfoLocation :location :progress />
-      <LocationCardDotsMenu v-if="progress === 1" :location absolute top-0 right-16 />
+      <LocationCardDotsMenu v-if="progress === 1" :location absolute top-0 right-16 mt-20 />
+      <div v-if="location.cryptocity" rounded-8 px-12 py-8 ring="1 neutral-200" flex="~ gap-x-8" mt-6 mb-20>
+        <div i-nimiq:logos-cryptocity text-17 />
+        <p text="12 neutral-800" flex-1>{{ $t('Spend Cryptocity points here') }}</p>
+        <div bg-green rounded-full size-16 grid="~ place-content-center" ml-8>
+          <div i-nimiq:check text="white 9" bottom--0.5 relative />
+        </div>
+      </div>
       <CryptoList :location :progress />
     </div>
 
