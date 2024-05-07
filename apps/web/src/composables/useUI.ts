@@ -3,7 +3,7 @@ import { useRouteQuery } from '@vueuse/router'
 
 export const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
 
-export function getMapUiState() {
+export function useUIParams() {
   const { zoom } = storeToRefs(useMap())
   return {
     fillMarker: computed(() => zoom.value >= 13),

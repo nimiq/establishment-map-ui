@@ -2,6 +2,9 @@
 import { ModalName } from './Modal.vue';
 const lang = ref(i18n.locale)
 watch(lang, () => setLanguage(lang.value))
+
+const isDark = useDark()
+const toggleDark = useToggle(isDark)
 </script>
 
 <template>
@@ -14,7 +17,7 @@ watch(lang, () => setLanguage(lang.value))
 
     <template #title>
       <div flex="~ gap-12 items-center">
-        <div i-nimiq:logos-crypto-map text-26 aria-hidden />
+        <div i-nimiq:logos-crypto-map text-26 aria-hidden @click.shift="() => toggleDark()" />
         {{ $t('Crypto Map') }}
       </div>
     </template>

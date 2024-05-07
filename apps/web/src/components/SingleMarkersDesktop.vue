@@ -5,7 +5,7 @@ import { CustomMarker } from 'vue3-google-map'
 const { singles } = storeToRefs(useMarkers())
 
 const { zoom } = storeToRefs(useMap())
-const { showLocationName } = getMapUiState()
+const { showLocationName } = useUIParams()
 const { isListShown } = storeToRefs(useApp())
 const { selectedUuid } = storeToRefs(useLocations())
 
