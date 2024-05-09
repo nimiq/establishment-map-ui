@@ -57,7 +57,7 @@ const { disabled, submit, reset, isError, isSuccess, isSubmitted } = useForm({ u
         <div grid="~ cols-[128px_auto_1fr] row-[auto_1fr] gap-x-16 gap-y-8 items-center" mt-32 mb-14 relative group>
           <img v-if="location.photo" :src="location.photo" size-full rounded-4 object-cover grid-row-span-2 />
           <BasicInfoLocation :location grid-col-span-2 />
-          <LocationExternalUrl :location />
+          <LocationExternalUrl :location self-start justify-self-end mt--6 />
           <CryptoList :location />
         </div>
         <FAQ nested :questions="['q-1']">

@@ -9,7 +9,6 @@ export function useUIParams() {
   // We track if the user has hidden the search box hint using localStorage
   const cssVar = '--dynamic-block'
   const showSearchBoxHintStorage = useLocalStorage('showSearchBoxHintStorage', true)
-  watch(showSearchBoxHintStorage, v => document.documentElement.style.setProperty(cssVar, v ? '1' : '0'))
 
   // We hide the hint in mobile devices
   const showSearchBoxHint = computed(() => showSearchBoxHintStorage.value && !isMobile.value)
@@ -17,7 +16,8 @@ export function useUIParams() {
   const { cryptocitiesInView } = storeToRefs(useCryptocities())
   const cryptocityBanner = computed(() => cryptocitiesInView.value.filter(c => c.showCardAtZoom <= zoom.value).at(0))
   const showCryptocityBanner = computed(() => !!cryptocityBanner.value)
-  watch(showCryptocityBanner, v => document.documentElement.style.setProperty(cssVar, v ? '1' : '0'), { immediate: true })
+
+  watch([showCryptocityBanner, showSearchBoxHint], ([v1, v2]) => document.documentElement.style.setProperty(cssVar, v1 || v2 ? '1' : '0'), { immediate: true })
 
 
   return {

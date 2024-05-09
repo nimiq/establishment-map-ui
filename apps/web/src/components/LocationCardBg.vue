@@ -10,7 +10,6 @@ withDefaults(defineProps<{ location: Location, withGradient?: boolean }>(), { wi
     <div v-if="withGradient" aria-hidden absolute rounded="$bottom-radius" top-0 right-0
       bg="[radial-gradient(100%_75.78%_at_100%_100%,#ffffff_0%,rgba(255,255,255,0)_100%)]" op-20 pointer-events-none
       w-full h-full />
-    {{ location.banner }}
     <div v-bind="$attrs" absolute bottom-0 right-0 z-20 of-hidden w-full h-full pointer-events-none>
       <div i-ring:provider size-188 absolute right--62 bottom--62 />
       <div absolute p-6 rounded-full size-32 right-16 bottom-16 :class="{

@@ -34,7 +34,7 @@ watch(selectedUuid, (uuid) => {
     <template #default="{ item: location, active }">
       <DynamicScrollerItem :key="location.uuid" :item="location" :active="active">
         <button w-full px-24 py-20 text-left bg="$bg-1 image-$bg-1 hocus:$bg-2 hocus:image-$bg-2" transition-colors
-          :data-inverted="location.isDark ? 'true' : undefined" :style="{
+          :data-inverted="location.isAtm && location.isDark ? 'true' : undefined" :style="{
             '--bg-1': location.isAtm && location.isDark ? location.bg[0] : 'rgb(var(--nq-neutral-0))',
             '--bg-2': location.isAtm && location.isDark && location.bg[1] ? location.bg[1] : 'rgb(var(--nq-neutral-100))'
           }" @click="useLocations().goToLocation(location.uuid, { open: true })">
@@ -52,7 +52,7 @@ watch(selectedUuid, (uuid) => {
   </DynamicScroller>
   <div v-else flex="~ col items-center justify-center gap-24" px-20 transition-height will-change-height duration-300
     max-w-320 of-hidden
-    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--dynamic-block, 0)) * 88px' : '0' }">
+    :style="{ height: listIsShown ? 'calc(100vh - 10.5rem - var(--dynamic-block, 0) * 88px)' : '0' }">
     <div i-nimiq:icons-lg-cactus text-80 op-80 />
     <span text="16 center">
       {{ $t('Oops, no businesses around here') }}
