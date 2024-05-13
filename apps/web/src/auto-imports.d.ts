@@ -376,10 +376,8 @@ declare module 'vue' {
   interface ComponentCustomProperties {
     readonly Autocomplete: UnwrapRef<typeof import('./composables/useAutocomplete')['Autocomplete']>
     readonly AutocompleteStatus: UnwrapRef<typeof import('./composables/useAutocomplete')['AutocompleteStatus']>
-    readonly CustomMarker: UnwrapRef<typeof import('vue3-google-maps')['CustomMarker']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly FormState: UnwrapRef<typeof import('./composables/useForm')['FormState']>
-    readonly GoogleMap: UnwrapRef<typeof import('vue3-google-maps')['GoogleMap']>
     readonly Layout: UnwrapRef<typeof import('./composables/useUI')['Layout']>
     readonly SUPPORTED_LANGUAGES: UnwrapRef<typeof import('./i18n/i18n-setup')['SUPPORTED_LANGUAGES']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
@@ -705,10 +703,8 @@ declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     readonly Autocomplete: UnwrapRef<typeof import('./composables/useAutocomplete')['Autocomplete']>
     readonly AutocompleteStatus: UnwrapRef<typeof import('./composables/useAutocomplete')['AutocompleteStatus']>
-    readonly CustomMarker: UnwrapRef<typeof import('vue3-google-maps')['CustomMarker']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly FormState: UnwrapRef<typeof import('./composables/useForm')['FormState']>
-    readonly GoogleMap: UnwrapRef<typeof import('vue3-google-maps')['GoogleMap']>
     readonly Layout: UnwrapRef<typeof import('./composables/useUI')['Layout']>
     readonly SUPPORTED_LANGUAGES: UnwrapRef<typeof import('./i18n/i18n-setup')['SUPPORTED_LANGUAGES']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>

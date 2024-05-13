@@ -35,7 +35,6 @@ export default defineConfig({
         '@vueuse/core',
         VueRouterAutoImports,
         {
-          'vue3-google-maps': ['CustomMarker', 'GoogleMap'],
           '@vueuse/router': ['useRouteQuery'],
         },
         {
@@ -62,6 +61,16 @@ export default defineConfig({
       dts: 'src/components.d.ts',
       resolvers: [
         RadixVueResolver(),
+        {
+          type: 'component',
+          resolve(name: string) {
+            const vueGoogleMap = ['GoogleMap', 'CustomMarker']
+            if (vueGoogleMap.includes(name)) {
+              console.log({ name })
+              return { name, from: 'vue3-google-map' }
+            }
+          }
+        }
       ],
     }),
   ],
