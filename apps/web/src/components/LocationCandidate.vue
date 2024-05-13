@@ -1,9 +1,10 @@
 <script setup lang="ts">
+import { Currency } from 'types';
 import { ModalName } from './Modal.vue'
 import type { GoogleSuggestion } from '@/composables/useAutocomplete'
 
 const selectedPlace = ref<GoogleSuggestion>()
-const selectedCryptos = ref<typeof Currency[]>([])
+const selectedCryptos = ref<Currency[]>([])
 
 const open = ref(false)
 
@@ -51,10 +52,8 @@ const { disabled, state, submit, reset, isError, isSuccess, isSubmitted } = useF
     </template>
     <template #content>
       <div v-if="!isSubmitted" mt-8 flex="~ col">
-        <a
-          href="https://www.google.com/business/" target="_blank" rel="noopener noreferrer"
-          w-max text-blue font-semibold arrow
-        >
+        <a href="https://www.google.com/business/" target="_blank" rel="noopener noreferrer" w-max text-blue
+          font-semibold arrow>
           {{ $t('Create Google Business profile') }}
         </a>
         <form mt-32 @submit.prevent="submit">

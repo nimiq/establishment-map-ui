@@ -32,7 +32,6 @@ declare module 'vue' {
     CompactView: typeof import('./components/CompactView.vue')['default']
     CryptocityCard: typeof import('./components/CryptocityCard.vue')['default']
     'CryptocityCard.story': typeof import('./components/CryptocityCard.story.vue')['default']
-    CryptocityMarker: typeof import('./components/CryptocityMarker.vue')['default']
     CryptoList: typeof import('./components/CryptoList.vue')['default']
     CryptoMapModal: typeof import('./components/CryptoMapModal.vue')['default']
     'CryptoMapModal.story': typeof import('./components/CryptoMapModal.story.vue')['default']
