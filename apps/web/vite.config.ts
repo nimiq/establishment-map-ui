@@ -66,7 +66,6 @@ export default defineConfig({
           resolve(name: string) {
             const vueGoogleMap = ['GoogleMap', 'CustomMarker']
             if (vueGoogleMap.includes(name)) {
-              console.log({ name })
               return { name, from: 'vue3-google-map' }
             }
           }

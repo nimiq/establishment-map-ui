@@ -302,7 +302,7 @@ msgid "Powered by {provider}"
 msgstr ""
 
 #: src/components/CryptoMapModal.vue:23
-#: src/components/TheMapInstance.vue:16
+#: src/components/TheMapInstance.vue:10
 msgid "Privacy Policy"
 msgstr ""
 
@@ -405,7 +405,7 @@ msgid "Submit Location"
 msgstr ""
 
 #: src/components/CryptoMapModal.vue:28
-#: src/components/TheMapInstance.vue:22
+#: src/components/TheMapInstance.vue:14
 msgid "Terms of Service"
 msgstr ""
 
@@ -433,7 +433,7 @@ msgstr ""
 msgid "This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map."
 msgstr ""
 
-#: src/components/TheMapInstance.vue:10
+#: src/components/TheMapInstance.vue:7
 msgid "This site is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
 msgstr ""
 
