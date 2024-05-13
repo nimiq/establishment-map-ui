@@ -59,7 +59,7 @@ const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url,
         </a>
         <form mt-32 @submit.prevent="submit">
           <label for="name" text="14 neutral-900" mb-4 block font-200>{{ $t('Find Location') }}</label>
-          <LocationSearchBox v-model:selected="selectedPlace" />
+          <LocationSearchBox v-model:selected="selectedPlace" disable-persist-state />
 
           <label for="name" text="14 neutral-900" mb-4 mt-24 block font-200>{{ $t('Select Cryptocurrency') }}</label>
           <CurrencySelector v-model:selected="selectedCryptos" />

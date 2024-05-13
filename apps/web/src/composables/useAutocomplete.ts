@@ -21,24 +21,29 @@ export interface GoogleSuggestion { label: string, placeId: string, matchedSubst
 
 interface UseAutocompleteOptions {
   autocomplete: Autocomplete[]
+  persistState?: boolean
 }
 
-export function useAutocomplete({ autocomplete }: UseAutocompleteOptions) {
+export function useAutocomplete({ autocomplete, persistState = true }: UseAutocompleteOptions) {
   const status = ref<AutocompleteStatus>(AutocompleteStatus.Initial)
   const googleSuggestions = ref<GoogleSuggestion[]>([])
   const locationSuggestions = ref<LocationSuggestion[]>([])
   const querySearch = useDebounceFn(_querySearch, 400)
 
-  const queryName = 'search'
   const route = useRoute()
   const router = useRouter()
-  const initialQuery = Array.isArray(route.query[queryName]) ? route.query[queryName][0] : route.query[queryName] || ''
+  const queryName = 'search'
+  let initialQuery = ''
+  if (persistState)
+    initialQuery = Array.isArray(route.query[queryName]) ? route.query[queryName][0] : route.query[queryName] || ''
+
   const query = ref(initialQuery)
   watch(query, (newValue, oldValue) => {
     if (newValue === oldValue)
       return
 
-    router.replace({ query: { ...route.query, [queryName]: newValue !== '' ? newValue : undefined } })
+    if (persistState)
+      router.replace({ query: { ...route.query, [queryName]: newValue !== '' ? newValue : undefined } })
 
     if (!query.value) {
       status.value = AutocompleteStatus.Initial
