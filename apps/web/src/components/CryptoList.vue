@@ -24,25 +24,21 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ cryptosToDispla
 
 <template>
   <DefineTemplate v-slot="{ cryptosToDisplay, n }">
-    <ul
-      v-if="cryptosToDisplay.length > 0" flex="~ items-center gap-x-8" absolute bottom-0 z-20 w-max rounded-full
-      bg-neutral-0 p-4 ring-neutral-100 ring="~ 1.5 neutral-100"
-    >
+    <ul v-if="cryptosToDisplay.length > 0" flex="~ items-center gap-x-8" absolute bottom-0 z-20 w-max rounded-full
+      bg-neutral-0 p-4 ring-neutral-100 ring="~ 1.5 neutral-100">
       <li v-for="c in cryptosToDisplay " :key="c">
         <div v-if="c !== Currency.BINANCE_PAY" text-24 :class="getCurrencyIcon(c)" :title="c" />
         <PopoverRoot v-else>
           <PopoverTrigger aria-label="Binance Pay" flex>
             <div i-cryptocurrency-color:btc relative text-24>
               <div absolute bottom--1 right--1 rounded-full bg-neutral-0>
-                <div text="12 neutral-600" < div i-nimiq:info />
+                <div text="12 neutral-600" i-nimiq:info />
               </div>
             </div>
           </PopoverTrigger>
           <PopoverPortal>
-            <PopoverContent
-              z-200 max-w-320 rounded-6 p-16 text-white shadow bg-gradient-neutral ring="1.5 neutral/3"
-              :side="isMobile ? 'top' : 'right'" :collision-padding="8" :side-offset="6"
-            >
+            <PopoverContent z-200 max-w-320 rounded-6 p-16 text-white shadow bg-gradient-neutral ring="1.5 neutral/3"
+              :side="isMobile ? 'top' : 'right'" :collision-padding="8" :side-offset="6">
               <h4 font-semibold lh-none text="15 neutral-100">
                 {{ $t('NAKA supports Binance Pay') }}
               </h4>
@@ -72,15 +68,12 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ cryptosToDispla
     </ul>
   </DefineTemplate>
 
-  <transition
-    enter-active-class="transition duration-100 ease-out" enter-from-class="transform translate-y-3 opacity-0"
+  <transition enter-active-class="transition duration-100 ease-out" enter-from-class="transform translate-y-3 opacity-0"
     enter-to-class="transform translate-y-0 opacity-100" leave-active-class="transition duration-75 ease-out"
-    leave-from-class="transform opacity-100" leave-to-class="transform translate-y-3 opacity-0"
-  >
+    leave-from-class="transform opacity-100" leave-to-class="transform translate-y-3 opacity-0">
     <div
       v-if="progress > 0.5 && location.accepts.length && location.sells.length && !arrayEquals(location.accepts, location.sells)"
-      grid="~ flow-col cols-[fit-content,fit-content] rows-[fit-content,1fr] gap-y-1 gap-x-2" relative z-20 size-max
-    >
+      grid="~ flow-col cols-[fit-content,fit-content] rows-[fit-content,1fr] gap-y-1 gap-x-2" relative z-20 size-max>
       <h5 text="13 white/60 inverted:white/90">
         {{ $t('Buy') }}
       </h5>
@@ -90,9 +83,7 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ cryptosToDispla
       </h5>
       <ReuseTemplate :cryptos-to-display="location.accepts" :n="location.accepts.length - acceptToDisplay.length" />
     </div>
-    <ReuseTemplate
-      v-else :cryptos-to-display="[...new Set(location.accepts.concat(location.sells))]" relative z-20
-      :n="location.accepts.length - acceptToDisplay.length"
-    />
+    <ReuseTemplate v-else :cryptos-to-display="[...new Set(location.accepts.concat(location.sells))]" relative z-20
+      :n="location.accepts.length - acceptToDisplay.length" />
   </transition>
 </template>
