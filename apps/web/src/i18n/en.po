@@ -291,7 +291,7 @@ msgstr ""
 msgid "Pay with {provider}"
 msgstr ""
 
-#: src/components/LocationCard.vue:22
+#: src/components/LocationCard.vue:17
 msgid "Picture of {name}"
 msgstr ""
 
@@ -387,7 +387,7 @@ msgstr ""
 msgid "Spend {CriptocityPoints} at unique locations in this area."
 msgstr ""
 
-#: src/components/LocationCard.vue:33
+#: src/components/LocationCard.vue:27
 msgid "Spend Cryptocity points here"
 msgstr ""
 
