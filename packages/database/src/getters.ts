@@ -55,7 +55,7 @@ export async function getMarkers(
   const res = await fetchDb<Returns[AnonReadDbFunction.GetMarkers]>(AnonReadDbFunction.GetMarkers, dbArgs, { query })
   return {
     clusters: res?.clusters ?? [],
-    singles: res?.singles.map(parseLocation) ?? [],
+    singles: res?.singles.filter(Boolean).map(parseLocation) ?? [],
   }
 }
 

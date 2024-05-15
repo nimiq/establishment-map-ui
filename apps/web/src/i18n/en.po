@@ -275,7 +275,7 @@ msgstr ""
 msgid "Oops, no businesses around here"
 msgstr ""
 
-#: src/components/MobileList.vue:37
+#: src/components/MobileList.vue:36
 msgid "Oops, no businesses around here."
 msgstr ""
 
@@ -371,7 +371,7 @@ msgid "Shop"
 msgstr ""
 
 #: src/components/DesktopList.story.vue:14
-#: src/components/MobileList.vue:33
+#: src/components/MobileList.vue:32
 msgid "Show list"
 msgstr ""
 
@@ -466,6 +466,6 @@ msgstr ""
 msgid "You can add any location that has a Google Business Profile."
 msgstr ""
 
-#: src/components/MobileList.vue:37
+#: src/components/MobileList.vue:36
 msgid "Zoom in to see the list."
 msgstr ""
