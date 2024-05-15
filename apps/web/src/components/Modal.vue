@@ -33,11 +33,10 @@ onUnmounted(() => query.value = undefined)
         <DialogOverlay v-if="!nested" fixed inset-0 z-200 bg-darkblue op-60 />
       </Transition>
       <Transition :name="nested ? 'nested' : 'modal'">
-        <DialogContent
-          :key="name" desktop="top-1/2 left-1/2 translate--1/2"
-          ring="1.5 neutral-50"
-          rounded="t-8 desktop:8" data-modal fixed bottom-0 z-200 h-max max-h-85dvh w-full transform of-y-auto bg-neutral-0 py-32 op-100 shadow-lg outline-none desktop:max-w-512 :data-nested="nested ? '' : undefined" @open-auto-focus.prevent
-        >
+        <DialogContent :key="name" desktop="top-1/2 left-1/2 translate--1/2" ring="1.5 neutral-50"
+          rounded="t-8 desktop:8" data-modal fixed bottom-0 z-200 h-max max-h-85dvh w-full transform of-y-auto
+          bg-neutral-0 py-32 op-100 shadow-lg outline-none desktop:max-w-512 :data-nested="nested ? '' : undefined"
+          @open-auto-focus.prevent>
           <DialogTitle mb-8 px-24 text-18 text-neutral font-bold lh-none desktop:px-40 as="h2">
             <slot name="title" />
           </DialogTitle>
@@ -115,7 +114,7 @@ Only apply when the Vue Transition classes are not applied
   &:has(~ [data-nested][data-state="open"]) {
     --un-scale-x: 0.94;
     --un-scale-y: 0.94;
-    filter: brightness(0.75) blur(2px);
+    filter: brightness(0.8) blur(0.5px);
   }
 }
 
