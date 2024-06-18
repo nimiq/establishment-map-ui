@@ -1,4 +1,5 @@
 import type { EstimatedMapPosition } from 'types'
+import { createSharedComposable } from '@vueuse/core'
 
 interface GeoIpResponse {
   location?: {
@@ -11,9 +12,11 @@ interface GeoIpResponse {
   city_names?: { [language: string]: string }
 }
 
-export function useGeoIp() {
+function _useGeoIp() {
   const ipPositionError = ref()
   const ipPosition = ref<EstimatedMapPosition>()
+  const browserPosition = ref<EstimatedMapPosition>()
+
   async function geolocateIp() {
     const url = new URL('https://geoip.nimiq-network.com:8443/v1/locate')
     const response = await fetch(url).catch((e) => {
@@ -62,14 +65,15 @@ export function useGeoIp() {
     }
 
     geolocatingUserBrowser.value = false
-
-    return {
+    browserPosition.value = {
       center: {
         lat: browserCoords.value.latitude,
         lng: browserCoords.value.longitude,
       },
       accuracy: browserCoords.value.accuracy,
     }
+
+    return browserPosition.value
   }
 
   return {
@@ -77,6 +81,7 @@ export function useGeoIp() {
     geolocateIp,
     ipPositionError,
     ipPosition,
+    browserPosition,
 
     // We need to trigger geolocation manually. Then we can read the coords.
     browserPositionIsSupported,
@@ -85,3 +90,5 @@ export function useGeoIp() {
     geolocatingUserBrowser,
   }
 }
+
+export const useGeoIp = createSharedComposable(_useGeoIp)
