@@ -31,12 +31,11 @@ export async function authenticateAnonUser({ apikey, url }: DatabaseArgs, captch
   }
   const data: { captcha_uuid: string } = await response.json()
   if (!data || !data.captcha_uuid) {
-    let randomUUID = globalThis.crypto?.randomUUID || (
+    const randomUUID = globalThis.crypto?.randomUUID || (
       // @ts-expect-error This is fine
       [1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g,
-        // @ts-ignore this is fine
-        c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-      )
+      // @ts-expect-error this is fine
+      c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))
     data.captcha_uuid = randomUUID()
   }
   //   throw new Error('No captcha uuid found!')

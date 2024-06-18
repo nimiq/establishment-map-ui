@@ -9,7 +9,7 @@ const selected = defineModel<GoogleSuggestion>('selected')
 <template>
   <ComboboxRoot v-model="selected" relative :display-value="v => v.label" @update:search-term="q => query = q">
     <ComboboxAnchor flex="~ items-center justify-between" relative>
-      <ComboboxInput :placeholder="$t('Search Map')" peer rounded-6 text-14 input-box pr-32 />
+      <ComboboxInput :placeholder="$t('Search Map')" peer rounded-6 pr-32 text-14 input-box />
       <div v-if="!query" i-nimiq:magnifying-glass absolute right-8 text="14 neutral-600 peer-focus-visible:blue" />
       <ComboboxCancel v-else i-nimiq:cross absolute right-8 text="10 neutral-700 peer-focus-visible:blue/80" />
     </ComboboxAnchor>
@@ -31,8 +31,10 @@ const selected = defineModel<GoogleSuggestion>('selected')
           </span>
         </div>
         <template v-else>
-          <ComboboxItem v-for="s in googleSuggestions" :key="s.placeId" :value="s" bg="hocus:bg-white/40" cursor-pointer
-            px-16 py-12 transition-colors text="14 neutral-100" @click="() => useMap().goToPlaceId(s.placeId)">
+          <ComboboxItem
+            v-for="s in googleSuggestions" :key="s.placeId" :value="s" bg="hocus:bg-white/40" cursor-pointer
+            px-16 py-12 transition-colors text="14 neutral-100" @click="() => useMap().goToPlaceId(s.placeId)"
+          >
             <span class="block truncate" v-html="highlightMatches(s.label, s.matchedSubstrings)" />
           </ComboboxItem>
         </template>

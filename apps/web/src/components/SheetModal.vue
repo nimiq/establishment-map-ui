@@ -167,8 +167,10 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <article ref="container" absolute h-full min-h-fit touch-pan-x will-change-auto class="sheet-transition"
-    :style="style" @pointerdown="onStart" @pointermove="onMove" @pointerup="onEnd" @pointercancel="onCancel">
+  <article
+    ref="container" absolute h-full min-h-fit touch-pan-x will-change-auto class="sheet-transition"
+    :style="style" @pointerdown="onStart" @pointermove="onMove" @pointerup="onEnd" @pointercancel="onCancel"
+  >
     <slot name="dragger" />
     <slot />
   </article>
