@@ -2,6 +2,8 @@
 const { singles } = storeToRefs(useMarkers())
 const { zoom } = storeToRefs(useMap())
 const SingleMarkersDesktop = defineAsyncComponent(() => import('./SingleMarkersDesktop.vue'))
+
+const { browserPositionIsSupported, browserPosition } = useGeoIp()
 </script>
 
 <template>
@@ -14,6 +16,14 @@ const SingleMarkersDesktop = defineAsyncComponent(() => import('./SingleMarkersD
   </CustomMarker>
 
   <ClusterMarkers />
+
+  <!-- User Position Marker -->
+  <CustomMarker
+    v-if="browserPositionIsSupported && browserPosition && browserPosition.accuracy < 1000"
+    :options="{ position: { lng: browserPosition.center.lng, lat: browserPosition.center.lat } }" data-custom-marker
+  >
+    <UserLocationMarker :accuracy="browserPosition.accuracy" />
+  </CustomMarker>
 
   <!-- Looks like you are about to find something interesting... -->
   <template v-if="zoom > 15">
