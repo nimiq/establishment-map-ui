@@ -20,7 +20,7 @@ const toggleDark = useToggle(isDark)
       <div flex="~ col gap-48 items-center">
         <div aria-hidden i-nimiq:logos-crypto-map mx-auto mt="8 desktop:20" text="64 desktop:94"
           @click.shift="() => toggleDark()" />
-        <span font-bold text="20 desktop:24" lh-tight>{{ $t('Crypto Map') }}</span>
+        <span>{{ $t('Crypto Map') }}</span>
       </div>
     </template>
 

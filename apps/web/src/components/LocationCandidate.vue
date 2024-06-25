@@ -25,18 +25,15 @@ const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url,
       {{ $t('Add Crypto location') }}
     </template>
     <template #title>
-      <div flex="~ gap-8 items-baseline" ml--6>
-        <div centered size-28 shrink-0 rounded-6 bg-neutral-400>
-          <div i-nimiq:landmark text-14 text-neutral />
-        </div>
+      <div text-center ml--6>
         <template v-if="isSuccess">
-          {{ $t('Thank you for submitting a new location to the Crypto Map!') }}
+          {{ $t('Thank you!') }}
         </template>
         <template v-else-if="isError">
           {{ $t('Something went wrong') }}
         </template>
         <template v-else>
-          {{ $t('Add a location to the Crypto Map') }}
+          {{ $t('Add a location') }}
         </template>
       </div>
     </template>
@@ -48,13 +45,13 @@ const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url,
         {{ $t('There has been a problem on our side. Please try again.') }}
       </template>
       <template v-else>
-        {{ $t('You can add any location that has a Google Business Profile.') }}
+        {{ $t('Add any location that has a Google Business profile.') }}
       </template>
     </template>
     <template #content>
       <div v-if="!isSubmitted" mt-8 flex="~ col">
-        <a href="https://www.google.com/business/" target="_blank" rel="noopener noreferrer" w-max text-blue
-          font-semibold arrow>
+        <a href="https://www.google.com/business/" target="_blank" rel="noopener noreferrer" un-text="blue center"
+          font-bold arrow lh-20>
           {{ $t('Create Google Business profile') }}
         </a>
         <form mt-32 @submit.prevent="submit">
@@ -64,8 +61,8 @@ const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url,
           <label for="name" text="14 neutral-900" mb-4 mt-24 block font-200>{{ $t('Select Cryptocurrency') }}</label>
           <CurrencySelector v-model:selected="selectedCryptos" />
 
-          <div flex="~ gap-16 justify-end">
-            <DialogClose :aria-label="$t('Cancel')" pill-sm pill-tertiary>
+          <div flex="~ gap-16 justify-between">
+            <DialogClose :aria-label="$t('Cancel')" pill-sm pill-secondary>
               Cancel
             </DialogClose>
             <button type="submit" :disabled :loading="state === FormState.Loading" pill-sm pill-blue>
