@@ -1,7 +1,7 @@
 import type { LocationQuery, RouteParams } from 'vue-router'
 import type { MapPosition } from 'types'
-import { useMap } from '@/stores/map'
 import { isPointInViewport } from 'geo'
+import { useMap } from '@/stores/map'
 
 /**
  * When user loads the map:
