@@ -56,7 +56,7 @@ const { submit, reset, isError, isSuccess, isSubmitted } = useForm({ url, body }
           <LocationExternalUrl :location show-name flex-basis-auto />
           <CryptoList pill pill-tertiary :location flex-1 :max="2" />
         </div>
-        <FAQ nested :questions="['q-1']">
+        <FAQ nested :questions="['q-1']" w-full>
           <template #trigger>
             <div flex="~ gap-4 items-center justify-center" text="neutral-800 14" mx--6 rounded-4 px-6 py-2
               transition-colors hocus:bg-neutral-200>
