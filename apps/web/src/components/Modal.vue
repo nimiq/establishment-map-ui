@@ -39,10 +39,10 @@ onUnmounted(() => router.replace({ query: { ...route.query, [queryName]: undefin
           bottom-0 z-200 h-max max-h-85dvh w-full transform of-y-auto shadow-lg outline-none desktop:max-w-440
           :data-nested="nested ? '' : undefined" @open-auto-focus.prevent>
           <div relative py-32 bg-neutral-0 ring="1.5 neutral/3" class="modal-container">
-            <DialogTitle mb-8 px-24 text-18 text-neutral font-bold lh-none desktop:px-40 as="h2">
+            <DialogTitle mb-12 px-24 text="24 center neutral lh-24" font-bold lh-none desktop:px-40 as="h2">
               <slot name="title" />
             </DialogTitle>
-            <DialogDescription block px-24 text-neutral-800 desktop:px-40>
+            <DialogDescription block px-24 text="center neutral" desktop:px-40>
               <slot name="description" />
             </DialogDescription>
 
