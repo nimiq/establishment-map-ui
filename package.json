@@ -1,32 +1,59 @@
 {
-  "name": "crypto-map",
-  "description": "A map of locations where you can pay with Crypto around the world",
+  "name": "nuxt-app",
   "type": "module",
-  "version": "2.0.4",
   "private": true,
-  "packageManager": "pnpm@9.3.0",
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev --no-cache --continue",
-    "lint": "turbo lint --",
-    "lint:fix": "turbo lint:fix --",
-    "clean": "turbo clean && rm -rf node_modules",
-    "changeset": "changeset",
-    "version-packages": "changeset version",
-    "release": "turbo build --filter=docs^... && changeset publish"
+    "build": "pnpm i18n:extract && nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "i18n:extract": "node ./node_modules/webpack-i18n-tools/index.js ./app/assets/i18n/en.po app",
+    "i18n:pull": "tx pull -l de,es,fr,nl,tr,pt,uk --force --minimum-perc 50",
+    "i18n:push": "tx push --source",
+    "i18n:sync": "pnpm i18n:extract && pnpm i18n:push; pnpm i18n:pull"
+  },
+  "dependencies": {
+    "@turf/turf": "^7.0.0-alpha.113",
+    "@vueuse/router": "^10.11.0",
+    "database": "workspace:*",
+    "geo": "workspace:*",
+    "nimiq-css": "^0.0.104",
+    "types": "workspace:*",
+    "vue": "^3.4.30",
+    "vue-recaptcha": "3.0.0-alpha.6",
+    "vue-router": "^4.4.0",
+    "vue3-google-map": "^0.20.0"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.6.4",
-    "@changesets/cli": "^2.27.1",
-    "eslint": "^8.56.0",
-    "eslint-config": "^0.3.0",
-    "lint-staged": "15.2.2",
-    "turbo": "^2.0.4"
+    "@antfu/eslint-config": "^2.21.1",
+    "@nuxt/eslint": "^0.3.13",
+    "@nuxtjs/i18n": "^8.3.1",
+    "@pinia/nuxt": "^0.5.1",
+    "@types/geojson": "^7946.0.14",
+    "@types/google.maps": "^3.55.10",
+    "@unocss/eslint-plugin": "^0.61.0",
+    "@unocss/nuxt": "^0.61.0",
+    "@unocss/preset-rem-to-px": "^0.61.0",
+    "@unocss/reset": "^0.61.0",
+    "@vueuse/components": "^10.11.0",
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/nuxt": "^10.11.0",
+    "eslint": "^9.5.0",
+    "lint-staged": "^15.2.7",
+    "nuxt": "^3.12.2",
+    "radix-vue": "^1.8.5",
+    "simple-git-hooks": "^2.11.1",
+    "unplugin-vue-router": "^0.10.0",
+    "vue-virtual-scroller": "2.0.0-beta.8",
+    "webpack-i18n-tools": "github:nimiq/webpack-i18n-tools#onmax/extract-with-custom-root"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
   },
   "lint-staged": {
-    "*": "turbo lint:fix --"
+    "*": "eslint --fix"
   }
 }

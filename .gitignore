@@ -1,10 +1,24 @@
-.turbo
-dist/**
-node_modules/
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
 
-# Local Netlify folder
-.netlify
+# Node dependencies
+node_modules
 
-deployment-map
+# Logs
+logs
+*.log
 
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
 .env
+.env.*
+!.env.example

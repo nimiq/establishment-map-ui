@@ -1,7 +1,0 @@
-{
-  "imports": {
-    "supercluster": "https://esm.sh/supercluster",
-    "@turf/": "https://esm.sh/@turf/",
-    "h3": "https://esm.sh/h3"
-  }
-}

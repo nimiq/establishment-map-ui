@@ -1,23 +1,7 @@
 {
+  // https://nuxt.com/docs/guide/concepts/typescript
+  "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "declaration": true,
-    "noUncheckedIndexedAccess": true,
-    "skipLibCheck": true,
-    "target": "es2022",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
-    "outDir": "dist",
-    "sourceMap": true,
-    "isolatedModules": true,
-    "strict": true,
-    "moduleResolution": "NodeNext",
-    "module": "NodeNext",
-    "composite": true,
-    "declarationMap": true,
-    "noEmit": true,
-    "lib": ["es2022", "dom", "dom.iterable"],
     "allowImportingTsExtensions": true
   }
 }
