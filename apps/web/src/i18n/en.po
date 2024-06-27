@@ -6,7 +6,7 @@ msgstr ""
 msgid "{count} locations"
 msgstr ""
 
-#: src/components/DesktopList.vue:22
+#: src/components/DesktopList.vue:26
 msgid "+ {count} grouped"
 msgstr ""
 
@@ -27,7 +27,7 @@ msgid "Add Crypto location"
 msgstr ""
 
 #: src/components/BasicInfoLocation.vue:4
-#: src/components/SingleMarker.vue:11
+#: src/components/SingleMarker.vue:15
 msgid "ATM"
 msgstr ""
 
@@ -57,11 +57,11 @@ msgstr ""
 msgid "Buy"
 msgstr ""
 
-#: src/components/BasicInfoLocation.vue:21
+#: src/components/BasicInfoLocation.vue:25
 msgid "Buy & sell crypto"
 msgstr ""
 
-#: src/components/BasicInfoLocation.vue:24
+#: src/components/BasicInfoLocation.vue:28
 msgid "Buy crypto only"
 msgstr ""
 
@@ -130,11 +130,11 @@ msgstr ""
 msgid "Decrease zoom"
 msgstr ""
 
-#: src/components/Banner.vue:50
+#: src/components/Banner.vue:59
 msgid "Download on App Store"
 msgstr ""
 
-#: src/components/Banner.vue:52
+#: src/components/Banner.vue:63
 msgid "Download on Play Store"
 msgstr ""
 
@@ -181,7 +181,7 @@ msgstr ""
 msgid "Health & Beauty"
 msgstr ""
 
-#: src/components/DesktopList.story.vue:14
+#: src/components/DesktopList.story.vue:13
 msgid "Hide list"
 msgstr ""
 
@@ -221,7 +221,7 @@ msgstr ""
 msgid "Kurant enables users to easily purchase cryptocurrencies through a network of ATMs."
 msgstr ""
 
-#: src/components/Banner.vue:44
+#: src/components/Banner.vue:52
 #: src/components/InteractionBar.vue:44
 msgid "Learn more"
 msgstr ""
@@ -275,11 +275,11 @@ msgstr ""
 msgid "Nothing found."
 msgstr ""
 
-#: src/components/DesktopList.vue:31
+#: src/components/DesktopList.vue:37
 msgid "Oops, no businesses around here"
 msgstr ""
 
-#: src/components/MobileList.vue:36
+#: src/components/MobileList.vue:48
 msgid "Oops, no businesses around here."
 msgstr ""
 
@@ -303,7 +303,7 @@ msgstr ""
 msgid "Pay with {provider}"
 msgstr ""
 
-#: src/components/LocationCard.vue:16
+#: src/components/LocationCard.vue:21
 msgid "Picture of {name}"
 msgstr ""
 
@@ -350,7 +350,7 @@ msgstr ""
 msgid "Search Map"
 msgstr ""
 
-#: src/components/SingleMarkersDesktop.vue:7
+#: src/components/SingleMarkersDesktop.vue:9
 msgid "See location details"
 msgstr ""
 
@@ -370,7 +370,7 @@ msgstr ""
 msgid "Sell"
 msgstr ""
 
-#: src/components/BasicInfoLocation.vue:23
+#: src/components/BasicInfoLocation.vue:27
 msgid "Sell crypto only"
 msgstr ""
 
@@ -382,8 +382,8 @@ msgstr ""
 msgid "Shop"
 msgstr ""
 
-#: src/components/DesktopList.story.vue:14
-#: src/components/MobileList.vue:32
+#: src/components/DesktopList.story.vue:13
+#: src/components/MobileList.vue:44
 msgid "Show list"
 msgstr ""
 
@@ -399,7 +399,7 @@ msgstr ""
 msgid "Spend {CriptocityPoints} at unique locations in this area."
 msgstr ""
 
-#: src/components/LocationCard.vue:27
+#: src/components/LocationCard.vue:35
 msgid "Spend Cryptocity points here"
 msgstr ""
 
@@ -474,6 +474,6 @@ msgstr ""
 msgid "With over 600 acceptance locations, Ljubljana not only stands as the most crypto-friendly city in Europe but also secures a prominent position in international rankings."
 msgstr ""
 
-#: src/components/MobileList.vue:36
+#: src/components/MobileList.vue:48
 msgid "Zoom in to see the list."
 msgstr ""
