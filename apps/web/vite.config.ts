@@ -39,7 +39,7 @@ export default defineConfig({
         },
         {
           from: 'types',
-          imports: ['MapLocation', 'Cluster', 'Cryptocity', 'CryptocityData', 'Currency', 'Provider'],
+          imports: ['MapLocation', 'Cluster', 'Cryptocity', 'CryptocityData', 'Currency', 'Provider', 'LocationBanner', 'LocationStyle'],
           type: true,
         },
       ],

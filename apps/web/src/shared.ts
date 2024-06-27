@@ -1,6 +1,6 @@
 import { PROVIDERS } from 'database'
 import type { DatabaseAnonArgs, DatabaseArgs, MapLocation } from 'types'
-import { DatabaseUser, LocationLink, Provider, Theme } from 'types'
+import { DatabaseUser, LocationLink, Provider } from 'types'
 import { getCardConfiguration } from './assets-dev/banner-assets'
 import { translateCategory } from './i18n/translations'
 import { useApp } from './stores/app'
@@ -32,8 +32,7 @@ function getProvider({ provider, isAtm }: MapLocation) {
 }
 
 export function parseLocation(location: MapLocation) {
-  const isAtm = location.sells.length > 0
-
+  location.isAtm = location.sells.length > 0
   location.provider = getProvider(location)
 
   // If the photo is not a URL, then it's a reference to Google Maps
@@ -54,13 +53,7 @@ export function parseLocation(location: MapLocation) {
 
   Object.assign(location, getCardConfiguration(location.provider)) // Assing all the keys from the asset to the location
 
-  location.isAtm = isAtm
-  location.isDark = location.theme === Theme.Dark
-  location.isLight = location.theme === Theme.Light
-
   // Make the translation reactive in case user change language
-  Object.defineProperty(location, 'category_label', {
-    get: () => translateCategory(location.category),
-  })
+  Object.defineProperty(location, 'category_label', { get: () => translateCategory(location.category) })
   return location
 }

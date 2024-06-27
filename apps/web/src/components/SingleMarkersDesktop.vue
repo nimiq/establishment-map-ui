@@ -38,11 +38,9 @@ function handlePopoverOpen(isOpen: boolean, location: MapLocation) {
 </script>
 
 <template>
-  <CustomMarker
-    v-for="location in singles" :key="location.uuid"
+  <CustomMarker v-for="location in singles" :key="location.uuid"
     :options="{ position: { lng: location.lng, lat: location.lat }, anchorPoint: showLocationName ? 'LEFT_CENTER' : 'CENTER' }"
-    data-custom-marker
-  >
+    data-custom-marker>
     <PopoverRoot @update:open="(isOpen: boolean) => handlePopoverOpen(isOpen, location)">
       <PopoverAnchor pointer-events-none absolute h-full w-28 />
       <PopoverTrigger :aria-label="$t('See location details')" cursor-pointer :data-trigger-uuid="location.uuid">
@@ -50,15 +48,12 @@ function handlePopoverOpen(isOpen: boolean, location: MapLocation) {
       </PopoverTrigger>
       <PopoverPortal :key="popoverKey">
         <Transition name="popover">
-          <PopoverContent
-            side="right" :side-offset="5" rounded-12 shadow :collision-padding="8" sticky="always"
-            ring="1.5 neutral/3" @open-auto-focus.prevent
-          >
+          <PopoverContent side="right" :side-offset="5" rounded-12 shadow :collision-padding="8" sticky="always"
+            ring="1.5 neutral/3" @open-auto-focus.prevent>
             <LocationCard :location="location" :progress="1" />
             <PopoverArrow
-              :style="{ color: location.isAtm ? extractColorFromBg(location.bg[0]) : 'rgb(var(--nq-neutral-0))' }"
-              as-child right-1 rotate-180
-            >
+              :style="{ color: location.isAtm ? extractColorFromBg(location.cardStyle.bg[0]) : 'rgb(var(--nq-neutral-0))' }"
+              as-child right-1 rotate-180>
               <div i-nimiq:tooltip-triangle h-8 w-16 />
             </PopoverArrow>
           </PopoverContent>

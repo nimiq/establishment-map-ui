@@ -6,12 +6,14 @@ withDefaults(defineProps<{ location: MapLocation, showName?: boolean }>(), { sho
 
 <template>
   <transition name="scale">
-    <a v-if="location.linkTo" :href="location.url" bg-neutral-0 px-8 py-5 arrow pill-tertiary border="neutral/15" after:ml-3 after:text-13
-      flex="~ gap-8" un-text="14 neutral-800" target="_blank" rel="noopener noreferrer">
+    <a
+      v-if="location.linkTo" :href="location.url" bg-neutral-0 px-8 py-5 arrow pill-tertiary border="neutral/15" after:ml-3 after:text-13
+      flex="~ gap-8" un-text="14 neutral-800" target="_blank" rel="noopener noreferrer"
+    >
       <div v-if="location.linkTo === LocationLink.GMaps" i-logos:google-maps />
       <div v-if="location.linkTo === LocationLink.Facebook" i-logos:facebook />
       <div v-if="location.linkTo === LocationLink.Instagram" i-nimiq:logos-instagram />
-      <span text-blue text="14/19.6 ellipsis nowrap" flex-1 of-hidden max-w-198 v-if="showName">
+      <span v-if="showName" text="14/19.6 ellipsis nowrap" max-w-198 flex-1 of-hidden text-blue>
         {{ location.name }}
       </span>
     </a>
