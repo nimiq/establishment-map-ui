@@ -366,7 +366,7 @@ declare global {
   export type { Component, ComponentPublicInstance, ComputedRef, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
-  export type { MapLocation, Cluster, Cryptocity, CryptocityData, Currency, Provider } from 'types'
+  export type { MapLocation, Cluster, Cryptocity, CryptocityData, Currency, Provider, LocationBanner, LocationStyle } from 'types'
   import('types')
 }
 // for vue template auto import
@@ -412,7 +412,6 @@ declare module 'vue' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
-    readonly getBannerIcon: UnwrapRef<typeof import('./composables/useIcon')['getBannerIcon']>
     readonly getCategoryIcon: UnwrapRef<typeof import('./composables/useIcon')['getCategoryIcon']>
     readonly getCurrencyIcon: UnwrapRef<typeof import('./composables/useIcon')['getCurrencyIcon']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
@@ -739,7 +738,6 @@ declare module '@vue/runtime-core' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
-    readonly getBannerIcon: UnwrapRef<typeof import('./composables/useIcon')['getBannerIcon']>
     readonly getCategoryIcon: UnwrapRef<typeof import('./composables/useIcon')['getCategoryIcon']>
     readonly getCurrencyIcon: UnwrapRef<typeof import('./composables/useIcon')['getCurrencyIcon']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>

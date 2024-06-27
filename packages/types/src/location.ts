@@ -22,8 +22,28 @@ export enum LocationLink {
 }
 
 // The different Banner designs
-export type SplitBanner = Provider.CryptopaymentLink | Provider.Opago | Provider.Osmo
-export type Banner = Provider.Bluecode | Provider.Edenia | Provider.Kurant | Provider.NAKA | Provider.Edenia | 'Nimiq-Pay' | Provider.DefaultAtm | 'None' | SplitBanner
+export type CardType = Provider.Bluecode | Provider.Edenia | Provider.Kurant | Provider.NAKA | Provider.Edenia | 'Nimiq-Pay' | Provider.DefaultAtm | Provider.CryptopaymentLink | Provider.Opago | Provider.Osmo | 'Default'
+
+export type LocationBanner = {
+  type: Exclude<CardType, 'Default'>
+  label: string
+  tooltip: string
+  tooltipCta?: string
+  tooltipLabel?: string
+  googlePlay?: string
+  appStore?: string
+}
+
+export interface LocationStyle {
+  // UI Options
+  theme: Theme
+  bg: [string /* primary color */, string | undefined /* For gradients */]
+
+  // Quick getters
+  isAtm: boolean
+  isDark: boolean
+  isLight: boolean
+}
 
 export interface MapLocation extends RawLocation {
   category_label: string
@@ -33,23 +53,10 @@ export interface MapLocation extends RawLocation {
   linkTo?: LocationLink
   url?: string
 
-  // UI Options
-  theme: Theme
-  bg: [string /* primary color */, string | undefined /* Active for atm */]
+  style: LocationStyle
 
-  // Quick getters
-  isAtm: boolean
-  isDark: boolean
-  isLight: boolean
-
-  // Banner: The design of the banner can be a provider or a Nimiq-Pay banner for specific providers.
-  banner: Banner
-  bannerLabel?: string
-  bannerTooltip?: string
-  bannerTooltipCta?: string
-  bannerTooltipLabel?: string
-  bannerGooglePlay?: string
-  bannerAppStore?: string
+  // The bottom part of the card
+  banner?: LocationBanner | [LocationBanner, LocationBanner]
 }
 
 export interface RawLocation {

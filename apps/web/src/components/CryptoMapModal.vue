@@ -18,17 +18,23 @@ const toggleDark = useToggle(isDark)
 
     <template #title>
       <div flex="~ col gap-48 items-center">
-        <div aria-hidden i-nimiq:logos-crypto-map mx-auto mt="8 desktop:20" text="64 desktop:94"
-          @click.shift="() => toggleDark()" />
+        <div
+          aria-hidden i-nimiq:logos-crypto-map mx-auto mt="8 desktop:20" text="64 desktop:94"
+          @click.shift="() => toggleDark()"
+        />
         <span>{{ $t('Crypto Map') }}</span>
       </div>
     </template>
 
     <template #description>
-      <i18n-t tag="p"
+      <i18n-t
+        tag="p"
         keypath="This app is brought to you by {Nimiq}. It is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
-        text="center 16 lh-24">
-        <template #Nimiq><span text-blue font-bold>Nimiq</span></template>
+        text="center 16 lh-24"
+      >
+        <template #Nimiq>
+          <span text-blue font-bold>Nimiq</span>
+        </template>
         <template #privacyPolicy>
           <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" text-neutral-800 underline>
             {{ $t('Privacy Policy') }}
@@ -44,7 +50,7 @@ const toggleDark = useToggle(isDark)
 
     <template #content>
       <LocationCandidate mt-32 />
-      <div absolute top-20 left-20>
+      <div absolute left-20 top-20>
         <TriangleSelector v-model:selected="lang" :options="SUPPORTED_LANGUAGES" />
       </div>
     </template>

@@ -2,77 +2,90 @@
 defineProps<{ location: MapLocation }>()
 
 // For the banner Nimiq Pay, the label should be Nimiq Pay
-function handleProviderPlaceholder({ banner, provider }: MapLocation) {
-  if (banner === 'Nimiq-Pay')
+function handleProviderPlaceholder({ provider }: MapLocation, { type }: LocationBanner) {
+  if (type === 'Nimiq-Pay')
     return 'Nimiq Pay'
   return provider
 }
+
+const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ location: MapLocation, banner: LocationBanner }>()
+
 </script>
 
 <template>
-  <footer relative flex="~ items-center" :class="location.bannerLabel ? 'h-64' : 'h-36'">
-    <LocationCardBg v-if="!location.isAtm && location.bannerLabel" :location="location" />
+  <footer relative>
+    <DefineTemplate v-slot="{ location, banner }">
+      <div :class="banner.label(location.splitBanner) ? 'h-64' : 'h-36'" relative flex="~ items-center"
+        text="white inverted:darkblue"
+        :style="{ backgroundColor: banner.style?.bg(location.splitBanner) || 'transparent' }">
+        <LocationCardBg v-if="!location.isAtm && banner.label(location.splitBanner)" :location :banner />
 
-    <div v-if="location.bannerLabel" flex="~ items-center gap-8" pl-24 pr-72 pt-6 text-12>
-      <i18n-t :keypath="location.bannerLabel" tag="p" text-neutral-50>
-        <!-- The name in the label can optionally be written bold by including a {provider} placeholder -->
-        <template #provider>
-          <b>{{ handleProviderPlaceholder(location) }}</b>
-        </template>
-      </i18n-t>
+        <div v-if="banner.label(location.splitBanner)" flex="~ items-center gap-8" pt-6 text-12
+          :class="{ 'pl-24 pr-72': !location.splitBanner, 'pl-16 pr-64': location.splitBanner }">
+          <p v-if="location.splitBanner" font-bold>{{ banner.label(location.splitBanner) }}</p>
+          <i18n-t v-else :keypath="banner.label(location.splitBanner)" tag="p">
+            <!-- The name in the label can optionally be written bold by including a {provider} placeholder -->
+            <template #provider>
+              <b>{{ handleProviderPlaceholder(location, banner) }}</b>
+            </template>
+          </i18n-t>
 
-      <PopoverRoot>
-        <PopoverTrigger>
-          <div i-nimiq:info text="14 neutral-0/50 inverted:neutral/50" />
-        </PopoverTrigger>
-        <PopoverPortal>
-          <Transition name="slide-left">
-            <PopoverContent as-child :side-offset="4" :collision-padding="8" :side="isMobile ? 'top' : 'right'">
-              <div z-100 max-w-320 rounded-6 p-16 text-neutral-0 shadow bg-gradient-neutral>
-                <header flex="~ items-center justify-start gap-8">
-                  <div :class="getBannerIcon(location.banner)" shrink-0 text-24 />
+          <PopoverRoot>
+            <PopoverTrigger>
+              <div i-nimiq:info text-14 op-80 />
+            </PopoverTrigger>
+            <PopoverPortal>
+              <Transition name="slide-left">
+                <PopoverContent as-child :side-offset="4" :collision-padding="8" :side="isMobile ? 'top' : 'right'">
+                  <div z-100 max-w-320 rounded-6 p-16 text-neutral-0 bg-gradient-neutral shadow>
+                    <header flex="~ items-center justify-start gap-8">
+                      <div :class="banner.icon" shrink-0 text-24 />
 
-                  <h4 truncate text-16 text-neutral-400 font-semibold lh-20>
-                    {{ handleProviderPlaceholder(location) }}
-                  </h4>
-                  <div v-if="location.bannerTooltipLabel" ml-auto text="10 neutral-600" whitespace-nowrap label>
-                    {{ location.bannerTooltipLabel }}
+                      <h4 truncate text-16 text-neutral-400 font-semibold lh-20>
+                        {{ handleProviderPlaceholder(location, banner) }}
+                      </h4>
+                      <div v-if="banner.tooltipLabel" ml-auto text="10 neutral-600" whitespace-nowrap label>
+                        {{ banner.tooltipLabel }}
+                      </div>
+                    </header>
+
+                    <p text="14 neutral-600" mt-8>
+                      {{ banner.tooltip }}
+                    </p>
+
+                    <a v-if="banner.tooltipCta" :href="banner.tooltipCta" target="_blank" rel="noopener noreferrer"
+                      un-text="14 neutral-600" mt-12 block arrow before:op-80 flex="~ items-center">
+                      {{ $t('Learn more') }}
+                    </a>
+
+                    <template v-if="banner.appStore || banner.googlePlay">
+                      <div flex="~ items-center gap-16" mt-16 text-45>
+                        <a v-if="banner.appStore" :href="banner.appStore" target="_blank" rel="noopener noreferrer"
+                          :aria-label="$t('Download on App Store')" i-apps:app-store flex-1 />
+                        <a v-if="banner.googlePlay" :href="banner.googlePlay" target="_blank" rel="noopener noreferrer"
+                          :aria-label="$t('Download on Play Store')" i-apps:google-play flex-1 />
+                      </div>
+                    </template>
                   </div>
-                </header>
 
-                <p text="14 neutral-600" mt-8>
-                  {{ location.bannerTooltip }}
-                </p>
+                  <PopoverArrow as-child>
+                    <div aria-hidden i-nimiq:tooltip-triangle h-8 w-16 rotate-180 text-neutral />
+                  </PopoverArrow>
+                </PopoverContent>
+              </Transition>
+            </PopoverPortal>
+          </PopoverRoot>
+        </div>
+      </div>
+    </DefineTemplate>
 
-                <a
-                  v-if="location.bannerTooltipCta" :href="location.bannerTooltipCta" target="_blank"
-                  rel="noopener noreferrer" un-text="14 neutral-600" mt-12 block arrow before:op-80
-                  flex="~ items-center"
-                >
-                  {{ $t('Learn more') }}
-                </a>
-
-                <template v-if="location.bannerAppStore || location.bannerGooglePlay">
-                  <div flex="~ items-center gap-24" mt-16 text-40>
-                    <a
-                      v-if="location.bannerAppStore" :href="location.bannerAppStore" target="_blank"
-                      rel="noopener noreferrer" :aria-label="$t('Download on App Store')" i-apps:app-store flex-1
-                    />
-                    <a
-                      v-if="location.bannerGooglePlay" :href="location.bannerGooglePlay" target="_blank"
-                      rel="noopener noreferrer" :aria-label="$t('Download on Play Store')" i-apps:google-play flex-1
-                    />
-                  </div>
-                </template>
-              </div>
-
-              <PopoverArrow as-child>
-                <div aria-hidden i-nimiq:tooltip-triangle h-8 w-16 rotate-180 text-neutral />
-              </PopoverArrow>
-            </PopoverContent>
-          </Transition>
-        </PopoverPortal>
-      </PopoverRoot>
+    <div v-if="Array.isArray(location.banner)" grid="~ cols-[1fr_1fr]">
+      <ReuseTemplate :location :banner="(location.banner as [LocationBanner, LocationBanner]).at(0)!"
+        :class="{ 'rounded-bl-12': !isMobile }" style="--bottom-radius-bl: 0" />
+      <ReuseTemplate :location :banner="(location.banner as [LocationBanner, LocationBanner]).at(1)!"
+        :class="{ 'rounded-br-12': !isMobile }" style="--bottom-radius-br: 0" />
     </div>
+    <ReuseTemplate v-else :location :banner="location.banner as LocationBanner"
+      :class="{ 'rounded-b-12': !isMobile }" />
   </footer>
 </template>
