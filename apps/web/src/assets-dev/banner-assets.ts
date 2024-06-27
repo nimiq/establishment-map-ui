@@ -39,7 +39,7 @@ const cardConfig: Record<CardType, CardConfig> = {
     cardStyle: defaultCardStyle,
     banner: {
       type: 'Nimiq-Pay',
-      label: (splitBanner) => splitBanner ? 'Nimiq Pay' : i18n.t('Pay with {provider}'),
+      label: splitBanner => splitBanner ? 'Nimiq Pay' : i18n.t('Pay with {provider}'),
       get tooltip() {
         return i18n.t('Nimiq Pay enables self-custodial payments with NIM wherever BTC Lightning is accepted.')
       },
@@ -48,9 +48,9 @@ const cardConfig: Record<CardType, CardConfig> = {
       icon: 'i-nimiq:logos-nimiq-pay-vertical',
       style: {
         theme: Theme.Dark,
-        bg: (splitBanner) => splitBanner ? '#265DD7' : 'rgb(var(--nq-gold))',
+        bg: splitBanner => splitBanner ? '#265DD7' : 'rgb(var(--nq-gold))',
         isDark: true,
-      }
+      },
     },
   },
   [Provider.NAKA]: {
@@ -67,7 +67,7 @@ const cardConfig: Record<CardType, CardConfig> = {
         theme: Theme.Dark,
         bg: () => '#293FFF',
         isDark: true,
-      }
+      },
     },
   },
   [Provider.Kurant]: {
@@ -106,7 +106,7 @@ const cardConfig: Record<CardType, CardConfig> = {
     cardStyle: defaultCardStyle,
     banner: {
       type: Provider.CryptopaymentLink,
-      label: (splitBanner) => splitBanner ? 'CPL' : i18n.t('Powered by {provider}'),
+      label: splitBanner => splitBanner ? 'CPL' : i18n.t('Powered by {provider}'),
       get tooltip() { return i18n.t('With CryptoPayment Link, you can quickly and easily receive cryptocurrency payments from your customers.') },
       tooltipCta: 'https://cplink.com',
       icon: 'i-providers:cpl',
@@ -114,7 +114,7 @@ const cardConfig: Record<CardType, CardConfig> = {
         bg: () => '#5371ff',
         theme: Theme.Dark,
         isDark: true,
-      }
+      },
     },
   },
   [Provider.Edenia]: {
@@ -191,7 +191,7 @@ export function getCardConfiguration(provider: Provider): Pick<MapLocation, 'car
     return {
       cardStyle: cardConfig[card.at(0)!].cardStyle,
       banner: card.map(type => cardConfig[type].banner) as [LocationBanner, LocationBanner],
-      splitBanner: true
+      splitBanner: true,
     }
   }
 
