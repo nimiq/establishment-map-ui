@@ -14,7 +14,7 @@ msgstr ""
 msgid "{count} locations"
 msgstr "{count} lieux"
 
-#: src/components/DesktopList.vue:22
+#: src/components/DesktopList.vue:26
 msgid "+ {count} grouped"
 msgstr "+ {count} groupé"
 
@@ -25,17 +25,17 @@ msgstr ""
 
 #: src/components/LocationCandidate.vue:15
 msgid "Add a location"
-msgstr ""
+msgstr "Ajouter un lieu"
 
 #: src/components/LocationCandidate.vue:27
 msgid "Add any location that has a Google Business profile."
-msgstr ""
+msgstr "Ajouter n'importe quel lieu disposant d'un profil Google Business."
 
 #: src/components/LocationCandidate.vue:4
 msgid "Add Crypto location"
 msgstr "Ajouter un emplacement Crypto"
 
-#: src/components/BasicInfoLocation.vue:4 src/components/SingleMarker.vue:11
+#: src/components/BasicInfoLocation.vue:4 src/components/SingleMarker.vue:15
 msgid "ATM"
 msgstr "Distributeur de billets"
 
@@ -55,7 +55,7 @@ msgstr ""
 "Binance Pay est un service de paiement en crypto-monnaie qui permet aux utilisateurs de payer avec des crypto-monnaies dans les magasins et\n"
 "les établissements qui acceptent Binance Pay."
 
-#: src/assets-dev/banner-assets.ts:93
+#: src/assets-dev/banner-assets.ts:108
 msgid ""
 "Bluecode is a payment method that allows secure transactions directly "
 "through the smartphone."
@@ -71,11 +71,11 @@ msgstr "BTC +50"
 msgid "Buy"
 msgstr "Acheter"
 
-#: src/components/BasicInfoLocation.vue:21
+#: src/components/BasicInfoLocation.vue:25
 msgid "Buy & sell crypto"
 msgstr "Acheter et vendre de la crypto-monnaie"
 
-#: src/components/BasicInfoLocation.vue:24
+#: src/components/BasicInfoLocation.vue:28
 msgid "Buy crypto only"
 msgstr "Achat de crypto-monnaie uniquement"
 
@@ -99,7 +99,7 @@ msgstr "Consultez {locationName} sur la Crypto Map de Nimiq"
 msgid "Close"
 msgstr "Fermer"
 
-#: src/assets-dev/banner-assets.ts:95
+#: src/assets-dev/banner-assets.ts:112
 msgid "Coming soon"
 msgstr "Bientôt disponible"
 
@@ -147,15 +147,15 @@ msgstr "Collecte des données"
 msgid "Decrease zoom"
 msgstr "Réduire l'agrandissement"
 
-#: src/components/Banner.vue:50
+#: src/components/Banner.vue:59
 msgid "Download on App Store"
 msgstr "Télécharger sur l'App Store"
 
-#: src/components/Banner.vue:52
+#: src/components/Banner.vue:63
 msgid "Download on Play Store"
 msgstr "Télécharger sur le Play Store"
 
-#: src/assets-dev/banner-assets.ts:131
+#: src/assets-dev/banner-assets.ts:156
 msgid ""
 "Edenia enables users to easily purchase cryptocurrencies through a network "
 "of ATMs"
@@ -259,7 +259,7 @@ msgstr ""
 "Kryptostadt Mannheim fait partie de l'initiative mondiale Cryptocity menée "
 "par Nimiq et ses partenaires."
 
-#: src/assets-dev/banner-assets.ts:82
+#: src/assets-dev/banner-assets.ts:95
 msgid ""
 "Kurant enables users to easily purchase cryptocurrencies through a network "
 "of ATMs."
@@ -267,7 +267,7 @@ msgstr ""
 "Kurant permet aux utilisateurs d'acheter facilement des crypto-monnaies par "
 "l'intermédiaire d'un réseau de distributeurs automatiques de billets."
 
-#: src/components/Banner.vue:44 src/components/InteractionBar.vue:44
+#: src/components/Banner.vue:52 src/components/InteractionBar.vue:44
 msgid "Learn more"
 msgstr "En savoir plus"
 
@@ -294,7 +294,7 @@ msgstr "Lieu disparu"
 msgid "Miscellaneous"
 msgstr "Autres"
 
-#: src/assets-dev/banner-assets.ts:62
+#: src/assets-dev/banner-assets.ts:70
 msgid ""
 "NAKA is a global payment network that enables merchants to accept crypto "
 "payments."
@@ -306,7 +306,7 @@ msgstr ""
 msgid "NAKA supports Binance Pay"
 msgstr "NAKA supporte Binance Pay"
 
-#: src/assets-dev/banner-assets.ts:44
+#: src/assets-dev/banner-assets.ts:48
 msgid ""
 "Nimiq Pay enables self-custodial payments with NIM wherever BTC Lightning is"
 " accepted."
@@ -327,24 +327,29 @@ msgstr "Aucune option"
 msgid "Nothing found."
 msgstr "Aucun résultat."
 
-#: src/components/DesktopList.vue:31
+#: src/components/DesktopList.vue:37
 msgid "Oops, no businesses around here"
 msgstr "Oups, aucun commerce dans le coin"
 
-#: src/components/MobileList.vue:36
+#: src/components/MobileList.vue:48
 msgid "Oops, no businesses around here."
 msgstr "Oups, il n'y a pas d'entreprise dans le coin."
 
-#: src/assets-dev/banner-assets.ts:141
+#: src/assets-dev/banner-assets.ts:168
 msgid ""
 "Opago offers fast and easy payments with Bitcoin via the Lightning Network"
 msgstr ""
+"Opago propose des paiements rapides et faciles en Bitcoin via le réseau "
+"Lightning"
 
-#: src/assets-dev/banner-assets.ts:157
+#: src/assets-dev/banner-assets.ts:186
 msgid ""
 "Osmo is a payment company powered by Bitcoin. Osmo helps you move money at "
 "the speed of light, anywhere in the world."
 msgstr ""
+"Osmo est une société de paiement alimentée par Bitcoin. Osmo vous permet de "
+"transférer de l'argent à la vitesse de la lumière, et ce, partout dans le "
+"monde."
 
 #: src/i18n/translations.ts:31
 msgid "Other"
@@ -361,16 +366,16 @@ msgstr ""
 "nous nous efforcions d'être précis, la collecte automatisée peut parfois "
 "entraîner des erreurs."
 
-#: src/assets-dev/banner-assets.ts:42
+#: src/assets-dev/banner-assets.ts:44
 msgid "Pay with {provider}"
 msgstr "Payez avec {provider}"
 
-#: src/components/LocationCard.vue:16
+#: src/components/LocationCard.vue:21
 msgid "Picture of {name}"
 msgstr "Image de {name}"
 
-#: src/assets-dev/banner-assets.ts:109 src/assets-dev/banner-assets.ts:60
-#: src/assets-dev/banner-assets.ts:91
+#: src/assets-dev/banner-assets.ts:105 src/assets-dev/banner-assets.ts:127
+#: src/assets-dev/banner-assets.ts:66
 msgid "Powered by {provider}"
 msgstr "Propulsé par {provider}"
 
@@ -378,7 +383,7 @@ msgstr "Propulsé par {provider}"
 msgid "Privacy Policy"
 msgstr "Politique de confidentialité"
 
-#: src/assets-dev/banner-assets.ts:129 src/assets-dev/banner-assets.ts:81
+#: src/assets-dev/banner-assets.ts:152 src/assets-dev/banner-assets.ts:91
 msgid "Register with {provider}"
 msgstr "S'inscrire sur {provider}"
 
@@ -407,7 +412,7 @@ msgstr "Rechercher sur la Crypto Map"
 msgid "Search Map"
 msgstr "Chercher sur la carte"
 
-#: src/components/SingleMarkersDesktop.vue:7
+#: src/components/SingleMarkersDesktop.vue:9
 msgid "See location details"
 msgstr "Voir les détails du lieu"
 
@@ -427,7 +432,7 @@ msgstr "Sélectionner une question"
 msgid "Sell"
 msgstr "Vendre"
 
-#: src/components/BasicInfoLocation.vue:23
+#: src/components/BasicInfoLocation.vue:27
 msgid "Sell crypto only"
 msgstr "Vente de crypto-monnaie uniquement"
 
@@ -439,7 +444,7 @@ msgstr "Partager"
 msgid "Shop"
 msgstr "Boutiques"
 
-#: src/components/DesktopList.story.vue:14 src/components/MobileList.vue:32
+#: src/components/DesktopList.story.vue:14 src/components/MobileList.vue:44
 msgid "Show list"
 msgstr "Afficher la liste"
 
@@ -456,7 +461,7 @@ msgid "Spend {CriptocityPoints} at unique locations in this area."
 msgstr ""
 "Dépensez vos {CriptocityPoints}dans des lieux uniques de cette région."
 
-#: src/components/LocationCard.vue:27
+#: src/components/LocationCard.vue:35
 msgid "Spend Cryptocity points here"
 msgstr "Dépensez vos points Cryptocity ici"
 
@@ -479,7 +484,7 @@ msgstr "Conditions d'utilisation"
 
 #: src/components/LocationCandidate.vue:9
 msgid "Thank you!"
-msgstr ""
+msgstr "Merci ! "
 
 #: src/assets-dev/cryptocities-assets.ts:38
 msgid ""
@@ -502,6 +507,8 @@ msgid ""
 "This app is brought to you by {Nimiq}. It is protected by reCAPTCHA and the "
 "Google {privacyPolicy} and {termsOfService} apply."
 msgstr ""
+"Cette application vous est proposée par{Nimiq}. Elle est protégée par "
+"reCAPTCHA, par la {privacyPolicy} et par les {termsOfService} de Google.  "
 
 #: src/components/LocationCandidate.vue:21
 msgid ""
@@ -547,7 +554,7 @@ msgstr ""
 "Nous travaillons stratégiquement avec des entreprises locales pour stimuler "
 "l'économie régionale grâce à l'utilisation innovante des cryptomonnaies."
 
-#: src/assets-dev/banner-assets.ts:110
+#: src/assets-dev/banner-assets.ts:130
 msgid ""
 "With CryptoPayment Link, you can quickly and easily receive cryptocurrency "
 "payments from your customers."
@@ -565,6 +572,6 @@ msgstr ""
 "la plus favorable aux cryptomonnaies en Europe, mais elle occupe également "
 "une place de choix dans les classements internationaux."
 
-#: src/components/MobileList.vue:36
+#: src/components/MobileList.vue:48
 msgid "Zoom in to see the list."
 msgstr "Zoomer pour voir la liste."

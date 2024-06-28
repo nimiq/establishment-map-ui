@@ -14,7 +14,8 @@ const listIsShown = ref(true)
       <div class="relative h-screen">
         <img src="@/assets-dev/stories/map-new-york-square.png" alt="" class="h-full object-cover">
         <div
-          class="pointer-events-none absolute bottom-6 left-6 top-6 h-max max-w-320 flex flex-col [&>*]:pointer-events-auto">
+          class="pointer-events-none absolute bottom-6 left-6 top-6 h-max max-w-320 flex flex-col [&>*]:pointer-events-auto"
+        >
           <div class="shadow-header rounded-2xl bg-white" style="mask-image: linear-gradient(white, white);">
             <InteractionBar />
             <DesktopList :singles="Object.values(locations)" :clusters="[]" :list-is-shown="listIsShown" />

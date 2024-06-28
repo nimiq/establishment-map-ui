@@ -4,18 +4,18 @@ import type { CardType, LocationBanner, MapLocation } from 'types'
 // @unocss-include
 
 // A dummy implementation of i18n.t that simply passes through the translation key. For usage for bannerLabels, for
-// which the actual translation is happening in i18n-t in ProviderBanner, and for which a pre-translation here via the
+// which the actual translation is happening in i18n-t in Banner, and for which a pre-translation here via the
 // actual i18n.t would lead to the translation used as translation key there, being an unknown translation key. Thus, we
-// simply pass the original translation key, such that it can get handled in ProviderBanner's i18n-t. Note that on usage
+// simply pass the original translation key, such that it can get handled in Banner's i18n-t. Note that on usage
 // i18nKeyPassThrough must be copied into a variable i18n, to be callable as i18n.t, such that the source string /
 // translation key is extractable via i18n:extract and such that the translation key is properly replaced with an
 // associated simple index in production builds via the i18n optimizer.
-const i18n = {
+const i18nKeyPassThrough = {
   t: (key: string) => key,
 }
 
 // Note that bannerLabel is defined as a getter to be able to use the i18nKeyPassThrough, as the actual translation
-// for bannerLabel is happening in i18n-t in ProviderBanner, and bannerTooltip is defined as a getter to not be
+// for bannerLabel is happening in i18n-t in Banner, and bannerTooltip is defined as a getter to not be
 // constant but re-computed on language changes. bannerLabel can include a {provider} placeholder which gets handled
 // in i18n-t in ProviderBanner.
 type CardConfig = Pick<MapLocation, 'banner' | 'cardStyle'>
@@ -39,7 +39,11 @@ const cardConfig: Record<CardType, CardConfig> = {
     cardStyle: defaultCardStyle,
     banner: {
       type: 'Nimiq-Pay',
-      label: splitBanner => splitBanner ? 'Nimiq Pay' : i18n.t('Pay with {provider}'),
+      shortLabel: 'Nimiq Pay',
+      get label() {
+        const i18n = i18nKeyPassThrough
+        return i18n.t('Pay with {provider}')
+      },
       get tooltip() {
         return i18n.t('Nimiq Pay enables self-custodial payments with NIM wherever BTC Lightning is accepted.')
       },
@@ -57,7 +61,10 @@ const cardConfig: Record<CardType, CardConfig> = {
     cardStyle: defaultCardStyle,
     banner: {
       type: Provider.NAKA,
-      label: () => i18n.t('Powered by {provider}'),
+      get label() {
+        const i18n = i18nKeyPassThrough
+        return i18n.t('Powered by {provider}')
+      },
       get tooltip() {
         return i18n.t('NAKA is a global payment network that enables merchants to accept crypto payments.')
       },
@@ -78,8 +85,13 @@ const cardConfig: Record<CardType, CardConfig> = {
     },
     banner: {
       type: Provider.Kurant,
-      label: () => i18n.t('Register with {provider}'),
-      get tooltip() { return i18n.t('Kurant enables users to easily purchase cryptocurrencies through a network of ATMs.') },
+      get label() {
+        const i18n = i18nKeyPassThrough
+        return i18n.t('Register with {provider}')
+      },
+      get tooltip() {
+        return i18n.t('Kurant enables users to easily purchase cryptocurrencies through a network of ATMs.')
+      },
       tooltipCta: 'https://kurant.net',
       icon: 'i-providers:kurant',
     },
@@ -88,11 +100,17 @@ const cardConfig: Record<CardType, CardConfig> = {
     cardStyle: defaultCardStyle,
     banner: {
       type: Provider.Bluecode,
-      label: () => i18n.t('Powered by {provider}'),
+      get label() {
+        const i18n = i18nKeyPassThrough
+        return i18n.t('Powered by {provider}')
+      },
       get tooltip() {
         return i18n.t('Bluecode is a payment method that allows secure transactions directly through the smartphone.')
       },
-      get tooltipLabel() { return i18n.t('Coming soon') },
+      get tooltipLabel() {
+        const i18n = i18nKeyPassThrough
+        return i18n.t('Coming soon')
+      },
       tooltipCta: 'https://bluecode.com',
       style: {
         bg: () => '#004899',
@@ -106,8 +124,14 @@ const cardConfig: Record<CardType, CardConfig> = {
     cardStyle: defaultCardStyle,
     banner: {
       type: Provider.CryptopaymentLink,
-      label: splitBanner => splitBanner ? 'CPL' : i18n.t('Powered by {provider}'),
-      get tooltip() { return i18n.t('With CryptoPayment Link, you can quickly and easily receive cryptocurrency payments from your customers.') },
+      get label() {
+        const i18n = i18nKeyPassThrough
+        return i18n.t('Powered by {provider}')
+      },
+      shortLabel: 'CPL',
+      get tooltip() {
+        return i18n.t('With CryptoPayment Link, you can quickly and easily receive cryptocurrency payments from your customers.')
+      },
       tooltipCta: 'https://cplink.com',
       icon: 'i-providers:cpl',
       style: {
@@ -126,8 +150,12 @@ const cardConfig: Record<CardType, CardConfig> = {
     },
     banner: {
       type: Provider.Edenia,
-      label: () => i18n.t('Register with {provider}'),
+      get label() {
+        const i18n = i18nKeyPassThrough
+        return i18n.t('Register with {provider}')
+      },
       get tooltip() {
+        const i18n = i18nKeyPassThrough
         return i18n.t('Edenia enables users to easily purchase cryptocurrencies through a network of ATMs')
       },
       tooltipCta: 'https://edenia.com/',
@@ -137,8 +165,11 @@ const cardConfig: Record<CardType, CardConfig> = {
     cardStyle: defaultCardStyle,
     banner: {
       type: Provider.Opago,
-      label: () => Provider.Opago,
-      tooltip: i18n.t('Opago offers fast and easy payments with Bitcoin via the Lightning Network'),
+      shortLabel: Provider.Opago,
+      get tooltip() {
+        const i18n = i18nKeyPassThrough
+        return i18n.t('Opago offers fast and easy payments with Bitcoin via the Lightning Network')
+      },
       tooltipCta: 'https://opago-pay.com/',
       icon: 'i-providers:opago',
       style: {
@@ -152,8 +183,9 @@ const cardConfig: Record<CardType, CardConfig> = {
     cardStyle: defaultCardStyle,
     banner: {
       type: Provider.Osmo,
-      label: () => Provider.Osmo,
+      shortLabel: Provider.Osmo,
       get tooltip() {
+        const i18n = i18nKeyPassThrough
         return i18n.t('Osmo is a payment company powered by Bitcoin. Osmo helps you move money at the speed of light, anywhere in the world.')
       },
       tooltipCta: 'https://en.osmowallet.com/',

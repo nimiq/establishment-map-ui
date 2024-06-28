@@ -15,7 +15,7 @@ msgstr ""
 msgid "{count} locations"
 msgstr "{count} Akzeptanzstellen"
 
-#: src/components/DesktopList.vue:22
+#: src/components/DesktopList.vue:26
 msgid "+ {count} grouped"
 msgstr "+{count} gruppiert"
 
@@ -35,7 +35,7 @@ msgstr ""
 msgid "Add Crypto location"
 msgstr "Kryptoakzeptanzstelle hinzufügen"
 
-#: src/components/BasicInfoLocation.vue:4 src/components/SingleMarker.vue:11
+#: src/components/BasicInfoLocation.vue:4 src/components/SingleMarker.vue:15
 msgid "ATM"
 msgstr "Geldautomat"
 
@@ -55,7 +55,7 @@ msgstr ""
 "Binance Pay ist ein Kryptowährungszahlungsdienst, der es Nutzern ermöglicht, mit Krypto in Geschäften zu zahlen und\n"
 "Geschäfte die Binance Pay akzeptieren."
 
-#: src/assets-dev/banner-assets.ts:93
+#: src/assets-dev/banner-assets.ts:108
 msgid ""
 "Bluecode is a payment method that allows secure transactions directly "
 "through the smartphone."
@@ -71,11 +71,11 @@ msgstr "BTC +50"
 msgid "Buy"
 msgstr "Kaufen"
 
-#: src/components/BasicInfoLocation.vue:21
+#: src/components/BasicInfoLocation.vue:25
 msgid "Buy & sell crypto"
 msgstr "Kaufe & verkaufe Krypto"
 
-#: src/components/BasicInfoLocation.vue:24
+#: src/components/BasicInfoLocation.vue:28
 msgid "Buy crypto only"
 msgstr "Kaufe Krypto"
 
@@ -99,7 +99,7 @@ msgstr "Schau dir {locationName} auf Nimiqs Krypto-Karte an."
 msgid "Close"
 msgstr "Schließen"
 
-#: src/assets-dev/banner-assets.ts:95
+#: src/assets-dev/banner-assets.ts:112
 msgid "Coming soon"
 msgstr "Bald verfügbar"
 
@@ -147,15 +147,15 @@ msgstr "Daten Sammlung"
 msgid "Decrease zoom"
 msgstr "Verkleinern"
 
-#: src/components/Banner.vue:50
+#: src/components/Banner.vue:59
 msgid "Download on App Store"
 msgstr "Im App Store herunterladen"
 
-#: src/components/Banner.vue:52
+#: src/components/Banner.vue:63
 msgid "Download on Play Store"
 msgstr "Im Play Store herunterladen"
 
-#: src/assets-dev/banner-assets.ts:131
+#: src/assets-dev/banner-assets.ts:156
 msgid ""
 "Edenia enables users to easily purchase cryptocurrencies through a network "
 "of ATMs"
@@ -258,7 +258,7 @@ msgstr ""
 "Kryptostadt Mannheim ist Teil der globalen Cryptocity-Initiative, die von "
 "Nimiq und seinen Partnern geleitet wird."
 
-#: src/assets-dev/banner-assets.ts:82
+#: src/assets-dev/banner-assets.ts:95
 msgid ""
 "Kurant enables users to easily purchase cryptocurrencies through a network "
 "of ATMs."
@@ -266,7 +266,7 @@ msgstr ""
 "Kurant ermöglicht es Benutzern, einfach über ein Netzwerk von Geldautomaten "
 "Kryptowährungen zu kaufen."
 
-#: src/components/Banner.vue:44 src/components/InteractionBar.vue:44
+#: src/components/Banner.vue:52 src/components/InteractionBar.vue:44
 msgid "Learn more"
 msgstr "Mehr Informationen"
 
@@ -293,7 +293,7 @@ msgstr "Geschäft existiert nicht mehr"
 msgid "Miscellaneous"
 msgstr "Sonstiges"
 
-#: src/assets-dev/banner-assets.ts:62
+#: src/assets-dev/banner-assets.ts:70
 msgid ""
 "NAKA is a global payment network that enables merchants to accept crypto "
 "payments."
@@ -305,7 +305,7 @@ msgstr ""
 msgid "NAKA supports Binance Pay"
 msgstr "NAKA unterstützt Binance Pay"
 
-#: src/assets-dev/banner-assets.ts:44
+#: src/assets-dev/banner-assets.ts:48
 msgid ""
 "Nimiq Pay enables self-custodial payments with NIM wherever BTC Lightning is"
 " accepted."
@@ -326,20 +326,20 @@ msgstr "Keine Optionen"
 msgid "Nothing found."
 msgstr "Nichts gefunden."
 
-#: src/components/DesktopList.vue:31
+#: src/components/DesktopList.vue:37
 msgid "Oops, no businesses around here"
 msgstr "Oops, hier gibt es keine Akzeptanzstelle"
 
-#: src/components/MobileList.vue:36
+#: src/components/MobileList.vue:48
 msgid "Oops, no businesses around here."
 msgstr "Oops, hier gibt es keine Akzeptanzstelle."
 
-#: src/assets-dev/banner-assets.ts:141
+#: src/assets-dev/banner-assets.ts:168
 msgid ""
 "Opago offers fast and easy payments with Bitcoin via the Lightning Network"
 msgstr ""
 
-#: src/assets-dev/banner-assets.ts:157
+#: src/assets-dev/banner-assets.ts:186
 msgid ""
 "Osmo is a payment company powered by Bitcoin. Osmo helps you move money at "
 "the speed of light, anywhere in the world."
@@ -360,16 +360,16 @@ msgstr ""
 "Obwohl wir nach Genauigkeit streben, kann die automatisierte Sammlung "
 "manchmal zu Fehlern führen."
 
-#: src/assets-dev/banner-assets.ts:42
+#: src/assets-dev/banner-assets.ts:44
 msgid "Pay with {provider}"
 msgstr "Zahle mit {provider}"
 
-#: src/components/LocationCard.vue:16
+#: src/components/LocationCard.vue:21
 msgid "Picture of {name}"
 msgstr "Bild von {name}"
 
-#: src/assets-dev/banner-assets.ts:109 src/assets-dev/banner-assets.ts:60
-#: src/assets-dev/banner-assets.ts:91
+#: src/assets-dev/banner-assets.ts:105 src/assets-dev/banner-assets.ts:127
+#: src/assets-dev/banner-assets.ts:66
 msgid "Powered by {provider}"
 msgstr "Powered by {provider}"
 
@@ -377,7 +377,7 @@ msgstr "Powered by {provider}"
 msgid "Privacy Policy"
 msgstr "Datenschutzrichtlinie"
 
-#: src/assets-dev/banner-assets.ts:129 src/assets-dev/banner-assets.ts:81
+#: src/assets-dev/banner-assets.ts:152 src/assets-dev/banner-assets.ts:91
 msgid "Register with {provider}"
 msgstr "Registriere dich bei {provider}"
 
@@ -406,7 +406,7 @@ msgstr "Durchsuche die Krypto Karte"
 msgid "Search Map"
 msgstr "Map durchsuchen"
 
-#: src/components/SingleMarkersDesktop.vue:7
+#: src/components/SingleMarkersDesktop.vue:9
 msgid "See location details"
 msgstr "Details über Akzeptanzstelle"
 
@@ -426,7 +426,7 @@ msgstr "Was ist das Problem?"
 msgid "Sell"
 msgstr "Verkaufen"
 
-#: src/components/BasicInfoLocation.vue:23
+#: src/components/BasicInfoLocation.vue:27
 msgid "Sell crypto only"
 msgstr "Nur Krypto Verkauf"
 
@@ -438,7 +438,7 @@ msgstr "Teilen"
 msgid "Shop"
 msgstr "Geschäft"
 
-#: src/components/DesktopList.story.vue:14 src/components/MobileList.vue:32
+#: src/components/DesktopList.story.vue:14 src/components/MobileList.vue:44
 msgid "Show list"
 msgstr "Liste anzeigen"
 
@@ -456,7 +456,7 @@ msgstr ""
 "Bezahle mit {CriptocityPoints}in ausgewählten Akzeptanzstellen aus der "
 "Umgebung."
 
-#: src/components/LocationCard.vue:27
+#: src/components/LocationCard.vue:35
 msgid "Spend Cryptocity points here"
 msgstr "Bezahle hier mit Cryptocity Punkten"
 
@@ -547,7 +547,7 @@ msgstr ""
 "Wir arbeiten strategisch mit lokalen Unternehmen zusammen, um die regionale "
 "Wirtschaft durch den innovativen Einsatz von Kryptowährung anzukurbeln."
 
-#: src/assets-dev/banner-assets.ts:110
+#: src/assets-dev/banner-assets.ts:130
 msgid ""
 "With CryptoPayment Link, you can quickly and easily receive cryptocurrency "
 "payments from your customers."
@@ -565,6 +565,6 @@ msgstr ""
 "kryptofreundlichste Stadt Europas da, sondern sichert sich auch einen "
 "prominenten Platz in internationalen Rankings."
 
-#: src/components/MobileList.vue:36
+#: src/components/MobileList.vue:48
 msgid "Zoom in to see the list."
 msgstr "Vergrößern um die Liste zu sehen."

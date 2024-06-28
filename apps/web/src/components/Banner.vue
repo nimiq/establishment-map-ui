@@ -14,21 +14,16 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ banner: Locatio
 <template>
   <footer relative>
     <DefineTemplate v-slot="{ banner }">
-      <div
-        :class="banner.label(location.splitBanner) ? 'h-64' : 'h-36'" relative flex="~ items-center"
-        text="white inverted:darkblue"
-        :style="{ backgroundColor: banner.style?.bg(location.splitBanner) || 'transparent' }"
-      >
-        <LocationCardBg v-if="!location.isAtm && banner.label(location.splitBanner)" :location :banner />
+      <div :class="banner.label ? 'h-64' : 'h-36'" relative flex="~ items-center" text="white inverted:darkblue"
+        :style="{ backgroundColor: banner.style?.bg?.(location.splitBanner) || 'transparent' }">
+        <LocationCardBg v-if="!location.isAtm && banner.label" :location :banner />
 
-        <div
-          v-if="banner.label(location.splitBanner)" flex="~ items-center gap-8" pt-6 text-12
-          :class="{ 'pl-24 pr-72': !location.splitBanner, 'pl-16 pr-64': location.splitBanner }"
-        >
+        <div v-if="banner.label || banner.shortLabel" flex="~ items-center gap-8" pt-6 text-12
+          :class="{ 'pl-24 pr-72': !location.splitBanner, 'pl-16 pr-64': location.splitBanner }">
           <p v-if="location.splitBanner" font-bold>
-            {{ banner.label(location.splitBanner) }}
+            {{ banner.shortLabel }}
           </p>
-          <i18n-t v-else :keypath="banner.label(location.splitBanner)" tag="p">
+          <i18n-t v-else :keypath="banner.label!" tag="p">
             <!-- The name in the label can optionally be written bold by including a {provider} placeholder -->
             <template #provider>
               <b>{{ handleProviderPlaceholder(location, banner) }}</b>
@@ -58,23 +53,17 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ banner: Locatio
                       {{ banner.tooltip }}
                     </p>
 
-                    <a
-                      v-if="banner.tooltipCta" :href="banner.tooltipCta" target="_blank" rel="noopener noreferrer"
-                      un-text="14 neutral-600" mt-12 block arrow before:op-80 flex="~ items-center"
-                    >
+                    <a v-if="banner.tooltipCta" :href="banner.tooltipCta" target="_blank" rel="noopener noreferrer"
+                      un-text="14 neutral-600" mt-12 block arrow before:op-80 flex="~ items-center">
                       {{ $t('Learn more') }}
                     </a>
 
                     <template v-if="banner.appStore || banner.googlePlay">
                       <div flex="~ items-center gap-16" mt-16 text-45>
-                        <a
-                          v-if="banner.appStore" :href="banner.appStore" target="_blank" rel="noopener noreferrer"
-                          :aria-label="$t('Download on App Store')" i-apps:app-store flex-1
-                        />
-                        <a
-                          v-if="banner.googlePlay" :href="banner.googlePlay" target="_blank" rel="noopener noreferrer"
-                          :aria-label="$t('Download on Play Store')" i-apps:google-play flex-1
-                        />
+                        <a v-if="banner.appStore" :href="banner.appStore" target="_blank" rel="noopener noreferrer"
+                          :aria-label="$t('Download on App Store')" i-apps:app-store flex-1 />
+                        <a v-if="banner.googlePlay" :href="banner.googlePlay" target="_blank" rel="noopener noreferrer"
+                          :aria-label="$t('Download on Play Store')" i-apps:google-play flex-1 />
                       </div>
                     </template>
                   </div>
@@ -91,14 +80,10 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ banner: Locatio
     </DefineTemplate>
 
     <div v-if="Array.isArray(location.banner)" grid="~ cols-[1fr_1fr]">
-      <ReuseTemplate
-        :banner="(location.banner as [LocationBanner, LocationBanner]).at(0)!"
-        :class="{ 'rounded-bl-12': !isMobile }" style="--bottom-radius-bl: 0"
-      />
-      <ReuseTemplate
-        :banner="(location.banner as [LocationBanner, LocationBanner]).at(1)!"
-        :class="{ 'rounded-br-12': !isMobile }" style="--bottom-radius-br: 0"
-      />
+      <ReuseTemplate :banner="(location.banner as [LocationBanner, LocationBanner]).at(0)!"
+        :class="{ 'rounded-bl-12': !isMobile }" style="--bottom-radius-bl: 0" />
+      <ReuseTemplate :banner="(location.banner as [LocationBanner, LocationBanner]).at(1)!"
+        :class="{ 'rounded-br-12': !isMobile }" style="--bottom-radius-br: 0" />
     </div>
     <ReuseTemplate v-else :banner="location.banner as LocationBanner" :class="{ 'rounded-b-12': !isMobile }" />
   </footer>

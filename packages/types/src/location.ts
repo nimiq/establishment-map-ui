@@ -26,9 +26,11 @@ export type CardType = Provider.Bluecode | Provider.Edenia | Provider.Kurant | P
 
 export type LocationBanner = {
   type: Exclude<CardType, 'Default'>
-  label: (splitBanner: boolean) => string
+
   // If the banner is a split banner, we need to provide the shortLabel
+  label?: string
   shortLabel?: string
+
   tooltip: string
   tooltipCta?: string
   tooltipLabel?: string

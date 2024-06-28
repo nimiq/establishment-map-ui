@@ -14,7 +14,7 @@ msgstr ""
 msgid "{count} locations"
 msgstr "{count} locaties"
 
-#: src/components/DesktopList.vue:22
+#: src/components/DesktopList.vue:26
 msgid "+ {count} grouped"
 msgstr "+ {count} gegroepeerd"
 
@@ -34,7 +34,7 @@ msgstr ""
 msgid "Add Crypto location"
 msgstr "Crypto locatie toevoegen "
 
-#: src/components/BasicInfoLocation.vue:4 src/components/SingleMarker.vue:11
+#: src/components/BasicInfoLocation.vue:4 src/components/SingleMarker.vue:15
 msgid "ATM"
 msgstr "Geldautomaat"
 
@@ -54,7 +54,7 @@ msgstr ""
 "Binance Pay is een cryptocurrency-betalingsdienst waarmee gebruikers met crypto kunnen betalen bij winkels en \n"
 "instellingen die Binance Pay ondersteunen."
 
-#: src/assets-dev/banner-assets.ts:93
+#: src/assets-dev/banner-assets.ts:108
 msgid ""
 "Bluecode is a payment method that allows secure transactions directly "
 "through the smartphone."
@@ -70,11 +70,11 @@ msgstr "BTC +50"
 msgid "Buy"
 msgstr "Kopen"
 
-#: src/components/BasicInfoLocation.vue:21
+#: src/components/BasicInfoLocation.vue:25
 msgid "Buy & sell crypto"
 msgstr "Koop & verkoop cryptovaluta"
 
-#: src/components/BasicInfoLocation.vue:24
+#: src/components/BasicInfoLocation.vue:28
 msgid "Buy crypto only"
 msgstr "Alleen cryptovaluta kopen"
 
@@ -98,7 +98,7 @@ msgstr "Bekijk {locationName} op Nimiq's Crypto Map"
 msgid "Close"
 msgstr "Sluiten"
 
-#: src/assets-dev/banner-assets.ts:95
+#: src/assets-dev/banner-assets.ts:112
 msgid "Coming soon"
 msgstr "Binnenkort beschikbaar"
 
@@ -146,15 +146,15 @@ msgstr "Gegevensverzameling"
 msgid "Decrease zoom"
 msgstr "Uitzoomen"
 
-#: src/components/Banner.vue:50
+#: src/components/Banner.vue:59
 msgid "Download on App Store"
 msgstr "Download in de App Store"
 
-#: src/components/Banner.vue:52
+#: src/components/Banner.vue:63
 msgid "Download on Play Store"
 msgstr "Download in de Play Store"
 
-#: src/assets-dev/banner-assets.ts:131
+#: src/assets-dev/banner-assets.ts:156
 msgid ""
 "Edenia enables users to easily purchase cryptocurrencies through a network "
 "of ATMs"
@@ -249,7 +249,7 @@ msgstr ""
 "Kryptostadt Mannheim maakt deel uit van het wereldwijde Cryptocity "
 "Initiatief onder leiding van Nimiq en zijn partners."
 
-#: src/assets-dev/banner-assets.ts:82
+#: src/assets-dev/banner-assets.ts:95
 msgid ""
 "Kurant enables users to easily purchase cryptocurrencies through a network "
 "of ATMs."
@@ -257,7 +257,7 @@ msgstr ""
 "Met Kurant kunnen gebruikers eenvoudig cryptocurrencies kopen via een "
 "netwerk van geldautomaten."
 
-#: src/components/Banner.vue:44 src/components/InteractionBar.vue:44
+#: src/components/Banner.vue:52 src/components/InteractionBar.vue:44
 msgid "Learn more"
 msgstr "Meer informatie"
 
@@ -284,7 +284,7 @@ msgstr "Locatie bestaat niet meer"
 msgid "Miscellaneous"
 msgstr "Diversen"
 
-#: src/assets-dev/banner-assets.ts:62
+#: src/assets-dev/banner-assets.ts:70
 msgid ""
 "NAKA is a global payment network that enables merchants to accept crypto "
 "payments."
@@ -296,7 +296,7 @@ msgstr ""
 msgid "NAKA supports Binance Pay"
 msgstr ""
 
-#: src/assets-dev/banner-assets.ts:44
+#: src/assets-dev/banner-assets.ts:48
 msgid ""
 "Nimiq Pay enables self-custodial payments with NIM wherever BTC Lightning is"
 " accepted."
@@ -317,20 +317,20 @@ msgstr ""
 msgid "Nothing found."
 msgstr "Geen resultaten."
 
-#: src/components/DesktopList.vue:31
+#: src/components/DesktopList.vue:37
 msgid "Oops, no businesses around here"
 msgstr "Oeps, er zijn hier geen bedrijven"
 
-#: src/components/MobileList.vue:36
+#: src/components/MobileList.vue:48
 msgid "Oops, no businesses around here."
 msgstr ""
 
-#: src/assets-dev/banner-assets.ts:141
+#: src/assets-dev/banner-assets.ts:168
 msgid ""
 "Opago offers fast and easy payments with Bitcoin via the Lightning Network"
 msgstr ""
 
-#: src/assets-dev/banner-assets.ts:157
+#: src/assets-dev/banner-assets.ts:186
 msgid ""
 "Osmo is a payment company powered by Bitcoin. Osmo helps you move money at "
 "the speed of light, anywhere in the world."
@@ -347,16 +347,16 @@ msgid ""
 "automated collection can sometimes result in errors."
 msgstr ""
 
-#: src/assets-dev/banner-assets.ts:42
+#: src/assets-dev/banner-assets.ts:44
 msgid "Pay with {provider}"
 msgstr "Betaal met {provider}"
 
-#: src/components/LocationCard.vue:16
+#: src/components/LocationCard.vue:21
 msgid "Picture of {name}"
 msgstr "Foto van {name}"
 
-#: src/assets-dev/banner-assets.ts:109 src/assets-dev/banner-assets.ts:60
-#: src/assets-dev/banner-assets.ts:91
+#: src/assets-dev/banner-assets.ts:105 src/assets-dev/banner-assets.ts:127
+#: src/assets-dev/banner-assets.ts:66
 msgid "Powered by {provider}"
 msgstr "Mogelijk gemaakt door {provider}"
 
@@ -364,7 +364,7 @@ msgstr "Mogelijk gemaakt door {provider}"
 msgid "Privacy Policy"
 msgstr "Privacybeleid"
 
-#: src/assets-dev/banner-assets.ts:129 src/assets-dev/banner-assets.ts:81
+#: src/assets-dev/banner-assets.ts:152 src/assets-dev/banner-assets.ts:91
 msgid "Register with {provider}"
 msgstr "Registreer bij {provider}"
 
@@ -393,7 +393,7 @@ msgstr ""
 msgid "Search Map"
 msgstr "Zoek op de kaart"
 
-#: src/components/SingleMarkersDesktop.vue:7
+#: src/components/SingleMarkersDesktop.vue:9
 msgid "See location details"
 msgstr "Bekijk locatie details"
 
@@ -413,7 +413,7 @@ msgstr "Selecteer probleem"
 msgid "Sell"
 msgstr "Verkopen"
 
-#: src/components/BasicInfoLocation.vue:23
+#: src/components/BasicInfoLocation.vue:27
 msgid "Sell crypto only"
 msgstr "Alleen cryptovaluta verkopen"
 
@@ -425,7 +425,7 @@ msgstr "Deel"
 msgid "Shop"
 msgstr "Winkel"
 
-#: src/components/DesktopList.story.vue:14 src/components/MobileList.vue:32
+#: src/components/DesktopList.story.vue:14 src/components/MobileList.vue:44
 msgid "Show list"
 msgstr "Toon lijst"
 
@@ -441,7 +441,7 @@ msgstr "Er is iets fout gegaan"
 msgid "Spend {CriptocityPoints} at unique locations in this area."
 msgstr ""
 
-#: src/components/LocationCard.vue:27
+#: src/components/LocationCard.vue:35
 msgid "Spend Cryptocity points here"
 msgstr ""
 
@@ -528,7 +528,7 @@ msgstr ""
 "We werken strategisch samen met lokale bedrijven om de regionale economie te"
 " stimuleren door het innovatieve gebruik van cryptocurrency."
 
-#: src/assets-dev/banner-assets.ts:110
+#: src/assets-dev/banner-assets.ts:130
 msgid ""
 "With CryptoPayment Link, you can quickly and easily receive cryptocurrency "
 "payments from your customers."
@@ -546,6 +546,6 @@ msgstr ""
 "crypto-vriendelijke stad van Europa, maar verzekert het ook een prominente "
 "positie op internationale ranglijsten."
 
-#: src/components/MobileList.vue:36
+#: src/components/MobileList.vue:48
 msgid "Zoom in to see the list."
 msgstr ""
