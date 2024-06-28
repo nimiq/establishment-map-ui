@@ -199,31 +199,34 @@ const cardConfig: Record<CardType, CardConfig> = {
   },
 }
 
-const cardMap: Record<Provider, CardType | [CardType, CardType]> = {
-  [Provider.AcceptLightning]: 'Nimiq-Pay',
-  [Provider.BtcMap]: 'Nimiq-Pay',
-  [Provider.Bridge2Bitcoin]: 'Nimiq-Pay',
-  [Provider.Coinmap]: 'Nimiq-Pay',
+const cardMap: Record<Provider, CardType> = {
   [Provider.NAKA]: Provider.NAKA,
   [Provider.Kurant]: Provider.Kurant,
   [Provider.Bluecode]: Provider.Bluecode,
-  [Provider.CryptopaymentLink]: [Provider.CryptopaymentLink, 'Nimiq-Pay'],
+  [Provider.CryptopaymentLink]: Provider.CryptopaymentLink,
   [Provider.Edenia]: Provider.Edenia,
   [Provider.DefaultAtm]: Provider.DefaultAtm,
+  [Provider.AcceptLightning]: 'Default',
+  [Provider.BtcMap]: 'Default',
+  [Provider.Bridge2Bitcoin]: 'Default',
+  [Provider.Coinmap]: 'Default',
   [Provider.DefaultShop]: 'Default',
   [Provider.BitcoinJungle]: 'Default',
-  [Provider.Opago]: [Provider.Opago, 'Nimiq-Pay'],
-  [Provider.Osmo]: [Provider.Osmo, 'Nimiq-Pay'],
+  [Provider.Opago]: Provider.Opago,
+  [Provider.Osmo]: Provider.Osmo,
 } as const
 
 export function getCardConfiguration({ provider: _provider, accepts }: Pick<MapLocation, 'provider' | 'accepts'>): Pick<MapLocation, 'cardStyle' | 'banner' | 'splitBanner'> {
-  // if location accepts LBTC and has no provider yet, then display Nimiq Pay
-  const card = accepts.includes(Currency.LBTC) && [Provider.DefaultShop, Provider.BitcoinJungle].includes(_provider) ? 'Nimiq-Pay' : cardMap[_provider]
+  let card = cardMap[_provider]
 
-  if (Array.isArray(card) && card.length === 2) {
+  if (card === 'Default' && accepts.includes(Currency.LBTC))
+    return { ...cardConfig['Nimiq-Pay'], splitBanner: false }
+
+  if (accepts.includes(Currency.LBTC)) {
+    const { cardStyle, banner } = cardConfig[card]
     return {
-      cardStyle: cardConfig[card.at(0)!].cardStyle,
-      banner: card.map(type => cardConfig[type].banner) as [LocationBanner, LocationBanner],
+      cardStyle,
+      banner: [banner!, cardConfig['Nimiq-Pay'].banner!] as [LocationBanner, LocationBanner],
       splitBanner: true,
     }
   }
