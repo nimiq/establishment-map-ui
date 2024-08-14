@@ -24,7 +24,7 @@ export enum LocationLink {
 // The different Banner designs
 export type CardType = Provider.Bluecode | Provider.Edenia | Provider.Kurant | Provider.NAKA | Provider.Edenia | 'Nimiq-Pay' | Provider.DefaultAtm | Provider.CryptopaymentLink | Provider.Opago | Provider.Osmo | 'Default'
 
-export type LocationBanner = {
+export interface LocationBanner {
   type: Exclude<CardType, 'Default'>
 
   // If the banner is a split banner, we need to provide the shortLabel

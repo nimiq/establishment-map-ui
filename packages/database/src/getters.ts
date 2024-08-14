@@ -75,7 +75,12 @@ export async function getCryptocities(dbArgs: DatabaseAuthArgs | DatabaseAnonArg
   const query = new URLSearchParams({ nelat: neLat.toString(), nelng: neLng.toString(), swlat: swLat.toString(), swlng: swLng.toString() })
   excludedCities.forEach(city => query.append('excluded_cities', city))
   query.append('excluded_cities', `{${excludedCities.join(',')}}`)
-  return await fetchDb<Returns[AnonReadDbFunction.GetCryptocities]>(AnonReadDbFunction.GetCryptocities, dbArgs, { query })
+  const res = await fetchDb<Returns[AnonReadDbFunction.GetCryptocities]>(AnonReadDbFunction.GetCryptocities, dbArgs, { query })
+  return res?.map((cryptocity) => {
+    const locationsCount = (cryptocity as any).locations_count as string
+    const showCardAtZoom = (cryptocity as any).show_card_at_zoom as string
+    return { ...cryptocity, locationsCount: Number.parseInt(locationsCount), showCardAtZoom: Number.parseInt(showCardAtZoom), locations_count: undefined, show_card_at_zoom: undefined }
+  })
 }
 
 export async function getStats(dbArgs: DatabaseAuthArgs | DatabaseAuthenticateUserArgs) {
