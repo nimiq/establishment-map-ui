@@ -1,3 +1,5 @@
+import { env } from 'node:process'
+
 // @ts-expect-error webpack-i18n-tools does currently not expose types
 // import poLoader from 'webpack-i18n-tools/loader/rollup'
 
@@ -15,41 +17,41 @@ export default defineNuxtConfig({
   },
 
   build: {
-    transpile: [/unplugin-vue-router\/runtime/]
+    transpile: [/unplugin-vue-router\/runtime/],
   },
 
   devtools: { enabled: true },
 
   modules: [
-    "@pinia/nuxt",
-    "@vueuse/nuxt",
-    "@unocss/nuxt",
-    "@nuxt/eslint",
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    '@unocss/nuxt',
+    '@nuxt/eslint',
     // "@nuxtjs/i18n",
     'radix-vue/nuxt',
     '@nuxtjs/supabase',
   ],
 
   supabase: {
-    redirect: false
+    redirect: false,
   },
 
   runtimeConfig: {
-    supabaseUrl: process.env.SUPABASE_URL,
-    supabaseKey: process.env.SUPABASE_KEY,
-    supabaseAdminEmail: process.env.SUPABASE_ADMIN_EMAIL,
-    supabaseAdminPassword: process.env.SUPABASE_ADMIN_PASSWORD,
-  
+    supabaseUrl: env.SUPABASE_URL,
+    supabaseKey: env.SUPABASE_KEY,
+    supabaseAdminEmail: env.SUPABASE_ADMIN_EMAIL,
+    supabaseAdminPassword: env.SUPABASE_ADMIN_PASSWORD,
+
     public: {
-      googleMapKey: process.env.NUXT_GOOGLE_MAP_KEY,
-      databaseUrl: process.env.NUXT_DATABASE_URL,
-      databaseKey: process.env.NUXT_DATABASE_KEY,
-      slackNewCandidateUrl: process.env.NUXT_SLACK_NEW_CANDIDATE_URL,
-      slackReportUrl: process.env.NUXT_SLACK_REPORT_URL,
+      googleMapKey: env.NUXT_GOOGLE_MAP_KEY,
+      databaseUrl: env.NUXT_DATABASE_URL,
+      databaseKey: env.NUXT_DATABASE_KEY,
+      slackNewCandidateUrl: env.NUXT_SLACK_NEW_CANDIDATE_URL,
+      slackReportUrl: env.NUXT_SLACK_REPORT_URL,
       // recaptcha: {
       //   v3SiteKey: process.env.NUXT_RECAPTCHA_SITE_KEY,
       // }
-    }
+    },
   },
 
   imports: {
@@ -57,7 +59,7 @@ export default defineNuxtConfig({
       'app/utils/i18n',
     ],
     imports: [
-      ...['MapLocation', 'Cluster', 'Cryptocity', 'CryptocityData', 'Currency', 'Provider'].map((name) => ({ name, from: 'types', type: true })),
+      ...['MapLocation', 'Cluster', 'Cryptocity', 'CryptocityData', 'Currency', 'Provider'].map(name => ({ name, from: 'types', type: true })),
     ],
   },
 
@@ -77,8 +79,8 @@ export default defineNuxtConfig({
 
   eslint: {
     config: {
-      standalone: false
-    }
+      standalone: false,
+    },
   },
 
   compatibilityDate: '2024-07-17',

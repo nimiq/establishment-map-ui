@@ -7,14 +7,14 @@ export function useTranslations() {
   const cookie = useCookie('lang', { sameSite: 'lax', default: () => locale })
 
   /**
-   * Load and enable new language 
+   * Load and enable new language
    */
   async function setLanguage(lang: string) {
-    if(!lang) return
+    if (!lang)
+      return
     locale.value = !SUPPORTED_LANGUAGES.includes(lang) ? defaultLocale : lang
     if (!languagesLoaded.has(locale.value)) {
       const messages = await import(`@/assets/i18n/${locale.value}.po`).then(module => module.default)
-      console.log(messages)
       setLocaleMessage(locale.value, messages)
       languagesLoaded.add(locale.value)
     }
@@ -33,7 +33,8 @@ export function useTranslations() {
 
   function onTabFocus() {
     const lang = detectLanguage()
-    if (locale.value !== lang) return
+    if (locale.value !== lang)
+      return
     setLanguage(lang)
   }
 

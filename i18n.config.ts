@@ -11,6 +11,5 @@ export const languagesLoaded = new Set<string>([DEFAULT_LANGUAGE])
 //   messages: DEFAULT_LANGUAGE ? await import(`@/assets/i18n/${DEFAULT_LANGUAGE}.po`).then(module => module.default) : {},
 
 //   // trick to not show numbers instead of string before language is loaded
-//   missing: !import.meta.dev ? (_locale, key) => /^[0-9]+$/.test(key) ? '' : key : undefined,  
+//   missing: !import.meta.dev ? (_locale, key) => /^[0-9]+$/.test(key) ? '' : key : undefined,
 // }))
-

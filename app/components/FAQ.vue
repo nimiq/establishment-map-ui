@@ -58,8 +58,10 @@ onUnmounted(() => router.replace({ query: route.query, q: undefined }))
               <h3 text="16/none">
                 {{ title }}
               </h3>
-              <div text="12 neutral-700" i-nimiq:chevron-right duration-300 delay-250 ease-out
-                r-accordion-open:rotate-90 op="0 r-accordion-hocus:100 r-accordion-open:100" />
+              <div
+                text="12 neutral-700" i-nimiq:chevron-right duration-300 delay-250 ease-out
+                r-accordion-open:rotate-90 op="0 r-accordion-hocus:100 r-accordion-open:100"
+              />
             </AccordionTrigger>
           </AccordionHeader>
           <AccordionContent class="content" mt-8 of-hidden pb-12 text="16/24">

@@ -20,12 +20,12 @@ const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url,
 </script>
 
 <template>
-  <Modal v-model:open="open" :name="ModalName.Candidate" nested pill-blue mx-auto>
+  <Modal v-model:open="open" :name="ModalName.Candidate" nested mx-auto pill-blue>
     <template #trigger>
       {{ $t('Add Crypto location') }}
     </template>
     <template #title>
-      <div text-center ml--6>
+      <div ml--6 text-center>
         <template v-if="isSuccess">
           {{ $t('Thank you!') }}
         </template>
@@ -50,8 +50,10 @@ const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url,
     </template>
     <template #content>
       <div v-if="!isSubmitted" mt-8 flex="~ col">
-        <a href="https://www.google.com/business/" target="_blank" rel="noopener noreferrer" un-text="blue center"
-          font-bold arrow lh-20>
+        <a
+          href="https://www.google.com/business/" target="_blank" rel="noopener noreferrer" un-text="blue center"
+          font-bold lh-20 arrow
+        >
           {{ $t('Create Google Business profile') }}
         </a>
         <form mt-32 @submit.prevent="submit">
@@ -71,7 +73,7 @@ const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url,
           </div>
         </form>
       </div>
-      <button v-else mt-32 pill-sm pill-blue @click="isError ? reset() : (open = false)">
+      <button v-else pill-sm mt-32 pill-blue @click="isError ? reset() : (open = false)">
         {{ isError ? $t('Try again') : $t('Back to the Map') }}
       </button>
     </template>

@@ -132,7 +132,7 @@ const formData = CreateAddLocationRawWorkflow.addStep(
         'category',
         'environment',
         'accepts',
-        'provider'
+        'provider',
       ],
     },
   },
@@ -145,7 +145,7 @@ const locationStep = CreateAddLocationRawWorkflow.addStep(
     address: formData.outputs.fields.address,
     category: formData.outputs.fields.category,
     accepts: formData.outputs.fields.accepts,
-    // lat and lng need to be processed as string in the form as 
+    // lat and lng need to be processed as string in the form as
     // Slack contains some issues with float numbers
     lat: formData.outputs.fields.lat,
     lng: formData.outputs.fields.lng,

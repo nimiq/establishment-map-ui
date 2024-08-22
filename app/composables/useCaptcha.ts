@@ -26,7 +26,7 @@ function _useCaptcha() {
   }
 
   async function getAsyncValue(): Promise<string> {
-    if(!import.meta.client)
+    if (!import.meta.client)
       return ''
 
     // Wait for the previous request to finish, if any
@@ -42,7 +42,7 @@ function _useCaptcha() {
       if (!token.value)
         await getCaptchaToken()
       const { databaseKey, databaseUrl } = useRuntimeConfig().public
-      captchaUuid.value = await authenticateAnonUser({ url: databaseUrl, apikey: databaseKey}, token.value!)
+      captchaUuid.value = await authenticateAnonUser({ url: databaseUrl, apikey: databaseKey }, token.value!)
       return captchaUuid.value
     }
     catch (error: any) {

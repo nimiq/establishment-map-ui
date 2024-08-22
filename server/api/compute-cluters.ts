@@ -1,14 +1,14 @@
 import { createConsola } from 'consola/core'
 import { serverSupabaseClient } from '#supabase/server'
 import { algorithm, computeMarkers, euclideanDistance } from '~~/packages/geo/src'
-import { BoundingBox, Cryptocity } from '~~/packages/types/src'
-import { Database } from '~~/types/supabase'
+import type { BoundingBox, Cryptocity } from '~~/packages/types/src'
+import type { Database } from '~~/types/supabase'
 
 type Radii = Record<number /* minZoom, maxZoom */, number /* the radius for minZoom is 120, the radius for maxZoom is 150 */>
 const MIN_ZOOM = 3
 const MAX_ZOOM = 14
 const radii: Radii = Array.from({ length: MAX_ZOOM - MIN_ZOOM + 1 }, (_, i) => 120 + i * 30 / (MAX_ZOOM - MIN_ZOOM))
-    .reduce((acc, radius, i) => ({ ...acc, [MIN_ZOOM + i]: radius }), {})
+  .reduce((acc, radius, i) => ({ ...acc, [MIN_ZOOM + i]: radius }), {})
 
 export default defineEventHandler(async (event) => {
   const consola = createConsola({ level: 3 })
@@ -21,17 +21,15 @@ export default defineEventHandler(async (event) => {
   consola.debug('Signed in as admin')
 
   consola.log('Flushing clusters')
-  await client.rpc("flush_markers_table")
+  await client.rpc('flush_markers_table')
 
   const boundingBox: BoundingBox = { nelat: 90, nelng: 180, swlat: -90, swlng: -180 }
 
-  const { data: locations, error: errorLocations } = await client.rpc("get_locations", { ...boundingBox, page_size: 30000 })
+  const { data: locations, error: errorLocations } = await client.rpc('get_locations', { ...boundingBox, page_size: 30000 })
   if (errorLocations)
     return new Error(`Error getting locations: ${errorLocations.message}`)
-  console.log(locations.length);
-  (`Found ${locations.length} locations`)
-  
-  const { data: cryptocities, error: cryptocitiesError }  = await client.rpc('get_cryptocities', { ...boundingBox, excluded_cities: [] })
+
+  const { data: cryptocities, error: cryptocitiesError } = await client.rpc('get_cryptocities', { ...boundingBox, excluded_cities: [] })
   if (cryptocitiesError)
     return new Error(`Error getting cryptocities: ${cryptocitiesError.message}`)
   consola.info(`Found ${cryptocities.length} cryptocities`)
@@ -40,12 +38,12 @@ export default defineEventHandler(async (event) => {
 
   for (let zoom = MIN_ZOOM; zoom <= MAX_ZOOM; zoom++) {
     const { singles, clusters: locationClusters } = computeMarkers(algorithm(radii[zoom]), locations, { zoom, boundingBox })
-    
-    type ClusterInsert = { lat: number, lng: number, count: number, zoom: number, locationUuid?: string, cryptocities?: string[], geo_location?: string }
+
+    interface ClusterInsert { lat: number, lng: number, count: number, zoom: number, locationUuid?: string, cryptocities?: string[], geo_location?: string }
     const singlesToAdd: ClusterInsert[] = singles.map(({ lng, lat, uuid }) => ({ zoom, count: 1, locationUuid: uuid, lat, lng }))
-    const locationClustersToAdd: ClusterInsert[] = locationClusters.map(({ lng, lat, count, expansionZoom }) => ({ zoom, count, lat, lng, expansionZoom }))
-    const singlesCryptocitiesToAdd: ClusterInsert[] = cryptocities.filter(c => 'city' in c).map(({ lng, lat, city }) => ({ zoom, count: 1, cryptocities: [city], lat, lng }))
-    
+    // const locationClustersToAdd: ClusterInsert[] = locationClusters.map(({ lng, lat, count, expansionZoom }) => ({ zoom, count, lat, lng, expansionZoom }))
+    // const singlesCryptocitiesToAdd: ClusterInsert[] = cryptocities.filter(c => 'city' in c).map(({ lng, lat, city }) => ({ zoom, count: 1, cryptocities: [city], lat, lng }))
+
     const clustersWithCryptocurrencies = [...locationClusters, ...cryptocities]
     const { singles: singlesItems } = computeMarkers(algorithm(radii[zoom]), clustersWithCryptocurrencies, { zoom, boundingBox })
     const singlesCryptocities: ClusterInsert[]
@@ -62,11 +60,10 @@ export default defineEventHandler(async (event) => {
         .sort((a, b) => a.distance - b.distance)[0]
       closestCluster.cryptocities.push(attachedCity.city as Cryptocity)
     }
-    
+
     const markers = singlesToAdd.concat(locationClusters).concat(singlesCryptocities)
-    const {data, error} = await client.rpc("insert_markers", { zoom_level: zoom, items: markers })
-    console.log(data  )
-    if(error)
+    const { error } = await client.rpc('insert_markers', { zoom_level: zoom, items: markers })
+    if (error)
       console.error(`Error inserting markers: ${error.message}`)
   }
   return new Response('Clusters computed', { status: 200 })

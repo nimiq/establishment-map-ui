@@ -78,20 +78,23 @@ function onEnd(event: PointerEvent) {
   if (isClick && !initialOpen) {
     open(true)
   }
+  else if (initialOpen) {
+    if (progress.value < 0.85)
+      close()
+    else open()
+  }
   else {
-    if (initialOpen) {
-      progress.value < 0.85 ? close() : open()
-    }
-    else {
-      progress.value > 0.15 ? open() : close()
+    if (progress.value > 0.5)
+      open()
+    else
+      close()
 
-      // Close list if dragged down fast enough
-      if (progress.value < 0 && speedY > 0.8)
-        emit('close')
+    // Close list if dragged down fast enough
+    if (progress.value < 0 && speedY > 0.8)
+      emit('close')
 
-      if (progress.value < -0.5)
-        emit('close')
-    }
+    if (progress.value < -0.5)
+      emit('close')
   }
 }
 

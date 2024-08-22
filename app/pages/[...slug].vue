@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { MapPosition } from '~~/packages/types/src';
+import type { MapPosition } from '~~/packages/types/src'
 
 // TODO locaiton uuid
 
@@ -20,7 +20,8 @@ onMounted(async () => {
     // eslint-disable-next-line no-console
     console.log(`Using user's location: ${JSON.stringify(ipPosition.value)}`)
     setPosition(ipPosition.value)
-  } else {
+  }
+  else {
     console.warn(`Error getting user's location: ${ipPositionError.value}. Using fallback position. ${JSON.stringify(FALLBACK_POSITION)}`)
     setPosition(FALLBACK_POSITION)
   }

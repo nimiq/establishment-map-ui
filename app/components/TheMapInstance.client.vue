@@ -28,7 +28,7 @@ type GestureBehaviour = typeof validGestureBehaviours[number]
 
 const gestureBehaviourParam = initialParams.gestureBehaviour
 const mapGestureBehaviour
-  = typeof gestureBehaviourParam === 'string' && ['cooperative', 'greedy', 'none', 'auto'].includes(gestureBehaviourParam)
+  = typeof gestureBehaviourParam === 'string' && validGestureBehaviours.includes(gestureBehaviourParam)
     ? gestureBehaviourParam as GestureBehaviour
     : 'greedy'
 </script>

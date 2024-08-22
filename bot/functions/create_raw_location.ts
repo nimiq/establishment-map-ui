@@ -11,7 +11,6 @@ import { Provider } from '../../../packages/types/src/database.ts'
 import type { Category, Currency } from '../../../packages/types/src/database.ts'
 import { getDbAuthUserArgs } from '../util/db-args.ts'
 
-
 export const CreateRawLocation = DefineFunction({
   callback_id: 'create_raw_location',
   title: 'New location with manual data',
@@ -85,7 +84,7 @@ export const CreateRawLocation = DefineFunction({
       'category',
       'environment',
       'accepts',
-      'provider'
+      'provider',
     ],
   },
   output_parameters: {
@@ -109,13 +108,13 @@ export default SlackFunction(
     // "16".toString().match(/\d+\.\d+/) --> not valid
     // "16.".toString().match(/\d+\.\d+/) --> not valid
     // "16.123".toString().match(/\d+\.\d+/) --> valid
-    const re = new RegExp(/^-?\d+\.\d+/)
+    const re = /^-?\d+\.\d+/
     if (!inputs.lat.toString().match(re) || !inputs.lng.toString().match(re)) {
       return { error: `Invalid latitude or longitude: ${inputs.lat}, ${inputs.lng}. Make sure to use a decimal number.` }
     }
     // check is in between -180 and 180
-    const latNumber = parseFloat(inputs.lat.toString())
-    const lngNumber = parseFloat(inputs.lng.toString())
+    const latNumber = Number.parseFloat(inputs.lat.toString())
+    const lngNumber = Number.parseFloat(inputs.lng.toString())
     if (latNumber < -180 || latNumber > 180 || lngNumber < -180 || lngNumber > 180) {
       return { error: `Invalid latitude or longitude: ${inputs.lat}, ${inputs.lng}. Make sure to use a number between -180 and 180.` }
     }
@@ -130,11 +129,11 @@ export default SlackFunction(
 
     console.log({ photoId })
 
-    const uuid = globalThis.crypto.randomUUID();
+    const uuid = globalThis.crypto.randomUUID()
     if (photoId) {
       const fileInfoUrl = new URL(`https://slack.com/api/files.info`)
       fileInfoUrl.searchParams.append('file', photoId)
-      const headersToken = { 'Authorization': `Bearer ${token}` }
+      const headersToken = { Authorization: `Bearer ${token}` }
 
       const fileInfo = await fetch(fileInfoUrl.href, { headers: headersToken })
       const photoJson = await fileInfo.json()
@@ -160,7 +159,7 @@ export default SlackFunction(
         'Authorization': `Bearer ${authToken}`,
         'cache-control': `max-age=3600`,
         'content-type': photo.mimetype,
-        apikey
+        apikey,
       }
 
       const postUrl = `${storageUrl}/object/${bucket}/${filename}`
@@ -190,7 +189,8 @@ export default SlackFunction(
       locationInput,
     )
     console.log(`Added ${JSON.stringify(res)}`)
-    if (!res) return { error: 'Error adding location' }
+    if (!res)
+      return { error: 'Error adding location' }
 
     return { outputs: { location: res } }
   },

@@ -6,6 +6,7 @@ const toggleList = useToggle(isListShown)
 </script>
 
 <template>
+  <!-- eslint-disable vue/no-multiple-template-root -->
   <TheMapInstance h-screen w-screen />
   <!-- Shadow -->
   <div id="shadow-left" pointer-events-none absolute inset-0 max-w-368 from-neutral to-transparent bg-gradient-to-r />

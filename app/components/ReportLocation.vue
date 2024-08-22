@@ -54,12 +54,14 @@ const { submit, reset, isError, isSuccess, isSubmitted } = useForm({ url, body }
       <template v-if="!isSubmitted">
         <div flex="~ gap-8 items-center justify-center" relative mb-24 w-full>
           <LocationExternalUrl :location show-name flex-basis-auto />
-          <CryptoList pill pill-tertiary :location flex-1 :max="2" />
+          <CryptoList :location flex-1 pill pill-tertiary :max="2" />
         </div>
         <FAQ nested :questions="['q-1']" w-full>
           <template #trigger>
-            <div flex="~ gap-4 items-center justify-center" text="neutral-800 14" mx--6 rounded-4 px-6 py-2
-              transition-colors hocus:bg-neutral-200>
+            <div
+              flex="~ gap-4 items-center justify-center" text="neutral-800 14" mx--6 rounded-4 px-6 py-2
+              transition-colors hocus:bg-neutral-200
+            >
               <div i-nimiq:help relative top--1 text="14 center" op-80 />
               <p>{{ $t('How is this data collected?') }}</p>
             </div>
@@ -71,8 +73,10 @@ const { submit, reset, isError, isSuccess, isSubmitted } = useForm({ url, body }
           <Select v-model:selected="issue" :options="Object.values(Issue)" :display-value="translateIssue" />
 
           <label for="name" text="14 neutral-900" mb-4 mt-24 block font-200>{{ $t('Describe the issue') }}</label>
-          <textarea v-model="description" :placeholder="$t('Write your problem here')" text="14 neutral" min-h-64
-            resize-none input-box style="field-sizing: content" />
+          <textarea
+            v-model="description" :placeholder="$t('Write your problem here')" text="14 neutral"
+            input-box min-h-64 resize-none style="field-sizing: content"
+          />
 
           <div flex="~ gap-16 justify-end" mt-24>
             <DialogClose :aria-label="$t('Cancel')" pill-sm pill-tertiary>
@@ -85,7 +89,7 @@ const { submit, reset, isError, isSuccess, isSubmitted } = useForm({ url, body }
           </div>
         </form>
       </template>
-      <button v-else mt-32 pill-sm pill-blue @click="isError ? reset() : (open = false)">
+      <button v-else pill-sm mt-32 pill-blue @click="isError ? reset() : (open = false)">
         {{ isError ? $t('Try again') : $t('Back to the Map') }}
       </button>
     </template>

@@ -51,6 +51,7 @@
     "nuxt": "^3.12.3",
     "radix-vue": "^1.9.1",
     "simple-git-hooks": "^2.11.1",
+    "typescript": "^5.5.4",
     "unplugin-vue-router": "^0.10.0",
     "vue-virtual-scroller": "2.0.0-beta.8",
     "webpack-i18n-tools": "github:nimiq/webpack-i18n-tools#onmax/extract-with-custom-root"

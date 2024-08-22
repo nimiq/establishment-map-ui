@@ -1,5 +1,5 @@
-import { bboxPolygon, booleanWithin, featureCollection, intersect, multiPolygon, point, pointsWithinPolygon, union } from '@turf/turf'
-import type { Feature, Point as GeoJSONPoint, MultiPolygon } from 'geojson'
+import { bboxPolygon, booleanWithin, feature, featureCollection, geojsonType, intersect, multiPolygon, point, pointsWithinPolygon, union } from '@turf/turf'
+import type { Feature, Point as GeoJSONPoint, MultiPolygon, Polygon } from 'geojson'
 import type { BoundingBox, Point } from '../../types/src/index.ts'
 
 /**
@@ -75,4 +75,29 @@ export function getItemsWithinBBox<T extends Point>(items: T[], bbox: BoundingBo
 export function bBoxesIntersect(bbox1: BoundingBox, bbox2: BoundingBox) {
   const [polygon1, polygon2] = [bbox1, bbox2].map(toPolygon)
   return polygon1?.some(p1 => polygon2?.some(p2 => intersect(featureCollection([p1, p2])))) || false
+}
+
+/**
+ * Merges two GeoJSON MultiPolygon features into one MultiPolygon.
+ */
+export function mergeMultiPolygons(p1: MultiPolygon | Polygon, p2: MultiPolygon | Polygon) {
+  return union(featureCollection([feature(p1), feature(p2)])) as Feature<MultiPolygon | Polygon>
+}
+
+export function isValidPolygon(data: any): data is GeoJSON.Feature<GeoJSON.Polygon | GeoJSON.MultiPolygon> {
+  let isOk = false
+  try {
+    geojsonType(data, 'Polygon', 'isPolygon')
+    isOk = true
+  }
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  catch (e) {}
+
+  try {
+    geojsonType(data, 'MultiPolygon', 'isPolygon')
+    isOk = true
+  }
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  catch (e) {}
+  return isOk
 }

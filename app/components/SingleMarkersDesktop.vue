@@ -9,7 +9,7 @@ const { isListShown } = storeToRefs(useApp())
 const { selectedUuid } = storeToRefs(useLocations())
 
 // Needed when bg color is a gradient
-const regex = /#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{3})/g
+const regex = /#([0-9A-F]{6}|[0-9A-F]{3})/gi
 function extractColorFromBg(bg: string) {
   return (bg.match(regex) || []).at(-1)
 }

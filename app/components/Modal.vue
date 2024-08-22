@@ -35,10 +35,12 @@ onUnmounted(() => router.replace({ query: { ...route.query, [queryName]: undefin
         <DialogOverlay v-if="!nested" fixed inset-0 z-200 bg-darkblue op-60 />
       </Transition>
       <Transition :name="nested ? 'nested' : 'modal'">
-        <DialogContent :key="name" desktop="top-1/2 left-1/2 translate--1/2" rounded="t-8 desktop:8" data-modal fixed
-          bottom-0 z-200 h-max max-h-85dvh w-full transform of-y-auto shadow-lg outline-none desktop:max-w-500
-          :data-nested="nested ? '' : undefined" @open-auto-focus.prevent>
-          <div relative py-32 bg-neutral-0 ring="1.5 neutral/3" class="modal-container">
+        <DialogContent
+          :key="name" desktop="top-1/2 left-1/2 translate--1/2" rounded="t-8 desktop:8"
+          data-modal fixed bottom-0 z-200 h-max max-h-85dvh w-full transform of-y-auto outline-none shadow-lg desktop:max-w-500
+          :data-nested="nested ? '' : undefined" @open-auto-focus.prevent
+        >
+          <div relative bg-neutral-0 py-32 ring="1.5 neutral/3" class="modal-container">
             <DialogTitle mb-12 px-24 text="24 center neutral lh-24" font-bold lh-none desktop:px-40 as="h2">
               <slot name="title" />
             </DialogTitle>
@@ -46,7 +48,7 @@ onUnmounted(() => router.replace({ query: { ...route.query, [queryName]: undefin
               <slot name="description" />
             </DialogDescription>
 
-            <div px-24 mt-12 desktop:px-40>
+            <div mt-12 px-24 desktop:px-40>
               <slot name="content" />
             </div>
 

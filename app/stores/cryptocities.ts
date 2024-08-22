@@ -24,7 +24,6 @@ export const useCryptocities = defineStore('cryptocities', () => {
       return allCryptocities.value
 
     const newCryptocities = await getDbCryptocities(await getAnonDatabaseArgs(), { boundingBox, excludedCities: loadedCitiesNames.value })
-    console.log('newCryptocities', newCryptocities)
     return setCryptocities(boundingBox, newCryptocities)
   }
 

@@ -35,10 +35,11 @@ export function parseLocation(location: MapLocation) {
 
   // If the photo is not a URL, then it's a reference to Google Maps
   const hasPhotoUrl = location.photo?.startsWith('http')
-  if (!hasPhotoUrl)
+  if (!hasPhotoUrl) {
     location.photo = location.photo
       ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${location.photo}&key=${useRuntimeConfig().public.googleMapKey}`
       : undefined
+  }
 
   // Prioritize links in this order: 1. Google Maps -> 2. Instagram -> 3. Facebook
   location.linkTo = location.gmaps ? LocationLink.GMaps : location.instagram ? LocationLink.Instagram : location.facebook ? LocationLink.Facebook : undefined
