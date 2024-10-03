@@ -37,6 +37,7 @@ export enum Currency {
   BTC = 'BTC',
   LBTC = 'LBTC', // Lightning BTC
   USDC_on_POLYGON = 'USDC_on_POLYGON',
+  USDT = 'USDT',
   ETH = 'ETH',
   LTC = 'LTC',
   XLM = 'XLM',

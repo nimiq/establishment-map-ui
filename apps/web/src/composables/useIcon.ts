@@ -24,7 +24,7 @@ export function getCategoryIcon(category: Category) {
 
 const cryptoIconCategory: Partial<Record<Currency, string>> = {
   [Currency.NIM]: 'i-nimiq:logos-nimiq',
-  [Currency.BTC]: 'i-cryptocurrency-color:btc',
+  [Currency.BTC]: 'i-cryptocurrency-color:btc scale-116 mr-2',
   [Currency.ETH]: 'i-cryptocurrency-color:eth',
   [Currency.DASH]: 'i-cryptocurrency-color:dash',
   [Currency.LTC]: 'i-cryptocurrency-color:ltc',
@@ -33,6 +33,7 @@ const cryptoIconCategory: Partial<Record<Currency, string>> = {
   [Currency.USDC_on_POLYGON]: 'i-cryptocurrency-color:usdc',
   [Currency.XLM]: 'i-cryptocurrency-color:xlm',
   [Currency.XRP]: 'i-cryptocurrency-color:xrp',
+  [Currency.USDT]: 'i-cryptocurrency-color:usdt',
 }
 
 export function getCurrencyIcon(currency: Currency) {

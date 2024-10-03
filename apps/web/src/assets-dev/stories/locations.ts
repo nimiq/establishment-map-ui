@@ -73,8 +73,8 @@ export const locations: Record<Provider, MapLocation> = {
   [Provider.AcceptLightning]: {
     uuid: 'NimiqPayApp',
     name: 'Mercedes-Benz Arena',
-    address: 'Kreuzbergstrasse 28, 10247, Berlin',
-    accepts: [Currency.NIM, Currency.LBTC],
+    address: 'Strasse 28, 10247, Berlin',
+    accepts: [Currency.NIM, Currency.LBTC, Currency.USDT],
     gmaps_types: ['stadium'],
     lat: 1,
     lng: 1,
