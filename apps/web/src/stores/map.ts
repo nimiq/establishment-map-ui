@@ -12,6 +12,21 @@ export const useMap = defineStore('map', () => {
   const router = useRouter()
   const route = useRoute()
 
+  useEventListener(window, 'message', (event: MessageEvent) => {
+    let payload
+    try {
+      payload = JSON.parse(event.data)
+    }
+    catch (_e) { }
+
+    if (payload?.kind !== 'map:position')
+      return
+    // eslint-disable-next-line no-console
+    console.log(`Received \`map:position\` ${JSON.stringify(payload)}`)
+    center.value = payload.data.center
+    zoom.value = payload.data.zoom
+  })
+
   // Update the route
   const updateRouteDebouncer = useDebounceFn(() => {
     if (!center.value)

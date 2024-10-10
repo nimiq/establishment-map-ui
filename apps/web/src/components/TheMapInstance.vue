@@ -1,10 +1,9 @@
 <script setup lang="ts">
 const GOOGLE_MAP_KEY = import.meta.env.VITE_GOOGLE_MAP_KEY
 
-const { params: initialParams } = useRoute()
+const { params: initialParams, query } = useRoute()
 const { showSplashScreen } = storeToRefs(useApp())
 const { mapLoaded } = storeToRefs(useMap())
-const { query } = useRoute()
 const setInitialMapPosition = () => useInitialMapPosition(initialParams, query)
 
 const mapStore = useMap()
