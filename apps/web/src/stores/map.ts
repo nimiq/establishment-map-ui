@@ -23,8 +23,13 @@ export const useMap = defineStore('map', () => {
       return
     // eslint-disable-next-line no-console
     console.log(`Received \`map:position\` ${JSON.stringify(payload)}`)
-    center.value = payload.data.center
-    zoom.value = payload.data.zoom
+
+    center.value = {
+      lat: Number.parseFloat(payload.data.center.lat),
+      lng: Number.parseFloat(payload.data.center.lng),
+    }
+
+    zoom.value = Number.parseInt(payload.data.zoom)
   })
 
   // Update the route
