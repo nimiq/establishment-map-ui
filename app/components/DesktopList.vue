@@ -49,7 +49,8 @@ watch(selectedUuid, (uuid) => {
 
     <template v-if="clusters.length" #after>
       <div px-24 py-20 text-14 font-semibold ring-neutral-100>
-        {{ $tc('+ {count} grouped', clusters.reduce((sum, cluster) => sum + cluster.count, 0)) }}
+        <!-- {{ $tc('+ {count} grouped', clusters.reduce((sum, cluster) => sum + cluster.count, 0)) }} -->
+        {{ clusters.reduce((sum, cluster) => sum + cluster.count, 0) }} grouped
       </div>
     </template>
   </DynamicScroller>
@@ -60,7 +61,8 @@ watch(selectedUuid, (uuid) => {
   >
     <div i-nimiq:icons-lg-cactus text-80 op-80 />
     <span text="16 center">
-      {{ $t('Oops, no businesses around here') }}
+      <!-- {{ $t(Oops, no businesses around here) }} -->
+      Oops, no businesses around here
     </span>
   </div>
 </template>

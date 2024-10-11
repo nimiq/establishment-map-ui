@@ -39,13 +39,15 @@ const { cryptocityBanner, showSearchBoxHint } = useUIParams()
                     {{ cryptocityBanner.name }}
                   </div>
                   <p mt-8 text-neutral-300>
-                    {{ $t('The initiative for crypto-friendly cities.') }}
+                    <!-- {{ $t(The initiative for crypto-friendly cities.) }} -->
+                    The initiative for crypto-friendly cities.
                   </p>
                   <a
                     :href="cryptocityBanner.url" target="_blank" pill-sm mt-12 transition-colors
                     bg-image="$nq-blue-on-dark-gradient hocus:$nq-blue-on-light-gradient-darkened"
                   >
-                    {{ $t('Learn more') }}
+                    <!-- {{ $t(Learn more) }} -->
+                    Learn more
                   </a>
                 </div>
                 <PopoverArrow as-child>
@@ -57,15 +59,20 @@ const { cryptocityBanner, showSearchBoxHint } = useUIParams()
         </PopoverRoot>
       </div>
     </div>
-    <i18n-t keypath="Spend {CriptocityPoints} at unique locations in this area." tag="p" text-neutral-800>
+    <!-- <i18n-t keypath="Spend {CriptocityPoints} at unique locations in this area." tag="p" text-neutral-800>
       <template #CryptocityPoints>
         <b>{{ $t('Cryptocity Points') }}</b>
       </template>
-    </i18n-t>
+    </i18n-t> -->
+    <p text-neutral-800>
+      Spend <b>Cryptocity Points</b> at unique locations in this area.
+    </p>
   </div>
 
   <p v-else-if="showSearchBoxHint" h-88 max-w-320 border-t px-20 py-16 text-12 text-neutral-700>
-    {{ $t(`Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other
-    crypto-currencies.`) }}
+    <!-- {{ $t(`Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other
+       crypto-currencies.`) }} -->
+    Enter country, city or zip code to discover locations that accept Bitcoin, Nimiq and other
+    crypto-currencies.
   </p>
 </template>

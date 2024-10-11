@@ -1,44 +1,46 @@
 import { Category, Currency, Issue } from 'types'
-import { SUPPORTED_LANGUAGES, languagesLoaded } from '~~/i18n.config'
+// import { SUPPORTED_LANGUAGES, languagesLoaded } from '~~/i18n.config'
 
 export function useTranslations() {
-  const { defaultLocale, locale, t, setLocaleMessage } = useI18n()
+  // const { defaultLocale, locale, t, setLocaleMessage } = useI18n()
 
-  const cookie = useCookie('lang', { sameSite: 'lax', default: () => locale })
+  // const cookie = useCookie('lang', { sameSite: 'lax', default: () => locale })
 
   /**
    * Load and enable new language
    */
-  async function setLanguage(lang: string) {
-    if (!lang)
-      return
-    locale.value = !SUPPORTED_LANGUAGES.includes(lang) ? defaultLocale : lang
-    if (!languagesLoaded.has(locale.value)) {
-      const messages = await import(`@/assets/i18n/${locale.value}.po`).then(module => module.default)
-      setLocaleMessage(locale.value, messages)
-      languagesLoaded.add(locale.value)
-    }
-    globalThis.document?.documentElement.setAttribute('lang', locale.value)
-  }
+  // async function setLanguage(lang: string) {
+  //   if (!lang)
+  //     return
+  //   locale.value = !SUPPORTED_LANGUAGES.includes(lang) ? defaultLocale : lang
+  //   if (!languagesLoaded.has(locale.value)) {
+  //     const messages = await import(`@/assets/i18n/${locale.value}.po`).then(module => module.default)
+  //     setLocaleMessage(locale.value, messages)
+  //     languagesLoaded.add(locale.value)
+  //   }
+  //   globalThis.document?.documentElement.setAttribute('lang', locale.value)
+  // }
 
-  watch(locale, () => setLanguage(locale.value))
+  // watch(locale, () => setLanguage(locale.value))
 
   /*
    * If the user changed the language in another window/tab then load and enable new language
    */
-  function detectLanguage(): string {
-    const lang = cookie.value || window.navigator.language.split('-')[0]
-    return !lang || !SUPPORTED_LANGUAGES.includes(lang) ? defaultLocale : lang
-  }
+  // function detectLanguage(): string {
+  //   const lang = cookie.value || window.navigator.language.split('-')[0]
+  //   return !lang || !SUPPORTED_LANGUAGES.includes(lang) ? defaultLocale : lang
+  // }
 
-  function onTabFocus() {
-    const lang = detectLanguage()
-    if (locale.value !== lang)
-      return
-    setLanguage(lang)
-  }
+  // function onTabFocus() {
+  //   const lang = detectLanguage()
+  //   if (locale.value !== lang)
+  //     return
+  //   setLanguage(lang)
+  // }
 
-  useEventListener('focus', onTabFocus)
+  // useEventListener('focus', onTabFocus)
+
+  const t = (key: string) => key
 
   function translateCategory(category?: Category) {
     switch (category) {
@@ -89,8 +91,8 @@ export function useTranslations() {
   }
 
   return {
-    setLanguage,
-    detectLanguage,
+    // setLanguage,
+    // detectLanguage,
     translateCategory,
     translateIssue,
     translateCurrency,

@@ -7,8 +7,9 @@ const query = ref('')
 <template>
   <ComboboxRoot v-model="selected" v-model:search-term="query" :multiple relative>
     <ComboboxAnchor input-box group relative p-0>
+      <!-- :placeholder="$t('Select an option')" w-full -->
       <ComboboxInput
-        :placeholder="$t('Select an option')" w-full
+        placeholder="Select an option" w-full
         rounded-6 bg-neutral-0 px-14 py-4.5 text="14 group-hocus:placeholder:blue" @keydown.enter.prevent
       />
       <ComboboxTrigger
@@ -26,7 +27,8 @@ const query = ref('')
       >
         <ComboboxViewport py-8>
           <ComboboxEmpty px-14 py-4.5>
-            {{ $t('No options') }}
+            <!-- {{ $t(No options) }} -->
+            No options
           </ComboboxEmpty>
           <ComboboxItem
             v-for="(option, index) in options" :key="index" :value="option"

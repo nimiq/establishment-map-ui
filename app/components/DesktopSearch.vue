@@ -6,7 +6,8 @@ const { query, status, googleSuggestions, locationSuggestions } = useAutocomplet
 <template>
   <ComboboxRoot v-model:searchTerm="query" flex-1>
     <ComboboxAnchor flex="~ items-center justify-between" relative>
-      <ComboboxInput :placeholder="$t('Search Map')" input-box peer w-full rounded-full text-14 />
+      <!-- :placeholder="$t('Search Map')" -->
+      <ComboboxInput placeholder="Search Map" input-box peer w-full rounded-full text-14 />
       <div
         v-if="query === ''" text="14 neutral-600 peer-focus-visible:blue"
         aria-hidden i-nimiq:magnifying-glass absolute right-16

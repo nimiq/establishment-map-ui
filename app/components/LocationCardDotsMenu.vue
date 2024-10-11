@@ -6,11 +6,12 @@ const props = defineProps<{ location: MapLocation }>()
 
 const url = `${window.location.origin}${window.location.pathname}?uuid=${props.location.uuid}`
 
-const { t } = useI18n()
+// const { t } = useI18n()
 
 const { share, isSupported: shareIsSupported } = useShare({
   title: props.location.name,
-  text: `${t('Check out {locationName} on Nimiq\'s Crypto Map', { locationName: props.location.name })}\n\n${url}`,
+  // text: `${t('Check out {locationName} on Nimiq\'s Crypto Map', { locationName: props.location.name })}\n\n${url}`,
+  text: `Check out ${props.location.name} on Nimiq\'s Crypto Map\n\n${url}`,
 })
 const { copy, isSupported: copyIsSupported, copied } = useClipboard({ source: url, copiedDuring: 3000 })
 
@@ -39,7 +40,8 @@ const initialOpen = useRoute().query.modal === ModalName.Report
             cursor-pointer rounded-2 px-14 py-8 @click="share"
           >
             <div i-nimiq:nodes mr-12 text-14 />
-            <span font-semibold>{{ $t('Share') }}</span>
+            <!-- <span font-semibold>{{ $t('Share') }}</span> -->
+            <span font-semibold>Share</span>
           </DropdownMenuItem>
 
           <DropdownMenuItem
@@ -68,7 +70,8 @@ const initialOpen = useRoute().query.modal === ModalName.Report
                 @select.prevent
               >
                 <div i-nimiq:flag mr-12 text-14 />
-                <span font-bold>{{ $t('Report') }}</span>
+                <!-- <span font-bold>{{ $t('Report') }}</span> -->
+                <span font-bold>Report</span>
               </DropdownMenuItem>
             </template>
           </ReportLocation>

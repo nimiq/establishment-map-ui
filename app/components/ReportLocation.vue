@@ -29,25 +29,31 @@ const { submit, reset, isError, isSuccess, isSubmitted } = useForm({ url, body }
     <template #title>
       <div flex="~ gap-8 items-baseline justify-center" ml--6>
         <template v-if="isSuccess">
-          {{ $t('Thank you for reporting this issue') }}
+          <!-- {{ $t(Thank you for reporting this issue) }} -->
+          Thank you for reporting this issue
         </template>
         <template v-else-if="isError">
-          {{ $t('Something went wrong') }}
+          <!-- {{ $t(Something went wrong) }} -->
+          Something went wrong
         </template>
         <template v-else>
-          {{ $t('Report an issue') }}
+          <!-- {{ $t(Report an issue) }} -->
+          Report an issue
         </template>
       </div>
     </template>
     <template #description>
       <template v-if="isSuccess">
-        {{ $t('This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map.') }}
+        <!-- {{ $t(This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map.) }} -->
+        This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map.
       </template>
       <template v-else-if="isError">
-        {{ $t('There has been a problem on our side. Please try again.') }}
+        <!-- {{ $t(There has been a problem on our side. Please try again.) }} -->
+        There has been a problem on our side. Please try again.
       </template>
       <template v-else>
-        {{ $t('Tell us what\'s wrong with this location') }}
+        <!-- {{ $t(Tell us what\'s wrong with this location) }} -->
+        Tell us what\'s wrong with this location
       </template>
     </template>
     <template #content>
@@ -63,34 +69,44 @@ const { submit, reset, isError, isSuccess, isSubmitted } = useForm({ url, body }
               transition-colors hocus:bg-neutral-200
             >
               <div i-nimiq:help relative top--1 text="14 center" op-80 />
-              <p>{{ $t('How is this data collected?') }}</p>
+              <!-- <p>{{ $t('How is this data collected?') }}</p> -->
+              <p>How is this data collected?</p>
             </div>
           </template>
         </FAQ>
 
         <form mt-40 @submit.prevent="submit">
-          <label for="name" text="14 neutral-900" mb-4 block font-200>{{ $t('Select issue') }}</label>
+          <label for="name" text="14 neutral-900" mb-4 block font-200>
+            <!-- {{ $t('Select issue') }} -->
+            Select issue
+          </label>
           <Select v-model:selected="issue" :options="Object.values(Issue)" :display-value="translateIssue" />
 
-          <label for="name" text="14 neutral-900" mb-4 mt-24 block font-200>{{ $t('Describe the issue') }}</label>
+          <label for="name" text="14 neutral-900" mb-4 mt-24 block font-200>
+            <!-- {{ $t('Describe the issue') }} -->
+            Describe the issue
+          </label>
+          <!-- :placeholder="$t('Write your problem here')" -->
           <textarea
-            v-model="description" :placeholder="$t('Write your problem here')" text="14 neutral"
-            input-box min-h-64 resize-none style="field-sizing: content"
+            v-model="description" placeholder="Write your problem here" text="14 neutral"
+            nq-input-box resize-none
           />
 
           <div flex="~ gap-16 justify-end" mt-24>
-            <DialogClose :aria-label="$t('Cancel')" pill-sm pill-tertiary>
+            <!-- :aria-label="$t('Cancel')" -->
+            <DialogClose aria-label="Cancel" pill-sm pill-tertiary>
               Cancel
             </DialogClose>
             <button type="submit" :disabled="disabled" pill-sm pill-blue>
-              {{ $t('Report Location')
-              }}
+              <!-- {{ $t('Report Location') }} -->
+              Report Location
             </button>
           </div>
         </form>
       </template>
       <button v-else pill-sm mt-32 pill-blue @click="isError ? reset() : (open = false)">
-        {{ isError ? $t('Try again') : $t('Back to the Map') }}
+        <!-- {{ isError ? $t('Try again') : $t('Back to the Map') }} -->
+        {{ isError ? 'Try again' : 'Back to the Map' }}
       </button>
     </template>
   </Modal>

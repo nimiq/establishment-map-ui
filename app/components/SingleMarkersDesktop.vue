@@ -47,7 +47,8 @@ function handlePopoverOpen(isOpen: boolean, location: MapLocation) {
   >
     <PopoverRoot @update:open="(isOpen: boolean) => handlePopoverOpen(isOpen, location)">
       <PopoverAnchor pointer-events-none absolute h-full w-28 />
-      <PopoverTrigger :aria-label="$t('See location details')" cursor-pointer :data-trigger-uuid="location.uuid">
+      <!-- :aria-label="$t('See location details')" -->
+      <PopoverTrigger aria-label="See location details" cursor-pointer :data-trigger-uuid="location.uuid">
         <SingleMarker :location rounded-4 transition-shadow />
       </PopoverTrigger>
       <PopoverPortal :key="popoverKey">

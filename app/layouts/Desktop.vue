@@ -32,7 +32,8 @@ const toggleList = useToggle(isListShown)
         i-nimiq:chevron-down :class="{ 'rotate-180': isListShown }" text="10 op-70"
         transition="transform delay-500"
       />
-      {{ $t(isListShown ? 'Hide list' : 'Show list') }}
+      <!-- {{ isListShown ? $t('Hide list') : $t('Show list') }} -->
+      {{ isListShown ? 'Hide list' : 'Show list' }}
     </button>
   </aside>
   <MapControls absolute bottom-24 right-24 />

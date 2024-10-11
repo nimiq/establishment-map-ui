@@ -22,30 +22,37 @@ const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url,
 <template>
   <Modal v-model:open="open" :name="ModalName.Candidate" nested mx-auto pill-blue>
     <template #trigger>
-      {{ $t('Add Crypto location') }}
+      <!-- {{ $t(Add Crypto location) }} -->
+      Add Crypto location
     </template>
     <template #title>
       <div ml--6 text-center>
         <template v-if="isSuccess">
-          {{ $t('Thank you!') }}
+          <!-- {{ $t(Thank you!) }} -->
+          Thank you!
         </template>
         <template v-else-if="isError">
-          {{ $t('Something went wrong') }}
+          <!-- {{ $t(Something went wrong) }} -->
+          Something went wrong
         </template>
         <template v-else>
-          {{ $t('Add a location') }}
+          <!-- {{ $t(Add a location) }} -->
+          Add a location
         </template>
       </div>
     </template>
     <template #description>
       <template v-if="isSuccess">
-        {{ $t('This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map.') }}
+        <!-- {{ $t(This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map.) }} -->
+        This may take a few days to process. Keep an eye out for changes to the location in the Crypto Map.
       </template>
       <template v-else-if="isError">
-        {{ $t('There has been a problem on our side. Please try again.') }}
+        <!-- {{ $t(There has been a problem on our side. Please try again.) }} -->
+        There has been a problem on our side. Please try again.
       </template>
       <template v-else>
-        {{ $t('Add any location that has a Google Business profile.') }}
+        <!-- {{ $t(Add any location that has a Google Business profile.) }} -->
+        Add any location that has a Google Business profile.
       </template>
     </template>
     <template #content>
@@ -54,27 +61,38 @@ const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url,
           href="https://www.google.com/business/" target="_blank" rel="noopener noreferrer" un-text="blue center"
           font-bold lh-20 arrow
         >
-          {{ $t('Create Google Business profile') }}
+          <!-- {{ $t(Create Google Business profile) }} -->
+          Create Google Business profile
         </a>
         <form mt-32 @submit.prevent="submit">
-          <label for="name" text="14 neutral-900" mb-4 block font-200>{{ $t('Find Location') }}</label>
+          <label for="name" text="14 neutral-900" mb-4 block font-200>
+            <!-- {{ $t('Find Location') }} -->
+            Find Location
+          </label>
           <LocationSearchBox v-model:selected="selectedPlace" disable-persist-state />
 
-          <label for="name" text="14 neutral-900" mb-4 mt-24 block font-200>{{ $t('Select Cryptocurrency') }}</label>
+          <label for="name" text="14 neutral-900" mb-4 mt-24 block font-200>
+            <!-- {{ $t('Select Cryptocurrency') }} -->
+            Select Cryptocurrency
+          </label>
           <CurrencySelector v-model:selected="selectedCryptos" />
 
           <div flex="~ gap-16 justify-between">
-            <DialogClose :aria-label="$t('Cancel')" pill-sm pill-secondary>
+            <!-- :aria-label="$t('Cancel')" -->
+            <DialogClose aria-label="Cancel" pill-sm pill-secondary>
+              <!-- $t('Cancel') -->
               Cancel
             </DialogClose>
             <button type="submit" :disabled :loading="state === FormState.Loading" pill-sm pill-blue>
-              {{ $t('Submit Location') }}
+              <!-- {{ $t(Submit Location) }} -->
+              Submit Location
             </button>
           </div>
         </form>
       </div>
       <button v-else pill-sm mt-32 pill-blue @click="isError ? reset() : (open = false)">
-        {{ isError ? $t('Try again') : $t('Back to the Map') }}
+        <!-- {{ isError ? $t('Try again') : $t('Back to the Map') }} -->
+        {{ isError ? 'Try again' : 'Back to the Map' }}
       </button>
     </template>
   </Modal>

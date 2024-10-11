@@ -34,6 +34,7 @@ const cardConfiguration: Record<Banner, BannerConfiguration> = {
       return i18n.t('Pay with {provider}')
     },
     get bannerTooltip() {
+      const i18n = i18nKeyPassThrough
       return i18n.t('Nimiq Pay enables self-custodial payments with NIM wherever BTC Lightning is accepted.')
     },
     bannerGooglePlay: 'https://play.google.com/store/apps/details?id=com.nimiq.pay',
@@ -47,6 +48,7 @@ const cardConfiguration: Record<Banner, BannerConfiguration> = {
       return i18n.t('Powered by {provider}')
     },
     get bannerTooltip() {
+      const i18n = i18nKeyPassThrough
       return i18n.t('NAKA is a global payment network that enables merchants to accept crypto payments.')
     },
     bannerTooltipCta: 'https://naka.com',
@@ -59,6 +61,7 @@ const cardConfiguration: Record<Banner, BannerConfiguration> = {
       return i18n.t('Register with {provider}')
     },
     get bannerTooltip() {
+      const i18n = i18nKeyPassThrough
       return i18n.t('Kurant enables users to easily purchase cryptocurrencies through a network of ATMs.')
     },
     bannerTooltipCta: 'https://kurant.net',
@@ -71,9 +74,11 @@ const cardConfiguration: Record<Banner, BannerConfiguration> = {
       return i18n.t('Powered by {provider}')
     },
     get bannerTooltip() {
+      const i18n = i18nKeyPassThrough
       return i18n.t('Bluecode is a payment method that allows secure transactions directly through the smartphone.')
     },
     get bannerTooltipLabel() {
+      const i18n = i18nKeyPassThrough
       return i18n.t('Coming soon')
     },
     bannerTooltipCta: 'https://bluecode.com',
@@ -86,6 +91,7 @@ const cardConfiguration: Record<Banner, BannerConfiguration> = {
       return i18n.t('Powered by {provider}')
     },
     get bannerTooltip() {
+      const i18n = i18nKeyPassThrough
       return i18n.t('With CryptoPayment Link, you can quickly and easily receive cryptocurrency payments from your customers.')
     },
     bannerTooltipCta: 'https://cplink.com',
@@ -98,6 +104,7 @@ const cardConfiguration: Record<Banner, BannerConfiguration> = {
       return i18n.t('Register with {provider}')
     },
     get bannerTooltip() {
+      const i18n = i18nKeyPassThrough
       return i18n.t('Edenia enables users to easily purchase cryptocurrencies through a network of ATMs')
     },
     bannerTooltipCta: 'https://edenia.com/',

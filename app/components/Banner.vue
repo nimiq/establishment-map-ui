@@ -14,12 +14,15 @@ function handleProviderPlaceholder({ banner, provider }: MapLocation) {
     <LocationCardBg v-if="!location.isAtm && location.bannerLabel" :location="location" />
 
     <div v-if="location.bannerLabel" flex="~ items-center gap-8" pl-24 pr-72 pt-6 text-12>
-      <i18n-t :keypath="location.bannerLabel" tag="p" text-neutral-50>
-        <!-- The name in the label can optionally be written bold by including a {provider} placeholder -->
+      <p text-neutral-50>
+        {{ location.bannerLabel }}
+      </p>
+      <!-- The name in the label can optionally be written bold by including a {provider} placeholder -->
+      <!-- <i18n-t :keypath="location.bannerLabel" tag="p" text-neutral-50>
         <template #provider>
           <b>{{ handleProviderPlaceholder(location) }}</b>
         </template>
-      </i18n-t>
+      </i18n-t> -->
 
       <PopoverRoot>
         <PopoverTrigger>
@@ -49,18 +52,21 @@ function handleProviderPlaceholder({ banner, provider }: MapLocation) {
                   rel="noopener noreferrer" un-text="14 neutral-600" mt-12 block arrow before:op-80
                   flex="~ items-center"
                 >
-                  {{ $t('Learn more') }}
+                  <!-- {{ $t(Learn more) }} -->
+                  Learn more
                 </a>
 
                 <template v-if="location.bannerAppStore || location.bannerGooglePlay">
                   <div flex="~ items-center gap-24" mt-16 text-40>
+                    <!-- :aria-label="$t('Download on App Store')" -->
                     <a
                       v-if="location.bannerAppStore" :href="location.bannerAppStore" target="_blank"
-                      rel="noopener noreferrer" :aria-label="$t('Download on App Store')" i-apps:app-store flex-1
+                      rel="noopener noreferrer" aria-label="Download on App Store" i-apps:app-store flex-1
                     />
+                    <!-- :aria-label="$t('Download on Play Store')" -->
                     <a
                       v-if="location.bannerGooglePlay" :href="location.bannerGooglePlay" target="_blank"
-                      rel="noopener noreferrer" :aria-label="$t('Download on Play Store')" i-apps:google-play flex-1
+                      rel="noopener noreferrer" aria-label="Download on Play Store" i-apps:google-play flex-1
                     />
                   </div>
                 </template>

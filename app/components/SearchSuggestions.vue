@@ -9,22 +9,27 @@ defineProps<{ status: AutocompleteStatus, googleSuggestions: GoogleSuggestion[],
   <ComboboxContent data-suggestions absolute inset-x-0 bg-neutral-0>
     <div v-if="status !== AutocompleteStatus.WithResults" p-16 text-neutral-800>
       <ComboboxEmpty v-if="status === AutocompleteStatus.NoResults">
-        {{ $t('Nothing found.') }}
+        <!-- {{ $t(Nothing found.) }} -->
+        Nothing found.
       </ComboboxEmpty>
       <span v-else-if="status === AutocompleteStatus.Loading">
-        {{ $t('Loading...') }}
+        <!-- {{ $t(Loading...) }} -->
+        Loading...
       </span>
       <span v-else-if="status === AutocompleteStatus.Initial">
-        {{ $t('Start typing...') }}
+        <!-- {{ $t(Start typing...) }} -->
+        Start typing...
       </span>
       <span v-else-if="status === AutocompleteStatus.Error">
-        {{ $t('Error loading results.') }}
+        <!-- {{ $t(Error loading results.) }} -->
+        Error loading results.
       </span>
     </div>
     <template v-else>
       <ComboboxGroup flex="~ col">
         <ComboboxLabel text="12 neutral-700" px-16 py-8 label>
-          {{ $t('Crypto Locations') }}
+          <!-- {{ $t(Crypto Locations) }} -->
+          Crypto Locations
         </ComboboxLabel>
 
         <ComboboxItem
@@ -39,7 +44,8 @@ defineProps<{ status: AutocompleteStatus, googleSuggestions: GoogleSuggestion[],
 
       <ComboboxGroup>
         <ComboboxLabel text="12 neutral-700" px-16 py-8 label>
-          {{ $t('Results from Google') }}
+          <!-- {{ $t(Results from Google) }} -->
+          Results from Google
         </ComboboxLabel>
 
         <ComboboxItem

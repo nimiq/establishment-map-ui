@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ModalName } from './Modal.vue'
-import { SUPPORTED_LANGUAGES } from '~~/i18n.config'
+// import { SUPPORTED_LANGUAGES } from '~~/i18n.config'
 
-const { locale } = useI18n()
+// const { locale } = useI18n()
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
@@ -22,12 +22,18 @@ const toggleDark = useToggle(isDark)
           aria-hidden i-nimiq:logos-crypto-map mx-auto mt="8 desktop:20" text="64 desktop:94"
           @click.shift="() => toggleDark()"
         />
-        <span>{{ $t('Crypto Map') }}</span>
+        <!-- <span>{{ $t('Crypto Map') }}</span> -->
+        <span>Crypto Map</span>
       </div>
     </template>
 
     <template #description>
-      <i18n-t
+      This app is brought to you by <span text-blue font-bold>Nimiq</span>. It is protected by reCAPTCHA and the Google <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" text-neutral-800 underline>
+        Privacy Policy
+      </a> and <a href="https://policies.google.com/terms" target="_blank" rel="noopener" text-neutral-800 underline>
+        Terms of Service
+      </a> apply.
+      <!-- <i18n-t
         tag="p"
         keypath="This app is brought to you by {Nimiq}. It is protected by reCAPTCHA and the Google {privacyPolicy} and {termsOfService} apply."
         text="center 16 lh-24"
@@ -37,22 +43,22 @@ const toggleDark = useToggle(isDark)
         </template>
         <template #privacyPolicy>
           <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" text-neutral-800 underline>
-            {{ $t('Privacy Policy') }}
+Privacy Policy
           </a>
         </template>
         <template #termsOfService>
           <a href="https://policies.google.com/terms" target="_blank" rel="noopener" text-neutral-800 underline>
-            {{ $t('Terms of Service') }}
+Terms of Service
           </a>
         </template>
-      </i18n-t>
+      </i18n-t> -->
     </template>
 
     <template #content>
       <LocationCandidate mt-32 />
-      <div absolute left-20 top-20>
+      <!-- <div absolute left-20 top-20>
         <TriangleSelector v-model:selected="locale" :options="SUPPORTED_LANGUAGES" />
-      </div>
+      </div> -->
     </template>
   </Modal>
 </template>

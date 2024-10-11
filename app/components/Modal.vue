@@ -52,7 +52,8 @@ onUnmounted(() => router.replace({ query: { ...route.query, [queryName]: undefin
               <slot name="content" />
             </div>
 
-            <DialogClose :aria-label="$t('Close')" absolute right-16 top-16 text-28 close-btn />
+            <!-- :aria-label="$t('Close')" -->
+            <DialogClose aria-label="Close" absolute right-16 top-16 text-28 close-btn />
           </div>
         </DialogContent>
       </Transition>

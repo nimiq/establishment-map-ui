@@ -5,7 +5,8 @@ withDefaults(defineProps<{ location: MapLocation, progress?: number }>(), { prog
 <template>
   <div :grid="`~ rows-[repeat(3,auto)] gap-x-6 ${location.photo ? 'cols-[auto_1fr]' : 'cols-[auto_1fr_auto]'}`">
     <h3 text="16 neutral inverted:neutral-0" col-span-2 pb-4 lh-20 :class="`${location.photo ? 'mr-16' : 'mr-8'}`">
-      {{ location.isAtm ? `${$t('ATM')} (${location.name})` : location.name }}
+      <!-- {{ location.isAtm ? `${$t('ATM')} (${location.name})` : location.name }} -->
+      {{ location.isAtm ? `ATM (${location.name})` : location.name }}
     </h3>
 
     <LocationExternalUrl
@@ -25,11 +26,18 @@ withDefaults(defineProps<{ location: MapLocation, progress?: number }>(), { prog
       </div>
     </template>
     <span v-else-if="location.isAtm" row-start-2 font-semibold text="12 neutral-800 inverted:white/90">
-      <template v-if="location.accepts?.length > 0 && location.sells?.length > 0">{{
-        $t('Buy & sell crypto')
-      }}</template>
-      <template v-else-if="location.accepts.length > 0">{{ $t('Sell crypto only') }}</template>
-      <template v-else-if="location.sells.length > 0">{{ $t('Buy crypto only') }}</template>
+      <template v-if="location.accepts?.length > 0 && location.sells?.length > 0">
+        <!-- {{ $t('Buy & sell crypto') }} -->
+        Buy & sell crypto
+      </template>
+      <template v-else-if="location.accepts.length > 0">
+        <!-- {{ $t('Sell crypto only') }} -->
+        Sell crypto only
+      </template>
+      <template v-else-if="location.sells.length > 0">
+        <!-- {{ $t('Buy crypto only') }} -->
+        Buy crypto only
+      </template>
     </span>
     <p
       v-if="location.address" row-start-3 leading-18 :class="location.photo ? 'col-span-2' : 'col-span-3'"

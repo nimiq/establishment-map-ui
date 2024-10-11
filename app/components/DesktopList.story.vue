@@ -21,7 +21,8 @@ const listIsShown = ref(true)
             <DesktopList :singles="Object.values(locations)" :clusters="[]" :list-is-shown="listIsShown" />
           </div>
           <button pill-blue class="mt-6" @click="listIsShown = !listIsShown">
-            {{ listIsShown ? $t('Hide list') : $t('Show list') }}
+            <!-- {{ listIsShown ? $t('Hide list') : $t('Show list') }} -->
+            {{ listIsShown ? 'Hide list' : 'Show list' }}
           </button>
         </div>
       </div>

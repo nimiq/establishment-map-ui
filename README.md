@@ -73,3 +73,23 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## TODO
+
+- [ ] Move README
+- [X] Remove i18n
+- [ ] Fix UI
+- [ ] Deploy in NuxtHub
+- [ ] Image fallback blob via Cloudflare
+- [ ] Move the map from vue to nuxt
+- [ ] Update nimiq-css and nimiq icons
+- [ ] Implement new design for cryptocities
+- [ ] Fix Cryptocities search
+- [ ] Make sure USDT works
+- [ ] Locations OG Image
+- [ ] Add African locations
+- [ ] Change map: change to layers?
+- [ ] Remove database and use supabase
+- [ ] Use NuxImg and NuxtLink
+- [ ] Make sure to use `nq-` for the utitilies and remove `space`
+- [ ] Remove withDefaults and `props.`

@@ -40,17 +40,21 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ cryptosToDispla
               :side="isMobile ? 'top' : 'right'" :collision-padding="8" :side-offset="6"
             >
               <h4 font-semibold lh-none text="15 neutral-100">
-                {{ $t('NAKA supports Binance Pay') }}
+                <!-- {{ $t(NAKA supports Binance Pay) }} -->
+                NAKA supports Binance Pay
               </h4>
 
               <p text="12 neutral-500" mt-8>
-                {{
+                <!-- {{
                   $t(`Binance Pay is a cryptocurrency payment service that empowers users to pay with crypto at shops and
                 establishments supporting Binance Pay.`)
-                }}
+                }} -->
+                Binance Pay is a cryptocurrency payment service that empowers users to pay with crypto at shops and
+                establishments supporting Binance Pay.
               </p>
 
-              <div flex="~ items-end justify-end gap-x-6" mt-12 :title="$t('BTC +50')">
+              <!-- :title="$t('BTC +50')" -->
+              <div flex="~ items-end justify-end gap-x-6" mt-12 title="BTC +50">
                 <div i-cryptocurrency-color:btc text-24 />
                 <span text="14 neutral-700" font-bold>50+</span>
               </div>
@@ -78,11 +82,13 @@ const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ cryptosToDispla
       grid="~ flow-col cols-[fit-content,fit-content] rows-[fit-content,1fr] gap-y-1 gap-x-2" relative z-20 size-max
     >
       <h5 text="13 white/60 inverted:white/90">
-        {{ $t('Buy') }}
+        <!-- {{ $t(Buy) }} -->
+        Buy
       </h5>
       <ReuseTemplate :cryptos-to-display="location.sells" :n="location.sells.length - sellToDisplay.length" />
       <h5 text="13 white/60 inverted:white/90">
-        {{ $t('Sell') }}
+        <!-- {{ $t(Sell) }} -->
+        Sell
       </h5>
       <ReuseTemplate :cryptos-to-display="location.accepts" :n="location.accepts.length - acceptToDisplay.length" />
     </div>

@@ -3,7 +3,8 @@ import { ModalName } from './Modal.vue'
 
 const props = withDefaults(defineProps<{ nested?: boolean, questions?: string[] }>(), { nested: false, questions: () => [] })
 
-const { t } = useI18n()
+// const { t } = useI18n()
+const t = (key: string) => key
 
 const items = [
   {
@@ -25,12 +26,13 @@ const items = [
 ].map(({ title, content }, i) => ({ title, content, value: `q-${i + 1}` }))
 
 // Keep state of the open questions in the URL
-const router = useRouter()
-const route = useRoute()
-const queryUrl: string | string[] = route.query.q || []
-const questionsOpen = ref<string[]>(props.questions || (Array.isArray(queryUrl) ? toValue(queryUrl) : [queryUrl]))
-watch(questionsOpen, v => requestAnimationFrame(() => router.push({ query: { ...route.query, q: v.length > 0 ? v : undefined } })), { deep: true })
-onUnmounted(() => router.replace({ query: route.query, q: undefined }))
+// const router = useRouter()
+// const route = useRoute()
+// const queryUrl: string | string[] = route.query.q as string[] || []
+const questionsOpen = ref<string[]>(props.questions)
+// const questionsOpen = ref<string[]>(props.questions || (Array.isArray(queryUrl) ? toValue(queryUrl) : [queryUrl]))
+// watch(questionsOpen, v => requestAnimationFrame(() => router.push({ query: { ...route.query, q: v.length > 0 ? v : undefined } })), { deep: true })
+// onUnmounted(() => router.replace({ query: route.query, q: undefined }))
 </script>
 
 <template>
@@ -39,16 +41,22 @@ onUnmounted(() => router.replace({ query: route.query, q: undefined }))
       <slot name="trigger" />
     </template>
     <template #title>
-      {{ $t('FAQ') }}
+      <!-- {{ $t(FAQ) }} -->
+      FAQ
     </template>
     <template #description>
-      <i18n-t keypath="If you need more details, feel free to reach us on {telegram}" tag="span">
+      <span>
+        If you need more details, feel free to reach us on <a href="https://t.me/nimiq" target="_blank" rel="noopener noreferrer" un-text="bold blue" arrow>
+          Telegram
+        </a>
+      </span>
+      <!-- <i18n-t keypath="If you need more details, feel free to reach us on {telegram}" tag="span">
         <template #telegram>
           <a href="https://t.me/nimiq" target="_blank" rel="noopener noreferrer" un-text="bold blue" arrow>
             Telegram
           </a>
         </template>
-      </i18n-t>
+      </i18n-t> -->
     </template>
     <template #content>
       <AccordionRoot v-model="questionsOpen">
@@ -75,7 +83,6 @@ onUnmounted(() => router.replace({ query: route.query, q: undefined }))
 
 <style scoped>
 .content {
-
   &:is([data-state="open"]) {
     animation: slide-up 200ms var(--nq-ease);
   }

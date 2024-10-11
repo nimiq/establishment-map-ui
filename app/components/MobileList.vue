@@ -199,11 +199,15 @@ function close() {
       v-else-if="!isListShown" translate-x="-50%" pill-sm absolute bottom-24 pill-tertiary shadow left="50%"
       @click="isListShown = true"
     >
-      {{ $t('Show list') }}
+      <!-- {{ $t(Show list) }} -->
+      Show list
     </button>
     <button v-else translate-x="-50%" pill-sm absolute bottom-24 text-orange pill-tertiary shadow left="50%">
-      {{
+      <!-- {{
         clustersInView.length > 0 ? $t('Zoom in to see the list.') : $t('Oops, no businesses around here.')
+      }} -->
+      {{
+        clustersInView.length > 0 ? 'Zoom in to see the list.' : 'Oops, no businesses around here.'
       }}
     </button>
   </transition>

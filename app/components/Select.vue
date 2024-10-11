@@ -6,8 +6,9 @@ const selected = defineModel<T>('selected')
 <template>
   <SelectRoot v-model="selected" relative>
     <SelectTrigger input-box flex="~ gap-8 items-center">
+      <!-- :placeholder="$t('Select issue')" -->
       <SelectValue
-        :placeholder="$t('Select issue')" text-14
+        placeholder="Select issue" text-14
         :class="{ 'text-neutral': !!selected, 'text-neutral-700': !selected }"
       />
       <div aria-hidden i-nimiq:chevron-down ml-auto text="12 neutral-600" />

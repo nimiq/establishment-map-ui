@@ -1,11 +1,5 @@
 import { env } from 'node:process'
 
-// @ts-expect-error webpack-i18n-tools does currently not expose types
-// import poLoader from 'webpack-i18n-tools/loader/rollup'
-
-// @ts-expect-error webpack-i18n-tools does currently not expose types
-// import poOptimizer from 'webpack-i18n-tools/optimizer/rollup'
-
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   future: {
@@ -27,7 +21,6 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@unocss/nuxt',
     '@nuxt/eslint',
-    // "@nuxtjs/i18n",
     'radix-vue/nuxt',
     '@nuxtjs/supabase',
   ],
@@ -55,9 +48,7 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: [
-      'app/utils/i18n',
-    ],
+    dirs: [],
     imports: [
       ...['MapLocation', 'Cluster', 'Cryptocity', 'CryptocityData', 'Currency', 'Provider'].map(name => ({ name, from: 'types', type: true })),
     ],
@@ -68,11 +59,6 @@ export default defineNuxtConfig({
       // poLoader(),
       // poOptimizer(),
     ],
-    define: {
-      __VUE_I18N_FULL_INSTALL__: true,
-      __VUE_I18N_LEGACY_API__: true,
-      __INTLIFY_PROD_DEVTOOLS__: false,
-    },
   },
 
   ignore: ['./bot'],

@@ -9,9 +9,9 @@ export const useApp = defineStore('app', () => {
   const isListShown = ref(false)
 
   // Allow to change the language from the URI. Useful for iframe embeds
-  const lang = useRouteQuery<string>('lang')
-  const { setLanguage } = useTranslations()
-  watch(lang, setLanguage, { immediate: true })
+  // const lang = useRouteQuery<string>('lang')
+  // const { setLanguage } = useTranslations()
+  // watch(lang, setLanguage, { immediate: true })
 
   const route = useRoute()
 

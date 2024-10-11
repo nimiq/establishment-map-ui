@@ -2,7 +2,7 @@
 import { GoogleMap } from 'vue3-google-map'
 
 const apiKey = useRuntimeConfig().public.googleMapKey
-const { locale } = useI18n()
+const { language } = useNavigatorLanguage()
 
 const { params: initialParams } = useRoute()
 const { showSplashScreen } = storeToRefs(useApp())
@@ -39,7 +39,7 @@ const mapGestureBehaviour
   </transition>
 
   <GoogleMap
-    ref="mapInstance" v-bind="$attrs" :api-key :language="locale" disable-default-ui
+    ref="mapInstance" v-bind="$attrs" :api-key :language disable-default-ui
     :gesture-handling="mapGestureBehaviour" :keyboard-shortcuts="false" :styles="googleMapStyles" :max-zoom="21"
     :min-zoom="3" :restriction="restriction" :clickable-icons="false"
     :libraries="['places', 'maps'] as unknown as ['places']"

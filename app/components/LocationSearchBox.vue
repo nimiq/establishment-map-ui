@@ -9,7 +9,8 @@ const selected = defineModel<GoogleSuggestion>('selected')
 <template>
   <ComboboxRoot v-model="selected" relative :display-value="v => v.label" @update:search-term="q => query = q">
     <ComboboxAnchor flex="~ items-center justify-between" relative>
-      <ComboboxInput :placeholder="$t('Search Map')" input-box peer rounded-6 pr-32 text-14 />
+      <!-- :placeholder="$t('Search Map')" -->
+      <ComboboxInput placeholder="Search Map" input-box peer rounded-6 pr-32 text-14 />
       <div v-if="!query" i-nimiq:magnifying-glass absolute right-8 text="14 neutral-600 peer-focus-visible:blue" />
       <ComboboxCancel v-else i-nimiq:cross absolute right-8 text="10 neutral-700 peer-focus-visible:blue/80" />
     </ComboboxAnchor>
@@ -18,16 +19,20 @@ const selected = defineModel<GoogleSuggestion>('selected')
       <ComboboxViewport>
         <div v-if="status !== AutocompleteStatus.WithResults" p-16 text="14 neutral-700">
           <ComboboxEmpty v-if="status === AutocompleteStatus.NoResults">
-            {{ $t('Nothing found.') }}
+            <!-- {{ $t(Nothing found.) }} -->
+            Nothing found.
           </ComboboxEmpty>
           <span v-else-if="status === AutocompleteStatus.Loading">
-            {{ $t('Loading...') }}
+            <!-- {{ $t(Loading...) }} -->
+            Loading...
           </span>
           <span v-else-if="status === AutocompleteStatus.Initial">
-            {{ $t('Start typing...') }}
+            <!-- {{ $t(Start typing...) }} -->
+            Start typing...
           </span>
           <span v-else-if="status === AutocompleteStatus.Error">
-            {{ $t('Error loading results.') }}
+            <!-- {{ $t(Error loading results.) }} -->
+            Error loading results.
           </span>
         </div>
         <template v-else>

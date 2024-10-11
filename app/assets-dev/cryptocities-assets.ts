@@ -1,6 +1,8 @@
 import type { CryptocityUI } from 'types'
 import { Cryptocity } from 'types'
 
+const useI18n = () => ({ t: (key: string) => key })
+
 // Note that description is defined as a getter to be able to use the i18nKeyPassThrough, as the actual translation
 // for providerLabel is happening in i18n-t in MapMarkers
 export const cryptocitiesUi: Record<Cryptocity, CryptocityUI> = {

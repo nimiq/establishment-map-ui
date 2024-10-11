@@ -14,11 +14,13 @@ defineEmits({ close: () => true })
         {{ cryptocity.name }}
       </h3>
       <span v-if="cryptocity.locationsCount > 1" text="14 lh-none neutral-700">
-        {{ $tc('{count} locations', cryptocity.locationsCount) }}
+        <!-- {{ $tc('{count} locations', cryptocity.locationsCount) }} -->
+        {{ cryptocity.locationsCount }} locations
       </span>
+      <!-- :aria-label="$t('Close')" -->
       <button
         type="button"
-        :aria-label="$t('Close')" :class="cryptocity.locationsCount > 1 ? 'self-start' : 'row-span-full'"
+        aria-label="Close" :class="cryptocity.locationsCount > 1 ? 'self-start' : 'row-span-full'"
         relative top--4 col-start-3 ml-auto size-24 rounded-full p-8 text-neutral-100 transition close-btn @click="$emit('close')"
       />
     </div>

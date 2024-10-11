@@ -22,12 +22,14 @@ function reset() {
   <Transition name="fade">
     <ComboboxRoot v-if="open" v-model:searchTerm="query" @update:model-value="reset">
       <ComboboxAnchor flex="~ items-center justify-between" group relative border-b="1.5 neutral-500 focus-within:blue">
+        <!-- :placeholder="$t('Search Map')" -->
         <ComboboxInput
-          :placeholder="$t('Search Map')"
+          placeholder="Search Map"
           input-box auto-focus order-2 w-full rounded-0 py-16 pr-48 text-14 font-semibold shadow-none outline-none
         />
+        <!-- :aria-label="$t('Go back')" -->
         <ComboboxTrigger
-          :aria-label="$t('Go back')" pl-16 arrow-back text="16  neutral-700 group-focus-within:blue/80"
+          aria-label="Go back" pl-16 arrow-back text="16  neutral-700 group-focus-within:blue/80"
           @click="open = false"
         />
         <ComboboxCancel

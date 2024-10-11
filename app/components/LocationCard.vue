@@ -20,10 +20,11 @@ defineProps<{ location: MapLocation, progress: number }>()
       v-if="location.photo && progress > 0" px-5 pt-6 transition-height duration="[--duration]"
       :style="`height: ${progress * 184}px;`"
     >
+      <!-- :alt="$tc('Picture of {name}', { name: location.name })" -->
       <img
         h-full w-full rounded-8 object-cover
         :class="location.isAtm && location.isDark ? 'bg-neutral-0/60' : 'bg-neutral/10'" :src="location.photo"
-        :alt="$tc('Picture of {name}', { name: location.name })" draggable="false"
+        :alt="`Picture of ${location.name}`" draggable="false"
         @load="($event.target as HTMLImageElement).classList.remove('animate-pulse')"
       >
     </div>
@@ -34,7 +35,8 @@ defineProps<{ location: MapLocation, progress: number }>()
       <div v-if="location.cryptocity" ring="1 neutral-200" flex="~ gap-x-8" mb-20 mt-6 rounded-8 px-12 py-8>
         <div i-nimiq:logos-cryptocity text-17 />
         <p text="12 neutral-800" flex-1>
-          {{ $t('Spend Cryptocity points here') }}
+          <!-- {{ $t(Spend Cryptocity points here) }} -->
+          Spend Cryptocity points here
         </p>
         <div centered ml-8 size-16 rounded-full bg-green>
           <div text="white 9" i-nimiq:check relative bottom--0.5 />
