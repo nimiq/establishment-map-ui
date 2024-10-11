@@ -25,7 +25,7 @@ const { browserPositionIsSupported, browserPosition } = storeToRefs(useGeoIp())
     <SingleMarker :location />
   </CustomMarker>
 
-  <ClusterMarkers />
+  <MapClusterMarkers />
 
   <!-- Looks like you are about to find something interesting... -->
   <template v-if="zoom > 15">

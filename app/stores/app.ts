@@ -1,6 +1,3 @@
-import { getTimestamps } from 'database'
-import type { AnyUserReadDbFunction, Returns } from 'types'
-
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 
 export const useApp = defineStore('app', () => {
@@ -33,30 +30,30 @@ export const useApp = defineStore('app', () => {
   })
 
   // The timestamps are used to invalidate the local storage values
-  const timestamps = ref<Returns[AnyUserReadDbFunction.GetTimestamps]>()
+  // const timestamps = ref<Returns[AnyUserReadDbFunction.GetTimestamps]>()
 
-  const { init: initCaptcha, captchaTokenUuid } = useCaptcha()
-  async function init() {
-    const promises = []
-    if (!captchaTokenUuid.value)
-      promises.push(initCaptcha())
+  // const { init: initCaptcha, captchaTokenUuid } = useCaptcha()
+  // async function init() {
+  //   const promises = []
+  //   if (!captchaTokenUuid.value)
+  //     promises.push(initCaptcha())
 
-    if (!timestamps.value) {
-      const { databaseKey, databaseUrl } = useRuntimeConfig().public
-      const auth = { url: databaseUrl, apikey: databaseKey }
-      promises.push(getTimestamps(auth).then(newTimestamps => timestamps.value = newTimestamps))
-    }
+  //   if (!timestamps.value) {
+  //     const { databaseKey, databaseUrl } = useRuntimeConfig().public
+  //     const auth = { url: databaseUrl, apikey: databaseKey }
+  //     promises.push(getTimestamps(auth).then(newTimestamps => timestamps.value = newTimestamps))
+  //   }
 
-    await Promise.all(promises)
-  }
+  //   await Promise.all(promises)
+  // }
 
-  init()
+  // init()
 
   return {
     isListShown,
     showSplashScreen,
-    timestamps,
-    init,
-    captchaTokenUuid,
+    // timestamps,
+    // init,
+    captchaTokenUuid: '1234567890',
   }
 })

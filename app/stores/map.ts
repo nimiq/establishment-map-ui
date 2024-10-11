@@ -1,4 +1,3 @@
-import type { BoundingBox, EstimatedMapPosition, MapPosition, Point } from 'types'
 import type { GoogleMap } from 'vue3-google-map'
 
 export const useMap = defineStore('map', () => {

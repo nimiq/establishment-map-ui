@@ -47,6 +47,9 @@ export interface LocationBanner {
 }
 
 export type MapLocation = Tables<'locations'> & {
+  lng: number
+  lat: number
+
   category_label: string
 
   // Given the social media fields, we can generate just one link

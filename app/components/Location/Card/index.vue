@@ -7,8 +7,8 @@ defineProps<{ location: MapLocation, progress: number }>()
     duration="$duration,0" :class="{
       'of-hidden': isMobile,
       'select-auto': progress === 1 || !isMobile,
-    }" :style="{
-      'background': location.isAtm ? location.bg[0] : 'rgb(var(--nq-neutral-0,0))',
+    }" :data-inverted="location.cardStyle.isDark && location.isAtm ? true : undefined" :style="{
+      'background': location.isAtm ? location.cardStyle.bg[0] : 'rgb(var(--nq-neutral-0,0))',
       '--bottom-radius': isMobile ? `calc((1 - ${progress}) * 12px)` : '12px',
       'border-bottom-left-radius': 'var(--bottom-radius)',
       'border-bottom-right-radius': 'var(--bottom-radius)',
@@ -22,41 +22,43 @@ defineProps<{ location: MapLocation, progress: number }>()
     >
       <!-- :alt="$tc('Picture of {name}', { name: location.name })" -->
       <img
-        h-full w-full rounded-8 object-cover
-        :class="location.isAtm && location.isDark ? 'bg-neutral-0/60' : 'bg-neutral/10'" :src="location.photo"
+        h-full w-full rounded-8 object-cover bg="neutral/10 inverted:neutral-0/60" :src="location.photo"
         :alt="`Picture of ${location.name}`" draggable="false"
         @load="($event.target as HTMLImageElement).classList.remove('animate-pulse')"
       >
     </div>
 
-    <div relative px-24 py-20 :data-inverted="location.isDark && location.isAtm ? true : undefined">
-      <BasicInfoLocation :location :progress />
+    <div relative px-24 py-20>
+      <LocationBasicInfo :location :progress />
       <LocationCardDotsMenu v-if="progress === 1" :location absolute right-16 top-0 mt-20 />
-      <div v-if="location.cryptocity" ring="1 neutral-200" flex="~ gap-x-8" mb-20 mt-6 rounded-8 px-12 py-8>
+      <div
+        v-if="location.cryptocity" ring="1 neutral-200 inverted:white/40" flex="~ gap-x-8" mb-20 mt-6 rounded-8 px-12
+        py-8 bg="inverted:white/20"
+      >
         <div i-nimiq:logos-cryptocity text-17 />
-        <p text="12 neutral-800" flex-1>
-          <!-- {{ $t(Spend Cryptocity points here) }} -->
+        <p text="12 neutral-800 inverted:white" flex-1>
+          <!-- {{ $t('Spend Cryptocity points here') }} -->
           Spend Cryptocity points here
         </p>
         <div centered ml-8 size-16 rounded-full bg-green>
           <div text="white 9" i-nimiq:check relative bottom--0.5 />
         </div>
       </div>
-      <div mt-16>
+      <div z-30 mt-16>
         <CryptoList :location :progress />
       </div>
     </div>
 
     <LocationExternalUrl v-if="location.photo && location.url && progress > 0.5" :location absolute right-16 top-16 />
 
-    <Banner
-      v-if="progress > 0 && location.banner !== 'None'" :location absolute mt--36 w-full
+    <LocationBanner
+      v-if="progress > 0 && location.banner" :location absolute mt--36 w-full
       :class="{ 'rounded-b-12': !isMobile }" :style="{
-        backgroundColor: !location.isAtm ? location.bg[0] : 'transparent',
         opacity: progress / 0.8,
         bottom: `-${(1 - progress) * 70}px`, // the height is 54, we add 16px to delay the animation
         left: `calc(${1 - progress} * var(--initial-gap-to-screen) * -1)`, // make the provider grow in a vertical line
         padding: `0 calc(${(1 - progress)} * var(--initial-gap-to-screen))`, // delay the animation
+        width: `calc(100% + ${2 * (1 - progress)} * var(--initial-gap-to-screen))`, // make the provider grow in a vertical line
       }"
     />
   </div>

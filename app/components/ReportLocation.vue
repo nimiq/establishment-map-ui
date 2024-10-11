@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Issue } from 'types'
 import { ModalName } from './Modal.vue'
+import type { Issue } from '#imports'
 
 defineProps<{ location: MapLocation }>()
 
@@ -14,9 +14,9 @@ const body = computed(() => ({
   uuid: selectedUuid.value,
   reason: description.value,
   reason_id: issue.value,
-  dev: import.meta.env.DEV,
+  dev: import.meta.dev,
 }))
-const url = import.meta.env.VITE_SLACK_REPORT_URL
+const url = new URL(useRuntimeConfig().public.slackReportUrl)
 const disabled = computed(() => !description.value || !issue.value)
 const { submit, reset, isError, isSuccess, isSubmitted } = useForm({ url, body })
 </script>

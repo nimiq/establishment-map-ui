@@ -20,7 +20,7 @@ function reset() {
 
 <template>
   <Transition name="fade">
-    <ComboboxRoot v-if="open" v-model:searchTerm="query" @update:model-value="reset">
+    <ComboboxRoot v-if="open" v-model:search-term="query" @update:model-value="reset">
       <ComboboxAnchor flex="~ items-center justify-between" group relative border-b="1.5 neutral-500 focus-within:blue">
         <!-- :placeholder="$t('Search Map')" -->
         <ComboboxInput

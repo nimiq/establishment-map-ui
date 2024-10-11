@@ -16,7 +16,9 @@ export function useForm({ url, body }: UseFormOptions) {
   async function submit() {
     state.value = FormState.Loading
 
-    const bodyStr = JSON.stringify({ ...body.value, captcha: await useCaptcha().getCaptchaToken() })
+    // const bodyStr = JSON.stringify({ ...body.value, captcha: await useCaptcha().getCaptchaToken() })
+    // FIXME
+    const bodyStr = JSON.stringify({ ...body.value, captcha: 'tokentoken' })
     const res = await fetch(url, { body: bodyStr, method: 'POST' })
 
     state.value = res?.ok ? FormState.Success : FormState.Error

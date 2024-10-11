@@ -7,17 +7,18 @@ const { fillMarker, showLocationName } = useUIParams()
 <template>
   <div
     flex="~ items-center gap-8" group max-w-176 :data-active="location.uuid === selectedUuid || undefined"
-    :style="{ '--c1': location.bg[0], '--c2': location.bg[1] || location.bg[0] }" @click="selectedUuid = location.uuid"
+    :style="{ '--c1': location.cardStyle.bg[0], '--c2': location.cardStyle.bg[1] || location.cardStyle.bg[0] }"
+    @click="selectedUuid = location.uuid"
   >
     <!-- Markers when the user zooms out -->
     <div v-if="!fillMarker" class="marker" size-12 text-12 bg="$c1 image-$c1 hocus:$c2 hocus:image-$c2" />
 
     <!-- Markers for ATMs -->
     <div
-      v-else-if="location.isAtm" ring="1.5 $c1 op-10"
-      bg="$c1 image-$c1 hocus:$c2 hocus:image-$c2" centered size-32 rounded-full text-white transition-colors
+      v-else-if="location.isAtm" ring="1.5 $c1 op-10" bg="$c1 image-$c1 hocus:$c2 hocus:image-$c2" centered size-32
+      rounded-full text-white transition-colors
     >
-      <!-- {{ $t(ATM) }} -->
+      <!-- {{ $t('ATM') }} -->
       ATM
     </div>
 

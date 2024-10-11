@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import type { EstimatedMapPosition } from 'types'
-import { metersToPx } from 'geo'
-
 const props = defineProps<{ browserPosition: EstimatedMapPosition }>()
 
 const { zoom } = storeToRefs(useMap())

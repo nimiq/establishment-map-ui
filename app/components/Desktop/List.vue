@@ -42,7 +42,7 @@ watch(selectedUuid, (uuid) => {
           }" @click="useLocations().goToLocation(location.uuid, { open: true })"
         >
           <LocationCardBg v-if="location.isAtm" :location="location" :with-gradient="false" translate-y-1 />
-          <BasicInfoLocation :location="location" />
+          <LocationBasicInfo :location="location" />
         </button>
       </DynamicScrollerItem>
     </template>

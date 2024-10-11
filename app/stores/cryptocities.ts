@@ -1,9 +1,5 @@
 import type { Feature, MultiPolygon } from 'geojson'
 import { multiPolygon } from '@turf/turf'
-import type { BoundingBox, Cryptocity, CryptocityData, CryptocityDatabase } from 'types'
-import { addBBoxToArea, bBoxIsWithinArea, getItemsWithinBBox } from 'geo'
-import { getCryptocities as getDbCryptocities } from 'database'
-import { getAnonDatabaseArgs } from '@/shared'
 import { cryptocitiesUi } from '@/assets-dev/cryptocities-assets'
 
 type StoredCryptocities = ExpiringValue<{ area: Feature<MultiPolygon>, data: Partial<Record<Cryptocity, CryptocityData>> }>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import LocationCard from './LocationCard.vue'
+import LocationCard from './Card/index.vue'
 import { locations } from '@/assets-dev/stories/locations'
 
 const progressState = ref < 'expanded' | 'not-expanded' | 'loop' | 'custom' > ('expanded')

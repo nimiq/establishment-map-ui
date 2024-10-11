@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import MobileList from './MobileList.vue'
+import MobileList from './List.vue'
 import { locations } from '@/assets-dev/stories/locations'
 </script>
 

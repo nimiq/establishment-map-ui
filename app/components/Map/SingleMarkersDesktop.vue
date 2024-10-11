@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { CustomMarker } from 'vue3-google-map'
-
 const { singles } = storeToRefs(useMarkers())
 
 const { zoom } = storeToRefs(useMap())
@@ -47,9 +45,9 @@ function handlePopoverOpen(isOpen: boolean, location: MapLocation) {
   >
     <PopoverRoot @update:open="(isOpen: boolean) => handlePopoverOpen(isOpen, location)">
       <PopoverAnchor pointer-events-none absolute h-full w-28 />
-      <!-- :aria-label="$t('See location details')" -->
+      <!-- :aria-label="$t('See location details')"  -->
       <PopoverTrigger aria-label="See location details" cursor-pointer :data-trigger-uuid="location.uuid">
-        <SingleMarker :location rounded-4 transition-shadow />
+        <MapSingleMarker :location rounded-4 transition-shadow />
       </PopoverTrigger>
       <PopoverPortal :key="popoverKey">
         <Transition name="popover">
@@ -59,7 +57,7 @@ function handlePopoverOpen(isOpen: boolean, location: MapLocation) {
           >
             <LocationCard :location="location" :progress="1" />
             <PopoverArrow
-              :style="{ color: location.isAtm ? extractColorFromBg(location.bg[0]) : 'rgb(var(--nq-neutral-0))' }"
+              :style="{ color: location.isAtm ? extractColorFromBg(location.cardStyle.bg[0]) : 'rgb(var(--nq-neutral-0))' }"
               as-child right-1 rotate-180
             >
               <div i-nimiq:tooltip-triangle h-8 w-16 />

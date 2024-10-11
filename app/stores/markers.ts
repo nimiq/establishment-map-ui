@@ -1,7 +1,5 @@
-import { getClusterMaxZoom, getMarkers } from 'database'
-import { CLUSTERS_MAX_ZOOM, addBBoxToArea, algorithm, bBoxIsWithinArea, computeMarkers, getItemsWithinBBox, toMultiPolygon } from 'geo'
-import type { Cluster, LocationClusterParams, MapLocation, Markers, MemoizedMarkers } from 'types'
-import { getAnonDatabaseArgs, parseLocation } from '@/shared'
+import { parseLocation } from '@/shared'
+import type { MemoizedMarkers } from '~~/types/map'
 
 export const useMarkers = defineStore('markers', () => {
   const { setLocations, getLocations } = useLocations()

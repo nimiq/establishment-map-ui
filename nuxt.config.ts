@@ -49,13 +49,15 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: [],
+    dirs: ['~~/lib/geo-json.ts', '~~/types'],
     imports: [
-      // ...['Cluster', 'Cryptocity', 'CryptocityData'].map(name => ({ name, from: 'types', type: true })),
-      ...['Currency', 'Provider'].map(name => ({ name, from: '~~/types/database.ts' })),
-      ...['CurrencyType', 'ProviderType'].map(name => ({ name, from: '~~/types/database.ts', type: true })),
+      ...['Currency', 'Provider', 'Category'].map(name => ({ name, from: '~~/types/database.ts' })),
+      ...['Issue'].map(name => ({ name, from: '~~/types/issue.ts', declarationType: true })),
+      ...['CurrencyType', 'CurrencyTypeNoBNC', 'ProviderType', 'CategoryType'].map(name => ({ name, from: '~~/types/database.ts', type: true })),
       ...['LocationLink', 'Theme', 'LocationType'].map(name => ({ name, from: '~~/types/location.ts' })),
-      ...['MapLocation', 'Banner', 'CardType'].map(name => ({ name, from: '~~/types/location.ts', type: true })),
+      ...['MapLocation', 'LocationBanner', 'CardType'].map(name => ({ name, from: '~~/types/location.ts', type: true })),
+      ...['Cryptocity', 'CryptocityData'].map(name => ({ name, from: '~~/types/cryptocity.ts', type: true })),
+      ...['BoundingBox', 'Cluster', 'MapPosition', 'ClusterArea', 'Point', 'LocationClusterParams', 'EstimatedMapPosition'].map(name => ({ name, from: '~~/types/map.ts', type: true })),
     ],
   },
 

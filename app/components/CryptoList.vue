@@ -1,21 +1,20 @@
 <script setup lang="ts">
-import { Currency } from 'types'
-
-const props = withDefaults(
-  defineProps<{ location: MapLocation, progress?: number, max?: number /* Max number of cryptos to display. If more, display a "+n" at the end */ }>(),
-  { progress: 1, max: 3 },
-)
+const { progress = 1, max = 3, location } = defineProps<{
+  location: MapLocation
+  progress?: number
+  max?: number /* Max number of cryptos to display. If more, display a "+n" at the end */
+}>()
 
 function arrayEquals(arrA: string[], arrB: string[]): boolean {
   return arrA.length === arrB.length && arrA.every((value, index) => value === arrB[index])
 }
 
-const accepts = computed(() => props.location.accepts)
-const sells = computed(() => props.location.sells)
-const acceptToDisplay = computed(() => accepts.value.length <= props.max ? accepts.value : accepts.value.slice(0, props.max))
-const sellToDisplay = computed(() => sells.value.length <= props.max ? sells.value : sells.value.slice(0, props.max))
+const accepts = computed(() => location.accepts)
+const sells = computed(() => location.sells)
+const acceptToDisplay = computed(() => accepts.value.length <= max ? accepts.value : accepts.value.slice(0, max))
+const sellToDisplay = computed(() => sells.value.length <= max ? sells.value : sells.value.slice(0, max))
 
-const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ cryptosToDisplay: Currency[], n: number }>()
+const [DefineTemplate, ReuseTemplate] = createReusableTemplate<{ cryptosToDisplay: CurrencyType[], n: number }>()
 </script>
 
 <template>

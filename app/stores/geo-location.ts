@@ -1,5 +1,3 @@
-import type { EstimatedMapPosition } from 'types'
-
 interface GeoIpResponse {
   location?: {
     longitude: string

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { Currency } from 'types'
-
-const selected = defineModel<Currency[]>('selected')
+const selected = defineModel<CurrencyTypeNoBNC[]>('selected')
 const options = Object.values(Currency).filter(c => c !== Currency.BINANCE_PAY)
 </script>
 

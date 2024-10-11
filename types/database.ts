@@ -40,6 +40,7 @@ export const Currency: Record<Enums<'currency_enum'>, Enums<'currency_enum'>> = 
 }
 
 export type CurrencyType = typeof Currency[keyof typeof Currency]
+export type CurrencyTypeNoBNC = Exclude<CurrencyType, 'BINANCE_PAY'>
 
 type OmitKeysWithSlash<T> = {
   [K in keyof T as K extends `${string}/${string}` ? never : K]: T[K];

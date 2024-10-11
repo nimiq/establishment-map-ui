@@ -1,9 +1,6 @@
 import type { Feature, MultiPolygon } from 'geojson'
 // import { getLocations as getDbLocations, getLocation } from 'database'
-import { addBBoxToArea, bBoxIsWithinArea, getItemsWithinBBox } from 'geo'
-import type { BoundingBox, MapLocation } from 'types'
 import { useRouteQuery } from '@vueuse/router'
-import { getAnonDatabaseArgs, parseLocation } from '@/shared'
 import type { Database } from '~~/types/supabase'
 
 export const useLocations = defineStore('locations', () => {

@@ -14,7 +14,7 @@ const { mapInstance } = storeToRefs(mapStore)
 const isDark = useDark()
 const googleMapStyles = ref<(typeof GoogleMap.map.MapTypeStyle)[]>()
 watch(isDark, async () => {
-  const module = isDark.value ? await import('@/assets/map-styles/dark.ts') : await import('@/assets/map-styles/light.ts')
+  const module = isDark.value ? await import('@/assets/map-styles/dark') : await import('@/assets/map-styles/light')
   googleMapStyles.value = module.default as (typeof GoogleMap.map.MapTypeStyle)[]
 }, { immediate: true })
 

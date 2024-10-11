@@ -1,6 +1,3 @@
-import { searchLocations } from 'database'
-import { getAnonDatabaseArgs } from '@/shared'
-
 export enum Autocomplete {
   GoogleBussines = 'establishment',
   GoogleRegions = '(regions)',

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { MapLocation } from 'types'
 import { locations as defaultLocations } from '@/assets-dev/stories/locations'
 import { locations as locationsEdgeCases } from '@/assets-dev/stories/locations-edge-cases'
 

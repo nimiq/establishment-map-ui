@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import type { Currency } from 'types'
-import { ModalName } from './Modal.vue'
+import { ModalName } from '../Modal.vue'
 import type { GoogleSuggestion } from '@/composables/useAutocomplete'
 
 const selectedPlace = ref<GoogleSuggestion>()
-const selectedCryptos = ref<Currency[]>([])
+const selectedCryptos = ref<CurrencyType[]>([])
 
 const open = ref(false)
 
@@ -12,9 +11,9 @@ const body = computed(() => ({
   name: selectedPlace.value?.label,
   gmapsPlaceId: selectedPlace.value?.placeId,
   currencies: selectedCryptos.value,
-  dev: import.meta.env.DEV,
+  dev: import.meta.dev,
 }))
-const url = import.meta.env.VITE_SLACK_NEW_CANDIDATE_URL
+const url = new URL(useRuntimeConfig().public.slackNewCandidateUrl)
 const disabled = computed(() => !selectedPlace.value || !selectedCryptos.value.length)
 const { state, submit, reset, isError, isSuccess, isSubmitted } = useForm({ url, body })
 </script>

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Theme } from 'types'
-
 const { isListShown } = storeToRefs(useApp())
 const { singlesInView: locations, clustersInView } = storeToRefs(useMarkers())
 
