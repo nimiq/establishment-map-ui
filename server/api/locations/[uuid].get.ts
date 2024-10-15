@@ -30,9 +30,7 @@ export default defineEventHandler(async (event) => {
 
   // Check if the location image exists in blob storage
   const blob = hubBlob()
-  consola.info(`Checking for image in blob storage: ${key}`)
   const existingImage = await blob.head(key).catch(() => false)
-  consola.info(`Existing image for ${key}: ${existingImage ? 'yes' : 'no'}`)
   const placeId = data.gmaps_place_id
 
   // If there's a Google Maps place ID and the image doesn't exist, fetch and store it
@@ -40,6 +38,7 @@ export default defineEventHandler(async (event) => {
     const { data: image, error } = await fetchPhotoFromGoogle(placeId)
     if (error || !image) {
       consola.warn(error)
+      data.photo = ``
     }
     else if (blob) {
       // Store the fetched image in blob storage
@@ -64,7 +63,7 @@ async function fetchPhotoFromGoogle(placeId: string): Result<{ contentType: stri
     const photoReference = placeDetails.result?.photos?.[0]?.photo_reference
 
     if (!photoReference)
-      return { data: undefined, error: `No photo reference found for place ID ${placeId}` }
+      return { data: undefined, error: `No photo reference found for place ID ${placeId}. Got ${JSON.stringify(placeDetails)}` }
 
     // Fetch the actual photo using the photo reference
     const imageUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${photoReference}&key=${gmapsApiKey}`

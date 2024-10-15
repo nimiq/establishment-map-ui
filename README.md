@@ -103,3 +103,5 @@ Check out the [deployment documentation](https://nuxt.com/docs/getting-started/d
 - [X] Use Provider enum
 - [X] Use Currency enum
 - [X] Use NuxtFonts
+- [ ] Favicon
+- [ ] SEO

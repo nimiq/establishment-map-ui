@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     supabaseAdminPassword: env.SUPABASE_ADMIN_PASSWORD,
 
     public: {
-      googleMapKey: env.NUXT_PUBLIC_GOOGLE_MAP_KEY,
+      googleMapsApiKey: env.NUXT_PUBLIC_GOOGLE_MAPS_API_KEY,
       slackNewCandidateUrl: env.NUXT_PUBLIC_SLACK_NEW_CANDIDATE_URL,
       slackReportUrl: env.NUXT_PUBLIC_SLACK_REPORT_URL,
       // recaptcha: {
