@@ -8,3 +8,5 @@ node_modules/
 deployment-map
 
 .env
+.env.nuxt
+.env.vite
