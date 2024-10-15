@@ -76,7 +76,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/api/locations/**': { cors: true },
     '/images/**': { cors: true },
-  }
+  },
 
   ignore: ['./bot'],
 
