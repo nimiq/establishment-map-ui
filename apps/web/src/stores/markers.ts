@@ -32,7 +32,7 @@ export const useMarkers = defineStore('markers', () => {
   const singlesInView = computed(() => boundingBox.value ? getItemsWithinBBox(singles.value, boundingBox.value) : [])
 
   function getIndex({ zoom, categories, currencies }: LocationClusterParams) {
-    return memoized.value.findIndex(m => m.key.zoom === zoom && m.key.categories === categories && m.key.currencies === currencies)
+    return memoized?.value?.findIndex?.(m => m.key.zoom === zoom && m.key.categories === categories && m.key.currencies === currencies)
   }
 
   function getMemoized() {

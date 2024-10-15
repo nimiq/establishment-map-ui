@@ -21,7 +21,7 @@ defineProps<{ location: MapLocation, progress: number }>()
       :style="`height: ${progress * 184}px;`"
     >
       <img
-        h-full w-full rounded-8 object-cover bg="neutral/10 inverted:neutral-0/60" :src="location.photo"
+        h-full w-full rounded-8 object-cover bg="neutral/10 inverted:neutral-0/60" :src="!location.photo.startsWith('https') ? `https://crypto-map.nuxt.dev/images/location:${location.uuid}` : location.photo"
         :alt="$tc('Picture of {name}', { name: location.name })" draggable="false"
         @load="($event.target as HTMLImageElement).classList.remove('animate-pulse')"
       >

@@ -1,5 +1,5 @@
 import type { Feature, MultiPolygon } from 'geojson'
-import { getLocations as getDbLocations, getLocation } from 'database'
+import { getLocations as getDbLocations } from 'database'
 import { addBBoxToArea, bBoxIsWithinArea, getItemsWithinBBox } from 'geo'
 import type { BoundingBox, MapLocation } from 'types'
 import { useRouteQuery } from '@vueuse/router'
@@ -37,7 +37,9 @@ export const useLocations = defineStore('locations', () => {
   async function getLocationByUuid(uuid: string) {
     if (uuid in locationsMap.value)
       return locationsMap.value[uuid]
-    const location = await getLocation(await getAnonDatabaseArgs(), uuid, parseLocation)
+
+    const res = await fetch(`https://crypto-map.nuxt.dev/api/locations/${uuid}`)
+    const location = parseLocation(await res.json())
     if (!location)
       return
     locationsMap.value[uuid] = location
