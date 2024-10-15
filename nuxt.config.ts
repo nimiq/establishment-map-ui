@@ -23,8 +23,14 @@ export default defineNuxtConfig({
     '@nuxt/eslint',
     'radix-vue/nuxt',
     '@nuxtjs/supabase',
+    '@nuxthub/core',
     '@nuxt/fonts',
   ],
+
+  hub: {
+    kv: true,
+    blob: true,
+  },
 
   supabase: {
     redirect: false,

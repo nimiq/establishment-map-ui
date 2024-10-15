@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { object, pipe, regex, safeParse, string } from 'valibot'
 import { createConsola } from 'consola'
 import { serverSupabaseClient } from '#supabase/server'
 import type { Database } from '~~/types/supabase'
@@ -6,14 +6,16 @@ import { cryptocityRegex, getGeoJson, getOsmDetails } from '~~/server/lib/crypto
 
 const consola = createConsola({ level: 3 })
 
-const requestSchema = z.object({
-  countryCode: z.string(),
+const requestSchema = object({
+  countryCode: string(),
   // CamelCase with underscores
-  city: z.string().regex(cryptocityRegex, '`city` must be in CamelCase with underscores'),
+  city: pipe(string(), regex(cryptocityRegex, '`city` must be in CamelCase with underscores')),
 })
 
 export default defineEventHandler(async (event) => {
-  const params = await readValidatedBody(event, body => requestSchema.parse(body))
+  const { output: params, issues, success } = await readValidatedBody(event, body => safeParse(requestSchema, body))
+  if (!success || !params)
+    return createError({ message: `Invalid request`, status: 400, cause: JSON.stringify(issues) })
 
   consola.info(`Inserting city ${params.city} in ${params.countryCode}`)
 
