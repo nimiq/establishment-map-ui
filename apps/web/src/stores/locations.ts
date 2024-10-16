@@ -1,9 +1,8 @@
 import type { Feature, MultiPolygon } from 'geojson'
-import { getLocations as getDbLocations } from 'database'
 import { addBBoxToArea, bBoxIsWithinArea, getItemsWithinBBox } from 'geo'
 import type { BoundingBox, MapLocation } from 'types'
 import { useRouteQuery } from '@vueuse/router'
-import { getAnonDatabaseArgs, parseLocation } from '@/shared'
+import { parseLocation } from '@/shared'
 
 export const useLocations = defineStore('locations', () => {
   // Reduce redundant database fetches by reusing fetched locations by tracking the areas explored by the user
@@ -28,7 +27,16 @@ export const useLocations = defineStore('locations', () => {
     }
 
     // New area, we need to fetch from the database
-    const newLocations = await getDbLocations(await getAnonDatabaseArgs(), boundingBox, parseLocation)
+    const url = new URL('https://crypto-map.nuxt.dev/api/locations/')
+    url.searchParams.append('nelat', boundingBox.neLat.toString())
+    url.searchParams.append('nelng', boundingBox.neLng.toString())
+    url.searchParams.append('swlat', boundingBox.swLat.toString())
+    url.searchParams.append('swlng', boundingBox.swLng.toString())
+    const res = await fetch(url)
+    const rawLocations = await res.json()
+    if (!rawLocations)
+      return []
+    const newLocations = rawLocations.map(parseLocation)
     setLocations(newLocations)
     visitedAreas.value = addBBoxToArea(boundingBox, visitedAreas.value)
     return newLocations
