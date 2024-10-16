@@ -7,7 +7,7 @@ import { cacheLocation } from '~~/server/utils/cache-location'
 
 export default defineEventHandler(async (event) => {
   // Validate the route parameters
-  const { output: query, issues, success } = await getValidatedRouterParams(event, query => safeParse(BoundingBoxSchema, query))
+  const { output: query, issues, success } = await getValidatedQuery(event, query => safeParse(BoundingBoxSchema, query))
   if (!success || !query)
     throw createError({ statusCode: 400, message: 'Invalid path parameters', cause: JSON.stringify(issues) })
 
