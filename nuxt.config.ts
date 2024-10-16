@@ -75,6 +75,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/api/locations/**': { cors: true },
+    '/api/markers/**': { cors: true },
     '/images/**': { cors: true },
   },
 
