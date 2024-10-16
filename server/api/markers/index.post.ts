@@ -2,7 +2,11 @@ import { createConsola } from 'consola/core'
 import { serverSupabaseClient } from '#supabase/server'
 import { euclideanDistance } from '~~/lib/geo-utilities'
 import { algorithm, computeMarkers } from '~~/lib/compute-markers'
-import type { Database } from '~~/types/supabase'
+import type { Database, Json } from '~~/types/supabase'
+import type { BoundingBox } from '~~/types/map'
+import type { CryptocityType } from '~~/types/cryptocity'
+
+// TODO Figure out how to invoke this
 
 type Radii = Record<number /* minZoom, maxZoom */, number /* the radius for minZoom is 120, the radius for maxZoom is 150 */>
 const MIN_ZOOM = 3
@@ -58,11 +62,11 @@ export default defineEventHandler(async (event) => {
       const closestCluster = locationClusters
         .map(cluster => ({ ...cluster, distance: euclideanDistance(cluster, attachedCity) }))
         .sort((a, b) => a.distance - b.distance)[0]
-      closestCluster.cryptocities.push(attachedCity.city as Cryptocity)
+      closestCluster.cryptocities.push(attachedCity.city as CryptocityType)
     }
 
     const markers = singlesToAdd.concat(locationClusters).concat(singlesCryptocities)
-    const { error } = await client.rpc('insert_markers', { zoom_level: zoom, items: markers })
+    const { error } = await client.rpc('insert_markers', { zoom_level: zoom, items: markers as unknown as Json[] })
     if (error)
       console.error(`Error inserting markers: ${error.message}`)
   }
