@@ -68,6 +68,7 @@ export async function getLocation(event: H3Event, key: string) {
 
   // If not in cache, fetch the location data from Supabase
   const supabase = await serverSupabaseClient<Database>(event)
+  const uuid = key.replace('location:', '')
   const { data: location, error } = await supabase.rpc('get_location_by_uuid', { location_uuid: uuid }) as unknown as { data: MapLocation, error: any }
   if (error || !location)
     throw createError({ statusCode: 404, message: `Location with UUID ${uuid} not found` })
