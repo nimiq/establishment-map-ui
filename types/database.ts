@@ -70,3 +70,9 @@ export const Provider: Record<ToPascalCase<ProviderEnums>, ProviderEnums> = {
 export const Providers = Object.values(Provider) as ProviderType[]
 
 export type ProviderType = typeof Provider[keyof typeof Provider]
+
+export interface LastUpdatedAt {
+  markers: string
+  locations: string
+  cryptocities: string
+}

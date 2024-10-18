@@ -30,7 +30,7 @@ export const useApp = defineStore('app', () => {
   })
 
   // The timestamps are used to invalidate the local storage values
-  // const timestamps = ref<Returns[AnyUserReadDbFunction.GetTimestamps]>()
+  const { data: timestamps } = useFetch('/api/timestamps')
 
   // const { init: initCaptcha, captchaTokenUuid } = useCaptcha()
   // async function init() {
@@ -52,8 +52,7 @@ export const useApp = defineStore('app', () => {
   return {
     isListShown,
     showSplashScreen,
-    // timestamps,
-    // init,
+    timestamps,
     captchaTokenUuid: '1234567890',
   }
 })
