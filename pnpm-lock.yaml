@@ -37,8 +37,8 @@ importers:
         specifier: ^3.8.0
         version: 3.8.0(@typescript-eslint/utils@8.10.0(eslint@9.12.0(jiti@2.3.3))(typescript@5.6.3))(@unocss/eslint-plugin@0.63.4(eslint@9.12.0(jiti@2.3.3))(typescript@5.6.3))(@vue/compiler-sfc@3.5.12)(eslint@9.12.0(jiti@2.3.3))(typescript@5.6.3)
       '@iconify-json/nimiq':
-        specifier: https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@814b6a1
-        version: nimiq-icons@https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@814b6a1
+        specifier: https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@d43e121
+        version: nimiq-icons@https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@d43e121
       '@nuxt/eslint':
         specifier: ^0.6.0
         version: 0.6.0(eslint@9.12.0(jiti@2.3.3))(magicast@0.3.5)(rollup@4.24.0)(typescript@5.6.3)(vite@5.4.9(@types/node@22.7.6)(terser@5.36.0))(webpack-sources@3.2.3)
@@ -4914,8 +4914,8 @@ packages:
     resolution: {integrity: sha512-eTCOYQcLlT4sNXuZ0/TA5JllvOns+pnbH0xeK0kjAo83doqMMsk3UfyuzsolOmQxuuywV5ItVPY23HUVjZHwvA==}
     engines: {node: '>=14'}
 
-  nimiq-icons@https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@814b6a1:
-    resolution: {tarball: https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@814b6a1}
+  nimiq-icons@https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@d43e121:
+    resolution: {tarball: https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@d43e121}
     version: 1.0.0
 
   nitro-cloudflare-dev@0.2.0:
@@ -13524,7 +13524,7 @@ snapshots:
       - supports-color
       - vite
 
-  nimiq-icons@https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@814b6a1:
+  nimiq-icons@https://pkg.pr.new/onmax/nimiq-ui/nimiq-icons@d43e121:
     dependencies:
       '@iconify/tools': 4.0.7
       '@iconify/utils': 2.1.33
