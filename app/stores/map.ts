@@ -17,6 +17,7 @@ export const useMap = defineStore('map', () => {
   watchDebounced(
     boundingBox,
     () => {
+      // TOOD Try with navigateTo
       router.push({
         name: '@lat,lng,zoomz',
         params: { lat: lat.value.toString(), lng: lng.value.toString(), zoom: zoom.value.toString() },
