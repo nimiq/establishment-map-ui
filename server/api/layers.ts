@@ -11,15 +11,14 @@ import { safeParse } from 'valibot'
 
 // TODO Rename compute to cluster
 
-const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
+const CACHE_DURATION = 24 * 60 * 60 * 1000 // 24 hours
 
 export default defineEventHandler(async (event) => {
   const { output: mapViewport, issues, success } = await getValidatedQuery(event, query => safeParse(MapViewportSchema, query))
   if (!success || !mapViewport)
     throw createError({ statusCode: 400, message: 'Invalid path parameters', cause: JSON.stringify(issues) })
 
-  const { boundingBox, zoom } = mapViewport
-  const { nelat, nelng, swlat, swlng } = boundingBox
+  const { nelat, nelng, swlat, swlng, zoom } = mapViewport
 
   const kv = hubKV()
 
@@ -29,7 +28,7 @@ export default defineEventHandler(async (event) => {
   if (missingTiles.length === 0)
     return { type: 'FeatureCollection', features: tiles.flatMap(tile => tile.data!.features) } as FeatureCollection
 
-  const layerData = await fetchLayerData(event, mapViewport)
+  const layerData = await fetchLayerData(event, { boundingBox: { nelat, nelng, swlat, swlng }, zoom })
   await Promise.all(missingTiles.map(tile => kv.set(tile.key, JSON.stringify(layerData), { ttl: CACHE_DURATION })))
   return layerData
 })
