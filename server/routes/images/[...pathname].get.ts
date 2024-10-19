@@ -3,6 +3,7 @@ import type { Result } from '~~/types/util'
 import { serverSupabaseClient } from '#supabase/server'
 import consola from 'consola'
 
+// TODO eventHandlerCache?
 export default eventHandler(async (event) => {
   const { pathname } = getRouterParams(event)
 

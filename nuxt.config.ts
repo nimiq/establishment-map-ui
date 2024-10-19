@@ -54,7 +54,7 @@ export default defineNuxtConfig({
       ...['MapLocation', 'LocationBanner', 'CardType', 'LocationLinkType'].map(name => ({ name, from: '~~/types/location.ts', type: true })),
       ...['Cryptocity'].map(name => ({ name, from: '~~/types/cryptocity.ts' })),
       ...['CryptocityData', 'CryptocityType', 'CryptocityDatabase', 'CryptocityUI'].map(name => ({ name, from: '~~/types/cryptocity.ts', type: true })),
-      ...['BoundingBox', 'Cluster', 'MapPosition', 'ClusterArea', 'Point', 'LocationClusterParams', 'EstimatedMapPosition'].map(name => ({ name, from: '~~/types/map.ts', type: true })),
+      ...['BoundingBox', 'Cluster', 'MapPosition', 'MapViewport', 'Point', 'LocationClusterParams', 'EstimatedMapPosition'].map(name => ({ name, from: '~~/types/map.ts', type: true })),
     ],
   },
 

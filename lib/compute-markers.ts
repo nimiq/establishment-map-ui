@@ -4,7 +4,7 @@ import { toPoint } from './geo-json'
 export const CLUSTERS_MAX_ZOOM = 17
 export const algorithm = (radius: number) => new Supercluster({ radius, maxZoom: CLUSTERS_MAX_ZOOM })
 
-export function computeMarkers<T extends Point>(algorithm: Supercluster, markers: T[], { zoom, boundingBox: bbox }: ClusterArea) {
+export function computeMarkers<T extends Point>(algorithm: Supercluster, markers: T[], { zoom, boundingBox: bbox }: MapViewport) {
   const singles: T[] = []
   const clusters: Cluster[] = []
 

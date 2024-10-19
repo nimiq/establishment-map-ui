@@ -1,4 +1,6 @@
+import type { MapViewportSchema } from '~~/lib/schemas.js'
 import type { Feature, MultiPolygon } from 'geojson'
+import type { InferInput } from 'valibot'
 import type { Cryptocity } from './cryptocity.ts'
 import type { MapLocation } from './location.ts'
 
@@ -34,10 +36,7 @@ export interface Cluster {
   cryptocities: Cryptocity[]
 }
 
-export interface ClusterArea {
-  zoom: number
-  boundingBox: BoundingBox
-}
+export type MapViewport = InferInput<typeof MapViewportSchema>
 
 export interface LocationClusterParams {
   zoom: number
