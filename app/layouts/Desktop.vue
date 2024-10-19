@@ -1,19 +1,17 @@
 <script setup lang="ts">
-const { isListShown } = storeToRefs(useApp())
-const { singlesInView, clustersInView } = storeToRefs(useMarkers())
+// const { isListShown } = storeToRefs(useApp())
+// const { singlesInView, clustersInView } = storeToRefs(useMarkers())
 
-const toggleList = useToggle(isListShown)
+// const toggleList = useToggle(isListShown)
 </script>
 
 <template>
   <!-- eslint-disable vue/no-multiple-template-root -->
-  <keep-alive>
-    <TheMapInstance size-screen />
-  </keep-alive>
-  <!-- Shadow -->
+  <TheMapInstance />
+  <!-- Shadow -- >
   <div id="shadow-left" pointer-events-none absolute inset-0 max-w-368 from-neutral to-transparent bg-gradient-to-r />
   <aside pointer-events-none absolute inset-24 right-initial h-max max-w-384 children:pointer-events-auto flex="~ col">
-    <!-- This element if for the shadow in the header. We cannot use a normal shadow because the use of mask-image restrict us of using shadows -->
+<!-- This element if for the shadow in the header. We cannot use a normal shadow because the use of mask-image restrict us of using shadows -- >
     <div
       id="shadow" ring="1.5 neutral/3" pointer-events-none absolute inset-0 shadow
       style="height: calc(66px + var(--dynamic-block, 0) * 88px)"
@@ -34,7 +32,7 @@ const toggleList = useToggle(isListShown)
         i-nimiq:chevron-down :class="{ 'rotate-180': isListShown }" text="10 op-70"
         transition="transform delay-500"
       />
-      <!-- {{ isListShown ? $t('Hide list') : $t('Show list') }} -->
+<!-- {{ isListShown ? $t('Hide list') : $t('Show list') }} -- >
       {{ isListShown ? 'Hide list' : 'Show list' }}
     </button>
   </aside>
@@ -44,6 +42,7 @@ const toggleList = useToggle(isListShown)
       FAQ
     </template>
   </FAQ>
+-->
 </template>
 
 <style scoped>

@@ -1,15 +1,17 @@
-import type { GoogleMap } from 'vue3-google-map'
+import type { BoundingBox } from '~~/types/map'
+import type { Map as OlMap } from 'ol'
+import type { Extent } from 'ol/extent'
+import { fromLonLat, toLonLat } from 'ol/proj'
 
 export const useMap = defineStore('map', () => {
-  const mapInstance = shallowRef<typeof GoogleMap>()
-  const map = computed(() => mapInstance.value?.map as google.maps.Map | undefined)
+  const mapInstance = shallowRef<OlMap>()
   const mapLoaded = ref(false)
   const boundingBox = ref<BoundingBox>()
 
   const lat = useRouteParams('lat', '', { transform: Number, mode: 'replace' })
   const lng = useRouteParams('lng', '', { transform: Number })
   const zoom = useRouteParams('zoom', '', { transform: Number })
-  const center = computed(() => lat.value && lng.value ? { lat: lat.value, lng: lng.value } : undefined)
+  const center = computed(() => lat.value && lng.value ? [lng.value, lat.value] : undefined)
 
   const router = useRouter()
   const route = useRoute()
@@ -17,7 +19,6 @@ export const useMap = defineStore('map', () => {
   watchDebounced(
     boundingBox,
     () => {
-      // TOOD Try with navigateTo
       router.push({
         name: '@lat,lng,zoomz',
         params: { lat: lat.value.toString(), lng: lng.value.toString(), zoom: zoom.value.toString() },
@@ -27,97 +28,88 @@ export const useMap = defineStore('map', () => {
     },
     { debounce: 500, maxWait: 1000 },
   )
-  // The bounds event is fired a lot, so we debounce it
 
-  // const unwatch = watch(map, async (map) => {
-  //   if (!map)
-  //     return
+  const increaseZoom = () => {
+    if (mapInstance.value) {
+      const view = mapInstance.value.getView()
+      view.setZoom(view.getZoom()! + 1)
+    }
+  }
 
-  //   // setPosition({ center: { lat: params.lat, lng: params.lng }, zoom: params.zoom }, { clearMarkers: true })
-  //   // map.addListener('center_changed', () => {
-  //   //   const { lat: newLat, lng: newLng } = map.getCenter()?.toJSON() as Point
-  //   //   lat.value = newLat
-  //   //   lng.value = newLng
-  //   // })
-  //   // map.addListener('zoom_changed', () => {
-  //   //   zoom.value = map.getZoom()!
-  //   // })
-  //   // map.addListener('bounds_changed', onBoundsChanged)
-  //   unwatch()
-  // })
-
-  const increaseZoom = () => map.value?.setZoom(zoom.value + 1)
-  const decreaseZoom = () => map.value?.setZoom(zoom.value - 1)
+  const decreaseZoom = () => {
+    if (mapInstance.value) {
+      const view = mapInstance.value.getView()
+      view.setZoom(view.getZoom()! - 1)
+    }
+  }
 
   interface SetPositionOptions {
-    /*
-      * If true, the map will pan to the new position instead of setting it directly
-      * This is useful when the map is not centered on the user's location
-      *
-      * @default false
-      */
     smooth?: boolean
-
-    /**
-     * If true, the markers will be cleared before setting the position
-     *
-     * @default false
-     */
     clearMarkers?: boolean
   }
-  function setPosition(p?: MapPosition | EstimatedMapPosition | google.maps.LatLngBounds, { clearMarkers, smooth }: SetPositionOptions = {}) {
-    if (!map.value || !p)
+
+  function setPosition(p?: [number, number] | Extent, { smooth, clearMarkers }: SetPositionOptions = {}) {
+    if (!mapInstance.value || !p)
       return
 
-    if ('zoom' in p) {
-      if (smooth) {
-        map.value?.panTo(p.center)
-      }
-      else {
-        map.value?.setCenter(p.center)
-        map.value?.setZoom(p.zoom)
-      }
+    const view = mapInstance.value.getView()
+
+    if (Array.isArray(p) && p.length === 2) {
+      const center = fromLonLat(p)
+      if (smooth)
+        view.animate({ center })
+      else
+        view.setCenter(center)
     }
-    else if ('accuracy' in p) {
-      const circle = new google.maps.Circle({
-        center: p.center,
-        radius: p.accuracy,
-      })
-      map.value?.fitBounds(circle.getBounds()!)
-    }
-    else if (p instanceof google.maps.LatLngBounds) {
-      map.value?.fitBounds(p)
+    else if (p.length === 4) {
+      if (smooth)
+        view.fit(p, { duration: 1000 })
+      else
+        view.fit(p)
     }
 
-    // It takes a few seconds to recompute the clusters, so we clear the markers to avoid showing them
     if (clearMarkers)
       useMarkers().clearMarkers()
   }
 
-  async function goToPlaceId(placeId?: string) {
-    const geocoder = new google.maps.Geocoder()
-    if (!placeId)
-      return
-    const res = await geocoder.geocode({ placeId })
-    setPosition(res.results[0]?.geometry.viewport)
+  async function goToPlaceId(_placeId?: string) {
+    console.warn('goToPlaceId is not implemented for OpenLayers')
+  }
+
+  function updateCenterAndZoom() {
+    if (mapInstance.value) {
+      const view = mapInstance.value.getView()
+      const center = view.getCenter()
+      if (center) {
+        const [longitude, latitude] = toLonLat(center)
+        lat.value = latitude!
+        lng.value = longitude!
+      }
+      zoom.value = view.getZoom()!
+    }
+  }
+
+  function updateBoundingBox() {
+    if (mapInstance.value) {
+      const extent = mapInstance.value.getView().calculateExtent(mapInstance.value.getSize())
+      const [swlng, swlat, nelng, nelat] = toLonLat(extent)
+      boundingBox.value = { swlat, swlng, nelat, nelng } as BoundingBox
+    }
   }
 
   return {
-    map,
-    mapInstance,
+    map: mapInstance,
     mapLoaded,
     lat,
     lng,
-
     setPosition,
-
     center,
     zoom,
     boundingBox,
-
     increaseZoom,
     decreaseZoom,
-
     goToPlaceId,
+    updateCenterAndZoom,
+    updateBoundingBox,
   }
 })

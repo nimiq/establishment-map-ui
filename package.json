@@ -18,12 +18,18 @@
     "@vueuse/integrations": "^11.1.0",
     "@vueuse/router": "^11.1.0",
     "consola": "^3.2.3",
+    "geobuf": "^3.0.2",
     "idb-keyval": "^6.2.1",
+    "ol": "^10.2.1",
+    "ol-contextmenu": "^5.5.0",
+    "ol-ext": "^4.0.24",
+    "pbf": "^4.0.1",
     "supercluster": "^8.0.1",
     "valibot": "^0.42.1",
     "vue": "^3.5.12",
     "vue-router": "^4.4.5",
-    "vue3-google-map": "^0.21.0"
+    "vue3-google-map": "^0.21.0",
+    "vue3-openlayers": "^11.2.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^3.8.0",
@@ -33,6 +39,7 @@
     "@nuxthub/core": "^0.7.34",
     "@nuxtjs/supabase": "^1.4.1",
     "@pinia/nuxt": "^0.5.5",
+    "@types/geobuf": "^3.0.4",
     "@types/geojson": "^7946.0.14",
     "@types/google.maps": "^3.58.1",
     "@types/supercluster": "^7.1.3",

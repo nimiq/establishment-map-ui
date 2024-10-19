@@ -17,6 +17,8 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
+  ssr: false,
+
   modules: ['@pinia/nuxt', '@vueuse/nuxt', '@unocss/nuxt', '@nuxt/eslint', 'radix-vue/nuxt', '@nuxtjs/supabase', '@nuxthub/core', '@nuxt/fonts'],
 
   hub: {
@@ -43,6 +45,8 @@ export default defineNuxtConfig({
       // }
     },
   },
+
+  plugins: [{ src: '~~/plugins/ol-map.client.ts' }],
 
   imports: {
     imports: [
@@ -80,4 +84,10 @@ export default defineNuxtConfig({
   },
 
   compatibilityDate: '2024-07-17',
+
+  $development: {
+    hub: {
+      remote: true,
+    },
+  },
 })

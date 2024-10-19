@@ -73,17 +73,35 @@ export const useGeoIp = defineStore('geo-ip', () => {
       /* eslint-disable-next-line no-alert */
       alert(`${errorBrowser.value.message}. Moving to closest location`)
       await geolocateIp()
-      if (!ipPositionError.value && ipPosition.value)
-        useMap().setPosition(ipPosition.value)
+      if (!ipPositionError.value && ipPosition.value) {
+        navigateTo({
+          name: '@lat,lng,zoomz',
+          params: {
+            lat: ipPosition.value.center.lat.toString(),
+            lng: ipPosition.value.center.lng.toString(),
+            zoom: '14',
+          },
+        })
+      }
+
       isGeolocationLoading.value = false
       return
     }
     isGeolocationLoading.value = false
-    if (browserPosition.accuracy)
-      useMap().setPosition(browserPosition)
-    else
+    if (browserPosition.accuracy) {
+      navigateTo({
+        name: '@lat,lng,zoomz',
+        params: {
+          lat: browserPosition.center.lat.toString(),
+          lng: browserPosition.center.lng.toString(),
+          zoom: '14',
+        },
+      })
+    }
+    else {
       /* eslint-disable-next-line no-alert */
       alert('Could not get your location.')
+    }
   }
 
   return {
