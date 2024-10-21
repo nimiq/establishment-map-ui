@@ -1,10 +1,10 @@
-import { intersect, maxValue, minValue, number, object, pipe, rawTransform, string, uuid } from 'valibot'
+import { intersect, maxValue, minValue, number, object, pipe, rawTransform, transform, string, uuid, unknown } from 'valibot'
 
 export const UuidSchema = pipe(string(), uuid('The UUID is badly formatted'))
 export const UuidObjectSchema = object({ uuid: UuidSchema })
 
-export const LatSchema = pipe(number(), minValue(-90, 'Latitude must be greater than or equal to -90'), maxValue(90, 'Latitude must be less than or equal to 90'))
-export const LngSchema = pipe(number(), minValue(-180, 'Longitude must be greater than or equal to -180'), maxValue(180, 'Longitude must be less than or equal to 180'))
+export const LatSchema = pipe(unknown(), transform(Number), minValue(-90, 'Latitude must be greater than or equal to -90'), maxValue(90, 'Latitude must be less than or equal to 90'))
+export const LngSchema = pipe(unknown(), transform(Number), minValue(-180, 'Longitude must be greater than or equal to -180'), maxValue(180, 'Longitude must be less than or equal to 180'))
 export const BoundingBoxSchema = object({ nelat: LatSchema, nelng: LngSchema, swlat: LatSchema, swlng: LngSchema })
 export const BoundingBoxObjectSchema = object({ boundingBox: BoundingBoxSchema })
 export const BoundingBoxStrSchema = pipe(string(), rawTransform(({ dataset: str, addIssue }) => {
