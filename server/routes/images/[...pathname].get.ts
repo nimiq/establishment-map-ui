@@ -9,12 +9,12 @@ export default eventHandler(async (event) => {
   const { pathname } = getRouterParams(event)
 
   // if the request is for a location image, serve it from blob storage
-  if (pathname.startsWith('location:')) {
+  if (pathname.startsWith('location/')) {
     // if the location is not cached, fetch it from the KV store
     if (!await hubKV().has(pathname)) {
       consola.info(`Location ${pathname} not cached, fetching from KV store`)
 
-      const uuid = pathname.replace('location:', '')
+      const uuid = pathname.replace('location/', '')
       const supabase = await serverSupabaseClient<Database>(event)
       const { data: location, error } = await supabase.from('locations').select('gmaps_place_id').eq('uuid', uuid).single()
       if (error || !location?.gmaps_place_id)
