@@ -46,6 +46,22 @@ export async function searchLocations(dbArgs: DatabaseAuthArgs | DatabaseAnonArg
   return res.map(r => ({ name: r.label, matchedSubstrings: r.matchedSubstrings, uuid: r.id }))
 }
 
+export async function searchCryptocities(dbArgs: DatabaseAuthArgs | DatabaseAnonArgs, queryInput: string) {
+  const query = new URLSearchParams()
+  query.append('p_query', queryInput)
+  type CryptocitiesDatabase = { label: string, city_id: string, matchedSubstrings: { length: number, offset: number }[], lat: number, lng: number, zoom_level: number }[]
+
+  const res = (await fetchDb<CryptocitiesDatabase>(AnonReadDbFunction.SearchCryptocities, dbArgs, { query })) ?? []
+  return res.map(r => ({
+    name: r.label,
+    matchedSubstrings: r.matchedSubstrings,
+    id: r.city_id,
+    lat: r.lat,
+    lng: r.lng,
+    zoom: r.zoom_level,
+  }))
+}
+
 export async function getMarkers(
   dbArgs: DatabaseAuthArgs | DatabaseAnonArgs,
   { boundingBox: { neLat, neLng, swLat, swLng }, zoom }: Args[AnonReadDbFunction.GetMarkers],

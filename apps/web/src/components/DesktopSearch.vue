@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const autocomplete = Object.values(Autocomplete)
-const { query, status, googleSuggestions, locationSuggestions } = useAutocomplete({ autocomplete })
+const { query, status, googleSuggestions, locationSuggestions, cryptocitySuggestions } = useAutocomplete({ autocomplete })
 </script>
 
 <template>
@@ -13,6 +13,6 @@ const { query, status, googleSuggestions, locationSuggestions } = useAutocomplet
       />
       <ComboboxCancel v-else i-nimiq:cross absolute right-16 text="10  neutral-700 peer-focus-visible:blue/80" />
     </ComboboxAnchor>
-    <SearchSuggestions :status :google-suggestions :location-suggestions top-66 rounded-b-16 shadow />
+    <SearchSuggestions :status :google-suggestions :location-suggestions :cryptocity-suggestions top-66 rounded-b-16 shadow />
   </ComboboxRoot>
 </template>

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const autocomplete = Object.values(Autocomplete)
-const { query, status, googleSuggestions, locationSuggestions } = useAutocomplete({ autocomplete })
+const { query, status, googleSuggestions, locationSuggestions, cryptocitySuggestions } = useAutocomplete({ autocomplete })
 const open = defineModel<boolean>('open')
 open.value = query.value !== ''
 
@@ -35,7 +35,7 @@ function reset() {
           transition-opacity delay-500 text="10  neutral-700 group-focus-within:blue/80"
         />
       </ComboboxAnchor>
-      <SearchSuggestions :status :google-suggestions :location-suggestions top-55 mt-16 />
+      <SearchSuggestions :status :google-suggestions :location-suggestions :cryptocity-suggestions top-55 mt-16 />
     </ComboboxRoot>
   </Transition>
 </template>

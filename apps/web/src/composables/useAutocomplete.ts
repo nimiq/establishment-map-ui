@@ -1,10 +1,11 @@
-import { searchLocations } from 'database'
+import { searchCryptocities, searchLocations } from 'database'
 import { getAnonDatabaseArgs } from '@/shared'
 
 export enum Autocomplete {
   GoogleBussines = 'establishment',
   GoogleRegions = '(regions)',
   CryptoMapLocation = 'crypto-map-location',
+  Cryptocities = 'cryptocities',
 }
 
 export enum AutocompleteStatus {
@@ -17,6 +18,14 @@ export enum AutocompleteStatus {
 
 export interface PredictionSubstring { length: number, offset: number }
 export type LocationSuggestion = Pick<MapLocation, 'uuid' | 'name'> & { matchedSubstrings: PredictionSubstring[] }
+export interface CryptocitySuggestion {
+  id: string
+  name: string
+  matchedSubstrings: PredictionSubstring[]
+  lat: number
+  lng: number
+  zoomLevel: number
+}
 export interface GoogleSuggestion { label: string, placeId: string, matchedSubstrings: PredictionSubstring[] }
 
 interface UseAutocompleteOptions {
@@ -28,6 +37,7 @@ export function useAutocomplete({ autocomplete, persistState = true }: UseAutoco
   const status = ref<AutocompleteStatus>(AutocompleteStatus.Initial)
   const googleSuggestions = ref<GoogleSuggestion[]>([])
   const locationSuggestions = ref<LocationSuggestion[]>([])
+  const cryptocitySuggestions = ref<CryptocitySuggestion[]>([])
   const querySearch = useDebounceFn(_querySearch, 400)
 
   const route = useRoute()
@@ -64,6 +74,7 @@ export function useAutocomplete({ autocomplete, persistState = true }: UseAutoco
   function clearSuggestions() {
     googleSuggestions.value = []
     locationSuggestions.value = []
+    cryptocitySuggestions.value = []
   }
 
   // Google Autocomplete
@@ -116,6 +127,10 @@ export function useAutocomplete({ autocomplete, persistState = true }: UseAutoco
     locationSuggestions.value = await searchLocations(await getAnonDatabaseArgs(), query.value)
   }
 
+  async function autocompleteCryptocities() {
+    cryptocitySuggestions.value = await searchCryptocities(await getAnonDatabaseArgs(), query.value)
+  }
+
   // If we search just for new candidates, we don't need to search in the database
   // and we just search locations in Google
   async function _querySearch() {
@@ -127,7 +142,7 @@ export function useAutocomplete({ autocomplete, persistState = true }: UseAutoco
       return
     }
 
-    const result = await Promise.allSettled([autocompleteLocations(), autocompleteGoogle()])
+    const result = await Promise.allSettled([autocompleteLocations(), autocompleteCryptocities(), autocompleteGoogle()])
 
     /* eslint-disable no-console */
     console.log(`Got ${result.length} results`)
@@ -154,6 +169,7 @@ export function useAutocomplete({ autocomplete, persistState = true }: UseAutoco
     status,
     googleSuggestions,
     locationSuggestions,
+    cryptocitySuggestions,
   }
 }
 

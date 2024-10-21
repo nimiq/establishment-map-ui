@@ -106,6 +106,7 @@ export enum AnonReadDbFunction {
   GetLocations = 'get_locations',
   GetLocation = 'get_location_by_uuid',
   SearchLocations = 'search_locations',
+  SearchCryptocities = 'search_cryptocities',
   GetMarkers = 'get_markers',
   GetMaxZoom = 'get_max_zoom_computed_markers_in_server',
   GetCryptocities = 'get_cryptocities',
