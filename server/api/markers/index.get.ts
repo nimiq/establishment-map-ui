@@ -5,7 +5,10 @@ import { BoundingBoxSchema, ZoomSchema } from '~~/lib/schemas'
 import { intersect, object, safeParse } from 'valibot'
 
 // TODO Rename zoom_level
-const Schema = intersect([BoundingBoxSchema, object({ zoom_level: ZoomSchema })])
+const Schema = object({
+  ...BoundingBoxSchema.entries,
+  zoom_level: ZoomSchema
+})
 
 export default defineEventHandler(async (event) => {
   // Validate the route parameters
