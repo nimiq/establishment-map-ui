@@ -32,18 +32,21 @@ export function translateIssue(issue: Issue) {
   }
 }
 
+export const currencyTranslations = {
+  [Currency.BTC]: 'Bitcoin',
+  [Currency.ETH]: 'Ethereum',
+  [Currency.NIM]: 'Nimiq',
+  [Currency.USDC_on_POLYGON]: i18n.t('USDC on POLYGON'),
+  [Currency.BINANCE_PAY]: i18n.t('Binance Pay'),
+  [Currency.BCH]: 'Bitcoin Cash',
+  [Currency.DASH]: 'Dash',
+  [Currency.LTC]: 'Litecoin',
+  [Currency.LBTC]: 'Lightning Bitcoin',
+  [Currency.XLM]: 'Stellar',
+  [Currency.XRP]: 'Ripple',
+  [Currency.USDT]: 'Tether',
+}
+
 export function translateCurrency(currency: Currency) {
-  switch (currency) {
-    case Currency.BTC: return 'Bitcoin'
-    case Currency.ETH: return 'Ethereum'
-    case Currency.NIM: return 'Nimiq'
-    case Currency.USDC_on_POLYGON: return i18n.t('USDC on POLYGON')
-    case Currency.BINANCE_PAY: return i18n.t('Binance Pay')
-    case Currency.BCH: return 'Bitcoin Cash'
-    case Currency.DASH: return 'Dash'
-    case Currency.LTC: return 'Litecoin'
-    case Currency.LBTC: return 'Lightning Bitcoin'
-    case Currency.XLM: return 'Stellar'
-    case Currency.XRP: return 'Ripple'
-  }
+  return currencyTranslations[currency] ?? currency
 }
