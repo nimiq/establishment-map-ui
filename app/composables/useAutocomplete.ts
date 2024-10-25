@@ -84,7 +84,7 @@ export function useAutocomplete({ autocomplete, persistState = true }: UseAutoco
       return
     }
 
-    const locationBias = searchForRegions ? useMap().map?.getBounds() : undefined
+    const locationBias = searchForRegions ? useMap2().map?.getBounds() : undefined
 
     const request: google.maps.places.AutocompletionRequest = {
       input: query.value,

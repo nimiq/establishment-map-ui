@@ -25,7 +25,7 @@ const FALLBACK_POSITION: MapPosition = { center: { lat: 9.6301892, lng: -84.2541
 
 const { geolocateIp } = useGeoIp()
 const { ipPositionError, ipPosition } = storeToRefs(useGeoIp())
-const { setPosition } = useMap()
+const { setPosition } = useMap2()
 
 await geolocateIp()
 

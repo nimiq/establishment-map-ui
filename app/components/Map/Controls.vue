@@ -30,7 +30,7 @@ function clearStorage() {
       <button
         size-32 rounded-t-full bg="neutral-0 hover:neutral-100" transition-colors
         flex="~ justify-center items-center" title="Increase zoom"
-        @click="useMap().increaseZoom"
+        @click="useMap2().increaseZoom"
       >
         <div i-nimiq:plus />
       </button>
@@ -39,7 +39,7 @@ function clearStorage() {
       <button
         size-32 rounded-b-full bg="neutral-0 hover:neutral-100" transition-colors
         flex="~ justify-center items-center" title="Decrease zoom"
-        @click="useMap().decreaseZoom"
+        @click="useMap2().decreaseZoom"
       >
         <div i-nimiq:minus />
       </button>

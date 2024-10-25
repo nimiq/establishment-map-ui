@@ -4,7 +4,6 @@ import { NuxtLayout } from '#components'
 if (import.meta.dev)
   useDark() // Take care of your eyes
 
-defineRouteRules({ ssr: false, prerender: true })
 definePageMeta({
   keepalive: true,
   key: 'Map',

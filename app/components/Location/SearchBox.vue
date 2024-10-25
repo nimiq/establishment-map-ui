@@ -38,7 +38,7 @@ const selected = defineModel<GoogleSuggestion>('selected')
         <template v-else>
           <ComboboxItem
             v-for="s in googleSuggestions" :key="s.placeId" :value="s" bg="hocus:bg-white/40" cursor-pointer
-            px-16 py-12 transition-colors text="14 neutral-100" @click="() => useMap().goToPlaceId(s.placeId)"
+            px-16 py-12 transition-colors text="14 neutral-100" @click="() => useMap2().goToPlaceId(s.placeId)"
           >
             <span class="block truncate" v-html="highlightMatches(s.label, s.matchedSubstrings)" />
           </ComboboxItem>

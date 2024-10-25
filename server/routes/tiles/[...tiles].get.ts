@@ -3,6 +3,7 @@ import type { MapViewport, Markers } from '~~/types/map'
 import type { Database } from '~~/types/supabase'
 import type { Point } from 'geojson'
 import type { H3Event } from 'h3'
+import { Buffer } from 'node:buffer'
 import { serverSupabaseClient } from '#supabase/server'
 import { tileToBBOX } from '@mapbox/tilebelt'
 import { feature, geometry } from '@turf/turf'
@@ -29,6 +30,13 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'Invalid query parameters', cause: JSON.stringify(issues) })
 
   const { x, y, z } = coords.tiles!
+
+  const client = await serverSupabaseClient<Database>(event)
+  const { data, error } = await client.rpc('mvt', { x, y, z })
+  if (error || !data)
+    throw createError({ statusCode: 500, message: 'Failed to fetch data', cause: error?.message || 'Unknown error' })
+  setResponseHeader(event, 'Content-Type', 'application/x-protobuf')
+  return Buffer.from(data, 'base64')
 
   // const [nelng, nelat, swlng, swlat] = tileToBBOX([x, y, z])
   // const featureCollection = await fetchLayerData(event, { boundingBox: { nelat, nelng, swlat, swlng }, zoom: z })

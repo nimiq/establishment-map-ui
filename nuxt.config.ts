@@ -19,7 +19,7 @@ export default defineNuxtConfig({
 
   ssr: false,
 
-  modules: ['@pinia/nuxt', '@vueuse/nuxt', '@unocss/nuxt', '@nuxt/eslint', 'radix-vue/nuxt', '@nuxtjs/supabase', '@nuxthub/core', '@nuxt/fonts'],
+  modules: ['@pinia/nuxt', '@vueuse/nuxt', '@unocss/nuxt', '@nuxt/eslint', 'radix-vue/nuxt', '@nuxtjs/supabase', '@nuxthub/core', '@nuxt/fonts', 'nuxt-maplibre'],
 
   hub: {
     kv: true,
@@ -51,8 +51,6 @@ export default defineNuxtConfig({
       tasks: true,
     },
   },
-
-  plugins: [{ src: '~~/plugins/ol-map.client.ts' }],
 
   imports: {
     imports: [

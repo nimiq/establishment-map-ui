@@ -55,7 +55,7 @@ export const useLocations = defineStore('locations', () => {
 
     selectedUuid.value = uuid
 
-    useMap().setPosition({ center: { lat: location.lat, lng: location.lng }, zoom: 19 })
+    useMap2().setPosition({ center: { lat: location.lat, lng: location.lng }, zoom: 19 })
 
     if (open) {
       const { singles } = storeToRefs(useMarkers())

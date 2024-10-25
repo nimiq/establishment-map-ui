@@ -3,8 +3,8 @@ import { isMobile } from '#imports'
 import { OnClickOutside } from '@vueuse/components'
 import { CustomMarker } from 'vue3-google-map'
 
-const { setPosition } = useMap()
-const { zoom } = storeToRefs(useMap())
+const { setPosition } = useMap2()
+const { zoom } = storeToRefs(useMap2())
 const { clusters } = storeToRefs(useMarkers())
 
 function setExpansionCluster(id: number, open: '0' | '1') {

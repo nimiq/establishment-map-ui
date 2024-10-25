@@ -9,8 +9,8 @@ type StoredCryptocities = ExpiringValue<{ area: Feature<MultiPolygon>, data: Par
 const defaultValue: StoredCryptocities['value'] = { area: multiPolygon([]), data: {} }
 
 export const useCryptocities = defineStore('cryptocities', () => {
-  // const { boundingBox, map, zoom } = storeToRefs(useMap())
-  const { boundingBox } = storeToRefs(useMap())
+  // const { boundingBox, map, zoom } = storeToRefs(useMap2())
+  const { boundingBox } = storeToRefs(useMap2())
 
   const cryptocities = ref(defaultValue)
   const loadedCitiesNames = computed(() => [...Object.keys(cryptocities.value.data)] as CryptocityType[])

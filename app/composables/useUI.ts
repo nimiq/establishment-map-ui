@@ -3,7 +3,7 @@ import { breakpointsTailwind } from '@vueuse/core'
 export const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
 
 export function useUIParams() {
-  const { zoom } = storeToRefs(useMap())
+  const { zoom } = storeToRefs(useMap2())
 
   // We track if the user has hidden the search box hint using localStorage
   const cssVar = useCssVar('--dynamic-block', globalThis.document?.documentElement)

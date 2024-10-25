@@ -3,7 +3,7 @@ import { CustomMarker } from 'vue3-google-map'
 
 const { singles } = storeToRefs(useMarkers())
 
-const { zoom } = storeToRefs(useMap())
+const { zoom } = storeToRefs(useMap2())
 const { showLocationName } = useUIParams()
 const { isListShown } = storeToRefs(useApp())
 const { selectedUuid } = storeToRefs(useLocations())
@@ -28,7 +28,7 @@ function handlePopoverOpen(isOpen: boolean, location: MapLocation) {
   if (distance && distance < 368 && isListShown.value) {
     popoverKey.value = 0
     const center = { lat: location.lat, lng: location.lng }
-    useMap().setPosition({ center, zoom: zoom.value }, { smooth: true })
+    useMap2().setPosition({ center, zoom: zoom.value }, { smooth: true })
     const stop = setInterval(() => {
       popoverKey.value += 1
       if (popoverKey.value === 50)

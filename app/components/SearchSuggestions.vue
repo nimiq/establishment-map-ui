@@ -50,7 +50,7 @@ defineProps<{ status: AutocompleteStatus, googleSuggestions: GoogleSuggestion[],
 
         <ComboboxItem
           v-for="s in googleSuggestions" :key="s.placeId" :value="s"
-          cursor-pointer px-16 py-12 transition-colors hocus:bg-neutral-100 @click="() => useMap().goToPlaceId(s.placeId)"
+          cursor-pointer px-16 py-12 transition-colors hocus:bg-neutral-100 @click="() => useMap2().goToPlaceId(s.placeId)"
         >
           <span block truncate v-html="highlightMatches(s.label, s.matchedSubstrings)" />
         </ComboboxItem>

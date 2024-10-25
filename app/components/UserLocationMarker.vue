@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const props = defineProps<{ browserPosition: EstimatedMapPosition }>()
 
-const { zoom } = storeToRefs(useMap())
+const { zoom } = storeToRefs(useMap2())
 const accuracyCircleEl = ref()
 const radius = useCssVar('--radius', accuracyCircleEl, { initialValue: '64px' })
 

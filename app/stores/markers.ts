@@ -1,10 +1,10 @@
 import type { Markers, MemoizedMarkers } from '~~/types/map'
-import { algorithm, CLUSTERS_MAX_ZOOM, computeMarkers } from '~~/lib/compute-markers'
+// import { algorithm, CLUSTERS_MAX_ZOOM, computeMarkers } from '~~/lib/compute-markers'
 import { parseLocation } from '~/shared'
 
 export const useMarkers = defineStore('markers', () => {
   const { setLocations, getLocations } = useLocations()
-  const { zoom, boundingBox } = storeToRefs(useMap())
+  const { zoom, boundingBox } = storeToRefs(useMap2())
   const loaded = ref(false)
   const { setCryptocities, getCryptocities } = useCryptocities()
   const { attachedCryptocities } = storeToRefs(useCryptocities())
@@ -69,8 +69,8 @@ export const useMarkers = defineStore('markers', () => {
     const locations = await getLocations(boundingBox.value!)
     const cryptocities = await getCryptocities(boundingBox.value!)
     setCryptocities(boundingBox.value!, cryptocities)
-    const { clusters, singles } = computeMarkers(algorithm(80), locations, { boundingBox: boundingBox.value!, zoom: zoom.value })
-    return { singles, clusters }
+    // const { clusters, singles } = computeMarkers(algorithm(80), locations, { boundingBox: boundingBox.value!, zoom: zoom.value })
+    return { singles: [], clusters: [] }
   }
 
   async function getMarkersFromDatabase(): Promise<Markers> {
@@ -92,7 +92,8 @@ export const useMarkers = defineStore('markers', () => {
   }
 
   async function cluster() {
-    if (zoom.value > CLUSTERS_MAX_ZOOM) {
+    // if (zoom.value > COMPUTE_CLUSTER) {
+    if (zoom.value > 14) {
       // We are too zoomed in, no need to cluster
       setMarkers(await getLocations(boundingBox.value!), [])
       return

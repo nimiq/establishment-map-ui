@@ -2,7 +2,7 @@
 import { CustomMarker } from 'vue3-google-map'
 
 const { singles } = storeToRefs(useMarkers())
-const { zoom } = storeToRefs(useMap())
+const { zoom } = storeToRefs(useMap2())
 const SingleMarkersDesktop = defineAsyncComponent(() => import('./SingleMarkersDesktop.vue'))
 
 const { browserPositionIsSupported, browserPosition } = storeToRefs(useGeoIp())

@@ -79,7 +79,7 @@ watch(cards, (newCards, oldCards) => {
     newCards.forEach(card => observer.observe(card))
 }, { deep: true })
 
-const { mapInstance } = storeToRefs(useMap())
+const { mapInstance } = storeToRefs(useMap2())
 useEventListener(mapInstance.value?.$el, 'click', (event: MouseEvent) => {
   if (!(event.target as HTMLElement).closest('[data-custom-marker]'))
     isListShown.value = false

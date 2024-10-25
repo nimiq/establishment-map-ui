@@ -11,7 +11,7 @@ export const useApp = defineStore('app', () => {
 
   const route = useRoute()
 
-  const { mapLoaded } = storeToRefs(useMap())
+  const { mapLoaded } = storeToRefs(useMap2())
   const { loaded: markersLoaded } = storeToRefs(useMarkers())
 
   const until = Date.now() + 300 // Show the splash screen at least for 300ms

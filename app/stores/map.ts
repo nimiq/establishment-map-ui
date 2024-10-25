@@ -3,7 +3,7 @@ import type { Map as OlMap } from 'ol'
 import type { Extent } from 'ol/extent'
 import { fromLonLat, toLonLat } from 'ol/proj'
 
-export const useMap = defineStore('map', () => {
+export const useMap2 = defineStore('map', () => {
   const mapInstance = shallowRef<OlMap>()
   const mapLoaded = ref(false)
   const boundingBox = ref<BoundingBox>()
