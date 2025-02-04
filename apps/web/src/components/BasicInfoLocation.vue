@@ -33,7 +33,7 @@ withDefaults(defineProps<{ location: MapLocation, progress?: number }>(), { prog
     </span>
     <p
       v-if="location.address" row-start-3 leading-18 :class="location.photo ? 'col-span-2' : 'col-span-3'"
-      text="12 neutral-800 inverted:neutral-100"
+      text="12 neutral-800 inverted:neutral-100" max-desktop:min-h-2lh
     >
       {{ location.address }}
     </p>
